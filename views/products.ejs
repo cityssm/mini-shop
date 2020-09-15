@@ -1,0 +1,41 @@
+<%- include('_header'); -%>
+
+<h1 class="title has-text-centered mt-4">Products</h1>
+
+<div class="columns is-centered is-multiline">
+  <%
+    const products = configFns.getProperty("products");
+    const productSKUs = Object.keys(products);
+
+    for (const productSKU of productSKUs) {
+  %>
+  <% const product = products[productSKU]; %>
+  <div class="column is-4">
+    <div class="card">
+      <% if (product.image) { %>
+        <div class="card-image">
+          <a class="image is-<%= product.image.dimensionClass %>"  href="products/<%= productSKU %>">
+            <img src="<%= product.image.path %>" alt="<%= product.productName %>" />
+          </a>
+        </div>
+      <% } %>
+      <a class="card-header" href="products/<%= productSKU %>">
+        <h2 class="card-header-title has-text-centered">
+          <%= product.productName %>
+        </h2>
+      </a>
+      <% if (product.description) { %>
+        <div class="card-content">
+          <%= product.description %>
+        </div>
+      <% } %>
+    </div>
+  </div>
+  <%
+    }
+  %>
+</div>
+
+<%- include('_footerA'); -%>
+
+<%- include('_footerB'); -%>

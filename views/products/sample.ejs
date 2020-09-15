@@ -1,0 +1,19 @@
+<%
+  const idPrefix = stringFns.getUID();
+%>
+<div class="field">
+  <label class="label" for="<%= idPrefix %>_size">
+    Size
+  </label>
+  <div class="control">
+    <div class="select">
+      <select id="<%= idPrefix %>_size" name="size" required>
+        <option value="">(Select One)</option>
+        <option value="S">Small</option>
+        <option value="M">Medium</option>
+        <option value="L">Large</option>
+        <option value="XL">Extra Large</option>
+      </select>
+    </div>
+  </div>
+</div>

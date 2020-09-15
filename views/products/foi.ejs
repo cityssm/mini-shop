@@ -1,0 +1,19 @@
+<%
+  const idPrefix = stringFns.getUID();
+%>
+<div class="message is-warning">
+  <p class="message-body">
+    Note that the payment made now is the payment for the application itself.
+    It is a deposit.
+    Depending on the extent of the request,
+    a subsequent payment may be required before the information is released.
+  </p>
+</div>
+<div class="field">
+  <label class="label" for="<%= idPrefix %>_natureOfRequest">
+    Nature of Request
+  </label>
+  <div class="control">
+    <textarea class="textarea" id="<%= idPrefix %>_natureOfRequest" name="natureOfRequest"></textarea>
+  </div>
+</div>
