@@ -7,6 +7,9 @@
             return;
         }
         isSubmitting = true;
-        alert("add to cart");
+        exports.cart.add(productFormEle);
+        productFormEle.reset();
+        document.getElementById("modal--success").classList.add("is-active");
+        document.getElementsByTagName("html")[0].classList.add("is-clipped");
     });
 })();

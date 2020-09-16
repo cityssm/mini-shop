@@ -9,11 +9,19 @@ export interface Config {
         secret?: string;
         maxAgeMillis?: number;
     };
+    views?: {
+        products?: Config_View;
+    };
     moneris?: {
         storeURL: string;
         ps_store_id: string;
         hpp_key: string;
     };
+    productCategories?: Array<{
+        categoryName: string;
+        categoryEjs?: string;
+        productSKUs: string[];
+    }>;
     products?: {
         [productSKU: string]: Config_Product;
     };
@@ -27,13 +35,17 @@ export interface Config_HTTPSConfig {
     certPath: string;
     passphrase?: string;
 }
+export interface Config_View {
+    title: string;
+    headerEjs: string;
+}
 export interface Config_Product {
     productName: string;
     description?: string;
     image?: Config_ProductImage;
     price: number;
     fees?: string[];
-    ejsViewPath: string;
+    productEjs?: string;
 }
 export interface Config_ProductImage {
     path: string;

@@ -1,15 +1,38 @@
-<%- include('_header'); -%>
+<%- include('../view-parts/_header'); -%>
 
-<h1 class="title has-text-centered mt-4">Products</h1>
+<%
+  const viewConfig = configFns.getProperty("views.products") || {};
+%>
+
+<h1 class="title is-3 has-text-centered mt-4">
+  <%= viewConfig.title || "Products" %>
+</h1>
+
+<% if (viewConfig.headerEjs) { %>
+  <%- include('../view-parts/headers/' + viewConfig.headerEjs); -%>
+<% } %>
+
+<%
+  const productCategories = configFns.getProperty("productCategories") || [];
+  const products = configFns.getProperty("products");
+
+  for (const productCategory of productCategories) {
+%>
+
+<h2 class="title is-4"><%= productCategory.categoryName %></h2>
+
+<% if (productCategory.categoryEjs) { %>
+  <%- include('../view-parts/categories/' + productCategory.categoryEjs); -%>
+<% } %>
 
 <div class="columns is-centered is-multiline">
   <%
-    const products = configFns.getProperty("products");
-    const productSKUs = Object.keys(products);
-
-    for (const productSKU of productSKUs) {
+    for (let skuIndex = 0; skuIndex < productCategory.productSKUs.length; skuIndex += 1) {
   %>
-  <% const product = products[productSKU]; %>
+  <%
+    const productSKU = productCategory.productSKUs[skuIndex];
+    const product = products[productSKU];
+  %>
   <div class="column is-4">
     <div class="card">
       <% if (product.image) { %>
@@ -28,14 +51,17 @@
         <div class="card-content">
           <%= product.description %>
         </div>
-      <% } %>
+        <% } %>
+      </div>
     </div>
-  </div>
   <%
     }
   %>
-</div>
+<%
+  }
+%>
 
-<%- include('_footerA'); -%>
-
-<%- include('_footerB'); -%>
+<%- include('../view-parts/_footerA'); -%>
+<script src="/formToObject/formToObject.min.js"></script>
+<script src="/javascripts/cart.min.js"></script>
+<%- include('../view-parts/_footerB'); -%>

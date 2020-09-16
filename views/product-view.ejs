@@ -1,8 +1,17 @@
-<%- include('_header'); -%>
+<%- include('../view-parts/_header'); -%>
 
 <%
   const product = configFns.getProperty("products")[productSKU];
 %>
+
+<nav class="breadcrumb has-succeeds-separator mt-4" aria-label="breadcrumb">
+  <ul>
+    <li><a href="/products"><%= configFns.getProperty("views.products.title") %></a></li>
+    <li class="is-active">
+      <a href="#" aria-current="page"><%= product.productName %></a>
+    </li>
+  </ul>
+</nav>
 
 <h1 class="title has-text-centered mt-4"><%= product.productName %></h1>
 
@@ -10,7 +19,7 @@
   <input name="productSKU" type="hidden" value="<%= productSKU %>" />
   <div class="columns">
     <div class="column is-3">
-      <a class="image is-<%= product.image.dimensionClass %>" href="../<%= product.image.path %>" target="_blank">
+      <a class="image is-<%= product.image.dimensionClass %> has-tooltip-bottom has-tooltip-arrow" data-tooltip="View Larger Picture" href="../<%= product.image.path %>" target="_blank">
         <img src="../<%= product.image.path %>" alt="<%= product.productName %>" />
       </a>
       <div class="has-text-centered">
@@ -18,19 +27,49 @@
       </div>
     </div>
     <div class="column">
-      <%- include(product.ejsViewPath); -%>
+      <% if (product.productEjs) { %>
+        <%- include('../view-parts/products/' + product.productEjs); -%>
+      <% } %>
+      <div class="has-text-right mt-4">
+        <button class="button is-success" type="submit">
+          <span class="icon is-small">
+            <i class="fas fa-cart-plus" aria-hidden="true"></i>
+          </span>
+          <span>Add to Cart</span>
+        </button>
+      </div>
     </div>
-  </div>
-  <div class="has-text-right">
-    <button class="button is-success" type="submit">
-      <span class="icon is-small">
-        <i class="fas fa-cart-plus" aria-hidden="true"></i>
-      </span>
-      <span>Add to Cart</span>
-    </button>
   </div>
 </form>
 
-<%- include('_footerA'); -%>
+<div class="modal" id="modal--success">
+  <div class="modal-background"></div>
+  <div class="modal-content">
+    <div class="message is-success">
+      <div class="message-body">
+        <p class="is-size-4 has-text-centered">
+          <i class="fas fa-3x fa-check" aria-hidden="true"></i><br />
+          Added to the cart successfully.
+        </p>
+        <div class="columns mt-3">
+          <div class="column">
+            <a class="button is-info is-fullwidth" href="/products">
+              Continue Shopping
+            </a>
+          </div>
+          <div class="column">
+            <a class="button is-success is-fullwidth" href="/checkout">
+              Proceed to Checkout
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('../view-parts/_footerA'); -%>
+<script src="/formToObject/formToObject.min.js"></script>
+<script src="/javascripts/cart.min.js"></script>
 <script src="/javascripts/product-view.min.js"></script>
-<%- include('_footerB'); -%>
+<%- include('../view-parts/_footerB'); -%>

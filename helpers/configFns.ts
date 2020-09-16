@@ -34,6 +34,8 @@ configFallbackValues.set("session.cookieName", "mini-shop-sid");
 configFallbackValues.set("session.secret", "cityssm/mini-shop");
 configFallbackValues.set("session.maxAgeMillis", 60 * 60 * 1000);
 
+configFallbackValues.set("views.products.title", "Products");
+
 
 export function getProperty(propertyName: "application.httpPort"): number;
 export function getProperty(propertyName: "application.https"): configTypes.Config_HTTPSConfig;

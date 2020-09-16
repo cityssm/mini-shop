@@ -7,7 +7,6 @@ const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const configFns = require("./helpers/configFns");
 const stringFns = require("@cityssm/expressjs-server-js/stringFns");
-const routerCart = require("./routes/cart");
 const routerCheckout = require("./routes/checkout");
 const routerProducts = require("./routes/products");
 const session = require("express-session");
@@ -26,6 +25,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 app.use("/typeface-barlow", express.static(path.join(__dirname, "node_modules", "@openfonts", "barlow_all", "files")));
 app.use("/fontawesome-free", express.static(path.join(__dirname, "node_modules", "@fortawesome", "fontawesome-free")));
+app.use("/formToObject", express.static(path.join(__dirname, "node_modules", "form_to_object", "dist")));
 const sessionCookieName = configFns.getProperty("session.cookieName");
 app.use(session({
     store: new SQLiteStore({
@@ -56,7 +56,6 @@ app.use(function (_req, res, next) {
 app.all("/", function (_req, res) {
     res.redirect("/products");
 });
-app.use("/cart", routerCart);
 app.use("/checkout", routerCheckout);
 app.use("/products", routerProducts);
 app.use(function (_req, _res, next) {

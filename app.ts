@@ -9,7 +9,6 @@ import * as logger from "morgan";
 import * as configFns from "./helpers/configFns";
 import * as stringFns from "@cityssm/expressjs-server-js/stringFns";
 
-import * as routerCart from "./routes/cart";
 import * as routerCheckout from "./routes/checkout";
 import * as routerProducts from "./routes/products";
 
@@ -54,6 +53,9 @@ app.use("/typeface-barlow",
 
 app.use("/fontawesome-free",
   express.static(path.join(__dirname, "node_modules", "@fortawesome", "fontawesome-free")));
+
+app.use("/formToObject",
+  express.static(path.join(__dirname, "node_modules", "form_to_object", "dist")));
 
 
 /*
@@ -112,7 +114,6 @@ app.all("/", function(_req, res) {
   res.redirect("/products");
 });
 
-app.use("/cart", routerCart);
 app.use("/checkout", routerCheckout);
 app.use("/products", routerProducts);
 

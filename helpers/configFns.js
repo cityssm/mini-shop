@@ -15,6 +15,7 @@ configFallbackValues.set("application.httpPort", 7777);
 configFallbackValues.set("session.cookieName", "mini-shop-sid");
 configFallbackValues.set("session.secret", "cityssm/mini-shop");
 configFallbackValues.set("session.maxAgeMillis", 60 * 60 * 1000);
+configFallbackValues.set("views.products.title", "Products");
 function getProperty(propertyName) {
     const propertyNameSplit = propertyName.split(".");
     let currentObj = config;
