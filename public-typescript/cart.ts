@@ -42,13 +42,27 @@ exports.cart = (() => {
       return (cart.length - 1);
     };
 
-  const removeFn =
-    (cartIndex: number) => {
-
+  const removeFn = (cartIndex: number) => {
+      cart.splice(cartIndex, 1);
+      toStorageFn();
+      renderCartButtonFn();
     };
+
+
+  const clearFn = () => {
+    cart = [];
+    toStorageFn();
+    renderCartButtonFn();
+  };
+
 
   return {
     add: addFn,
-    remove: removeFn
+    remove: removeFn,
+    clear: clearFn,
+    get: () => {
+      return cart;
+    },
+    refresh: toStorageFn
   };
 })();

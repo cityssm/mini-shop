@@ -39,3 +39,9 @@ export interface MonerisResponse {
   bank_transaction_id: string;
   rvar_sGUID: string;
 }
+
+
+export interface CartItem {
+  productSKU: string;
+  [formFieldName: string]: string;
+}

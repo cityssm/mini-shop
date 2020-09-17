@@ -26,9 +26,22 @@ exports.cart = (function () {
         return (cart.length - 1);
     };
     var removeFn = function (cartIndex) {
+        cart.splice(cartIndex, 1);
+        toStorageFn();
+        renderCartButtonFn();
+    };
+    var clearFn = function () {
+        cart = [];
+        toStorageFn();
+        renderCartButtonFn();
     };
     return {
         add: addFn,
-        remove: removeFn
+        remove: removeFn,
+        clear: clearFn,
+        get: function () {
+            return cart;
+        },
+        refresh: toStorageFn
     };
 })();
