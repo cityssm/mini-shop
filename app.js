@@ -23,9 +23,10 @@ app.use(express.urlencoded({
 }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
-app.use("/typeface-barlow", express.static(path.join(__dirname, "node_modules", "@openfonts", "barlow_all", "files")));
-app.use("/fontawesome-free", express.static(path.join(__dirname, "node_modules", "@fortawesome", "fontawesome-free")));
-app.use("/formToObject", express.static(path.join(__dirname, "node_modules", "form_to_object", "dist")));
+app.use("/lib/bulma-webapp-js", express.static(path.join(__dirname, "node_modules", "@cityssm", "bulma-webapp-js", "dist")));
+app.use("/lib/fontawesome-free", express.static(path.join(__dirname, "node_modules", "@fortawesome", "fontawesome-free")));
+app.use("/lib/formToObject", express.static(path.join(__dirname, "node_modules", "form_to_object", "dist")));
+app.use("/lib/typeface-barlow", express.static(path.join(__dirname, "node_modules", "@openfonts", "barlow_all", "files")));
 const sessionCookieName = configFns.getProperty("session.cookieName");
 app.use(session({
     store: new SQLiteStore({

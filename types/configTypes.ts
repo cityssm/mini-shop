@@ -63,6 +63,9 @@ export interface Config_Product {
     formFieldName: string;
   }>;
   fees?: string[];
+  feeTotals?: {
+    [feeName: string]: number;
+  };
   productEjs?: string;
 }
 

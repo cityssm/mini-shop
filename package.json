@@ -45,6 +45,7 @@
     "typescript": "^4.0.2"
   },
   "dependencies": {
+    "@cityssm/bulma-webapp-js": "^0.4.3",
     "@cityssm/expressjs-server-js": "^0.6.2",
     "@fortawesome/fontawesome-free": "^5.14.0",
     "@openfonts/barlow_all": "^1.44.1",

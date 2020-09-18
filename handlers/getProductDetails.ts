@@ -20,11 +20,14 @@ export const handler: RequestHandler = (req, res) => {
 
       if (product.fees) {
 
+        product.feeTotals = {};
+
         for (const feeName of product.fees) {
 
           const fee = configFns.getProperty("fees")[feeName];
 
           if (fee) {
+            product.feeTotals[feeName] = fee.feeCalculation(product);
             fees[feeName] = fee;
           } else {
             // eslint-disable-next-line @typescript-eslint/no-dynamic-delete

@@ -17,3 +17,14 @@
     <textarea class="textarea" id="<%= idPrefix %>_natureOfRequest" name="natureOfRequest" required></textarea>
   </div>
 </div>
+<fieldset>
+  <legend class="has-text-weight-bold">Preferred method of access to records:</legend>
+  <p class="facheck facheck-fas-checked mt-2">
+    <input id="<%= idPrefix %>_accessMethod-original" name="accessMethod" type="radio" value="Examine Original" required />
+    <label for="<%= idPrefix %>_accessMethod-original">Examine Original</label>
+  </p>
+  <p class="facheck facheck-fas-checked mt-2">
+    <input id="<%= idPrefix %>_accessMethod-copy" name="accessMethod" type="radio" value="Receive Copy" required />
+    <label for="<%= idPrefix %>_accessMethod-copy">Receive Copy</label>
+  </p>
+</fieldset>

@@ -11,9 +11,11 @@ exports.handler = (req, res) => {
         if (product) {
             products[productSKU] = product;
             if (product.fees) {
+                product.feeTotals = {};
                 for (const feeName of product.fees) {
                     const fee = configFns.getProperty("fees")[feeName];
                     if (fee) {
+                        product.feeTotals[feeName] = fee.feeCalculation(product);
                         fees[feeName] = fee;
                     }
                     else {

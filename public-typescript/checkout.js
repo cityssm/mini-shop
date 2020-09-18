@@ -39,13 +39,22 @@ Object.defineProperty(exports, "__esModule", { value: true });
 (function () {
     var productDetails = {};
     var cartContainerEle = document.getElementById("card--cart");
+    var cartTotalContainerEle = document.getElementById("container--cartTotal");
+    var cartTotals = {
+        itemTotal: 0,
+        feeTotals: {}
+    };
     var removeCartItemFn = function (clickEvent) {
         clickEvent.preventDefault();
         var cartIndex = parseInt(clickEvent.currentTarget.getAttribute("data-cart-index"));
-        exports.cart.remove(cartIndex);
-        renderCheckoutFn();
+        var cartItem = exports.cart.get()[cartIndex];
+        var product = productDetails.products[cartItem.productSKU];
+        cityssm.confirmModal("Remove \"" + product.productName + "\"?", "Are you sure you want to remove this item from your cart?", "Yes, Remove It", "warning", function () {
+            exports.cart.remove(cartIndex);
+            renderCheckoutFn();
+        });
     };
-    var forEachCartItemFn = function (cartItem, cartIndex) {
+    var forEachFn_renderCartItems_calculateTotals = function (cartItem, cartIndex) {
         var product = productDetails.products[cartItem.productSKU];
         if (!product) {
             exports.cart.clear();
@@ -55,17 +64,18 @@ Object.defineProperty(exports, "__esModule", { value: true });
         productCardContentEle.className = "card-content";
         productCardContentEle.innerHTML =
             "<div class=\"columns\">" +
-                "<div class=\"column is-narrow\">" +
-                "<button class=\"button is-inverted is-danger has-tooltip-arrow has-tooltip-right\" data-cart-index=\"" + cartIndex.toString() + "\" data-tooltip=\"Remove from Cart\" type=\"button\">" +
-                "<i class=\"fas fa-times\" aria-hidden=\"true\"></i>" +
-                "<span class=\"sr-only\">Remove from Cart</span>" +
-                "</button>" +
-                "</div>" +
+                ("<div class=\"column is-narrow has-text-right\">" +
+                    "<button class=\"button is-inverted is-danger has-tooltip-arrow has-tooltip-right has-tooltip-hidden-mobile\"" +
+                    " data-cart-index=\"" + cartIndex.toString() + "\" data-tooltip=\"Remove from Cart\" type=\"button\">" +
+                    "<i class=\"fas fa-times\" aria-hidden=\"true\"></i>" +
+                    "<span class=\"is-hidden-tablet ml-2\">Remove from Cart</span>" +
+                    "</button>" +
+                    "</div>") +
                 ("<div class=\"column\">" +
                     "<strong class=\"container--productName\"></strong><br />" +
                     "<div class=\"is-size-7 container--formFields\"></div>" +
                     "</div>") +
-                "<div class=\"column is-narrow column--price has-text-weight-bold\"></div>" +
+                "<div class=\"column is-narrow column--price has-text-weight-bold has-text-right\"></div>" +
                 "</div>";
         productCardContentEle.getElementsByTagName("button")[0].addEventListener("click", removeCartItemFn);
         productCardContentEle.getElementsByClassName("container--productName")[0]
@@ -86,19 +96,46 @@ Object.defineProperty(exports, "__esModule", { value: true });
         var priceColumnEle = productCardContentEle.getElementsByClassName("column--price")[0];
         priceColumnEle.innerText = "$" + product.price.toFixed(2);
         cartContainerEle.appendChild(productCardContentEle);
+        cartTotals.itemTotal += product.price;
+        if (product.feeTotals && Object.keys(product.feeTotals).length > 0) {
+            for (var _b = 0, _c = Object.keys(product.feeTotals); _b < _c.length; _b++) {
+                var feeName = _c[_b];
+                cartTotals.feeTotals[feeName] =
+                    (cartTotals.feeTotals[feeName] || 0) + product.feeTotals[feeName];
+            }
+        }
     };
     var renderCheckoutFn = function () {
-        cartContainerEle.innerHTML = "";
+        cityssm.clearElement(cartContainerEle);
+        cityssm.clearElement(cartTotalContainerEle);
+        cartTotals = {
+            itemTotal: 0,
+            feeTotals: {}
+        };
         var cartItems = exports.cart.get();
         if (cartItems.length === 0) {
             cartContainerEle.classList.add("is-hidden");
             cartContainerEle.insertAdjacentHTML("beforebegin", "<div class=\"message is-info\">" +
-                "<p class=\"message-body\">The cart is empty.</p>" +
+                ("<div class=\"message-body has-text-centered\">" +
+                    "<p class=\"has-text-weight-bold\">The cart is empty.</p>" +
+                    "<p><a href=\"/products\">View Available Products</a></p>" +
+                    "</div>") +
                 "</div>");
-            return;
         }
-        cartItems.forEach(forEachCartItemFn);
-        cartContainerEle.classList.remove("is-hidden");
+        else {
+            cartItems.forEach(forEachFn_renderCartItems_calculateTotals);
+            cartContainerEle.classList.remove("is-hidden");
+        }
+        var cartTotal = cartTotals.itemTotal;
+        if (Object.keys(cartTotals.feeTotals).length > 0) {
+            cartTotalContainerEle.insertAdjacentHTML("beforeend", "<div class=\"has-text-weight-bold\">Subtotal: $" + cartTotals.itemTotal.toFixed(2) + "</div>");
+            for (var _i = 0, _a = Object.keys(cartTotals.feeTotals); _i < _a.length; _i++) {
+                var feeName = _a[_i];
+                cartTotalContainerEle.insertAdjacentHTML("beforeend", "<div>" + productDetails.fees[feeName].feeName + ": $" + cartTotals.feeTotals[feeName].toFixed(2) + "</div>");
+                cartTotal += cartTotals.feeTotals[feeName];
+            }
+        }
+        cartTotalContainerEle.insertAdjacentHTML("beforeend", "<div class=\"is-size-4 has-text-weight-bold\">Total: $" + cartTotal.toFixed(2) + "</div>");
     };
     var initFn_getDistinctProductSKUs = function () {
         var productSKUs = new Set();
@@ -137,6 +174,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
         });
     };
     initFn_loadProductDetails();
+    document.getElementById("button--clearCart").addEventListener("click", function () {
+        cityssm.confirmModal("Clear Cart?", "Are you sure you want to remove all items from your cart?", "Yes, Clear the Cart", "warning", function () {
+            exports.cart.clear();
+            renderCheckoutFn();
+        });
+    });
     window.setTimeout(function () {
         exports.cart.refresh();
     }, 5 * 60 * 1000);

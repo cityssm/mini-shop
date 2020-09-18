@@ -13,9 +13,21 @@
   </ul>
 </nav>
 
-<h1 class="title is-3 has-text-centered mt-4">
-  <%= viewConfig.title || "Checkout" %>
-</h1>
+<div class="level mt-4">
+  <div class="level-left">
+    <h1 class="title is-3">
+      <%= viewConfig.title || "Checkout" %>
+    </h1>
+  </div>
+  <div class="level-right has-text-right">
+    <button class="button is-danger" id="button--clearCart" type="button">
+      <span class="icon">
+        <i class="fas fa-trash-alt" aria-hidden="true"></i>
+      </span>
+      <span>Clear Cart</span>
+    </button>
+  </div>
+</div>
 
 <% if (viewConfig.headerEjs) { %>
   <%- include('../view-parts/headers/' + viewConfig.headerEjs); -%>
@@ -23,8 +35,17 @@
 
 <ul class="card is-hidden" id="card--cart"></ul>
 
+<div class="card has-text-right">
+  <div class="card-content" id="container--cartTotal"></div>
+</div>
+
+<form id="form--checkout">
+
+</form>
+
 <%- include('../view-parts/_footerA'); -%>
-<script src="/formToObject/formToObject.min.js"></script>
+<script src="/lib/formToObject/formToObject.min.js"></script>
 <script src="/javascripts/cart.min.js"></script>
+<script src="/lib/bulma-webapp-js/cityssm.min.js"></script>
 <script src="/javascripts/checkout.min.js"></script>
 <%- include('../view-parts/_footerB'); -%>

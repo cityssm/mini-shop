@@ -4,181 +4,181 @@
 @font-face {
   font-family: 'Barlow';
   font-style: normal;
-  font-display: swap;
   font-weight: 100;
   src:
     local('Barlow Thin'),
     local('Barlow-Thin'),
-    url('/typeface-barlow/barlow-all-100.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
-    url('/typeface-barlow/barlow-all-100.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+    url('/lib/typeface-barlow/barlow-all-100.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+    url('/lib/typeface-barlow/barlow-all-100.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+  font-display: swap;
 }
 /* barlow-100italic - all */
 @font-face {
   font-family: 'Barlow';
   font-style: italic;
-  font-display: swap;
   font-weight: 100;
   src:
     local('Barlow Thin Italic'),
     local('Barlow-ThinItalic'),
-    url('/typeface-barlow/barlow-all-100-italic.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
-    url('/typeface-barlow/barlow-all-100-italic.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+    url('/lib/typeface-barlow/barlow-all-100-italic.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+    url('/lib/typeface-barlow/barlow-all-100-italic.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+  font-display: swap;
 }
 /* barlow-200normal - all */
 @font-face {
   font-family: 'Barlow';
   font-style: normal;
-  font-display: swap;
   font-weight: 200;
   src:
     local('Barlow ExtraLight'),
     local('Barlow-ExtraLight'),
-    url('/typeface-barlow/barlow-all-200.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
-    url('/typeface-barlow/barlow-all-200.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+    url('/lib/typeface-barlow/barlow-all-200.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+    url('/lib/typeface-barlow/barlow-all-200.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+  font-display: swap;
 }
 /* barlow-200italic - all */
 @font-face {
   font-family: 'Barlow';
   font-style: italic;
-  font-display: swap;
   font-weight: 200;
   src:
     local('Barlow ExtraLight Italic'),
     local('Barlow-ExtraLightItalic'),
-    url('/typeface-barlow/barlow-all-200-italic.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
-    url('/typeface-barlow/barlow-all-200-italic.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+    url('/lib/typeface-barlow/barlow-all-200-italic.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+    url('/lib/typeface-barlow/barlow-all-200-italic.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+  font-display: swap;
 }
 /* barlow-300normal - all */
 @font-face {
   font-family: 'Barlow';
   font-style: normal;
-  font-display: swap;
   font-weight: 300;
   src:
     local('Barlow Light'),
     local('Barlow-Light'),
-    url('/typeface-barlow/barlow-all-300.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
-    url('/typeface-barlow/barlow-all-300.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+    url('/lib/typeface-barlow/barlow-all-300.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+    url('/lib/typeface-barlow/barlow-all-300.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+  font-display: swap;
 }
 /* barlow-300italic - all */
 @font-face {
   font-family: 'Barlow';
   font-style: italic;
-  font-display: swap;
   font-weight: 300;
   src:
     local('Barlow Light Italic'),
     local('Barlow-LightItalic'),
-    url('/typeface-barlow/barlow-all-300-italic.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
-    url('/typeface-barlow/barlow-all-300-italic.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+    url('/lib/typeface-barlow/barlow-all-300-italic.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+    url('/lib/typeface-barlow/barlow-all-300-italic.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+  font-display: swap;
 }
 /* barlow-400normal - all */
 @font-face {
   font-family: 'Barlow';
   font-style: normal;
-  font-display: swap;
   font-weight: 400;
   src:
     local('Barlow Regular'),
     local('Barlow-Regular'),
-    url('/typeface-barlow/barlow-all-400.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
-    url('/typeface-barlow/barlow-all-400.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+    url('/lib/typeface-barlow/barlow-all-400.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+    url('/lib/typeface-barlow/barlow-all-400.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+  font-display: swap;
 }
 /* barlow-400italic - all */
 @font-face {
   font-family: 'Barlow';
   font-style: italic;
-  font-display: swap;
   font-weight: 400;
   src:
     local('Barlow Italic'),
     local('Barlow-Italic'),
-    url('/typeface-barlow/barlow-all-400-italic.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
-    url('/typeface-barlow/barlow-all-400-italic.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+    url('/lib/typeface-barlow/barlow-all-400-italic.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+    url('/lib/typeface-barlow/barlow-all-400-italic.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+  font-display: swap;
 }
 /* barlow-500normal - all */
 @font-face {
   font-family: 'Barlow';
   font-style: normal;
-  font-display: swap;
   font-weight: 500;
   src:
     local('Barlow Medium'),
     local('Barlow-Medium'),
-    url('/typeface-barlow/barlow-all-500.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
-    url('/typeface-barlow/barlow-all-500.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+    url('/lib/typeface-barlow/barlow-all-500.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+    url('/lib/typeface-barlow/barlow-all-500.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+  font-display: swap;
 }
 /* barlow-500italic - all */
 @font-face {
   font-family: 'Barlow';
   font-style: italic;
-  font-display: swap;
   font-weight: 500;
   src:
     local('Barlow Medium Italic'),
     local('Barlow-MediumItalic'),
-    url('/typeface-barlow/barlow-all-500-italic.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
-    url('/typeface-barlow/barlow-all-500-italic.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+    url('/lib/typeface-barlow/barlow-all-500-italic.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+    url('/lib/typeface-barlow/barlow-all-500-italic.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+  font-display: swap;
 }
 /* barlow-600normal - all */
 @font-face {
   font-family: 'Barlow';
   font-style: normal;
-  font-display: swap;
   font-weight: 600;
   src:
     local('Barlow SemiBold'),
     local('Barlow-SemiBold'),
-    url('/typeface-barlow/barlow-all-600.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
-    url('/typeface-barlow/barlow-all-600.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+    url('/lib/typeface-barlow/barlow-all-600.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+    url('/lib/typeface-barlow/barlow-all-600.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+  font-display: swap;
 }
 /* barlow-600italic - all */
 @font-face {
   font-family: 'Barlow';
   font-style: italic;
-  font-display: swap;
   font-weight: 600;
   src:
     local('Barlow SemiBold Italic'),
     local('Barlow-SemiBoldItalic'),
-    url('/typeface-barlow/barlow-all-600-italic.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
-    url('/typeface-barlow/barlow-all-600-italic.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+    url('/lib/typeface-barlow/barlow-all-600-italic.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+    url('/lib/typeface-barlow/barlow-all-600-italic.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+  font-display: swap;
 }
 /* barlow-700normal - all */
 @font-face {
   font-family: 'Barlow';
   font-style: normal;
-  font-display: swap;
   font-weight: 700;
   src:
     local('Barlow Bold'),
     local('Barlow-Bold'),
-    url('/typeface-barlow/barlow-all-700.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
-    url('/typeface-barlow/barlow-all-700.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+    url('/lib/typeface-barlow/barlow-all-700.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+    url('/lib/typeface-barlow/barlow-all-700.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+  font-display: swap;
 }
 /* barlow-700italic - all */
 @font-face {
   font-family: 'Barlow';
   font-style: italic;
-  font-display: swap;
   font-weight: 700;
   src:
     local('Barlow Bold Italic'),
     local('Barlow-BoldItalic'),
-    url('/typeface-barlow/barlow-all-700-italic.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
-    url('/typeface-barlow/barlow-all-700-italic.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+    url('/lib/typeface-barlow/barlow-all-700-italic.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+    url('/lib/typeface-barlow/barlow-all-700-italic.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+  font-display: swap;
 }
 /* barlow-800normal - all */
 @font-face {
   font-family: 'Barlow';
   font-style: normal;
-  font-display: swap;
   font-weight: 800;
   src:
     local('Barlow ExtraBold'),
     local('Barlow-ExtraBold'),
-    url('/typeface-barlow/barlow-all-800.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
-    url('/typeface-barlow/barlow-all-800.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+    url('/lib/typeface-barlow/barlow-all-800.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+    url('/lib/typeface-barlow/barlow-all-800.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+  font-display: swap;
 }
 /* barlow-800italic - all */
 @font-face {
@@ -188,8 +188,8 @@
   src:
     local('Barlow ExtraBold Italic'),
     local('Barlow-ExtraBoldItalic'),
-    url('/typeface-barlow/barlow-all-800-italic.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
-    url('/typeface-barlow/barlow-all-800-italic.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+    url('/lib/typeface-barlow/barlow-all-800-italic.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+    url('/lib/typeface-barlow/barlow-all-800-italic.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
   font-display: swap;
 }
 /* barlow-900normal - all */
@@ -200,8 +200,8 @@
   src:
     local('Barlow Black'),
     local('Barlow-Black'),
-    url('/typeface-barlow/barlow-all-900.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
-    url('/typeface-barlow/barlow-all-900.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+    url('/lib/typeface-barlow/barlow-all-900.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+    url('/lib/typeface-barlow/barlow-all-900.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
   font-display: swap;
 }
 /* barlow-900italic - all */
@@ -212,8 +212,8 @@
   src:
     local('Barlow Black Italic'),
     local('Barlow-BlackItalic'),
-    url('/typeface-barlow/barlow-all-900-italic.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
-    url('/typeface-barlow/barlow-all-900-italic.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+    url('/lib/typeface-barlow/barlow-all-900-italic.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+    url('/lib/typeface-barlow/barlow-all-900-italic.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
   font-display: swap;
 }
 
