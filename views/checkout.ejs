@@ -39,8 +39,37 @@
   <div class="card-content" id="container--cartTotal"></div>
 </div>
 
-<form id="form--checkout">
-
+<form class="mt-4" id="form--checkout">
+  <div class="field">
+    <label class="label" for="checkout_fullName">Full Name:</label>
+    <div class="control">
+      <input class="input" id="checkout_fullName" name="fullName" type="text" maxlength="100" required />
+    </div>
+  </div>
+  <div class="field">
+    <label class="label" for="checkout_address">Address:</label>
+    <div class="control">
+      <input class="input" id="checkout_address" name="address" type="text" maxlength="100" required />
+    </div>
+  </div>
+  <div class="field">
+    <label class="label" for="checkout_city">City:</label>
+    <div class="control">
+      <input class="input" id="checkout_city" name="city" type="text" maxlength="50" required />
+    </div>
+  </div>
+  <div class="field">
+    <label class="label" for="checkout_province">Province:</label>
+    <div class="control">
+      <input class="input" id="checkout_province" name="province" type="text" maxlength="3" required />
+    </div>
+  </div>
+  <div class="field">
+    <label class="label" for="checkout_postalCode">Postal Code:</label>
+    <div class="control">
+      <input class="input" id="checkout_postalCode" name="postalCode" type="text" minlength="6" maxlength="7" required />
+    </div>
+  </div>
 </form>
 
 <%- include('../view-parts/_footerA'); -%>
