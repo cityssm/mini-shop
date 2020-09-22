@@ -14,6 +14,8 @@ export interface Config {
 
   views?: {
     products?: Config_View;
+    checkout?: Config_View;
+    checkout_shipping?: Config_View;
   };
 
   moneris?: {
@@ -45,8 +47,8 @@ export interface Config_HTTPSConfig {
 }
 
 export interface Config_View {
-  title: string;
-  headerEjs: string;
+  title?: string;
+  headerEjs?: string;
 }
 
 export interface Config_Product {

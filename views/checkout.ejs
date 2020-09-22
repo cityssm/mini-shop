@@ -1,14 +1,11 @@
 <%- include('../view-parts/_header'); -%>
 
-<%
-  const viewConfig = configFns.getProperty("views.checkout") || {};
-%>
 
 <nav class="breadcrumb has-succeeds-separator mt-4" aria-label="breadcrumb">
   <ul>
     <li><a href="/products"><%= configFns.getProperty("views.products.title") %></a></li>
     <li class="is-active">
-      <a href="#" aria-current="page"><%= viewConfig.title || "Checkout" %></a>
+      <a href="#" aria-current="page"><%= configFns.getProperty("views.checkout.title") %></a>
     </li>
   </ul>
 </nav>
@@ -16,7 +13,7 @@
 <div class="level mt-4">
   <div class="level-left">
     <h1 class="title is-3">
-      <%= viewConfig.title || "Checkout" %>
+      <%= configFns.getProperty("views.checkout.title") %>
     </h1>
   </div>
   <div class="level-right has-text-right">
@@ -29,8 +26,11 @@
   </div>
 </div>
 
-<% if (viewConfig.headerEjs) { %>
-  <%- include('../view-parts/headers/' + viewConfig.headerEjs); -%>
+<%
+  const checkoutHeaderEJS = configFns.getProperty("views.checkout.headerEjs");
+%>
+<% if (checkoutHeaderEJS) { %>
+  <%- include('../view-parts/headers/' + checkoutHeaderEJS); -%>
 <% } %>
 
 <ul class="card is-hidden" id="card--cart"></ul>
@@ -39,35 +39,83 @@
   <div class="card-content" id="container--cartTotal"></div>
 </div>
 
-<form class="mt-4" id="form--checkout">
+<form class="mt-4" id="form--shipping">
+  <h2 class="title is-4">
+    <%= configFns.getProperty("views.checkout_shipping.title") %>
+  </h2>
+  <%
+    const shippingHeaderEJS = configFns.getProperty("views.checkout_shipping.headerEjs");
+  %>
+  <% if (shippingHeaderEJS) { %>
+    <%- include('../view-parts/headers/' + shippingHeaderEJS); -%>
+  <% } %>
   <div class="field">
-    <label class="label" for="checkout_fullName">Full Name:</label>
+    <label class="label" for="shipping_fullName">Full Name:</label>
     <div class="control">
-      <input class="input" id="checkout_fullName" name="fullName" type="text" maxlength="100" required />
+      <input class="input" id="shipping_fullName" name="fullName" type="text" maxlength="100" autocomplete="name" required />
     </div>
   </div>
   <div class="field">
-    <label class="label" for="checkout_address">Address:</label>
+    <label class="label" for="shipping_address">Address:</label>
     <div class="control">
-      <input class="input" id="checkout_address" name="address" type="text" maxlength="100" required />
+      <input class="input" id="shipping_address" name="address" type="text" maxlength="100" placeholder="Address Line 1" autocomplete="address-line1" required />
+    </div>
+    <div class="control mt-2">
+      <input class="input" name="address2" type="text" maxlength="100" placeholder="Address Line 2" autocomplete="address-line2" aria-label="Address Line 2" />
     </div>
   </div>
-  <div class="field">
-    <label class="label" for="checkout_city">City:</label>
-    <div class="control">
-      <input class="input" id="checkout_city" name="city" type="text" maxlength="50" required />
+  <div class="columns">
+    <div class="column is-two-thirds">
+      <div class="field">
+        <label class="label" for="shipping_city">City:</label>
+        <div class="control">
+          <input class="input" id="shipping_city" name="city" type="text" maxlength="50" autocomplete="address-level2" required />
+        </div>
+      </div>
+    </div>
+    <div class="column">
+      <div class="field">
+        <label class="label" for="shipping_province">Province:</label>
+        <div class="control">
+          <input class="input" id="shipping_province" name="province" type="text" maxlength="3" autocomplete="address-level1" required />
+        </div>
+      </div>
     </div>
   </div>
-  <div class="field">
-    <label class="label" for="checkout_province">Province:</label>
-    <div class="control">
-      <input class="input" id="checkout_province" name="province" type="text" maxlength="3" required />
+  <div class="columns">
+    <div class="column">
+      <div class="field">
+        <label class="label" for="shipping_country">Country:</label>
+        <div class="control">
+          <input class="input" id="shipping_country" name="country" type="text" maxlength="3" autocomplete="country" required />
+        </div>
+      </div>
+    </div>
+    <div class="column">
+      <div class="field">
+        <label class="label" for="shipping_postalCode">Postal Code:</label>
+        <div class="control">
+          <input class="input" id="shipping_postalCode" name="postalCode" type="text" minlength="6" maxlength="7" autocomplete="postal-code" required />
+        </div>
+      </div>
     </div>
   </div>
-  <div class="field">
-    <label class="label" for="checkout_postalCode">Postal Code:</label>
-    <div class="control">
-      <input class="input" id="checkout_postalCode" name="postalCode" type="text" minlength="6" maxlength="7" required />
+  <div class="columns">
+    <div class="column">
+      <div class="field">
+        <label class="label" for="shipping_phoneNumberDay">Daytime Telephone Number:</label>
+        <div class="control">
+          <input class="input" id="shipping_phoneNumberDay" name="phoneNumberDay" type="text" minlength="10" autocomplete="tel" required />
+        </div>
+      </div>
+    </div>
+    <div class="column">
+      <div class="field">
+        <label class="label" for="shipping_phoneNumberEvening">Evening Telephone Number:</label>
+        <div class="control">
+          <input class="input" id="shipping_phoneNumberEvening" name="phoneNumberEvening" type="text" minlength="10" autocomplete="tel" required />
+        </div>
+      </div>
     </div>
   </div>
 </form>

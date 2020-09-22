@@ -11,5 +11,6 @@
         productFormEle.reset();
         document.getElementById("modal--success").classList.add("is-active");
         document.getElementsByTagName("html")[0].classList.add("is-clipped");
+        document.getElementById("successButton--checkout").focus();
     });
 })();

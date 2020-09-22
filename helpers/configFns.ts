@@ -35,6 +35,8 @@ configFallbackValues.set("session.secret", "cityssm/mini-shop");
 configFallbackValues.set("session.maxAgeMillis", 60 * 60 * 1000);
 
 configFallbackValues.set("views.products.title", "Products");
+configFallbackValues.set("views.checkout.title", "Checkout");
+configFallbackValues.set("views.checkout_shipping.title", "Shipping Details");
 
 configFallbackValues.set("fees", {});
 configFallbackValues.set("products", {});

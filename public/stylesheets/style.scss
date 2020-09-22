@@ -230,6 +230,11 @@ $facheck-radio-checked: '\f058';
 @import '../../node_modules/@cityssm/fa5-power-transforms-css/fa5-power-transforms';
 
 
+main.container {
+  max-width: 960px;
+}
+
+
 input[type='number'] {
 
   -moz-appearance: textfield;
