@@ -1,23 +1,26 @@
+declare type BulmaBackgroundColors = "white" | "black" | "light" | "dark" | "primary" | "link" | "info" | "success" | "warning" | "danger";
 export interface Config {
     application?: {
         httpPort?: number;
         https?: Config_HTTPSConfig;
         applicationName?: string;
     };
-    session?: {
-        cookieName?: string;
-        secret?: string;
-        maxAgeMillis?: number;
+    site?: {
+        header?: {
+            backgroundColorClass?: BulmaBackgroundColors;
+            logoImagePath?: string;
+        };
+        footer?: {
+            isVisible?: boolean;
+            backgroundColorClass?: BulmaBackgroundColors;
+            textColorClass?: BulmaBackgroundColors;
+            footerEjs?: string;
+        };
     };
     views?: {
         products?: Config_View;
         checkout?: Config_View;
         checkout_shipping?: Config_View;
-    };
-    moneris?: {
-        storeURL: string;
-        ps_store_id: string;
-        hpp_key: string;
     };
     productCategories?: Array<{
         categoryName: string;
@@ -30,6 +33,16 @@ export interface Config {
     fees?: {
         [feeName: string]: Config_Fee;
     };
+    store?: {
+        storeType: "moneris-hpp";
+        storeConfig: {
+            storeURL: string;
+            ps_store_id: string;
+            hpp_key: string;
+        };
+    } | {
+        storeType: "testing-free";
+    };
 }
 export interface Config_HTTPSConfig {
     port: number;
@@ -40,6 +53,7 @@ export interface Config_HTTPSConfig {
 export interface Config_View {
     title?: string;
     headerEjs?: string;
+    footerEjs?: string;
 }
 export interface Config_Product {
     productName: string;
@@ -63,3 +77,4 @@ export interface Config_Fee {
     feeName: string;
     feeCalculation: (product: Config_Product) => number;
 }
+export {};

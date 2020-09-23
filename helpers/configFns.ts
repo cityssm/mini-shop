@@ -34,6 +34,13 @@ configFallbackValues.set("session.cookieName", "mini-shop-sid");
 configFallbackValues.set("session.secret", "cityssm/mini-shop");
 configFallbackValues.set("session.maxAgeMillis", 60 * 60 * 1000);
 
+configFallbackValues.set("site.header.backgroundColorClass", "info");
+
+configFallbackValues.set("site.footer.isVisible", true);
+configFallbackValues.set("site.footer.backgroundColorClass", "dark");
+configFallbackValues.set("site.footer.textColorClass", "light");
+configFallbackValues.set("site.footer.footerEjs", "thanks.ejs");
+
 configFallbackValues.set("views.products.title", "Products");
 configFallbackValues.set("views.checkout.title", "Checkout");
 configFallbackValues.set("views.checkout_shipping.title", "Shipping Details");

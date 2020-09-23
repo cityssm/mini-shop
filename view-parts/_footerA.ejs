@@ -1,6 +1,13 @@
   </main>
 </div>
-<footer></footer>
+<% if (configFns.getProperty("site.footer.isVisible")) { %>
+  <footer class="px-5 py-3 has-background-<%= configFns.getProperty("site.footer.backgroundColorClass") %> has-text-<%= configFns.getProperty("site.footer.textColorClass") %>">
+    <%
+      const siteFooterEjs = configFns.getProperty("site.footer.footerEjs");
+    %>
+    <%- include('../view-parts/footers/' + siteFooterEjs); -%>
+  </footer>
+<% } %>
 <script>
   window.exports = window.exports || {};
 </script>

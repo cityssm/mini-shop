@@ -29,7 +29,21 @@ export interface MonerisResponse {
     bank_transaction_id: string;
     rvar_sGUID: string;
 }
+export interface ShippingForm {
+    fullName: string;
+    address: string;
+    address2: string;
+    city: string;
+    province: string;
+    country: string;
+    postalCode: string;
+    phoneNumberDay: string;
+    phoneNumberEvening: string;
+    emailAddress: string;
+    cartItems: CartItem[];
+}
 export interface CartItem {
     productSKU: string;
+    quantity: string;
     [formFieldName: string]: string;
 }

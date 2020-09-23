@@ -4,6 +4,7 @@ import type * as cityssmTypes from "@cityssm/bulma-webapp-js/src/types";
 
 
 declare const cityssm: cityssmTypes.cityssmGlobal;
+declare const formToObject: (formEle: HTMLFormElement) => {};
 
 
 interface ProductDetails {
@@ -28,9 +29,9 @@ interface CartTotals {
 
   let productDetails: ProductDetails = {};
 
-
   const cartContainerEle = document.getElementById("card--cart");
   const cartTotalContainerEle = document.getElementById("container--cartTotal");
+  const shippingFormEle = document.getElementById("form--shipping") as HTMLFormElement;
 
   let cartTotals: CartTotals = {
     itemTotal: 0,
@@ -88,6 +89,7 @@ interface CartTotals {
           "<strong class=\"container--productName\"></strong><br />" +
           "<div class=\"is-size-7 container--formFields\"></div>" +
           "</div>") +
+        "<div class=\"column is-narrow column--quantity has-text-right\"></div>" +
         "<div class=\"column is-narrow column--price has-text-weight-bold has-text-right\"></div>" +
         "</div>";
 
@@ -116,8 +118,17 @@ interface CartTotals {
         }
       }
 
+      const quantityColumnEle = productCardContentEle.getElementsByClassName("column--quantity")[0] as HTMLDivElement;
+
+      quantityColumnEle.innerText =
+        cartItem.quantity +
+        " × $" + product.price.toFixed(2);
+
+      const itemTotal = product.price * parseInt(cartItem.quantity);
+
       const priceColumnEle = productCardContentEle.getElementsByClassName("column--price")[0] as HTMLDivElement;
-      priceColumnEle.innerText = "$" + product.price.toFixed(2);
+
+      priceColumnEle.innerText = "$" + itemTotal.toFixed(2);
 
       cartContainerEle.appendChild(productCardContentEle);
 
@@ -125,7 +136,7 @@ interface CartTotals {
        * Cart Totals
        */
 
-      cartTotals.itemTotal += product.price;
+      cartTotals.itemTotal += itemTotal;
 
       if (product.feeTotals && Object.keys(product.feeTotals).length > 0) {
 
@@ -154,6 +165,7 @@ interface CartTotals {
     if (cartItems.length === 0) {
 
       cartContainerEle.classList.add("is-hidden");
+      shippingFormEle.classList.add("is-hidden");
 
       cartContainerEle.insertAdjacentHTML("beforebegin",
         "<div class=\"message is-info\">" +
@@ -167,6 +179,7 @@ interface CartTotals {
 
       cartItems.forEach(forEachFn_renderCartItems_calculateTotals);
       cartContainerEle.classList.remove("is-hidden");
+      shippingFormEle.classList.remove("is-hidden");
     }
 
     // Render total
@@ -231,6 +244,34 @@ interface CartTotals {
 
       });
   };
+
+
+  shippingFormEle.addEventListener("submit", (formEvent) => {
+    formEvent.preventDefault();
+
+    const formObj = formToObject(shippingFormEle) as recordTypes.ShippingForm;
+
+    formObj.cartItems = exports.cart.get();
+
+    console.log(formObj);
+
+    fetch("/checkout/doCreateOrder", {
+      method: "POST",
+      body: JSON.stringify(formObj),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+      .then(async (response) => {
+        return await response.json();
+      })
+      .then((responseOrderDetails) => {
+
+      })
+      .catch(() => {
+
+      });
+  });
 
 
   // Initialize page

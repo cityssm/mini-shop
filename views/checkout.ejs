@@ -33,13 +33,18 @@
   <%- include('../view-parts/headers/' + checkoutHeaderEJS); -%>
 <% } %>
 
-<ul class="card is-hidden" id="card--cart"></ul>
+<ul class="card" id="card--cart">
+  <li class="card-content has-text-centered">
+    <i class="fas fa-6x fa-pulse fa-spinner" aria-hidden="true"></i>
+    <span class="is-sr-only">Loading cart</span>
+  </li>
+</ul>
 
 <div class="card has-text-right">
   <div class="card-content" id="container--cartTotal"></div>
 </div>
 
-<form class="mt-4" id="form--shipping">
+<form class="mt-4 is-hidden" id="form--shipping">
   <h2 class="title is-4">
     <%= configFns.getProperty("views.checkout_shipping.title") %>
   </h2>
@@ -105,7 +110,7 @@
       <div class="field">
         <label class="label" for="shipping_phoneNumberDay">Daytime Telephone Number:</label>
         <div class="control">
-          <input class="input" id="shipping_phoneNumberDay" name="phoneNumberDay" type="text" minlength="10" autocomplete="tel" required />
+          <input class="input" id="shipping_phoneNumberDay" name="phoneNumberDay" type="text" minlength="10" maxlength="50" autocomplete="tel" required />
         </div>
       </div>
     </div>
@@ -113,10 +118,29 @@
       <div class="field">
         <label class="label" for="shipping_phoneNumberEvening">Evening Telephone Number:</label>
         <div class="control">
-          <input class="input" id="shipping_phoneNumberEvening" name="phoneNumberEvening" type="text" minlength="10" autocomplete="tel" required />
+          <input class="input" id="shipping_phoneNumberEvening" name="phoneNumberEvening" type="text" minlength="10" maxlength="50" autocomplete="tel" />
         </div>
       </div>
     </div>
+  </div>
+  <div class="field">
+    <label class="label" for="shipping_emailAddress">Email Address:</label>
+    <div class="control">
+      <input class="input" id="shipping_emailAddress" name="emailAddress" type="email" maxlength="50" required />
+    </div>
+  </div>
+
+  <%
+    const shippingFooterEJS = configFns.getProperty("views.checkout_shipping.footerEjs");
+  %>
+  <% if (shippingFooterEJS) { %>
+    <%- include('../view-parts/footers/' + shippingFooterEJS); -%>
+  <% } %>
+
+  <div class="block has-text-right">
+    <button class="button is-success" type="submit">
+      Proceed to Payment
+    </button>
   </div>
 </form>
 

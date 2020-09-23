@@ -12,10 +12,6 @@ import * as stringFns from "@cityssm/expressjs-server-js/stringFns";
 import * as routerCheckout from "./routes/checkout";
 import * as routerProducts from "./routes/products";
 
-import * as session from "express-session";
-import * as sqlite from "connect-sqlite3";
-const SQLiteStore = sqlite(session);
-
 
 /*
  * INITIALIZE APP
@@ -60,44 +56,6 @@ app.use("/lib/formToObject",
 
   app.use("/lib/typeface-barlow",
   express.static(path.join(__dirname, "node_modules", "@openfonts", "barlow_all", "files")));
-
-/*
- * SESSION MANAGEMENT
- */
-
-
-const sessionCookieName = configFns.getProperty("session.cookieName");
-
-
-// Initialize session
-app.use(session({
-  store: new SQLiteStore({
-    dir: "data",
-    db: "sessions.db"
-  }),
-  name: sessionCookieName,
-  secret: configFns.getProperty("session.secret"),
-  resave: true,
-  saveUninitialized: false,
-  rolling: true,
-  cookie: {
-    maxAge: configFns.getProperty("session.maxAgeMillis"),
-    sameSite: "strict"
-  }
-}));
-
-// Clear cookie if no corresponding session
-app.use(function(req, res, next) {
-
-  if (req.cookies[sessionCookieName] && !req.session.user) {
-
-    res.clearCookie(sessionCookieName);
-
-  }
-
-  next();
-
-});
 
 
 /*

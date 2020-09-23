@@ -41,7 +41,23 @@ export interface MonerisResponse {
 }
 
 
+export interface ShippingForm {
+  fullName: string;
+  address: string;
+  address2: string;
+  city: string;
+  province: string;
+  country: string;
+  postalCode: string;
+  phoneNumberDay: string;
+  phoneNumberEvening: string;
+  emailAddress: string;
+  cartItems: CartItem[];
+}
+
+
 export interface CartItem {
   productSKU: string;
+  quantity: string;
   [formFieldName: string]: string;
 }
