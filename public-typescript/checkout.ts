@@ -253,8 +253,6 @@ interface CartTotals {
 
     formObj.cartItems = exports.cart.get();
 
-    console.log(formObj);
-
     fetch("/checkout/doCreateOrder", {
       method: "POST",
       body: JSON.stringify(formObj),
@@ -265,8 +263,12 @@ interface CartTotals {
       .then(async (response) => {
         return await response.json();
       })
-      .then((responseOrderDetails) => {
+      .then((responseOrderNumbers: { orderNumber: string; orderSecret: string }) => {
 
+        (document.getElementById("toPayment_orderNumber") as HTMLInputElement).value = responseOrderNumbers.orderNumber;
+        (document.getElementById("toPayment_orderSecret") as HTMLInputElement).value = responseOrderNumbers.orderSecret;
+
+        (document.getElementById("form--toPayment") as HTMLFormElement).submit();
       })
       .catch(() => {
 

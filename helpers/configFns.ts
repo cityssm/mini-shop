@@ -1,4 +1,8 @@
-import * as configTypes from "../types/configTypes";
+import { v4 as uuidv4 } from "uuid";
+
+import type * as configTypes from "../types/configTypes";
+import type * as sqlTypes from "mssql";
+
 
 /*
  * LOAD CONFIGURATION
@@ -30,9 +34,9 @@ const configFallbackValues = new Map<string, any>();
 
 configFallbackValues.set("application.httpPort", 7777);
 
-configFallbackValues.set("session.cookieName", "mini-shop-sid");
-configFallbackValues.set("session.secret", "cityssm/mini-shop");
-configFallbackValues.set("session.maxAgeMillis", 60 * 60 * 1000);
+configFallbackValues.set("orderNumberFunction", () => {
+  return uuidv4();
+});
 
 configFallbackValues.set("site.header.backgroundColorClass", "info");
 
@@ -45,6 +49,8 @@ configFallbackValues.set("views.products.title", "Products");
 configFallbackValues.set("views.checkout.title", "Checkout");
 configFallbackValues.set("views.checkout_shipping.title", "Shipping Details");
 
+configFallbackValues.set("views.toPayment.headerEjs", "redirecting.ejs");
+
 configFallbackValues.set("fees", {});
 configFallbackValues.set("products", {});
 
@@ -52,9 +58,9 @@ configFallbackValues.set("products", {});
 export function getProperty(propertyName: "application.httpPort"): number;
 export function getProperty(propertyName: "application.https"): configTypes.Config_HTTPSConfig;
 
-export function getProperty(propertyName: "session.cookieName"): string;
-export function getProperty(propertyName: "session.secret"): string;
-export function getProperty(propertyName: "session.maxAgeMillis"): number;
+export function getProperty(propertyName: "mssqlConfig"): sqlTypes.config;
+
+export function getProperty(propertyName: "orderNumberFunction"): () => string;
 
 export function getProperty(propertyName: "fees"): { [feeName: string]: configTypes.Config_Fee };
 export function getProperty(propertyName: "products"): { [productSKU: string]: configTypes.Config_Product };

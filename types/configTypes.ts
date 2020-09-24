@@ -1,3 +1,5 @@
+import type * as sqlTypes from "mssql";
+
 type BulmaBackgroundColors =
   "white" | "black" | "light" | "dark" | "primary" | "link" | "info" | "success" | "warning" | "danger";
 
@@ -8,6 +10,10 @@ export interface Config {
     https?: Config_HTTPSConfig;
     applicationName?: string;
   };
+
+  mssqlConfig?: sqlTypes.config;
+
+  orderNumberFunction?: () => string;
 
   site?: {
     header?: {
@@ -26,6 +32,7 @@ export interface Config {
     products?: Config_View;
     checkout?: Config_View;
     checkout_shipping?: Config_View;
+    toPayment?: Config_View;
   };
 
   productCategories?: Array<{

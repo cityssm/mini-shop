@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>
+    <%= configFns.getProperty("application.applicationName") %>
+  </title>
+
+  <link rel="icon" href="/images/favicon.png" />
+
+  <link rel="stylesheet" href="/stylesheets/style.min.css" />
+  <link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css" />
+</head>
+<body>
+  <div class="section">
+    <main class="container">
+      <%
+        // header
+        const headerEjs = configFns.getProperty("views.toPayment.headerEjs");
+      %>
+      <% if (headerEjs) { %>
+        <%- include('../view-parts/headers/' + headerEjs); -%>
+      <% } %>
+
+      <%
+        // store
+        const storeType = configFns.getProperty("store.storeType");
+      %>
+      <%- include("../view-parts/stores/" + storeType + ".ejs"); -%>
+
+      <%
+        // footer
+        const footerEjs = configFns.getProperty("views.toPayment.footerEjs");
+      %>
+      <% if (footerEjs) { %>
+        <%- include('../view-parts/footers/' + footerEjs); -%>
+      <% } %>
+    </main>
+  </div>
+</body>
+</html>

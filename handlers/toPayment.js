@@ -10,9 +10,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.handler = void 0;
-const createOrder_1 = require("../helpers/miniShopDB/createOrder");
+const getOrder_1 = require("../helpers/miniShopDB/getOrder");
 exports.handler = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const formData = req.body;
-    const orderIDs = yield createOrder_1.createOrder(formData);
-    return res.json(orderIDs);
+    const orderNumber = req.body.orderNumber;
+    const orderSecret = req.body.orderSecret;
+    const order = yield getOrder_1.getOrder(orderNumber, orderSecret, false);
+    if (!order) {
+        return res.render("toPayment-expired");
+    }
+    else {
+        return res.render("toPayment", {
+            order
+        });
+    }
 });

@@ -28,6 +28,7 @@
     "@types/gulp-minify": "^3.1.0",
     "@types/http-errors": "^1.8.0",
     "@types/morgan": "^1.9.1",
+    "@types/mssql": "^6.0.4",
     "@types/uuid": "^8.3.0",
     "@typescript-eslint/eslint-plugin": "^4.2.0",
     "@typescript-eslint/parser": "^4.2.0",
@@ -53,6 +54,7 @@
     "express": "^4.17.1",
     "form_to_object": "^2.0.0",
     "morgan": "^1.10.0",
+    "mssql": "^6.2.2",
     "uuid": "^8.3.0"
   }
 }

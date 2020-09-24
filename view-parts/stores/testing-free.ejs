@@ -1,0 +1,9 @@
+<form id="form--toPayment" action="/checkout/fromPayment" method="post">
+  <input name="orderNumber" type="hidden" value="<%= order.orderNumber %>" />
+  <input name="orderSecret" type="hidden" value="<%= order.orderSecret %>" />
+</form>
+<script>
+  setTimeout(() => {
+    document.getElementById("form--toPayment").submit();
+  }, 1500);
+</script>
