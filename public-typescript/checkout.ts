@@ -43,7 +43,7 @@ interface CartTotals {
 
     clickEvent.preventDefault();
 
-    const cartIndex = parseInt((clickEvent.currentTarget as HTMLButtonElement).getAttribute("data-cart-index"));
+    const cartIndex = parseInt((clickEvent.currentTarget as HTMLButtonElement).getAttribute("data-cart-index"), 10);
 
     const cartItem = exports.cart.get()[cartIndex] as recordTypes.CartItem;
     const product = productDetails.products[cartItem.productSKU];
@@ -124,7 +124,7 @@ interface CartTotals {
         cartItem.quantity +
         " × $" + product.price.toFixed(2);
 
-      const itemTotal = product.price * parseInt(cartItem.quantity);
+      const itemTotal = product.price * parseInt(cartItem.quantity, 10);
 
       const priceColumnEle = productCardContentEle.getElementsByClassName("column--price")[0] as HTMLDivElement;
 
