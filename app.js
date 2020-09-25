@@ -8,6 +8,7 @@ const logger = require("morgan");
 const configFns = require("./helpers/configFns");
 const stringFns = require("@cityssm/expressjs-server-js/stringFns");
 const routerCheckout = require("./routes/checkout");
+const routerOrder = require("./routes/order");
 const routerProducts = require("./routes/products");
 const app = express();
 app.set("views", path.join(__dirname, "views"));
@@ -33,6 +34,7 @@ app.all("/", function (_req, res) {
     res.redirect("/products");
 });
 app.use("/checkout", routerCheckout);
+app.use("/order", routerOrder);
 app.use("/products", routerProducts);
 app.use(function (_req, _res, next) {
     next(createError(404));

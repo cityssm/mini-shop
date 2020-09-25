@@ -1,35 +1,3 @@
-export interface TransactionRecord {
-
-  transactionGUID: string;
-  transactionDate: number;
-  transactionTime: number;
-  ipAddress: string;
-
-  civicNumber: string;
-  streetName: string;
-
-  permitType: "new" | "renew_4yr" | "renew_1yr";
-  expiryDate: number;
-
-  ownerName: string;
-  phoneNumber: string;
-  emailAddress: string;
-
-  transactionAmount: number;
-
-  paymentCardHolder?: string;
-  paymentChargeTotal?: number;
-  paymentBankTransactionID?: string;
-
-  securityGUID: string;
-
-  recordCreate_timeMillis: number;
-  recordUpdate_timeMillis: number;
-  recordLock_timeMillis: number;
-  recordDelete_timeMillis?: number;
-}
-
-
 export interface MonerisResponse {
   response_order_id: string;
   result: string;
@@ -80,4 +48,19 @@ export interface Order {
   shippingEmailAddress: string;
   paymentID?: string;
   paymentTime?: Date;
+  items?: Array<{
+    itemIndex: number;
+    productSKU: string;
+    unitPrice: number;
+    quantity: number;
+    itemTotal: number;
+  }>;
+  fees?: Array<{
+    feeName: string;
+    feeTotal: number;
+  }>;
+  paymentData?: Array<{
+    dataName: string;
+    dataValue: string;
+  }>;
 }

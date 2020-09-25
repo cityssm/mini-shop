@@ -265,6 +265,12 @@ input[type='number'] {
   border-top: 1px solid #ededed;
 }
 
+// Should be fixed in the next Bulma release
 optgroup {
   font-family: $family-sans-serif;
+}
+
+.has-margin-auto {
+  margin-right: auto;
+  margin-left: auto;
 }

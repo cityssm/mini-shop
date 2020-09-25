@@ -33,6 +33,7 @@ export interface Config {
     checkout?: Config_View;
     checkout_shipping?: Config_View;
     toPayment?: Config_View;
+    order?: Config_View;
   };
 
   productCategories?: Array<{

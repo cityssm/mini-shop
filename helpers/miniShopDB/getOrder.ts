@@ -23,12 +23,47 @@ export const getOrder = async (orderNumber: string, orderSecret: string, orderIs
         " paymentID, paymentTime" +
         " from MiniShop.Orders" +
         " where orderIsRefunded = 0 and orderIsDeleted = 0" +
-        " and (datediff(minute, orderTime, getdate()) < 60 or datediff(minute, paymentTime, getdate()) < 60)" +
+        " and (datediff(minute, orderTime, getdate()) < 60 or datediff(minute, paymentTime, getdate()) < 120)" +
         " and orderNumber = @orderNumber" +
         " and orderSecret = @orderSecret" +
         " and orderIsPaid = @orderIsPaid");
 
+    if (!orderResult.recordset || orderResult.recordset.length === 0) {
+      return false;
+    }
+
     const order = orderResult.recordset[0] as Order;
+
+    // Get order items
+
+    const orderItemsResult = await pool.request()
+      .input("orderID", sql.BigInt, order.orderID)
+      .query("select itemIndex, productSKU, unitPrice, quantity, itemTotal" +
+        " from MiniShop.OrderItems" +
+        " where orderID = @orderID");
+
+    order.items = orderItemsResult.recordset;
+
+    // Get order fees
+
+    const orderFeesResult = await pool.request()
+      .input("orderID", sql.BigInt, order.orderID)
+      .query("select feeName, feeTotal" +
+        " from MiniShop.OrderFees" +
+        " where orderID = @orderID");
+
+    order.fees = orderFeesResult.recordset;
+
+    if (orderIsPaid) {
+
+      const paymentDataResult = await pool.request()
+        .input("orderID", sql.BigInt, order.orderID)
+        .query("select dataName, dataValue" +
+          " from MiniShop.PaymentData" +
+          " where orderID = @orderID");
+
+      order.paymentData = paymentDataResult.recordset;
+    }
 
     return order;
 

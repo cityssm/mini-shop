@@ -10,6 +10,7 @@ import * as configFns from "./helpers/configFns";
 import * as stringFns from "@cityssm/expressjs-server-js/stringFns";
 
 import * as routerCheckout from "./routes/checkout";
+import * as routerOrder from "./routes/order";
 import * as routerProducts from "./routes/products";
 
 
@@ -45,8 +46,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/lib/bulma-webapp-js",
-express.static(path.join(__dirname, "node_modules", "@cityssm", "bulma-webapp-js", "dist")));
-
+  express.static(path.join(__dirname, "node_modules", "@cityssm", "bulma-webapp-js", "dist")));
 
 app.use("/lib/fontawesome-free",
   express.static(path.join(__dirname, "node_modules", "@fortawesome", "fontawesome-free")));
@@ -54,7 +54,7 @@ app.use("/lib/fontawesome-free",
 app.use("/lib/formToObject",
   express.static(path.join(__dirname, "node_modules", "form_to_object", "dist")));
 
-  app.use("/lib/typeface-barlow",
+app.use("/lib/typeface-barlow",
   express.static(path.join(__dirname, "node_modules", "@openfonts", "barlow_all", "files")));
 
 
@@ -76,6 +76,7 @@ app.all("/", function(_req, res) {
 });
 
 app.use("/checkout", routerCheckout);
+app.use("/order", routerOrder);
 app.use("/products", routerProducts);
 
 

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>
+    <%= configFns.getProperty("application.applicationName") %>
+  </title>
+
+  <link rel="icon" href="/images/favicon.png" />
+
+  <link rel="stylesheet" href="/stylesheets/style.min.css" />
+  <link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css" />
+</head>
+<body>
+  <div class="section">
+    <main class="container">
+      <div class="message is-danger">
+        <p class="message-body has-text-centered">
+          <strong>An error occurred while processing this order.</strong><br />
+          <a href="/checkout">Try Again</a>
+        </p>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

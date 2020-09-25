@@ -1,0 +1,152 @@
+<%- include('../view-parts/_header'); -%>
+
+<h1 class="title is-3 has-text-centered mt-4">
+  <%= configFns.getProperty("views.order.title") %>
+</h1>
+
+<%
+  const headerEjs = configFns.getProperty("views.order.headerEjs");
+  if (headerEjs) {
+%>
+  <%- include("../view-parts/headers/" + headerEjs); -%>
+<%
+  }
+%>
+
+<table class="table has-margin-auto">
+  <thead>
+    <tr>
+      <th scope="col">Item</th>
+      <th class="has-text-right" scope="col">Price</th>
+      <th class="has-text-right" scope="col">Total</th>
+    </tr>
+  </thead>
+  <tbody>
+    <%
+      let itemTotal = 0;
+
+      for (const item of order.items) {
+
+        const productConfig = configFns.getProperty("products")[item.productSKU];
+        itemTotal += item.itemTotal;
+    %>
+      <tr>
+        <th scope="row">
+          <%= (productConfig ? productConfig.productName : item.productSKU) %><br />
+          <small class="has-text-weight-normal" aria-label="Product Identifier"><%= item.productSKU %></small>
+        </th>
+        <td class="has-text-right">
+          <%= item.quantity %>
+          &times;
+          $<%= item.unitPrice.toFixed(2) %>
+        </td>
+        <td class="has-text-right">
+          $<%= item.itemTotal.toFixed(2) %>
+        </td>
+      </tr>
+    <%
+      }
+    %>
+    <tr>
+      <th class="has-text-right" colspan="2" scope="row">
+        Item Total
+      </th>
+      <td class="has-text-right has-text-weight-bold">
+        $<%= itemTotal.toFixed(2) %>
+      </td>
+    </tr>
+  </tbody>
+  <%
+    let feeTotal = 0;
+
+    if (order.fees && order.fees.length > 0) {
+  %>
+    <tbody>
+      <%
+        for (const fee of order.fees) {
+          const feeConfig = configFns.getProperty("fees")[fee.feeName];
+          feeTotal += fee.feeTotal;
+      %>
+      <tr>
+        <th class="has-text-right has-text-weight-normal" colspan="2" scope="row">
+          <%= (feeConfig ? feeConfig.feeName : fee.feeName) %>
+        </th>
+        <td>
+          $<%= fee.feeTotal.toFixed(2) %>
+        </td>
+      </tr>
+      <%
+        }
+      %>
+    </tbody>
+  <%
+    }
+  %>
+  <tfoot>
+    <tr>
+      <th>
+        <th class="has-text-right is-size-5" scope="row">
+          Total
+        </th>
+        <td class="is-size-5">
+          $<%= (itemTotal + feeTotal).toFixed(2) %>
+        </td>
+      </th>
+    </tr>
+  </tfoot>
+</table>
+
+<h2 class="title is-4">
+  <%= configFns.getProperty("views.checkout_shipping.title") %>
+</h2>
+
+<div class="columns">
+  <div class="column">
+    <div class="block">
+      <strong>Full Name:</strong><br />
+      <%= order.shippingName %>
+    </div>
+    <div class="block">
+      <strong>Address:</strong><br />
+      <%= order.shippingAddress1 %><br />
+      <% if (order.shippingAddress2) { %>
+        <%= order.shippingAddress2 %><br />
+      <% } %>
+      <%= order.shippingCity %> <%= order.shippingProvince %> &nbsp;<%= order.shippingPostalCode %><br />
+      <%= order.shippingCountry %>
+    </div>
+  </div>
+  <div class="column">
+    <div class="block">
+      <strong>Daytime Phone Number:</strong><br />
+      <%= order.shippingPhoneNumberDay %>
+    </div>
+    <% if (order.shippingPhoneNumberEvening) { %>
+      <div class="block">
+        <strong>Evening Phone Number:</strong><br />
+        <%= order.shippingPhoneNumberEvening %>
+      </div>
+    <% } %>
+    <div class="block">
+      <strong>Email Address:</strong><br />
+      <%= order.shippingEmailAddress %>
+    </div>
+  </div>
+</div>
+
+<%
+  const footerEjs = configFns.getProperty("views.order.footerEjs");
+  if (footerEjs) {
+%>
+  <%- include("../view-parts/footers/" + footerEjs); -%>
+<%
+  }
+%>
+
+<%- include('../view-parts/_footerA'); -%>
+<script src="/lib/formToObject/formToObject.min.js"></script>
+<script src="/javascripts/cart.min.js"></script>
+<script>
+  exports.cart.clear();
+</script>
+<%- include('../view-parts/_footerB'); -%>

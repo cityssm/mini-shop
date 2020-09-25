@@ -48,6 +48,7 @@ configFallbackValues.set("site.footer.footerEjs", "thanks.ejs");
 configFallbackValues.set("views.products.title", "Products");
 configFallbackValues.set("views.checkout.title", "Checkout");
 configFallbackValues.set("views.checkout_shipping.title", "Shipping Details");
+configFallbackValues.set("views.order.title", "Order Summary");
 
 configFallbackValues.set("views.toPayment.headerEjs", "redirecting.ejs");
 
@@ -61,6 +62,8 @@ export function getProperty(propertyName: "application.https"): configTypes.Conf
 export function getProperty(propertyName: "mssqlConfig"): sqlTypes.config;
 
 export function getProperty(propertyName: "orderNumberFunction"): () => string;
+
+export function getProperty(propertyName: "store.storeType"): string;
 
 export function getProperty(propertyName: "fees"): { [feeName: string]: configTypes.Config_Fee };
 export function getProperty(propertyName: "products"): { [productSKU: string]: configTypes.Config_Product };

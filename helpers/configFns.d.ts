@@ -4,6 +4,7 @@ export declare function getProperty(propertyName: "application.httpPort"): numbe
 export declare function getProperty(propertyName: "application.https"): configTypes.Config_HTTPSConfig;
 export declare function getProperty(propertyName: "mssqlConfig"): sqlTypes.config;
 export declare function getProperty(propertyName: "orderNumberFunction"): () => string;
+export declare function getProperty(propertyName: "store.storeType"): string;
 export declare function getProperty(propertyName: "fees"): {
     [feeName: string]: configTypes.Config_Fee;
 };
