@@ -7,6 +7,7 @@ const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const configFns = require("./helpers/configFns");
 const stringFns = require("@cityssm/expressjs-server-js/stringFns");
+const dateTimeFns = require("@cityssm/expressjs-server-js/dateTimeFns");
 const routerCheckout = require("./routes/checkout");
 const routerOrder = require("./routes/order");
 const routerProducts = require("./routes/products");
@@ -27,6 +28,7 @@ app.use("/lib/formToObject", express.static(path.join(__dirname, "node_modules",
 app.use("/lib/typeface-barlow", express.static(path.join(__dirname, "node_modules", "@openfonts", "barlow_all", "files")));
 app.use(function (_req, res, next) {
     res.locals.configFns = configFns;
+    res.locals.dateTimeFns = dateTimeFns;
     res.locals.stringFns = stringFns;
     next();
 });
@@ -46,3 +48,4 @@ app.use(function (err, req, res, _next) {
     res.render("error");
 });
 module.exports = app;
+//# sourceMappingURL=app.js.map

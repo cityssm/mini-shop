@@ -39,3 +39,4 @@ exports.handler = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         return res.redirect("/order/error");
     }
 });
+//# sourceMappingURL=fromPayment.js.map

@@ -24,3 +24,4 @@ exports.handler = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         return res.redirect("/order/expired");
     }
 });
+//# sourceMappingURL=order-receipt.js.map

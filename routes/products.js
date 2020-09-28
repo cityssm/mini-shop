@@ -6,3 +6,4 @@ const router = express_1.Router();
 router.get("/", products_1.handler);
 router.get("/:productSKU", product_view_1.handler);
 module.exports = router;
+//# sourceMappingURL=products.js.map

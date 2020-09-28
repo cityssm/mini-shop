@@ -238,12 +238,14 @@
 
 $family-sans-serif: 'Barlow', system-ui, sans-serif;
 $body-size: 18px;
+
 @import '../../node_modules/bulma/bulma';
+@import '../../node_modules/@creativebulma/bulma-tooltip/src/sass/index';
 
 $facheck-radio-checked: '\f058';
+
 @import '../../node_modules/@cityssm/simple-fa5-checkbox/facheck-bulma';
 
-@import '../../node_modules/@creativebulma/bulma-tooltip/src/sass/index';
 
 // Site styles
 
@@ -273,4 +275,8 @@ optgroup {
 .has-margin-auto {
   margin-right: auto;
   margin-left: auto;
+}
+
+.has-cursor-zoom-in {
+  cursor: zoom-in !important;
 }

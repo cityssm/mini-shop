@@ -4,3 +4,4 @@ exports.handler = void 0;
 exports.handler = (_req, res) => {
     return res.render("order-error");
 };
+//# sourceMappingURL=order-error.js.map

@@ -18,8 +18,7 @@ exports.isOrderFoundAndPaid = (orderNumber, orderSecret) => __awaiter(void 0, vo
         const orderResult = yield pool.request()
             .input("orderNumber", sql.VarChar(50), orderNumber)
             .input("orderSecret", sql.UniqueIdentifier, orderSecret)
-            .query("select orderID, orderIsPaid" +
-            " from MiniShop.Orders" +
+            .query("select orderID, orderIsPaid from MiniShop.Orders" +
             " where orderIsRefunded = 0 and orderIsDeleted = 0" +
             " and orderNumber = @orderNumber" +
             " and orderSecret = @orderSecret");
@@ -40,3 +39,4 @@ exports.isOrderFoundAndPaid = (orderNumber, orderSecret) => __awaiter(void 0, vo
         paid: false
     };
 });
+//# sourceMappingURL=isOrderFoundAndPaid.js.map

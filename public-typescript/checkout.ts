@@ -38,6 +38,8 @@ interface CartTotals {
     feeTotals: {}
   };
 
+  let cartItems: recordTypes.CartItem[] = [];
+
 
   const removeCartItemFn = (clickEvent: Event) => {
 
@@ -45,7 +47,7 @@ interface CartTotals {
 
     const cartIndex = parseInt((clickEvent.currentTarget as HTMLButtonElement).getAttribute("data-cart-index"), 10);
 
-    const cartItem = exports.cart.get()[cartIndex] as recordTypes.CartItem;
+    const cartItem = cartItems[cartIndex];
     const product = productDetails.products[cartItem.productSKU];
 
     cityssm.confirmModal("Remove \"" + product.productName + "\"?",
@@ -150,6 +152,8 @@ interface CartTotals {
 
   const renderCheckoutFn = () => {
 
+    // Reset cart
+
     cityssm.clearElement(cartContainerEle);
     cityssm.clearElement(cartTotalContainerEle);
 
@@ -158,7 +162,7 @@ interface CartTotals {
       feeTotals: {}
     };
 
-    const cartItems: recordTypes.CartItem[] = exports.cart.get();
+    cartItems = exports.cart.get();
 
     // Render items
 
@@ -166,6 +170,7 @@ interface CartTotals {
 
       cartContainerEle.classList.add("is-hidden");
       shippingFormEle.classList.add("is-hidden");
+      document.getElementById("button--clearCart").classList.add("is-hidden");
 
       cartContainerEle.insertAdjacentHTML("beforebegin",
         "<div class=\"message is-info\">" +

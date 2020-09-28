@@ -8,6 +8,7 @@ import * as logger from "morgan";
 
 import * as configFns from "./helpers/configFns";
 import * as stringFns from "@cityssm/expressjs-server-js/stringFns";
+import * as dateTimeFns from "@cityssm/expressjs-server-js/dateTimeFns";
 
 import * as routerCheckout from "./routes/checkout";
 import * as routerOrder from "./routes/order";
@@ -66,6 +67,7 @@ app.use("/lib/typeface-barlow",
 // Make config objects available to the templates
 app.use(function(_req, res, next) {
   res.locals.configFns = configFns;
+  res.locals.dateTimeFns = dateTimeFns;
   res.locals.stringFns = stringFns;
   next();
 });

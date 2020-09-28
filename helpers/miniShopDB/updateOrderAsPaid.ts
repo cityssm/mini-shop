@@ -24,8 +24,7 @@ export const updateOrderAsPaid = async (validOrder: StoreValidatorReturn): Promi
   }
 
   try {
-    const pool: sql.ConnectionPool =
-      await sql.connect(configFns.getProperty("mssqlConfig"));
+    const pool: sql.ConnectionPool = await sql.connect(configFns.getProperty("mssqlConfig"));
 
     await pool.request()
       .input("paymentID", sql.NVarChar(50), validOrder.paymentID)
@@ -43,8 +42,7 @@ export const updateOrderAsPaid = async (validOrder: StoreValidatorReturn): Promi
           .input("orderID", sql.BigInt, order.orderID)
           .input("dataName", sql.VarChar(30), dataName)
           .input("dataValue", sql.NVarChar, validOrder.paymentData[dataName])
-          .query("insert into MiniShop.PaymentData" +
-            " (orderID, dataName, dataValue)" +
+          .query("insert into MiniShop.PaymentData (orderID, dataName, dataValue)" +
             " values (@orderID, @dataName, @dataValue)");
       }
     }

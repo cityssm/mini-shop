@@ -3,12 +3,12 @@
     "target": "ES6",
     "module": "CommonJS",
     "moduleResolution": "Node",
+    "sourceMap": true,
     "isolatedModules": false,
     "declaration": true,
     "noImplicitAny": false,
     "removeComments": true,
-    "allowUnreachableCode": false,
-    "resolveJsonModule": true
+    "allowUnreachableCode": false
   },
   "compileOnSave": true,
   "buildOnSave": true,

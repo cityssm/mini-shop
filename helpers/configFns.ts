@@ -43,14 +43,16 @@ configFallbackValues.set("site.header.backgroundColorClass", "info");
 configFallbackValues.set("site.footer.isVisible", true);
 configFallbackValues.set("site.footer.backgroundColorClass", "dark");
 configFallbackValues.set("site.footer.textColorClass", "light");
-configFallbackValues.set("site.footer.footerEjs", "thanks.ejs");
+configFallbackValues.set("site.footer.footerEjs", "site_thanks.ejs");
 
 configFallbackValues.set("views.products.title", "Products");
 configFallbackValues.set("views.checkout.title", "Checkout");
 configFallbackValues.set("views.checkout_shipping.title", "Shipping Details");
-configFallbackValues.set("views.order.title", "Order Summary");
 
-configFallbackValues.set("views.toPayment.headerEjs", "redirecting.ejs");
+configFallbackValues.set("views.order.title", "Order Summary");
+configFallbackValues.set("views.order.headerEjs", "order_print.ejs");
+
+configFallbackValues.set("views.toPayment.headerEjs", "toPayment_redirecting.ejs");
 
 configFallbackValues.set("fees", {});
 configFallbackValues.set("products", {});

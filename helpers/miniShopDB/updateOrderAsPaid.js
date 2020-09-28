@@ -39,8 +39,7 @@ exports.updateOrderAsPaid = (validOrder) => __awaiter(void 0, void 0, void 0, fu
                     .input("orderID", sql.BigInt, order.orderID)
                     .input("dataName", sql.VarChar(30), dataName)
                     .input("dataValue", sql.NVarChar, validOrder.paymentData[dataName])
-                    .query("insert into MiniShop.PaymentData" +
-                    " (orderID, dataName, dataValue)" +
+                    .query("insert into MiniShop.PaymentData (orderID, dataName, dataValue)" +
                     " values (@orderID, @dataName, @dataValue)");
             }
         }
@@ -51,3 +50,4 @@ exports.updateOrderAsPaid = (validOrder) => __awaiter(void 0, void 0, void 0, fu
     }
     return false;
 });
+//# sourceMappingURL=updateOrderAsPaid.js.map

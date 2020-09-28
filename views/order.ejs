@@ -1,5 +1,14 @@
 <%- include('../view-parts/_header'); -%>
 
+<nav class="breadcrumb has-bullet-separator mt-4" aria-label="breadcrumb">
+  <ul>
+    <li><a href="/products"><%= configFns.getProperty("views.products.title") %></a></li>
+    <li class="is-active">
+      <a href="#" aria-current="page"><%= configFns.getProperty("views.order.title") %></a>
+    </li>
+  </ul>
+</nav>
+
 <h1 class="title is-3 has-text-centered mt-4">
   <%= configFns.getProperty("views.order.title") %>
 </h1>
@@ -13,7 +22,30 @@
   }
 %>
 
-<table class="table has-margin-auto">
+<div class="columns">
+  <div class="column">
+    <div class="block">
+      <strong>Order:</strong><br />
+      <span class="is-size-7">
+        <%= order.orderNumber %><br />
+        <%= dateTimeFns.dateToString(order.orderTime) %>
+        <%= dateTimeFns.dateToTimeString(order.orderTime) %>
+      </span>
+    </div>
+  </div>
+  <div class="column">
+    <div class="block">
+      <strong>Receipt:</strong><br />
+      <span class="is-size-7">
+        <%= order.paymentID %><br />
+        <%= dateTimeFns.dateToString(order.paymentTime) %>
+        <%= dateTimeFns.dateToTimeString(order.paymentTime) %>
+      </span>
+    </div>
+  </div>
+</div>
+
+<table class="table is-fullwidth">
   <thead>
     <tr>
       <th scope="col">Item</th>
@@ -88,7 +120,7 @@
         <th class="has-text-right is-size-5" scope="row">
           Total
         </th>
-        <td class="is-size-5">
+        <td class="has-text-right is-size-5">
           $<%= (itemTotal + feeTotal).toFixed(2) %>
         </td>
       </th>
