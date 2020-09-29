@@ -4,6 +4,7 @@ declare const formToObject: (formEle: HTMLFormElement) => {};
 exports.cart = (() => {
 
   const sessionStorageKey = "miniShopCart";
+  const cartMaxSize = 255;
 
   let cart: Array<{}> = JSON.parse(sessionStorage.getItem(sessionStorageKey) || "[]");
 
@@ -33,13 +34,17 @@ exports.cart = (() => {
   const addFn =
     (productFormEle: HTMLFormElement) => {
 
+      if (cart.length >= cartMaxSize) {
+        return false;
+      }
+
       const formObj = formToObject(productFormEle);
 
       cart.push(formObj);
       toStorageFn();
       renderCartButtonFn();
 
-      return (cart.length - 1);
+      return true;
     };
 
   const removeFn = (cartIndex: number) => {

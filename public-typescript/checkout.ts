@@ -277,9 +277,9 @@ interface CartTotals {
       .then(async (response) => {
         return await response.json();
       })
-      .then((responseOrderNumbers: { succcess: boolean; orderNumber?: string; orderSecret?: string }) => {
+      .then((responseOrderNumbers: { success: boolean; orderNumber?: string; orderSecret?: string }) => {
 
-        if (responseOrderNumbers.succcess) {
+        if (responseOrderNumbers.success) {
           (document.getElementById("toPayment_orderNumber") as HTMLInputElement).value = responseOrderNumbers.orderNumber;
           (document.getElementById("toPayment_orderSecret") as HTMLInputElement).value = responseOrderNumbers.orderSecret;
 

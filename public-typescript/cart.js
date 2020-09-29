@@ -1,5 +1,6 @@
 exports.cart = (function () {
     var sessionStorageKey = "miniShopCart";
+    var cartMaxSize = 255;
     var cart = JSON.parse(sessionStorage.getItem(sessionStorageKey) || "[]");
     if (!cart) {
         cart = [];
@@ -19,11 +20,14 @@ exports.cart = (function () {
     };
     renderCartButtonFn();
     var addFn = function (productFormEle) {
+        if (cart.length >= cartMaxSize) {
+            return false;
+        }
         var formObj = formToObject(productFormEle);
         cart.push(formObj);
         toStorageFn();
         renderCartButtonFn();
-        return (cart.length - 1);
+        return true;
     };
     var removeFn = function (cartIndex) {
         cart.splice(cartIndex, 1);

@@ -9,9 +9,31 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createOrder = void 0;
+exports.createOrder = exports.insertOrderItem = void 0;
 const sql = require("mssql");
 const configFns = require("../configFns");
+exports.insertOrderItem = (pool, orderID, cartIndex, cartItem) => __awaiter(void 0, void 0, void 0, function* () {
+    const product = configFns.getProperty("products")[cartItem.productSKU];
+    yield pool.request()
+        .input("orderID", sql.BigInt, orderID)
+        .input("itemIndex", sql.TinyInt, cartIndex)
+        .input("productSKU", sql.VarChar(20), cartItem.productSKU)
+        .input("unitPrice", sql.Money, product.price)
+        .input("quantity", sql.TinyInt, cartItem.quantity)
+        .query("insert into MiniShop.OrderItems (" +
+        "orderID, itemIndex, productSKU, unitPrice, quantity)" +
+        " values (@orderID, @itemIndex, @productSKU, @unitPrice, @quantity)");
+    for (const formField of product.formFieldsToSave) {
+        yield pool.request()
+            .input("orderID", sql.BigInt, orderID)
+            .input("itemIndex", sql.TinyInt, cartIndex)
+            .input("formFieldName", sql.VarChar(30), formField.formFieldName)
+            .input("fieldValue", sql.NVarChar, cartItem[formField.formFieldName])
+            .query("insert into MiniShop.OrderItemFields (" +
+            "orderID, itemIndex, formFieldName, fieldValue)" +
+            " values (@orderID, @itemIndex, @formFieldName, @fieldValue)");
+    }
+});
 exports.createOrder = (shippingForm) => __awaiter(void 0, void 0, void 0, function* () {
     const orderNumber = configFns.getProperty("orderNumberFunction")();
     try {
@@ -54,26 +76,8 @@ exports.createOrder = (shippingForm) => __awaiter(void 0, void 0, void 0, functi
             if (!allProducts.hasOwnProperty(cartItem.productSKU)) {
                 continue;
             }
+            yield exports.insertOrderItem(pool, orderID, cartIndex, cartItem);
             const product = allProducts[cartItem.productSKU];
-            yield pool.request()
-                .input("orderID", sql.BigInt, orderID)
-                .input("itemIndex", sql.TinyInt, cartIndex)
-                .input("productSKU", sql.VarChar(20), cartItem.productSKU)
-                .input("unitPrice", sql.Money, product.price)
-                .input("quantity", sql.TinyInt, cartItem.quantity)
-                .query("insert into MiniShop.OrderItems (" +
-                "orderID, itemIndex, productSKU, unitPrice, quantity)" +
-                " values (@orderID, @itemIndex, @productSKU, @unitPrice, @quantity)");
-            for (const formField of product.formFieldsToSave) {
-                yield pool.request()
-                    .input("orderID", sql.BigInt, orderID)
-                    .input("itemIndex", sql.TinyInt, cartIndex)
-                    .input("formFieldName", sql.VarChar(30), formField.formFieldName)
-                    .input("fieldValue", sql.NVarChar, cartItem[formField.formFieldName])
-                    .query("insert into MiniShop.OrderItemFields (" +
-                    "orderID, itemIndex, formFieldName, fieldValue)" +
-                    " values (@orderID, @itemIndex, @formFieldName, @fieldValue)");
-            }
             if (product.fees) {
                 for (const feeName of product.fees) {
                     feeTotals[feeName] = (feeTotals[feeName] || 0) +

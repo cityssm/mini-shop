@@ -1,3 +1,9 @@
+import type * as cityssmTypes from "@cityssm/bulma-webapp-js/src/types";
+
+
+declare const cityssm: cityssmTypes.cityssmGlobal;
+
+
 (() => {
 
   let isSubmitting = false;
@@ -13,13 +19,25 @@
 
     isSubmitting = true;
 
-    exports.cart.add(productFormEle);
+    const success = exports.cart.add(productFormEle);
 
-    productFormEle.reset();
+    if (success) {
 
-    document.getElementById("modal--success").classList.add("is-active");
-    document.getElementsByTagName("html")[0].classList.add("is-clipped");
+      productFormEle.reset();
 
-    document.getElementById("successButton--checkout").focus();
+      document.getElementById("modal--success").classList.add("is-active");
+      document.getElementsByTagName("html")[0].classList.add("is-clipped");
+
+      document.getElementById("successButton--checkout").focus();
+
+    } else {
+
+      isSubmitting = false;
+
+      cityssm.alertModal("The Cart is Full",
+        "You cannot add anymore items to your cart.",
+        "OK",
+        "warning");
+    }
   });
 })();

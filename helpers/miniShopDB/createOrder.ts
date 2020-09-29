@@ -1,7 +1,7 @@
 import * as sql from "mssql";
 import * as configFns from "../configFns";
 
-import type { ShippingForm } from "../../types/recordTypes";
+import type { ShippingForm, CartItem } from "../../types/recordTypes";
 
 type CreateOrderReturn = {
   success: true;
@@ -9,6 +9,37 @@ type CreateOrderReturn = {
   orderSecret: string;
 } | {
   success: false;
+};
+
+
+export const insertOrderItem = async (pool: sql.ConnectionPool, orderID: number, cartIndex: number, cartItem: CartItem) => {
+
+  const product = configFns.getProperty("products")[cartItem.productSKU];
+
+  // Create the item record
+  await pool.request()
+    .input("orderID", sql.BigInt, orderID)
+    .input("itemIndex", sql.TinyInt, cartIndex)
+    .input("productSKU", sql.VarChar(20), cartItem.productSKU)
+    .input("unitPrice", sql.Money, product.price)
+    .input("quantity", sql.TinyInt, cartItem.quantity)
+    .query("insert into MiniShop.OrderItems (" +
+      "orderID, itemIndex, productSKU, unitPrice, quantity)" +
+      " values (@orderID, @itemIndex, @productSKU, @unitPrice, @quantity)");
+
+  // Create the item field records
+  for (const formField of product.formFieldsToSave) {
+
+    await pool.request()
+      .input("orderID", sql.BigInt, orderID)
+      .input("itemIndex", sql.TinyInt, cartIndex)
+      .input("formFieldName", sql.VarChar(30), formField.formFieldName)
+      .input("fieldValue", sql.NVarChar, cartItem[formField.formFieldName])
+      .query("insert into MiniShop.OrderItemFields (" +
+        "orderID, itemIndex, formFieldName, fieldValue)" +
+        " values (@orderID, @itemIndex, @formFieldName, @fieldValue)");
+  }
+
 };
 
 
@@ -79,33 +110,12 @@ export const createOrder = async (shippingForm: ShippingForm): Promise<CreateOrd
         continue;
       }
 
-      const product = allProducts[cartItem.productSKU];
-
       // Create the item record
-      await pool.request()
-        .input("orderID", sql.BigInt, orderID)
-        .input("itemIndex", sql.TinyInt, cartIndex)
-        .input("productSKU", sql.VarChar(20), cartItem.productSKU)
-        .input("unitPrice", sql.Money, product.price)
-        .input("quantity", sql.TinyInt, cartItem.quantity)
-        .query("insert into MiniShop.OrderItems (" +
-          "orderID, itemIndex, productSKU, unitPrice, quantity)" +
-          " values (@orderID, @itemIndex, @productSKU, @unitPrice, @quantity)");
-
-      // Create the item field records
-      for (const formField of product.formFieldsToSave) {
-
-        await pool.request()
-          .input("orderID", sql.BigInt, orderID)
-          .input("itemIndex", sql.TinyInt, cartIndex)
-          .input("formFieldName", sql.VarChar(30), formField.formFieldName)
-          .input("fieldValue", sql.NVarChar, cartItem[formField.formFieldName])
-          .query("insert into MiniShop.OrderItemFields (" +
-            "orderID, itemIndex, formFieldName, fieldValue)" +
-            " values (@orderID, @itemIndex, @formFieldName, @fieldValue)");
-      }
+      await insertOrderItem(pool, orderID, cartIndex, cartItem);
 
       // Calculate the fees (if any)
+      const product = allProducts[cartItem.productSKU];
+
       if (product.fees) {
         for (const feeName of product.fees) {
 

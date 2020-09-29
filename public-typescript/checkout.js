@@ -209,7 +209,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
             });
         }); })
             .then(function (responseOrderNumbers) {
-            if (responseOrderNumbers.succcess) {
+            if (responseOrderNumbers.success) {
                 document.getElementById("toPayment_orderNumber").value = responseOrderNumbers.orderNumber;
                 document.getElementById("toPayment_orderSecret").value = responseOrderNumbers.orderSecret;
                 document.getElementById("form--toPayment").submit();
