@@ -1,0 +1,41 @@
+<%
+  const idPrefix = stringFns.getUID();
+%>
+<div class="columns">
+  <div class="column">
+    <div class="field">
+      <label class="label" for="<%= idPrefix %>_colour">
+        Colour
+      </label>
+      <div class="control">
+        <div class="select is-fullwidth">
+          <select id="<%= idPrefix %>_colour" name="colour" required>
+            <option value="">(Select One)</option>
+            <option>Blue</option>
+            <option>Grey</option>
+            <option>Red</option>
+            <option>Yellow</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="column">
+    <div class="field">
+      <label class="label" for="<%= idPrefix %>_size">
+        Size
+      </label>
+      <div class="control">
+        <div class="select is-fullwidth">
+          <select id="<%= idPrefix %>_size" name="size" required>
+            <option value="">(Select One)</option>
+            <option value="S">Small</option>
+            <option value="M">Medium</option>
+            <option value="L">Large</option>
+            <option value="XL">Extra Large</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -7,8 +7,8 @@ try {
     config = require("../data/config");
 }
 catch (e) {
-    config = {};
-    console.error("No \"data/config.js\" found.");
+    config = require("../data/config-sample");
+    console.error("No \"data/config.js\" found, using \"data/config-sample.js\".");
 }
 Object.freeze(config);
 const configFallbackValues = new Map();

@@ -184,8 +184,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
             .catch(function () {
         });
     };
+    var formIsSubmitting = false;
     shippingFormEle.addEventListener("submit", function (formEvent) {
         formEvent.preventDefault();
+        if (formIsSubmitting) {
+            return;
+        }
+        formIsSubmitting = true;
         var formObj = formToObject(shippingFormEle);
         formObj.cartItems = exports.cart.get();
         fetch("/checkout/doCreateOrder", {
@@ -204,11 +209,19 @@ Object.defineProperty(exports, "__esModule", { value: true });
             });
         }); })
             .then(function (responseOrderNumbers) {
-            document.getElementById("toPayment_orderNumber").value = responseOrderNumbers.orderNumber;
-            document.getElementById("toPayment_orderSecret").value = responseOrderNumbers.orderSecret;
-            document.getElementById("form--toPayment").submit();
+            if (responseOrderNumbers.succcess) {
+                document.getElementById("toPayment_orderNumber").value = responseOrderNumbers.orderNumber;
+                document.getElementById("toPayment_orderSecret").value = responseOrderNumbers.orderSecret;
+                document.getElementById("form--toPayment").submit();
+            }
+            else {
+                cityssm.alertModal("Order Error", "An error occurred while trying to create your order. Please try again.", "OK", "danger");
+                formIsSubmitting = false;
+            }
         })
-            .catch(function () {
+            .catch(function (_e) {
+            cityssm.alertModal("Order Error", "An error occurred while trying to create your order. Please try again.", "OK", "danger");
+            formIsSubmitting = false;
         });
     });
     initFn_loadProductDetails();

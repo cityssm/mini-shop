@@ -251,8 +251,17 @@ interface CartTotals {
   };
 
 
+  let formIsSubmitting = false;
+
+
   shippingFormEle.addEventListener("submit", (formEvent) => {
     formEvent.preventDefault();
+
+    if (formIsSubmitting) {
+      return;
+    }
+
+    formIsSubmitting = true;
 
     const formObj = formToObject(shippingFormEle) as recordTypes.ShippingForm;
 
@@ -268,15 +277,31 @@ interface CartTotals {
       .then(async (response) => {
         return await response.json();
       })
-      .then((responseOrderNumbers: { orderNumber: string; orderSecret: string }) => {
+      .then((responseOrderNumbers: { succcess: boolean; orderNumber?: string; orderSecret?: string }) => {
 
-        (document.getElementById("toPayment_orderNumber") as HTMLInputElement).value = responseOrderNumbers.orderNumber;
-        (document.getElementById("toPayment_orderSecret") as HTMLInputElement).value = responseOrderNumbers.orderSecret;
+        if (responseOrderNumbers.succcess) {
+          (document.getElementById("toPayment_orderNumber") as HTMLInputElement).value = responseOrderNumbers.orderNumber;
+          (document.getElementById("toPayment_orderSecret") as HTMLInputElement).value = responseOrderNumbers.orderSecret;
 
-        (document.getElementById("form--toPayment") as HTMLFormElement).submit();
+          (document.getElementById("form--toPayment") as HTMLFormElement).submit();
+
+        } else {
+
+          cityssm.alertModal("Order Error",
+            "An error occurred while trying to create your order. Please try again.",
+            "OK",
+            "danger");
+
+          formIsSubmitting = false;
+        }
       })
-      .catch(() => {
+      .catch((_e) => {
+        cityssm.alertModal("Order Error",
+          "An error occurred while trying to create your order. Please try again.",
+          "OK",
+          "danger");
 
+        formIsSubmitting = false;
       });
   });
 

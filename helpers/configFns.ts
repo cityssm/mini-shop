@@ -16,9 +16,9 @@ try {
 
 } catch (e) {
 
-  config = {};
+  config = require("../data/config-sample");
 
-  console.error("No \"data/config.js\" found.");
+  console.error("No \"data/config.js\" found, using \"data/config-sample.js\".");
 
 }
 
@@ -64,6 +64,22 @@ export function getProperty(propertyName: "application.https"): configTypes.Conf
 export function getProperty(propertyName: "mssqlConfig"): sqlTypes.config;
 
 export function getProperty(propertyName: "orderNumberFunction"): () => string;
+
+export function getProperty(propertyName: "site.header.backgroundColorClass"): () => string;
+
+export function getProperty(propertyName: "site.footer.isVisible"): () => boolean;
+export function getProperty(propertyName: "site.footer.backgroundColorClass"): () => string;
+export function getProperty(propertyName: "site.footer.textColorClass"): () => string;
+export function getProperty(propertyName: "site.footer.footerEjs"): () => string;
+
+export function getProperty(propertyName: "views.products.title"): () => string;
+export function getProperty(propertyName: "views.checkout.title"): () => string;
+export function getProperty(propertyName: "views.checkout_shipping.title"): () => string;
+
+export function getProperty(propertyName: "views.toPayment.headerEjs"): () => string;
+
+export function getProperty(propertyName: "views.order.title"): () => string;
+export function getProperty(propertyName: "views.order.headerEjs"): () => string;
 
 export function getProperty(propertyName: "store.storeType"): string;
 

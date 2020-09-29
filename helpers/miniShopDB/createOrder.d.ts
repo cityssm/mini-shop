@@ -1,5 +1,10 @@
 import type { ShippingForm } from "../../types/recordTypes";
-export declare const createOrder: (shippingForm: ShippingForm) => Promise<{
+declare type CreateOrderReturn = {
+    success: true;
     orderNumber: string;
     orderSecret: string;
-}>;
+} | {
+    success: false;
+};
+export declare const createOrder: (shippingForm: ShippingForm) => Promise<CreateOrderReturn>;
+export {};

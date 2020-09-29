@@ -246,12 +246,7 @@ $facheck-radio-checked: '\f058';
 
 @import '../../node_modules/@cityssm/simple-fa5-checkbox/facheck-bulma';
 
-
 // Site styles
-
-main.container {
-  max-width: 960px;
-}
 
 input[type='number'] {
   -moz-appearance: textfield;
@@ -265,11 +260,6 @@ input[type='number'] {
 
 .card-content + .card-content {
   border-top: 1px solid #ededed;
-}
-
-// Should be fixed in the next Bulma release
-optgroup {
-  font-family: $family-sans-serif;
 }
 
 .has-margin-auto {
