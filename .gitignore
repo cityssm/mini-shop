@@ -1,6 +1,7 @@
 *.db
 *.db-journal
 *.pem
+.nyc_output/
 node_modules/
 data/config.*
 .npmrc
