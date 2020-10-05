@@ -2,6 +2,7 @@
 *.db-journal
 *.pem
 .nyc_output/
+bin/daemon
 node_modules/
 data/config.*
 .npmrc
