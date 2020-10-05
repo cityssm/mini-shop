@@ -1,0 +1,84 @@
+<form id="form--toPayment" action="<%= configFns.getProperty("store.storeConfig.storeURL") %>" method="post">
+  <input name="ps_store_id" type="hidden" value="<%= configFns.getProperty("store.storeConfig.ps_store_id") %>" />
+  <input name="hpp_key" type="hidden" value="<%= configFns.getProperty("store.storeConfig.hpp_key") %>" />
+
+  <input name="order_id" type="hidden" value="<%= order.orderNumber.substring(0, 50) %>" />
+  <input name="rvarSecret" type="hidden" value="<%= order.orderSecret %>" />
+
+  <input name="email" type="hidden" value="<%= (order.shippingEmailAddress.length <= 50 ? order.shippingEmailAddress : "") %>" />
+
+  <input name="ship_address_one" type="hidden" value="<%= order.shippingAddress1.substring(0, 30) %>" />
+  <input name="ship_city" type="hidden" value="<%= order.shippingCity.substring(0, 30) %>" />
+  <input name="ship_state_or_province" type="hidden" value="<%= order.shippingProvince.substring(0, 30) %>" />
+  <input name="ship_postal_code" type="hidden" value="<%= order.shippingPostalCode.substring(0, 30) %>" />
+  <input name="ship_country" type="hidden" value="<%= order.shippingCountry.substring(0, 30) %>" />
+  <input name="ship_phone" type="hidden" value="<%= order.shippingPhoneNumberDay.substring(0, 30) %>" />
+
+  <%
+    let itemIndex = 0;
+
+    let chargeTotal = 0;
+
+    for (const item of order.items) {
+
+      itemIndex += 1;
+
+      chargeTotal += (item.quantity * item.unitPrice);
+
+      const itemIndexPadded = ("00" + itemIndex.toString()).slice(-3);
+
+      const product = configFns.getProperty("products")[item.productSKU];
+  %>
+  <input name="id<%= itemIndexPadded %>" type="hidden" value="<%= item.productSKU.substring(0, 10) %>" />
+  <input name="description<%= itemIndexPadded %>" type="hidden" value="<%= (product ? product.productName : item.productSKU).substring(0, 15) %>" />
+  <input name="quantity<%= itemIndexPadded %>" type="hidden" value="<%= item.quantity %>" />
+  <input name="price<%= itemIndexPadded %>" type="hidden" value="<%= item.unitPrice.toFixed(2) %>" />
+  <input name="subtotal<%= itemIndexPadded %>" type="hidden" value="<%= (item.quantity * item.unitPrice).toFixed(2) %>" />
+  <%
+    }
+
+    const storeFeeConfig = configFns.getProperty("store.storeConfig.fees") | {};
+
+    for (const fee of order.fees) {
+
+      if (storeFeeConfig.gst && fee.feeName === storeFeeConfig.gst) {
+  %>
+      <input name="gst" type="hidden" value="<%= feeTotal.toFixed(2) %>" />
+  <%
+      } else if (storeFeeConfig.pst && fee.feeName === storeFeeConfig.pst) {
+  %>
+      <input name="pst" type="hidden" value="<%= feeTotal.toFixed(2) %>" />
+  <%
+      } else if (storeFeeConfig.hst && fee.feeName === storeFeeConfig.hst) {
+  %>
+      <input name="hst" type="hidden" value="<%= feeTotal.toFixed(2) %>" />
+  <%
+      } else if (storeFeeConfig.shipping && fee.feeName === storeFeeConfig.shipping) {
+  %>
+      <input name="shipping_cost" type="hidden" value="<%= feeTotal.toFixed(2) %>" />
+  <%
+      } else {
+        itemIndex += 1;
+
+        chargeTotal += fee.feeTotal;
+
+        const itemIndexPadded = ("00" + itemIndex.toString()).slice(-3);
+
+        const feeConfig = configFns.getProperty("fees")[fee.feeName];
+  %>
+      <input name="id<%= itemIndexPadded %>" type="hidden" value="<%= fee.feeName.substring(0, 10) %>" />
+      <input name="description<%= itemIndexPadded %>" type="hidden" value="<%= (feeConfig ? feeConfig.feeName : fee.feeName).substring(0, 15) %>" />
+      <input name="quantity<%= itemIndexPadded %>" type="hidden" value="1" />
+      <input name="price<%= itemIndexPadded %>" type="hidden" value="<%= fee.feeTotal.toFixed(2) %>" />
+      <input name="subtotal<%= itemIndexPadded %>" type="hidden" value="<%= fee.feeTotal.toFixed(2) %>" />
+  <%
+      }
+    }
+  %>
+  <input name="charge_total" type="hidden" value="<%= chargeTotal.toFixed(2) %>" />
+</form>
+<script>
+  setTimeout(() => {
+    document.getElementById("form--toPayment").submit();
+  }, 1500);
+</script>

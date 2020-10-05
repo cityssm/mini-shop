@@ -1,5 +1,6 @@
 import * as configFns from "../helpers/configFns";
 
+import { validate as monerisHPP_validate } from "../helpers/stores/moneris-hpp";
 import { validate as testingFree_validate } from "../helpers/stores/testing-free";
 
 import { updateOrderAsPaid } from "../helpers/miniShopDB/updateOrderAsPaid";
@@ -22,6 +23,7 @@ export const handler: RequestHandler = async (req, res) => {
   switch (storeType) {
 
     case "moneris-hpp":
+      storeValidatorReturn = await monerisHPP_validate(req);
       break;
 
     case "testing-free":

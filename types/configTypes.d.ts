@@ -41,9 +41,15 @@ export interface Config {
     store?: {
         storeType: "moneris-hpp";
         storeConfig: {
-            storeURL: string;
+            storeURL: "https://esqa.moneris.com/HPPDP/index.php" | "https://www3.moneris.com/HPPDP/index.php";
             ps_store_id: string;
             hpp_key: string;
+            fees?: {
+                gst?: string;
+                pst?: string;
+                hst?: string;
+                shipping?: string;
+            };
         };
     } | {
         storeType: "testing-free";

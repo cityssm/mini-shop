@@ -19,7 +19,7 @@
   },
   "homepage": "https://github.com/cityssm/mini-shop#readme",
   "devDependencies": {
-    "@cityssm/simple-fa5-checkbox": "^0.2.0",
+    "@cityssm/simple-fa5-checkbox": "^0.2.1",
     "@creativebulma/bulma-tooltip": "^1.2.0",
     "@types/compression": "^1.7.0",
     "@types/cookie-parser": "^1.4.2",
@@ -30,7 +30,7 @@
     "@types/http-errors": "^1.8.0",
     "@types/mocha": "^8.0.3",
     "@types/morgan": "^1.9.1",
-    "@types/mssql": "^6.0.4",
+    "@types/mssql": "^6.0.5",
     "@types/puppeteer": "^3.0.2",
     "@types/uuid": "^8.3.0",
     "@typescript-eslint/eslint-plugin": "^4.3.0",
@@ -50,8 +50,8 @@
     "typescript": "^4.0.3"
   },
   "dependencies": {
-    "@cityssm/bulma-webapp-js": "^0.4.3",
-    "@cityssm/expressjs-server-js": "^0.6.2",
+    "@cityssm/bulma-webapp-js": "^0.5.1",
+    "@cityssm/expressjs-server-js": "^0.7.0",
     "@fortawesome/fontawesome-free": "^5.15.0",
     "@openfonts/barlow_all": "^1.44.2",
     "compression": "^1.7.4",
@@ -61,6 +61,6 @@
     "form_to_object": "^2.0.0",
     "morgan": "^1.10.0",
     "mssql": "^6.2.3",
-    "uuid": "^8.3.0"
+    "uuid": "^8.3.1"
   }
 }

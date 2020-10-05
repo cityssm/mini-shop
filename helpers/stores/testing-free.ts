@@ -5,7 +5,7 @@ export const validate = (req: Request): StoreValidatorReturn => {
 
   const orderNumber = req.body.orderNumber;
 
-  if (!orderNumber) {
+  if (!orderNumber || orderNumber === "") {
     return {
       isValid: false,
       errorCode: "missingOrderNumber"
@@ -14,7 +14,7 @@ export const validate = (req: Request): StoreValidatorReturn => {
 
   const orderSecret = req.body.orderSecret;
 
-  if (!orderSecret) {
+  if (!orderSecret || orderSecret === "") {
     return {
       isValid: false,
       errorCode: "missingOrderSecret"

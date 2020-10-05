@@ -11,6 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.handler = void 0;
 const configFns = require("../helpers/configFns");
+const moneris_hpp_1 = require("../helpers/stores/moneris-hpp");
 const testing_free_1 = require("../helpers/stores/testing-free");
 const updateOrderAsPaid_1 = require("../helpers/miniShopDB/updateOrderAsPaid");
 exports.handler = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -21,6 +22,7 @@ exports.handler = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     };
     switch (storeType) {
         case "moneris-hpp":
+            storeValidatorReturn = yield moneris_hpp_1.validate(req);
             break;
         case "testing-free":
             storeValidatorReturn = testing_free_1.validate(req);

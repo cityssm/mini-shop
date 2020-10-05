@@ -1,6 +1,8 @@
 export type StoreValidatorErrorMessage =
-  "noHandler" |
-  "missingOrderNumber" | "missingOrderSecret";
+  "noHandler" | "noResult" |
+  "missingOrderNumber" | "invalidOrderNumber" |
+  "missingOrderSecret" |
+  "paymentDeclined";
 
 export type StoreValidatorReturn = {
   isValid: true;
