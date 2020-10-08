@@ -3,7 +3,6 @@
     "target": "ES6",
     "module": "CommonJS",
     "moduleResolution": "Node",
-    "sourceMap": true,
     "isolatedModules": false,
     "declaration": true,
     "noImplicitAny": false,

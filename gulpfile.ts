@@ -5,23 +5,23 @@ import * as minify from "gulp-minify";
  * Minify public/javascripts
  */
 
-function publicJavascriptsMinFn () {
+const publicJavascriptsMinFn = () => {
 
   return gulp.src("public-typescript/*.js", { allowEmpty: true })
     .pipe(minify({ noSource: true, ext: { min: ".min.js" } }))
-    .pipe(gulp.dest('public/javascripts'))
-}
+    .pipe(gulp.dest("public/javascripts"));
+};
 
 
-gulp.task("public-javascript-min", publicJavascriptsMinFn)
+gulp.task("public-javascript-min", publicJavascriptsMinFn);
 
 /*
  * Watch
  */
 
-function watchFn() {
+const watchFn = () => {
   gulp.watch("public-typescript/*.js", publicJavascriptsMinFn);
-}
+};
 
 gulp.task("watch", watchFn);
 
@@ -29,7 +29,7 @@ gulp.task("watch", watchFn);
  * Initialize default
  */
 
-gulp.task("default",function() {
+gulp.task("default", () => {
   publicJavascriptsMinFn();
   watchFn();
 });

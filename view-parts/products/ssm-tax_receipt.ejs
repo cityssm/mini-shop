@@ -2,10 +2,12 @@
   const idPrefix = stringFns.getUID();
 %>
 <div class="message is-info">
-  <p class="message-body">
-    Please allow three to five business days for processing.
-  </p>
+  <div class="message-body">
+    <p>Tax Receipts can only be issued to property owners who have owned their property for the full calendar year.</p>
+    <p class="mt-1">In cases where ownership has changed mid-year, please refer to your Statement of Adjustments.</p>
+  </div>
 </div>
+
 <div class="field">
   <label class="label" for="<%= idPrefix %>_propertyAddress">
     Property Address:
@@ -21,9 +23,14 @@
         15 Digit Roll Number:
       </label>
       <div class="control">
-        <input class="input" id="<%= idPrefix %>_rollNumber" name="rollNumber" type="text" pattern="0[1-6]0\d{12}" minlength="15" maxlength="15" inputmode="numeric" required />
+        <input class="input" id="<%= idPrefix %>_rollNumber" name="rollNumber" type="text" pattern="^0[1-6]0[ -]?\d{3}[ -]?\d{3}[ -]?\d{4}[ -]?\d{2}$" minlength="15" maxlength="19" inputmode="numeric" />
       </div>
       <p class="help">Roll numbers should start with "0", followed by a number between "1" and "6".</p>
+      <p class="help">
+        Don't know your roll number?
+        Visit the
+        <a href="https://myfinance.saultstemarie.ca/VCH/city/propsearch/pigeneralinquiry.aspx" target="_blank" rel="noopener">My Sault Ste. Marie Property Search</a>.
+      </p>
     </div>
   </div>
   <div class="column">
@@ -35,5 +42,15 @@
         <input class="input" id="<%= idPrefix %>_taxYear" name="taxYear" type="text" pattern="\d{4}" minlength="4" maxlength="4" inputmode="numeric" value="<%= new Date().getFullYear() - 1 %>" required />
       </div>
     </div>
+  </div>
+</div>
+<div class="facheck facheck-fas-checked block">
+  <input id="<%= idPrefix %>_ownedForYear" type="checkbox" required />
+  <label for="<%= idPrefix %>_ownedForYear">I have owned the above proper for the entire taxation year.</label>
+</div>
+
+<div class="message is-info">
+  <div class="message-body">
+    <p>Please allow three to five business days for processing.</p>
   </div>
 </div>
