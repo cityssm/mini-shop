@@ -7,4 +7,3 @@ exports.handler = (req, res) => {
         productSKU
     });
 };
-//# sourceMappingURL=product-view.js.map
