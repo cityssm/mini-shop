@@ -94,4 +94,3 @@ const config = {
     }
 };
 module.exports = config;
-//# sourceMappingURL=config-sample.js.map

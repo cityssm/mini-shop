@@ -39,4 +39,3 @@ exports.isOrderFoundAndPaid = (orderNumber, orderSecret) => __awaiter(void 0, vo
         paid: false
     };
 });
-//# sourceMappingURL=isOrderFoundAndPaid.js.map

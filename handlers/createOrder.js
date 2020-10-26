@@ -16,4 +16,3 @@ exports.handler = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const orderIDs = yield createOrder_1.createOrder(formData);
     return res.json(orderIDs);
 });
-//# sourceMappingURL=createOrder.js.map

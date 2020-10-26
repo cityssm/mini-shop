@@ -24,4 +24,3 @@ exports.handler = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         });
     }
 });
-//# sourceMappingURL=toPayment.js.map

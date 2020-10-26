@@ -12,4 +12,3 @@ router.post("/doCreateOrder", createOrder_1.handler);
 router.post("/toPayment", toPayment_1.handler);
 router.all("/fromPayment", fromPayment_1.handler);
 module.exports = router;
-//# sourceMappingURL=checkout.js.map

@@ -61,4 +61,3 @@ exports.getOrder = (orderNumber, orderSecret, orderIsPaid) => __awaiter(void 0, 
     }
     return false;
 });
-//# sourceMappingURL=getOrder.js.map

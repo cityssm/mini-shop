@@ -59,4 +59,3 @@ describe("configFns - properties with default values", () => {
         });
     });
 });
-//# sourceMappingURL=configFns.js.map

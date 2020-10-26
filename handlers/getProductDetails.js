@@ -31,4 +31,3 @@ exports.handler = (req, res) => {
         fees
     });
 };
-//# sourceMappingURL=getProductDetails.js.map

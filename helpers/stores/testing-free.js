@@ -23,4 +23,3 @@ exports.validate = (req) => {
         paymentID: orderNumber
     };
 };
-//# sourceMappingURL=testing-free.js.map

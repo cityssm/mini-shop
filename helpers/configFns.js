@@ -59,4 +59,3 @@ function getClientSideProduct(productSKU) {
     return clientSideProducts[productSKU];
 }
 exports.getClientSideProduct = getClientSideProduct;
-//# sourceMappingURL=configFns.js.map
