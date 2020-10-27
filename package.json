@@ -1,6 +1,6 @@
 {
   "name": "mini-shop",
-  "version": "0.0.1-dev",
+  "version": "0.5.0-dev",
   "description": "",
   "main": "app.js",
   "scripts": {
@@ -36,7 +36,7 @@
     "@typescript-eslint/eslint-plugin": "^4.6.0",
     "@typescript-eslint/parser": "^4.6.0",
     "bulma": "^0.9.1",
-    "eslint": "^7.12.0",
+    "eslint": "^7.12.1",
     "eslint-config-standard-with-typescript": "^19.0.1",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-node": "^11.1.0",
@@ -46,9 +46,9 @@
     "gulp-minify": "^3.1.0",
     "mocha": "^8.2.0",
     "nyc": "^15.1.0",
-    "puppeteer": "^5.4.0",
+    "puppeteer": "^5.4.1",
     "snyk": "^1.420.1",
-    "typescript": "^4.0.3"
+    "typescript": "^4.0.5"
   },
   "dependencies": {
     "@cityssm/bulma-webapp-js": "^0.5.1",
