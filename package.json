@@ -29,7 +29,7 @@
     "@types/gulp-minify": "^3.1.0",
     "@types/http-errors": "^1.8.0",
     "@types/mocha": "^8.0.3",
-    "@types/morgan": "^1.9.1",
+    "@types/morgan": "^1.9.2",
     "@types/mssql": "^6.0.5",
     "@types/puppeteer": "^3.0.2",
     "@types/uuid": "^8.3.0",
