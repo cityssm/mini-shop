@@ -1,4 +1,4 @@
-import { createOrder as miniShopDB_createOrder } from "../helpers/miniShopDB/createOrder";
+import { createOrder as miniShopDB_createOrder } from "@cityssm/mini-shop-db/createOrder";
 
 import type { RequestHandler } from "express";
 import type { ShippingForm } from "../types/recordTypes";

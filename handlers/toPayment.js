@@ -10,7 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.handler = void 0;
-const getOrder_1 = require("../helpers/miniShopDB/getOrder");
+const getOrder_1 = require("@cityssm/mini-shop-db/getOrder");
 exports.handler = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const orderNumber = req.body.orderNumber;
     const orderSecret = req.body.orderSecret;

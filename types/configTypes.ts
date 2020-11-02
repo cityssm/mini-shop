@@ -108,4 +108,4 @@ export interface Config_Product {
 export interface Config_Fee {
   feeName: string;
   feeCalculation: (product: Config_Product) => number;
-};
+}

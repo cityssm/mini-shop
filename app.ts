@@ -6,6 +6,8 @@ import * as path from "path";
 import * as cookieParser from "cookie-parser";
 import * as logger from "morgan";
 
+import * as miniShopDB from "@cityssm/mini-shop-db/config";
+
 import * as configFns from "./helpers/configFns";
 import * as stringFns from "@cityssm/expressjs-server-js/stringFns";
 import * as dateTimeFns from "@cityssm/expressjs-server-js/dateTimeFns";
@@ -13,6 +15,17 @@ import * as dateTimeFns from "@cityssm/expressjs-server-js/dateTimeFns";
 import * as routerCheckout from "./routes/checkout";
 import * as routerOrder from "./routes/order";
 import * as routerProducts from "./routes/products";
+
+
+/*
+ * MINI SHOP DB
+ */
+
+
+miniShopDB.setMSSQLConfig(configFns.getProperty("mssqlConfig"));
+miniShopDB.setOrderNumberFunction(configFns.getProperty("orderNumberFunction"));
+miniShopDB.setProducts(configFns.getProperty("products"));
+miniShopDB.setFees(configFns.getProperty("fees"));
 
 
 /*
@@ -26,7 +39,6 @@ const app = express();
 // View engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
-
 
 app.use(compression());
 app.use(logger("dev"));

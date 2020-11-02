@@ -194,4 +194,3 @@ Object.defineProperty(exports, "__esModule", { value: true });
         exports.cart.refresh();
     }, 5 * 60 * 1000);
 })();
-//# sourceMappingURL=checkout.js.map
