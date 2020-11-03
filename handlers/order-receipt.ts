@@ -11,9 +11,15 @@ export const handler: RequestHandler = async (req, res) => {
   const order = await miniShopDB_getOrder(orderNumber, orderSecret, true);
 
   if (order) {
-    return res.render("order", {
-      order
-    });
+    if (order.redirectURL && order.redirectURL !== "") {
+
+      return res.redirect(order.redirectURL);
+
+    } else {
+      return res.render("order", {
+        order
+      });
+    }
   } else {
     return res.redirect("/order/expired");
   }

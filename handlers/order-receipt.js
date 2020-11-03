@@ -16,9 +16,14 @@ exports.handler = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const orderSecret = req.params.orderSecret;
     const order = yield getOrder_1.getOrder(orderNumber, orderSecret, true);
     if (order) {
-        return res.render("order", {
-            order
-        });
+        if (order.redirectURL && order.redirectURL !== "") {
+            return res.redirect(order.redirectURL);
+        }
+        else {
+            return res.render("order", {
+                order
+            });
+        }
     }
     else {
         return res.redirect("/order/expired");
