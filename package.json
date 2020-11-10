@@ -47,13 +47,13 @@
     "mocha": "^8.2.1",
     "nyc": "^15.1.0",
     "puppeteer": "^5.4.1",
-    "snyk": "^1.425.1",
+    "snyk": "^1.425.2",
     "typescript": "^4.0.5"
   },
   "dependencies": {
     "@cityssm/bulma-webapp-js": "^0.5.1",
     "@cityssm/expressjs-server-js": "^1.0.2",
-    "@cityssm/mini-shop-db": "0.0.3",
+    "@cityssm/mini-shop-db": "0.0.4",
     "@fortawesome/fontawesome-free": "^5.15.1",
     "@openfonts/barlow_all": "^1.44.2",
     "compression": "^1.7.4",

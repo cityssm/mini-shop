@@ -17,7 +17,7 @@ exports.handler = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const order = yield getOrder_1.getOrder(orderNumber, orderSecret, true);
     if (order) {
         if (order.redirectURL && order.redirectURL !== "") {
-            return res.redirect(order.redirectURL);
+            return res.redirect(order.redirectURL + "/" + orderNumber + "/" + orderSecret);
         }
         else {
             return res.render("order", {

@@ -13,7 +13,7 @@ export const handler: RequestHandler = async (req, res) => {
   if (order) {
     if (order.redirectURL && order.redirectURL !== "") {
 
-      return res.redirect(order.redirectURL);
+      return res.redirect(order.redirectURL + "/" + orderNumber + "/" + orderSecret);
 
     } else {
       return res.render("order", {
