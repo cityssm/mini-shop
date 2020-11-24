@@ -3,6 +3,7 @@
 *.pem
 .nyc_output/
 bin/daemon
+coverage/
 node_modules/
 data/config.*
 .npmrc
