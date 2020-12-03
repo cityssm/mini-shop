@@ -35,6 +35,7 @@ app.use(function (_req, res, next) {
     res.locals.configFns = configFns;
     res.locals.dateTimeFns = dateTimeFns;
     res.locals.stringFns = stringFns;
+    res.locals.pageTitle = "";
     next();
 });
 app.all("/", function (_req, res) {
