@@ -3,17 +3,19 @@ declare const formToObject: (formEle: HTMLFormElement) => {};
 
 exports.cart = (() => {
 
-  const sessionStorageKey = "miniShopCart";
-  const cartMaxSize = 255;
+  const SESSION_STORAGE_KEY = "miniShopCart";
+  const CART_MAX_SIZE = 255;
 
-  let cart: Array<{}> = JSON.parse(sessionStorage.getItem(sessionStorageKey) || "[]");
+  let cart: Array<{}> = sessionStorage.getItem(SESSION_STORAGE_KEY)
+    ? JSON.parse(sessionStorage.getItem(SESSION_STORAGE_KEY))
+    : [];
 
   if (!cart) {
     cart = [];
   }
 
   const toStorageFn = () => {
-    sessionStorage.setItem(sessionStorageKey, JSON.stringify(cart));
+    sessionStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(cart));
   };
 
   const renderCartButtonFn = () => {
@@ -34,7 +36,7 @@ exports.cart = (() => {
   const addFn =
     (productFormEle: HTMLFormElement) => {
 
-      if (cart.length >= cartMaxSize) {
+      if (cart.length >= CART_MAX_SIZE) {
         return false;
       }
 
@@ -48,10 +50,10 @@ exports.cart = (() => {
     };
 
   const removeFn = (cartIndex: number) => {
-      cart.splice(cartIndex, 1);
-      toStorageFn();
-      renderCartButtonFn();
-    };
+    cart.splice(cartIndex, 1);
+    toStorageFn();
+    renderCartButtonFn();
+  };
 
 
   const clearFn = () => {

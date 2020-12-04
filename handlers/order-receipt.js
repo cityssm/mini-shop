@@ -11,7 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.handler = void 0;
 const getOrder_1 = require("@cityssm/mini-shop-db/getOrder");
-exports.handler = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const handler = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const orderNumber = req.params.orderNumber;
     const orderSecret = req.params.orderSecret;
     const order = yield getOrder_1.getOrder(orderNumber, orderSecret, true);
@@ -29,3 +29,4 @@ exports.handler = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         return res.redirect("/order/expired");
     }
 });
+exports.handler = handler;

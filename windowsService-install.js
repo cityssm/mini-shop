@@ -11,4 +11,3 @@ svc.on("install", () => {
     svc.start();
 });
 svc.install();
-//# sourceMappingURL=windowsService-install.js.map

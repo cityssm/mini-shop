@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-(function () {
-    var isSubmitting = false;
-    var productFormEle = document.getElementById("form--product");
-    productFormEle.addEventListener("submit", function (formEvent) {
+(() => {
+    let isSubmitting = false;
+    const productFormEle = document.getElementById("form--product");
+    productFormEle.addEventListener("submit", (formEvent) => {
         formEvent.preventDefault();
         if (isSubmitting) {
             return;
         }
         isSubmitting = true;
-        var success = exports.cart.add(productFormEle);
+        const success = exports.cart.add(productFormEle);
         if (success) {
             productFormEle.reset();
             document.getElementById("modal--success").classList.add("is-active");
@@ -22,4 +22,3 @@ Object.defineProperty(exports, "__esModule", { value: true });
         }
     });
 })();
-//# sourceMappingURL=product-view.js.map

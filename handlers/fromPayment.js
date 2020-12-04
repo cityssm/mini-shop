@@ -14,7 +14,7 @@ const configFns = require("../helpers/configFns");
 const moneris_hpp_1 = require("../helpers/stores/moneris-hpp");
 const testing_free_1 = require("../helpers/stores/testing-free");
 const updateOrderAsPaid_1 = require("@cityssm/mini-shop-db/updateOrderAsPaid");
-exports.handler = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const handler = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const storeType = configFns.getProperty("store.storeType");
     let storeValidatorReturn = {
         isValid: false,
@@ -41,3 +41,4 @@ exports.handler = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         return res.redirect("/order/error");
     }
 });
+exports.handler = handler;

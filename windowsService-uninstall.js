@@ -11,4 +11,3 @@ svc.on("uninstall", function () {
     console.log("The service exists: ", svc.exists);
 });
 svc.uninstall();
-//# sourceMappingURL=windowsService-uninstall.js.map
