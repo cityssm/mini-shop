@@ -12,29 +12,42 @@ export const handler: RequestHandler = (req, res) => {
 
   for (const productSKU of productSKUs) {
 
+    /*
+     * Validate the product SKU
+     */
+
     const product = configFns.getClientSideProduct(productSKU);
 
-    if (product) {
+    // If product not available, don't add it to the list.
+    if (!product) {
+      continue;
+    }
 
-      products[productSKU] = product;
+    // Add valid product to list.
+    products[productSKU] = product;
 
-      if (product.fees) {
+    // If no additional fees, continue.
+    if (!product.fees) {
+      continue;
+    }
 
-        product.feeTotals = {};
+    /*
+     * Calculate fees
+     */
 
-        for (const feeName of product.fees) {
+    product.feeTotals = {};
 
-          const fee = configFns.getProperty("fees")[feeName];
+    for (const feeName of product.fees) {
 
-          if (fee) {
-            product.feeTotals[feeName] = fee.feeCalculation(product);
-            fees[feeName] = fee;
-          } else {
-            // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
-            delete products[productSKU];
-            break;
-          }
-        }
+      const fee = configFns.getProperty("fees")[feeName];
+
+      if (fee) {
+        product.feeTotals[feeName] = fee.feeCalculation(product);
+        fees[feeName] = fee;
+      } else {
+        // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
+        delete products[productSKU];
+        break;
       }
     }
   }
