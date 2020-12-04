@@ -5,8 +5,8 @@ const app = require("../app");
 const http = require("http");
 const https = require("https");
 const fs = require("fs");
+const log = require("fancy-log");
 const configFns = require("../helpers/configFns");
-const debug = require("debug")("mini-shop:server");
 function onError(error) {
     if (error.syscall !== "listen") {
         throw error;
@@ -27,7 +27,7 @@ function onListening(server) {
     const bind = typeof addr === "string"
         ? "pipe " + addr
         : "port " + addr.port.toString();
-    debug("Listening on " + bind);
+    log.info("Listening on " + bind);
 }
 const httpPort = configFns.getProperty("application.httpPort");
 if (httpPort) {
@@ -37,7 +37,7 @@ if (httpPort) {
     httpServer.on("listening", function () {
         onListening(httpServer);
     });
-    console.log("HTTP listening on " + httpPort.toString());
+    log.info("HTTP listening on " + httpPort.toString());
 }
 const httpsConfig = configFns.getProperty("application.https");
 if (httpsConfig) {
@@ -51,5 +51,5 @@ if (httpsConfig) {
     httpsServer.on("listening", function () {
         onListening(httpsServer);
     });
-    console.log("HTTPS listening on " + httpsConfig.port.toString());
+    log.info("HTTPS listening on " + httpsConfig.port.toString());
 }

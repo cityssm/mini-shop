@@ -1,5 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
 
+import * as log from "fancy-log";
+
 import type * as configTypes from "../types/configTypes";
 import type * as sqlTypes from "mssql";
 
@@ -18,8 +20,7 @@ try {
 
   config = require("../data/config-sample");
 
-  console.error("No \"data/config.js\" found, using \"data/config-sample.js\".");
-
+  log.error("No \"data/config.js\" found, using \"data/config-sample.js\".");
 }
 
 Object.freeze(config);

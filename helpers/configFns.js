@@ -2,13 +2,14 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getClientSideProduct = exports.getProperty = void 0;
 const uuid_1 = require("uuid");
+const log = require("fancy-log");
 let config = {};
 try {
     config = require("../data/config");
 }
 catch (e) {
     config = require("../data/config-sample");
-    console.error("No \"data/config.js\" found, using \"data/config-sample.js\".");
+    log.error("No \"data/config.js\" found, using \"data/config-sample.js\".");
 }
 Object.freeze(config);
 const configFallbackValues = new Map();
