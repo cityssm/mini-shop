@@ -35,6 +35,10 @@ const configFallbackValues = new Map<string, any>();
 
 configFallbackValues.set("application.httpPort", 7777);
 
+configFallbackValues.set("reverseProxy.disableCompression", false);
+configFallbackValues.set("reverseProxy.disableEtag", false);
+configFallbackValues.set("reverseProxy.urlPrefix", "");
+
 configFallbackValues.set("orderNumberFunction", () => {
   return uuidv4();
 });
@@ -61,6 +65,10 @@ configFallbackValues.set("products", {});
 
 export function getProperty(propertyName: "application.httpPort"): number;
 export function getProperty(propertyName: "application.https"): configTypes.Config_HTTPSConfig;
+
+export function getProperty(propertyName: "reverseProxy.disableCompression"): boolean;
+export function getProperty(propertyName: "reverseProxy.disableEtag"): boolean;
+export function getProperty(propertyName: "reverseProxy.urlPrefix"): "";
 
 export function getProperty(propertyName: "mssqlConfig"): sqlTypes.config;
 

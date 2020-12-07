@@ -1,3 +1,5 @@
+import * as configFns from "../helpers/configFns";
+
 import { getOrder as miniShopDB_getOrder } from "@cityssm/mini-shop-db/getOrder";
 
 import type { RequestHandler } from "express";
@@ -21,6 +23,6 @@ export const handler: RequestHandler = async (req, res) => {
       });
     }
   } else {
-    return res.redirect("/order/expired");
+    return res.redirect(configFns.getProperty("reverseProxy.urlPrefix") + "/order/expired");
   }
 };

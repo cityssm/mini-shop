@@ -34,11 +34,12 @@ const handler = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     if (storeValidatorReturn.isValid) {
         orderRecordMarkedAsPaid = yield updateOrderAsPaid_1.updateOrderAsPaid(storeValidatorReturn);
     }
+    const urlPrefix = configFns.getProperty("reverseProxy.urlPrefix");
     if (storeValidatorReturn.isValid && orderRecordMarkedAsPaid) {
-        return res.redirect("/order/" + storeValidatorReturn.orderNumber + "/" + storeValidatorReturn.orderSecret);
+        return res.redirect(urlPrefix + "/order/" + storeValidatorReturn.orderNumber + "/" + storeValidatorReturn.orderSecret);
     }
     else {
-        return res.redirect("/order/error");
+        return res.redirect(urlPrefix + "/order/error");
     }
 });
 exports.handler = handler;

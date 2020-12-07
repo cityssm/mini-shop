@@ -35,12 +35,18 @@ miniShopDB.setFees(configFns.getProperty("fees"));
 
 const app = express();
 
+if (!configFns.getProperty("reverseProxy.disableEtag")) {
+  app.set("etag", false);
+}
 
 // View engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
-app.use(compression());
+if (!configFns.getProperty("reverseProxy.disableCompression")) {
+  app.use(compression());
+}
+
 app.use(logger("dev"));
 app.use(express.json());
 
@@ -56,18 +62,21 @@ app.use(cookieParser());
  */
 
 
-app.use(express.static(path.join(__dirname, "public")));
+const urlPrefix = configFns.getProperty("reverseProxy.urlPrefix");
 
-app.use("/lib/bulma-webapp-js",
+
+app.use(urlPrefix, express.static(path.join(__dirname, "public")));
+
+app.use(urlPrefix + "/lib/bulma-webapp-js",
   express.static(path.join(__dirname, "node_modules", "@cityssm", "bulma-webapp-js", "dist")));
 
-app.use("/lib/fontawesome-free",
+app.use(urlPrefix + "/lib/fontawesome-free",
   express.static(path.join(__dirname, "node_modules", "@fortawesome", "fontawesome-free")));
 
-app.use("/lib/formToObject",
+app.use(urlPrefix + "/lib/formToObject",
   express.static(path.join(__dirname, "node_modules", "form_to_object", "dist")));
 
-app.use("/lib/typeface-barlow",
+app.use(urlPrefix + "/lib/typeface-barlow",
   express.static(path.join(__dirname, "node_modules", "@openfonts", "barlow_all", "files")));
 
 
@@ -81,18 +90,19 @@ app.use(function(_req, res, next) {
   res.locals.configFns = configFns;
   res.locals.dateTimeFns = dateTimeFns;
   res.locals.stringFns = stringFns;
+  res.locals.urlPrefix = configFns.getProperty("reverseProxy.urlPrefix");
   res.locals.pageTitle = "";
   next();
 });
 
 
-app.all("/", function(_req, res) {
-  res.redirect("/products");
+app.all(urlPrefix + "/", function(_req, res) {
+  res.redirect(urlPrefix + "/products");
 });
 
-app.use("/checkout", routerCheckout);
-app.use("/order", routerOrder);
-app.use("/products", routerProducts);
+app.use(urlPrefix + "/checkout", routerCheckout);
+app.use(urlPrefix + "/order", routerOrder);
+app.use(urlPrefix + "/products", routerProducts);
 
 
 // Catch 404 and forward to error handler

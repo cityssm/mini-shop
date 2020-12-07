@@ -2,7 +2,7 @@
 
 <nav class="breadcrumb has-bullet-separator mt-4" aria-label="breadcrumb">
   <ul>
-    <li><a href="/products"><%= configFns.getProperty("views.products.title") %></a></li>
+    <li><a href="<%= urlPrefix %>/products"><%= configFns.getProperty("views.products.title") %></a></li>
     <li class="is-active">
       <a href="#" aria-current="page"><%= product.productName %></a>
     </li>
@@ -16,8 +16,8 @@
   <input name="quantity" type="hidden" value="1" />
   <div class="columns">
     <div class="column is-3-tablet is-4-desktop">
-      <a class="image has-cursor-zoom-in is-<%= product.image.dimensionClass %> has-tooltip-bottom has-tooltip-arrow" data-tooltip="View Larger Picture" href="../<%= product.image.path %>" target="_blank">
-        <img src="../<%= product.image.path %>" alt="<%= product.productName %>" />
+      <a class="image has-cursor-zoom-in is-<%= product.image.dimensionClass %> has-tooltip-bottom has-tooltip-arrow" data-tooltip="View Larger Picture" href="<%= urlPrefix %><%= product.image.path %>" target="_blank">
+        <img src="<%= urlPrefix %><%= product.image.path %>" alt="<%= product.productName %>" />
       </a>
       <div class="has-text-centered">
         $<%= product.price.toFixed(2) %>
@@ -50,12 +50,12 @@
         </p>
         <div class="columns mt-3">
           <div class="column">
-            <a class="button is-info is-fullwidth" href="/products">
+            <a class="button is-info is-fullwidth" href="<%= urlPrefix %>/products">
               Continue Shopping
             </a>
           </div>
           <div class="column">
-            <a class="button is-success is-fullwidth" id="successButton--checkout" href="/checkout">
+            <a class="button is-success is-fullwidth" id="successButton--checkout" href="<%= urlPrefix %>/checkout">
               Proceed to Checkout
             </a>
           </div>
@@ -66,8 +66,8 @@
 </div>
 
 <%- include('../view-parts/_footerA'); -%>
-<script src="/lib/formToObject/formToObject.min.js"></script>
-<script src="/javascripts/cart.min.js"></script>
-<script src="/lib/bulma-webapp-js/cityssm.min.js"></script>
-<script src="/javascripts/product-view.min.js"></script>
+<script src="<%= urlPrefix %>/lib/formToObject/formToObject.min.js"></script>
+<script src="<%= urlPrefix %>/javascripts/cart.min.js"></script>
+<script src="<%= urlPrefix %>/lib/bulma-webapp-js/cityssm.min.js"></script>
+<script src="<%= urlPrefix %>/javascripts/product-view.min.js"></script>
 <%- include('../view-parts/_footerB'); -%>

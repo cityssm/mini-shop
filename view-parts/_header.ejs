@@ -10,10 +10,10 @@
     <%= configFns.getProperty("application.applicationName") %>
   </title>
 
-  <link rel="icon" href="/images/favicon.png" />
+  <link rel="icon" href="<%= urlPrefix %>/images/favicon.png" />
 
-  <link rel="stylesheet" href="/stylesheets/style.min.css" />
-  <link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css" />
+  <link rel="stylesheet" href="<%= urlPrefix %>/stylesheets/style.min.css" />
+  <link rel="stylesheet" href="<%= urlPrefix %>/lib/fontawesome-free/css/all.min.css" />
 </head>
 
 <%
@@ -25,15 +25,15 @@
   <nav class="has-background-<%= backgroundColorClass %>">
     <div class="columns is-gapless is-vcentered is-mobile">
       <div class="column">
-        <a class="button is-medium is-<%= backgroundColorClass %> is-radiusless" href="/products">
+        <a class="button is-medium is-<%= backgroundColorClass %> is-radiusless" href="<%= urlPrefix %>/products">
           <% if (logoImagePath) { %>
-            <img class="mr-2" src="<%= logoImagePath %>" alt="" style="max-height:30px" />
+            <img class="mr-2" src="<%= urlPrefix %><%= logoImagePath %>" alt="" style="max-height:30px" />
           <% } %>
           <span><%= configFns.getProperty("application.applicationName") %></span>
         </a>
       </div>
       <div class="column is-narrow">
-        <a class="button is-medium is-<%= backgroundColorClass %> is-radiusless has-tooltip-arrow has-tooltip-left" data-tooltip="Cart and Checkout" href="/checkout">
+        <a class="button is-medium is-<%= backgroundColorClass %> is-radiusless has-tooltip-arrow has-tooltip-left" data-tooltip="Cart and Checkout" href="<%= urlPrefix %>/checkout">
           <span class="icon">
             <i class="fas fa-shopping-cart" aria-hidden="true"></i>
           </span>
@@ -44,4 +44,4 @@
     </div>
   </nav>
   <div class="section pt-0">
-    <main class="container is-max-desktop">
+    <main class="container is-max-desktop" data-url-prefix="<%= urlPrefix %>">

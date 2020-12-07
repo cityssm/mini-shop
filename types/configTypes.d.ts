@@ -6,6 +6,11 @@ export interface Config {
         https?: Config_HTTPSConfig;
         applicationName?: string;
     };
+    reverseProxy?: {
+        disableCompression: boolean;
+        disableEtag: boolean;
+        urlPrefix: string;
+    };
     mssqlConfig?: sqlTypes.config;
     orderNumberFunction?: () => string;
     site?: {

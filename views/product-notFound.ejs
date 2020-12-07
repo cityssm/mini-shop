@@ -2,7 +2,7 @@
 
 <nav class="breadcrumb has-bullet-separator mt-4" aria-label="breadcrumb">
   <ul>
-    <li><a href="/products"><%= configFns.getProperty("views.products.title") %></a></li>
+    <li><a href="<%= urlPrefix %>/products"><%= configFns.getProperty("views.products.title") %></a></li>
     <li class="is-active">
       <a href="#" aria-current="page">Product Not Found</a>
     </li>
@@ -12,11 +12,11 @@
 <div class="message is-danger">
   <p class="message-body has-text-centered">
     <span class="has-text-weight-bold">Product Not Found</span><br />
-    <a href="/">Return to Products</a>
+    <a href="<%= urlPrefix %>/">Return to Products</a>
   </p>
 </div>
 
 <%- include('../view-parts/_footerA'); -%>
-<script src="/lib/formToObject/formToObject.min.js"></script>
-<script src="/javascripts/cart.min.js"></script>
+<script src="<%= urlPrefix %>/lib/formToObject/formToObject.min.js"></script>
+<script src="<%= urlPrefix %>/javascripts/cart.min.js"></script>
 <%- include('../view-parts/_footerB'); -%>

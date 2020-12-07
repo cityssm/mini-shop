@@ -2,7 +2,7 @@
 
 <nav class="breadcrumb has-bullet-separator mt-4" aria-label="breadcrumb">
   <ul>
-    <li><a href="/products"><%= configFns.getProperty("views.products.title") %></a></li>
+    <li><a href="<%= urlPrefix %>/products"><%= configFns.getProperty("views.products.title") %></a></li>
     <li class="is-active">
       <a href="#" aria-current="page"><%= configFns.getProperty("views.checkout.title") %></a>
     </li>
@@ -143,14 +143,14 @@
   </div>
 </form>
 
-<form class="is-hidden" id="form--toPayment" action="/checkout/toPayment" method="post">
+<form class="is-hidden" id="form--toPayment" action="<%= urlPrefix %>/checkout/toPayment" method="post">
   <input id="toPayment_orderNumber" name="orderNumber" type="hidden" />
   <input id="toPayment_orderSecret" name="orderSecret" type="hidden" />
 </form>
 
 <%- include('../view-parts/_footerA'); -%>
-<script src="/lib/formToObject/formToObject.min.js"></script>
-<script src="/javascripts/cart.min.js"></script>
-<script src="/lib/bulma-webapp-js/cityssm.min.js"></script>
-<script src="/javascripts/checkout.min.js"></script>
+<script src="<%= urlPrefix %>/lib/formToObject/formToObject.min.js"></script>
+<script src="<%= urlPrefix %>/javascripts/cart.min.js"></script>
+<script src="<%= urlPrefix %>/lib/bulma-webapp-js/cityssm.min.js"></script>
+<script src="<%= urlPrefix %>/javascripts/checkout.min.js"></script>
 <%- include('../view-parts/_footerB'); -%>

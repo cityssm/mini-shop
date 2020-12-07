@@ -9,10 +9,10 @@
     <%= configFns.getProperty("application.applicationName") %>
   </title>
 
-  <link rel="icon" href="/images/favicon.png" />
+  <link rel="icon" href="<%= urlPrefix %>/images/favicon.png" />
 
-  <link rel="stylesheet" href="/stylesheets/style.min.css" />
-  <link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css" />
+  <link rel="stylesheet" href="<%= urlPrefix %>/stylesheets/style.min.css" />
+  <link rel="stylesheet" href="<%= urlPrefix %>/lib/fontawesome-free/css/all.min.css" />
 </head>
 <body>
   <div class="section">
@@ -20,7 +20,7 @@
       <div class="message is-danger">
         <p class="message-body has-text-centered">
           <strong>An error occurred while processing this order.</strong><br />
-          <a href="/checkout">Try Again</a>
+          <a href="<%= urlPrefix %>/checkout">Try Again</a>
         </p>
       </div>
     </main>

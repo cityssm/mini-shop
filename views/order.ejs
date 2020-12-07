@@ -2,7 +2,7 @@
 
 <nav class="breadcrumb has-bullet-separator mt-4" aria-label="breadcrumb">
   <ul>
-    <li><a href="/products"><%= configFns.getProperty("views.products.title") %></a></li>
+    <li><a href="<%= urlPrefix %>/products"><%= configFns.getProperty("views.products.title") %></a></li>
     <li class="is-active">
       <a href="#" aria-current="page"><%= configFns.getProperty("views.order.title") %></a>
     </li>
@@ -116,14 +116,12 @@
   %>
   <tfoot>
     <tr>
-      <th>
-        <th class="has-text-right is-size-5" scope="row">
-          Total
-        </th>
-        <td class="has-text-right is-size-5">
-          $<%= (itemTotal + feeTotal).toFixed(2) %>
-        </td>
+      <th class="has-text-right is-size-5" colspan="2" scope="row">
+        Total
       </th>
+      <td class="has-text-right is-size-5">
+        $<%= (itemTotal + feeTotal).toFixed(2) %>
+      </td>
     </tr>
   </tfoot>
 </table>
@@ -176,8 +174,8 @@
 %>
 
 <%- include('../view-parts/_footerA'); -%>
-<script src="/lib/formToObject/formToObject.min.js"></script>
-<script src="/javascripts/cart.min.js"></script>
+<script src="<%= urlPrefix %>/lib/formToObject/formToObject.min.js"></script>
+<script src="<%= urlPrefix %>/javascripts/cart.min.js"></script>
 <script>
   exports.cart.clear();
 </script>

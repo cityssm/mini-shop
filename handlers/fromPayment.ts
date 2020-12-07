@@ -44,9 +44,11 @@ export const handler: RequestHandler = async (req, res) => {
 
   // Redirect to receipt
 
+  const urlPrefix = configFns.getProperty("reverseProxy.urlPrefix");
+
   if (storeValidatorReturn.isValid && orderRecordMarkedAsPaid) {
-    return res.redirect("/order/" + storeValidatorReturn.orderNumber + "/" + storeValidatorReturn.orderSecret);
+    return res.redirect(urlPrefix + "/order/" + storeValidatorReturn.orderNumber + "/" + storeValidatorReturn.orderSecret);
   } else {
-    return res.redirect("/order/error");
+    return res.redirect(urlPrefix + "/order/error");
   }
 };

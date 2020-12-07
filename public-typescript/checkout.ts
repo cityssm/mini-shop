@@ -27,6 +27,8 @@ interface CartTotals {
 
 (() => {
 
+  const urlPrefix = document.querySelector("main").getAttribute("data-url-prefix");
+
   let productDetails: ProductDetails = {};
 
   const cartContainerEle = document.getElementById("card--cart");
@@ -176,7 +178,7 @@ interface CartTotals {
         "<div class=\"message is-info\">" +
         ("<div class=\"message-body has-text-centered\">" +
           "<p class=\"has-text-weight-bold\">The cart is empty.</p>" +
-          "<p><a href=\"/products\">View Available Products</a></p>" +
+          "<p><a href=\"" + cityssm.escapeHTML(urlPrefix) + "/products\">View Available Products</a></p>" +
           "</div>") +
         "</div>");
 
@@ -232,7 +234,7 @@ interface CartTotals {
       return;
     }
 
-    fetch("/checkout/doGetProductDetails", {
+    fetch(urlPrefix + "/checkout/doGetProductDetails", {
       method: "POST",
       body: new URLSearchParams({
         productSKUs
@@ -267,7 +269,7 @@ interface CartTotals {
 
     formObj.cartItems = exports.cart.get();
 
-    fetch("/checkout/doCreateOrder", {
+    fetch(urlPrefix + "/checkout/doCreateOrder", {
       method: "POST",
       body: JSON.stringify(formObj),
       headers: {

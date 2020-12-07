@@ -1,4 +1,4 @@
-<form id="form--toPayment" action="/checkout/fromPayment" method="post">
+<form id="form--toPayment" action="<%= urlPrefix %>/checkout/fromPayment" method="post">
   <input name="orderNumber" type="hidden" value="<%= order.orderNumber %>" />
   <input name="orderSecret" type="hidden" value="<%= order.orderSecret %>" />
 </form>

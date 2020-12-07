@@ -11,6 +11,12 @@ export interface Config {
     applicationName?: string;
   };
 
+  reverseProxy?: {
+    disableCompression: boolean;
+    disableEtag: boolean;
+    urlPrefix: string;
+  };
+
   mssqlConfig?: sqlTypes.config;
 
   orderNumberFunction?: () => string;
