@@ -38,7 +38,7 @@
       <% if (product.image) { %>
         <div class="card-image">
           <a class="image is-<%= product.image.dimensionClass %>"  href="<%= urlPrefix %>/products/<%= productSKU %>">
-            <img src="<%= urlPrefix %>/<%= product.image.path %>" alt="<%= product.productName %>" />
+            <img src="<%= urlPrefix %><%= product.image.path %>" alt="<%= product.productName %>" />
           </a>
         </div>
       <% } %>
