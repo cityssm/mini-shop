@@ -64,8 +64,28 @@
     %>
       <tr>
         <th scope="row">
-          <%= (productConfig ? productConfig.productName : item.productSKU) %><br />
-          <small class="has-text-weight-normal" aria-label="Product Identifier"><%= item.productSKU %></small>
+          <%= (productConfig ? productConfig.productName : item.productSKU) %>
+          <% if (item.fields) { %>
+            <%
+              for (const itemField of item.fields) {
+
+                let fieldDefinition = null;
+
+                if (productConfig && productConfig.formFieldsToSave) {
+                  fieldDefinition = productConfig.formFieldsToSave.find((def) => {
+                    return itemField.formFieldName === def.formFieldName;
+                  });
+                }
+            %>
+              <br />
+              <span class="is-size-7 has-text-weight-normal">
+                <strong><%= (fieldDefinition ? fieldDefinition.fieldName : itemField.formFieldName) %>:</strong>
+                <%= itemField.fieldValue %>
+              </span>
+            <%
+              }
+            %>
+          <% } %>
         </th>
         <td class="has-text-right">
           <%= item.quantity %>
