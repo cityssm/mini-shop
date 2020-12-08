@@ -8,6 +8,11 @@
 -   <https://pixabay.com/photos/calculator-calculation-insurance-723925/>
 -   [Pixabay Licence](https://pixabay.com/service/license/)
 
+**calculator2.jpg**
+
+-   <https://pixabay.com/photos/accountant-accounting-adviser-1238598/>
+-   [Pixabay Licence](https://pixabay.com/service/license/)
+
 **fileShelves.jpg**
 
 -   <https://pixabay.com/photos/files-ddr-archive-1633406/>

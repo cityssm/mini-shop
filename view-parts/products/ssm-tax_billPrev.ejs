@@ -1,0 +1,39 @@
+<%
+  const idPrefix = stringFns.getUID();
+%>
+
+<div class="message is-info">
+  <div class="message-body">
+    <p>Requests are for <strong><%= new Date().getFullYear() - 1 %></strong>, the previous tax year.</p>
+  </div>
+</div>
+
+<div class="field">
+  <label class="label" for="<%= idPrefix %>_propertyAddress">
+    Property Address:
+  </label>
+  <div class="control">
+    <input class="input" id="<%= idPrefix %>_propertyAddress" name="propertyAddress" type="text" maxlength="100" required />
+  </div>
+</div>
+
+<div class="field">
+  <label class="label" for="<%= idPrefix %>_rollNumber">
+    15 Digit Roll Number:
+  </label>
+  <div class="control">
+    <input class="input" id="<%= idPrefix %>_rollNumber" name="rollNumber" type="text" pattern="^0[1-6]0[ -]?\d{3}[ -]?\d{3}[ -]?\d{4}[ -]?\d{2}$" minlength="15" maxlength="19" inputmode="numeric" />
+  </div>
+  <p class="help">Roll numbers should start with "0", followed by a number between "1" and "6".</p>
+  <p class="help">
+    Don't know your roll number?
+    Visit the
+    <a href="https://myfinance.saultstemarie.ca/VCH/city/propsearch/pigeneralinquiry.aspx" target="_blank" rel="noopener">My Sault Ste. Marie Property Search</a>.
+  </p>
+</div>
+
+<div class="message is-info">
+  <div class="message-body">
+    <p>Please allow three to five business days for processing.</p>
+  </div>
+</div>
