@@ -1,6 +1,7 @@
 "use strict";
 const createError = require("http-errors");
 const express = require("express");
+const express_abuse_points_1 = require("@cityssm/express-abuse-points");
 const compression = require("compression");
 const path = require("path");
 const cookieParser = require("cookie-parser");
@@ -22,6 +23,7 @@ if (!configFns.getProperty("reverseProxy.disableEtag")) {
 }
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
+app.use(express_abuse_points_1.abuseCheck());
 if (!configFns.getProperty("reverseProxy.disableCompression")) {
     app.use(compression());
 }

@@ -1,5 +1,6 @@
 import type { RequestHandler } from "express";
 
+import { recordAbuse } from "@cityssm/express-abuse-points";
 import * as configFns from "../helpers/configFns";
 
 
@@ -9,6 +10,7 @@ export const handler: RequestHandler = (req, res) => {
   const product = configFns.getProperty("products")[productSKU];
 
   if (!product) {
+    recordAbuse(req);
     res.status(404);
     return res.render("product-notFound");
   }

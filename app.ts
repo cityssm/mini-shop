@@ -1,6 +1,7 @@
 import * as createError from "http-errors";
 import * as express from "express";
 
+import { abuseCheck } from "@cityssm/express-abuse-points";
 import * as compression from "compression";
 import * as path from "path";
 import * as cookieParser from "cookie-parser";
@@ -42,6 +43,8 @@ if (!configFns.getProperty("reverseProxy.disableEtag")) {
 // View engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
+
+app.use(abuseCheck());
 
 if (!configFns.getProperty("reverseProxy.disableCompression")) {
   app.use(compression());
