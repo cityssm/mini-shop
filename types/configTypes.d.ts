@@ -9,6 +9,7 @@ export interface Config {
     reverseProxy?: {
         disableCompression: boolean;
         disableEtag: boolean;
+        blockViaXForwardedFor: boolean;
         urlPrefix: string;
     };
     mssqlConfig?: sqlTypes.config;

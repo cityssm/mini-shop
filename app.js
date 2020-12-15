@@ -23,7 +23,10 @@ if (!configFns.getProperty("reverseProxy.disableEtag")) {
 }
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
-app.use(express_abuse_points_1.abuseCheck());
+app.use(express_abuse_points_1.abuseCheck({
+    byXForwardedFor: configFns.getProperty("reverseProxy.blockViaXForwardedFor"),
+    byIP: !configFns.getProperty("reverseProxy.blockViaXForwardedFor")
+}));
 if (!configFns.getProperty("reverseProxy.disableCompression")) {
     app.use(compression());
 }

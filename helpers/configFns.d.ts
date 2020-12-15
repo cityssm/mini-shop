@@ -4,6 +4,7 @@ export declare function getProperty(propertyName: "application.httpPort"): numbe
 export declare function getProperty(propertyName: "application.https"): configTypes.Config_HTTPSConfig;
 export declare function getProperty(propertyName: "reverseProxy.disableCompression"): boolean;
 export declare function getProperty(propertyName: "reverseProxy.disableEtag"): boolean;
+export declare function getProperty(propertyName: "reverseProxy.blockViaXForwardedFor"): boolean;
 export declare function getProperty(propertyName: "reverseProxy.urlPrefix"): "";
 export declare function getProperty(propertyName: "mssqlConfig"): sqlTypes.config;
 export declare function getProperty(propertyName: "orderNumberFunction"): () => string;

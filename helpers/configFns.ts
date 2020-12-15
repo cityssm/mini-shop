@@ -37,6 +37,7 @@ configFallbackValues.set("application.httpPort", 7777);
 
 configFallbackValues.set("reverseProxy.disableCompression", false);
 configFallbackValues.set("reverseProxy.disableEtag", false);
+configFallbackValues.set("reverseProxy.blockViaXForwardedFor", false);
 configFallbackValues.set("reverseProxy.urlPrefix", "");
 
 configFallbackValues.set("orderNumberFunction", () => {
@@ -68,6 +69,7 @@ export function getProperty(propertyName: "application.https"): configTypes.Conf
 
 export function getProperty(propertyName: "reverseProxy.disableCompression"): boolean;
 export function getProperty(propertyName: "reverseProxy.disableEtag"): boolean;
+export function getProperty(propertyName: "reverseProxy.blockViaXForwardedFor"): boolean;
 export function getProperty(propertyName: "reverseProxy.urlPrefix"): "";
 
 export function getProperty(propertyName: "mssqlConfig"): sqlTypes.config;
