@@ -5,6 +5,9 @@ import * as puppeteer from "puppeteer";
 import * as http from "http";
 import * as app from "../app";
 
+import { shutdown as abuseCheckShutdown } from "@cityssm/express-abuse-points";
+import * as configFns from "../helpers/configFns";
+
 
 describe("mini-shop", () => {
 
@@ -20,14 +23,15 @@ describe("mini-shop", () => {
     httpServer.on("listening", () => {
       serverStarted = true;
     });
-
   });
 
   after(() => {
-
     try {
+      abuseCheckShutdown();
       httpServer.close();
+
     } catch (_e) {
+      console.log(_e);
       // ignore
     }
   });
@@ -36,7 +40,7 @@ describe("mini-shop", () => {
     assert.ok(serverStarted);
   });
 
-  const appURL = "http://localhost:" + portNumber.toString();
+  const appURL = "http://localhost:" + portNumber.toString() + configFns.getProperty("reverseProxy.urlPrefix");
 
   describe("simple page tests", () => {
 
@@ -47,10 +51,20 @@ describe("mini-shop", () => {
       (async () => {
         const browser = await puppeteer.launch();
         const page = await browser.newPage();
-        await page.goto(productsURL);
+
+        await page.goto(productsURL)
+          .then((res) => {
+            assert.strictEqual(res.status(), 200);
+          })
+          .catch(() => {
+            assert.fail();
+          });
 
         await browser.close();
       })()
+        .catch(() => {
+          assert.fail();
+        })
         .finally(() => {
           done();
         });
@@ -60,15 +74,26 @@ describe("mini-shop", () => {
       (async () => {
         const browser = await puppeteer.launch();
         const page = await browser.newPage();
-        await page.goto(checkoutURL);
+
+        await page.goto(checkoutURL)
+          .then((res) => {
+            assert.strictEqual(res.status(), 200);
+          })
+          .catch(() => {
+            assert.fail();
+          });
 
         await browser.close();
       })()
+        .catch(() => {
+          assert.fail();
+        })
         .finally(() => {
           done();
         });
     });
   });
+
 
   describe("error page tests", () => {
 
@@ -80,26 +105,21 @@ describe("mini-shop", () => {
         browser = await puppeteer.launch();
         const page = await browser.newPage();
 
-        let status = 0;
-
         await page.goto(appURL + "/page-not-found")
           .then((res) => {
-            status = res.status();
+            assert.strictEqual(res.status(), 404);
           })
           .catch(() => {
             assert.fail();
-          })
-          .finally(() => {
-            assert.strictEqual(status, 404);
-            done();
           });
+
+        await browser.close();
       })()
         .catch(() => {
           assert.fail();
         })
         .finally(() => {
-          // eslint-disable-next-line no-void
-          void browser.close();
+          done();
         });
     });
   });

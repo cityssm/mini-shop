@@ -13,6 +13,8 @@ const assert = require("assert");
 const puppeteer = require("puppeteer");
 const http = require("http");
 const app = require("../app");
+const express_abuse_points_1 = require("@cityssm/express-abuse-points");
+const configFns = require("../helpers/configFns");
 describe("mini-shop", () => {
     const httpServer = http.createServer(app);
     const portNumber = 52525;
@@ -25,15 +27,17 @@ describe("mini-shop", () => {
     });
     after(() => {
         try {
+            express_abuse_points_1.shutdown();
             httpServer.close();
         }
         catch (_e) {
+            console.log(_e);
         }
     });
     it("should start server starts on port " + portNumber.toString(), () => {
         assert.ok(serverStarted);
     });
-    const appURL = "http://localhost:" + portNumber.toString();
+    const appURL = "http://localhost:" + portNumber.toString() + configFns.getProperty("reverseProxy.urlPrefix");
     describe("simple page tests", () => {
         const productsURL = appURL + "/products";
         const checkoutURL = appURL + "/checkout";
@@ -41,9 +45,18 @@ describe("mini-shop", () => {
             (() => __awaiter(void 0, void 0, void 0, function* () {
                 const browser = yield puppeteer.launch();
                 const page = yield browser.newPage();
-                yield page.goto(productsURL);
+                yield page.goto(productsURL)
+                    .then((res) => {
+                    assert.strictEqual(res.status(), 200);
+                })
+                    .catch(() => {
+                    assert.fail();
+                });
                 yield browser.close();
             }))()
+                .catch(() => {
+                assert.fail();
+            })
                 .finally(() => {
                 done();
             });
@@ -52,9 +65,18 @@ describe("mini-shop", () => {
             (() => __awaiter(void 0, void 0, void 0, function* () {
                 const browser = yield puppeteer.launch();
                 const page = yield browser.newPage();
-                yield page.goto(checkoutURL);
+                yield page.goto(checkoutURL)
+                    .then((res) => {
+                    assert.strictEqual(res.status(), 200);
+                })
+                    .catch(() => {
+                    assert.fail();
+                });
                 yield browser.close();
             }))()
+                .catch(() => {
+                assert.fail();
+            })
                 .finally(() => {
                 done();
             });
@@ -66,24 +88,20 @@ describe("mini-shop", () => {
             (() => __awaiter(void 0, void 0, void 0, function* () {
                 browser = yield puppeteer.launch();
                 const page = yield browser.newPage();
-                let status = 0;
                 yield page.goto(appURL + "/page-not-found")
                     .then((res) => {
-                    status = res.status();
+                    assert.strictEqual(res.status(), 404);
                 })
                     .catch(() => {
                     assert.fail();
-                })
-                    .finally(() => {
-                    assert.strictEqual(status, 404);
-                    done();
                 });
+                yield browser.close();
             }))()
                 .catch(() => {
                 assert.fail();
             })
                 .finally(() => {
-                void browser.close();
+                done();
             });
         });
     });
