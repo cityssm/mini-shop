@@ -134,7 +134,7 @@ export function getClientSideProduct(productSKU: string) {
         productName: serverSideProduct.productName,
         price: serverSideProduct.price,
         image: serverSideProduct.image,
-        fees: serverSideProduct.fees,
+        fees: serverSideProduct.fees || [],
         formFieldsToSave: serverSideProduct.formFieldsToSave
       };
     }

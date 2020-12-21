@@ -12,9 +12,6 @@ const handler = (req, res) => {
             continue;
         }
         products[productSKU] = product;
-        if (!product.fees) {
-            continue;
-        }
         product.feeTotals = {};
         for (const feeName of product.fees) {
             const fee = configFns.getProperty("fees")[feeName];

@@ -26,11 +26,6 @@ export const handler: RequestHandler = (req, res) => {
     // Add valid product to list.
     products[productSKU] = product;
 
-    // If no additional fees, continue.
-    if (!product.fees) {
-      continue;
-    }
-
     /*
      * Calculate fees
      */
