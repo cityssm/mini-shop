@@ -2,8 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.handler = void 0;
 const configFns = require("../helpers/configFns");
-const handler = (req, res) => {
-    const productSKUs = req.body.productSKUs.split(",");
+const getProductAndFeeDetails = (productSKUs) => {
     const products = {};
     const fees = {};
     for (const productSKU of productSKUs) {
@@ -28,9 +27,14 @@ const handler = (req, res) => {
             products[productSKU] = product;
         }
     }
-    return res.json({
+    return {
         products,
         fees
-    });
+    };
+};
+const handler = (req, res) => {
+    const productSKUs = req.body.productSKUs.split(",");
+    const returnObj = getProductAndFeeDetails(productSKUs);
+    return res.json(returnObj);
 };
 exports.handler = handler;

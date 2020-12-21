@@ -1,14 +1,13 @@
 import type { RequestHandler } from "express";
 
 import * as configFns from "../helpers/configFns";
+import { Config_Fee, Config_Product } from "../types/configTypes";
 
 
-export const handler: RequestHandler = (req, res) => {
+const getProductAndFeeDetails = (productSKUs: string[]) => {
 
-  const productSKUs = (req.body.productSKUs as string).split(",");
-
-  const products = {};
-  const fees = {};
+  const products: { [productSKU: string]: Config_Product } = {};
+  const fees: { [feeName: string]: Config_Fee } = {};
 
   for (const productSKU of productSKUs) {
 
@@ -49,8 +48,18 @@ export const handler: RequestHandler = (req, res) => {
     }
   }
 
-  return res.json({
+  return {
     products,
     fees
-  });
+  };
+};
+
+
+export const handler: RequestHandler = (req, res) => {
+
+  const productSKUs = (req.body.productSKUs as string).split(",");
+
+  const returnObj = getProductAndFeeDetails(productSKUs);
+
+  return res.json(returnObj);
 };
