@@ -13,7 +13,7 @@ const config = {
             ("0" + (today.getMonth() + 1).toString()).slice(-2) +
             ("0" + today.getDate().toString()).slice(-2) +
             "-" +
-            uuid_1.v4();
+            uuid_1.v4().toUpperCase();
     },
     mssqlConfig: {
         user: "",

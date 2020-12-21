@@ -17,7 +17,7 @@ const config: configTypes.Config = {
       ("0" + (today.getMonth() + 1).toString()).slice(-2) +
       ("0" + today.getDate().toString()).slice(-2) +
       "-" +
-      uuidv4();
+      uuidv4().toUpperCase();
   },
 
   mssqlConfig: {
