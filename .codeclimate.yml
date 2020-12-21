@@ -1,5 +1,8 @@
 version: "2"
 checks:
+  complex-logic:
+    config:
+      threshold: 10
   file-lines:
     config:
       threshold: 500
