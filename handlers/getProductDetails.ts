@@ -23,13 +23,11 @@ export const handler: RequestHandler = (req, res) => {
       continue;
     }
 
-    // Add valid product to list.
-    products[productSKU] = product;
-
     /*
      * Calculate fees
      */
 
+    let addProductToObject = true;
     product.feeTotals = {};
 
     for (const feeName of product.fees) {
@@ -40,10 +38,14 @@ export const handler: RequestHandler = (req, res) => {
         product.feeTotals[feeName] = fee.feeCalculation(product);
         fees[feeName] = fee;
       } else {
-        // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
-        delete products[productSKU];
+        addProductToObject = false;
         break;
       }
+    }
+
+    // Add valid product to list.
+    if (addProductToObject) {
+      products[productSKU] = product;
     }
   }
 

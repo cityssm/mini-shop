@@ -11,7 +11,7 @@ const handler = (req, res) => {
         if (!product) {
             continue;
         }
-        products[productSKU] = product;
+        let addProductToObject = true;
         product.feeTotals = {};
         for (const feeName of product.fees) {
             const fee = configFns.getProperty("fees")[feeName];
@@ -20,9 +20,12 @@ const handler = (req, res) => {
                 fees[feeName] = fee;
             }
             else {
-                delete products[productSKU];
+                addProductToObject = false;
                 break;
             }
+        }
+        if (addProductToObject) {
+            products[productSKU] = product;
         }
     }
     return res.json({
