@@ -9,3 +9,6 @@ checks:
   method-lines:
     config:
       threshold: 200
+  return-statements:
+    config:
+      threshold: 6
