@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/cityssm/mini-shop#readme",
   "devDependencies": {
+    "@cityssm/bulma-a11y": "^0.1.1",
     "@cityssm/simple-fa5-checkbox": "^0.2.1",
     "@creativebulma/bulma-tooltip": "^1.2.0",
     "@types/compression": "^1.7.0",

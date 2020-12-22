@@ -239,12 +239,12 @@
 $family-sans-serif: 'Barlow', system-ui, sans-serif;
 $body-size: 18px;
 
-@import '../../node_modules/bulma/bulma';
-@import '../../node_modules/@creativebulma/bulma-tooltip/src/sass/index';
+@import '@cityssm/bulma-a11y/bulma-a11y';
+@import '@creativebulma/bulma-tooltip/src/sass/index';
 
 $facheck-radio-checked: '\f058';
 
-@import '../../node_modules/@cityssm/simple-fa5-checkbox/facheck-bulma';
+@import '@cityssm/simple-fa5-checkbox/facheck-bulma';
 
 // Site styles
 
