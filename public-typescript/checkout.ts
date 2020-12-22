@@ -84,7 +84,7 @@ interface CartTotals {
         "<div class=\"columns\">" +
         ("<div class=\"column is-narrow has-text-right\">" +
           "<button class=\"button is-inverted is-danger has-tooltip-arrow has-tooltip-right has-tooltip-hidden-mobile\"" +
-          " data-cart-index=\"" + cartIndex.toString() + "\" data-tooltip=\"Remove from Cart\" type=\"button\">" +
+          " data-cart-index=\"" + cartIndex.toString() + "\" data-tooltip=\"Remove from Cart\" type=\"button\" aria-label=\"Remove from Cart\">" +
           "<i class=\"fas fa-times\" aria-hidden=\"true\"></i>" +
           "<span class=\"is-hidden-tablet ml-2\">Remove from Cart</span>" +
           "</button>" +
