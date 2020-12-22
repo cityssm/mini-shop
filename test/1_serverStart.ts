@@ -44,54 +44,59 @@ describe("mini-shop", () => {
 
   describe("simple page tests", () => {
 
-    const productsURL = appURL + "/products";
-    const checkoutURL = appURL + "/checkout";
+    const urls = [
+      // css
+      appURL + "/stylesheets/style.min.css",
 
-    it("should load products page - " + productsURL, (done) => {
-      (async () => {
-        const browser = await puppeteer.launch();
-        const page = await browser.newPage();
+      // javascripts
+      appURL + "/javascripts/cart.min.js",
+      appURL + "/javascripts/checkout.min.js",
+      appURL + "/javascripts/product-view.min.js",
 
-        await page.goto(productsURL)
-          .then((res) => {
-            assert.strictEqual(res.status(), 200);
-          })
+      // libraries
+      appURL + "/lib/bulma-webapp-js/cityssm.min.js",
+      appURL + "/lib/fontawesome-free/webfonts/fa-solid-900.woff2",
+      appURL + "/lib/formToObject/formToObject.min.js",
+      appURL + "/lib/typeface-barlow/barlow-all-600.woff2",
+
+      // pages
+      appURL + "/products",
+      appURL + "/checkout"
+    ];
+
+    for (const url of urls) {
+
+      it("should load - " + url, (done) => {
+
+        (async () => {
+
+          let browser: puppeteer.Browser;
+
+          try {
+            browser = await puppeteer.launch();
+            const page = await browser.newPage();
+
+            await page.goto(url)
+              .then((res) => {
+                assert.strictEqual(res.status(), 200);
+              })
+              .catch(() => {
+                assert.fail();
+              });
+          } catch (_e) {
+
+          } finally {
+            await browser.close();
+          }
+        })()
           .catch(() => {
             assert.fail();
-          });
-
-        await browser.close();
-      })()
-        .catch(() => {
-          assert.fail();
-        })
-        .finally(() => {
-          done();
-        });
-    });
-
-    it("should load checkout page - " + checkoutURL, (done) => {
-      (async () => {
-        const browser = await puppeteer.launch();
-        const page = await browser.newPage();
-
-        await page.goto(checkoutURL)
-          .then((res) => {
-            assert.strictEqual(res.status(), 200);
           })
-          .catch(() => {
-            assert.fail();
+          .finally(() => {
+            done();
           });
-
-        await browser.close();
-      })()
-        .catch(() => {
-          assert.fail();
-        })
-        .finally(() => {
-          done();
-        });
-    });
+      });
+    }
   });
 
 
@@ -99,21 +104,25 @@ describe("mini-shop", () => {
 
     it("should return a 404 not found error", (done) => {
 
-      let browser: puppeteer.Browser;
-
       (async () => {
-        browser = await puppeteer.launch();
-        const page = await browser.newPage();
+        let browser: puppeteer.Browser;
 
-        await page.goto(appURL + "/page-not-found")
-          .then((res) => {
-            assert.strictEqual(res.status(), 404);
-          })
-          .catch(() => {
-            assert.fail();
-          });
+        try {
+          browser = await puppeteer.launch();
+          const page = await browser.newPage();
 
-        await browser.close();
+          await page.goto(appURL + "/page-not-found")
+            .then((res) => {
+              assert.strictEqual(res.status(), 404);
+            })
+            .catch(() => {
+              assert.fail();
+            });
+        } catch (_e) {
+
+        } finally {
+          await browser.close();
+        }
       })()
         .catch(() => {
           assert.fail();
