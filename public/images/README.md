@@ -13,6 +13,11 @@
 -   <https://pixabay.com/photos/accountant-accounting-adviser-1238598/>
 -   [Pixabay Licence](https://pixabay.com/service/license/)
 
+**favicon.svg**
+
+-   <https://pixabay.com/vectors/shopping-cart-caddy-shopping-trolley-304843/>
+-   [Pixabay Licence](https://pixabay.com/service/license/)
+
 **fileShelves.jpg**
 
 -   <https://pixabay.com/photos/files-ddr-archive-1633406/>
