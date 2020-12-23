@@ -25,7 +25,6 @@
     "@cityssm/bulma-a11y": "^0.2.0",
     "@cityssm/simple-fa5-checkbox": "^0.2.1",
     "@creativebulma/bulma-tooltip": "^1.2.0",
-    "@lhci/cli": "^0.6.1",
     "@types/compression": "^1.7.0",
     "@types/cookie-parser": "^1.4.2",
     "@types/ejs": "^3.0.5",
@@ -50,9 +49,7 @@
     "eslint-plugin-standard": "^5.0.0",
     "gulp": "^4.0.2",
     "gulp-minify": "^3.1.0",
-    "mocha": "^8.2.1",
     "nodemon": "^2.0.6",
-    "nyc": "^15.1.0",
     "puppeteer": "^5.5.0",
     "typescript": "^4.1.3"
   },
