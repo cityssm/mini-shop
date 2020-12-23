@@ -15,7 +15,7 @@ install:
   - npm --version
   # install modules
   - sh: npm ci
-  - sh: npm install -g mocha nyc @lhci/ci
+  - sh: npm install -g mocha nyc @lhci/cli
 
 before_test:
   # Download codeclimate test report
