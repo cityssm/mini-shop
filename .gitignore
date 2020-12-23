@@ -1,6 +1,8 @@
 *.db
 *.db-journal
 *.pem
+
+.lighthouseci/
 .nyc_output/
 bin/daemon
 coverage/

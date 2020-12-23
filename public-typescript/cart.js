@@ -1,17 +1,17 @@
-exports.cart = (function () {
-    var SESSION_STORAGE_KEY = "miniShopCart";
-    var CART_MAX_SIZE = 255;
-    var cart = sessionStorage.getItem(SESSION_STORAGE_KEY)
+exports.cart = (() => {
+    const SESSION_STORAGE_KEY = "miniShopCart";
+    const CART_MAX_SIZE = 255;
+    let cart = sessionStorage.getItem(SESSION_STORAGE_KEY)
         ? JSON.parse(sessionStorage.getItem(SESSION_STORAGE_KEY))
         : [];
     if (!cart) {
         cart = [];
     }
-    var toStorageFn = function () {
+    const toStorageFn = () => {
         sessionStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(cart));
     };
-    var renderCartButtonFn = function () {
-        var cartCountTagEle = document.getElementById("tag--cartCount");
+    const renderCartButtonFn = () => {
+        const cartCountTagEle = document.getElementById("tag--cartCount");
         if (cart.length === 0) {
             cartCountTagEle.classList.add("is-hidden");
         }
@@ -21,22 +21,22 @@ exports.cart = (function () {
         }
     };
     renderCartButtonFn();
-    var addFn = function (productFormEle) {
+    const addFn = (productFormEle) => {
         if (cart.length >= CART_MAX_SIZE) {
             return false;
         }
-        var formObj = formToObject(productFormEle);
+        const formObj = formToObject(productFormEle);
         cart.push(formObj);
         toStorageFn();
         renderCartButtonFn();
         return true;
     };
-    var removeFn = function (cartIndex) {
+    const removeFn = (cartIndex) => {
         cart.splice(cartIndex, 1);
         toStorageFn();
         renderCartButtonFn();
     };
-    var clearFn = function () {
+    const clearFn = () => {
         cart = [];
         toStorageFn();
         renderCartButtonFn();
@@ -45,7 +45,7 @@ exports.cart = (function () {
         add: addFn,
         remove: removeFn,
         clear: clearFn,
-        get: function () {
+        get: () => {
             return cart;
         },
         refresh: toStorageFn

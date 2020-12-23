@@ -10,10 +10,10 @@ import type * as sqlTypes from "mssql";
  * LOAD CONFIGURATION
  */
 
+
 let config: configTypes.Config = {};
 
 try {
-
   config = require("../data/config");
 
 } catch (e) {
@@ -30,6 +30,8 @@ Object.freeze(config);
  * SET UP FALLBACK VALUES
  */
 
+
+const configOverrides: { [propertyName: string]: any } = {};
 
 const configFallbackValues = new Map<string, any>();
 
@@ -97,7 +99,12 @@ export function getProperty(propertyName: "store.storeType"): string;
 export function getProperty(propertyName: "fees"): { [feeName: string]: configTypes.Config_Fee };
 export function getProperty(propertyName: "products"): { [productSKU: string]: configTypes.Config_Product };
 
+
 export function getProperty(propertyName: string): any {
+
+  if (configOverrides.hasOwnProperty(propertyName)) {
+    return configOverrides[propertyName];
+  }
 
   const propertyNameSplit = propertyName.split(".");
 
@@ -116,6 +123,23 @@ export function getProperty(propertyName: string): any {
   return currentObj;
 
 }
+
+
+/*
+ * SET OVERRIDES
+ */
+
+
+export function overrideProperty(propertyName: "reverseProxy.urlPrefix", propertyValue: string): void;
+
+export function overrideProperty(propertyName: string, propertyValue: any): void {
+  configOverrides[propertyName] = propertyValue;
+}
+
+
+/*
+ * SPECIAL RETURNS
+ */
 
 
 const clientSideProducts: { [productSKU: string]: configTypes.Config_Product } = {};

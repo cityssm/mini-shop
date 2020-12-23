@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getClientSideProduct = exports.getProperty = void 0;
+exports.getClientSideProduct = exports.overrideProperty = exports.getProperty = void 0;
 const uuid_1 = require("uuid");
 const log = require("fancy-log");
 let config = {};
@@ -12,6 +12,7 @@ catch (e) {
     log.error("No \"data/config.js\" found, using \"data/config-sample.js\".");
 }
 Object.freeze(config);
+const configOverrides = {};
 const configFallbackValues = new Map();
 configFallbackValues.set("application.httpPort", 7777);
 configFallbackValues.set("reverseProxy.disableCompression", false);
@@ -35,6 +36,9 @@ configFallbackValues.set("views.toPayment.headerEjs", "toPayment_redirecting.ejs
 configFallbackValues.set("fees", {});
 configFallbackValues.set("products", {});
 function getProperty(propertyName) {
+    if (configOverrides.hasOwnProperty(propertyName)) {
+        return configOverrides[propertyName];
+    }
     const propertyNameSplit = propertyName.split(".");
     let currentObj = config;
     for (let index = 0; index < propertyNameSplit.length; index += 1) {
@@ -46,6 +50,10 @@ function getProperty(propertyName) {
     return currentObj;
 }
 exports.getProperty = getProperty;
+function overrideProperty(propertyName, propertyValue) {
+    configOverrides[propertyName] = propertyValue;
+}
+exports.overrideProperty = overrideProperty;
 const clientSideProducts = {};
 function getClientSideProduct(productSKU) {
     if (Object.keys(clientSideProducts).length === 0) {

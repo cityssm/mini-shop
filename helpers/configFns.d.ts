@@ -26,4 +26,5 @@ export declare function getProperty(propertyName: "fees"): {
 export declare function getProperty(propertyName: "products"): {
     [productSKU: string]: configTypes.Config_Product;
 };
+export declare function overrideProperty(propertyName: "reverseProxy.urlPrefix", propertyValue: string): void;
 export declare function getClientSideProduct(productSKU: string): configTypes.Config_Product;

@@ -5,6 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "cross-env NODE_ENV=production node ./bin/www",
+    "start:50000": "cross-env NODE_ENV=production node ./bin/www-50000",
     "dev": "cross-env NODE_ENV=dev nodemon ./bin/www",
     "test": "mocha --timeout 30000",
     "coverage": "nyc --reporter=lcov --reporter=text --reporter=text-summary mocha --timeout 30000"
@@ -20,9 +21,10 @@
   },
   "homepage": "https://github.com/cityssm/mini-shop#readme",
   "devDependencies": {
-    "@cityssm/bulma-a11y": "^0.1.1",
+    "@cityssm/bulma-a11y": "^0.2.0",
     "@cityssm/simple-fa5-checkbox": "^0.2.1",
     "@creativebulma/bulma-tooltip": "^1.2.0",
+    "@lhci/cli": "^0.6.1",
     "@types/compression": "^1.7.0",
     "@types/cookie-parser": "^1.4.2",
     "@types/ejs": "^3.0.5",
