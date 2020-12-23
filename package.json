@@ -8,6 +8,7 @@
     "start:lh": "cross-env NODE_ENV=production node ./bin/www-lh",
     "dev": "cross-env NODE_ENV=dev nodemon ./bin/www",
     "test": "mocha --timeout 30000",
+    "test:lh": "lhci autorun",
     "coverage": "nyc --reporter=lcov --reporter=text --reporter=text-summary mocha --timeout 30000"
   },
   "repository": {

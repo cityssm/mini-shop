@@ -6,10 +6,9 @@ module.exports = {
                 "http://localhost:50000/checkout"]
         },
         assert: {
-            preset: "lighthouse:no-pwa",
             assertions: {
-                "categories:performance": ["error", { minScore: 0.9 }],
-                "categories:accessibility": ["error", { minScore: 0.9 }]
+                "categories:performance": ["warn", { minScore: 0.85 }],
+                "categories:accessibility": ["warn", { minScore: 0.95 }]
             }
         }
     }
