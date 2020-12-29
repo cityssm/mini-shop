@@ -1,9 +1,10 @@
 {
   "name": "mini-shop",
-  "version": "0.5.1-dev",
+  "version": "0.6.0-dev",
   "description": "",
   "main": "app.js",
   "scripts": {
+    "preinstall": "npx npm-force-resolutions",
     "start": "cross-env NODE_ENV=production node ./bin/www",
     "start:lh": "cross-env NODE_ENV=production node ./bin/www-lh",
     "dev": "cross-env NODE_ENV=dev nodemon ./bin/www",
@@ -38,8 +39,8 @@
     "@types/mssql": "^6.0.7",
     "@types/puppeteer": "^5.4.2",
     "@types/uuid": "^8.3.0",
-    "@typescript-eslint/eslint-plugin": "^4.11.0",
-    "@typescript-eslint/parser": "^4.11.0",
+    "@typescript-eslint/eslint-plugin": "^4.11.1",
+    "@typescript-eslint/parser": "^4.11.1",
     "bulma": "^0.9.1",
     "eslint": "^7.16.0",
     "eslint-config-standard-with-typescript": "^19.0.1",
@@ -70,5 +71,9 @@
     "morgan": "^1.10.0",
     "mssql": "^6.3.0",
     "uuid": "^8.3.2"
+  },
+  "resolutions": {
+    "axios": "0.21.1",
+    "node-addon-api": "2.0.1"
   }
 }
