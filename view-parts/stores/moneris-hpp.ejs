@@ -7,6 +7,23 @@
 
   <input name="email" type="hidden" value="<%= (order.shippingEmailAddress.length <= 50 ? order.shippingEmailAddress : "") %>" />
 
+  <%
+    const shippingName = (order.shippingName || "");
+
+    const shippingFirstName = "";
+    const shippingLastName = "";
+    const shippingCompanyName = shippingName;
+
+    if (shippingCompanyName.length > 30) {
+      shippingFirstName = shippingName.substring(0, 30);
+      shippingLastName = shippingName.substring(30, 60);
+      shippingCompanyName = shippingName.substring(60, 90);
+    }
+  %>
+
+  <input name="ship_first_name" type="hidden" value="<%= shippingFirstName.substring(0, 30) %>" />
+  <input name="ship_last_name" type="hidden" value="<%= shippingLastName.substring(0, 30) %>" />
+  <input name="ship_company_name" type="hidden" value="<%= shippingCompanyName.substring(0, 30) %>" />
   <input name="ship_address_one" type="hidden" value="<%= order.shippingAddress1.substring(0, 30) %>" />
   <input name="ship_city" type="hidden" value="<%= order.shippingCity.substring(0, 30) %>" />
   <input name="ship_state_or_province" type="hidden" value="<%= order.shippingProvince.substring(0, 30) %>" />
