@@ -11,6 +11,20 @@
 
 <h1 class="title has-text-centered mt-4"><%= product.productName %></h1>
 
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "<%= product.productName %>",
+    "sku": "<%= productSKU %>",
+    "image": "<%= urlPrefix %><%= product.image.path %>",
+    "offers": {
+      "@type": "Offer",
+      "price": "<%= product.price.toFixed(2) %>"
+    }
+  }
+</script>
+
 <form id="form--product">
   <input name="productSKU" type="hidden" value="<%= productSKU %>" />
   <input name="quantity" type="hidden" value="1" />
@@ -20,7 +34,25 @@
         <img src="<%= urlPrefix %><%= product.image.path %>" alt="<%= product.productName %>" />
       </a>
       <div class="has-text-centered">
-        $<%= product.price.toFixed(2) %>
+        $<%= product.price.toFixed(2) %><br />
+        <%
+          if (product.fees && product.fees.length > 0) {
+        %>
+          <span class="is-size-7">
+          Plus
+            <%
+              for (let i = 0; i < product.fees.length; i += 1) {
+                const feeName = product.fees[i];
+                const fee = configFns.getProperty("fees")[feeName];
+            %>
+              <%= (i === 0 ? "" : ", ") + (fee ? fee.feeName : feeName) %>
+            <%
+              }
+            %>
+          </span>
+        <%
+          }
+        %>
       </div>
     </div>
     <div class="column">
