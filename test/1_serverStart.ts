@@ -55,9 +55,7 @@ describe("mini-shop", () => {
 
       // libraries
       appURL + "/lib/bulma-webapp-js/cityssm.min.js",
-      appURL + "/lib/fontawesome-free/webfonts/fa-solid-900.woff2",
       appURL + "/lib/formToObject/formToObject.min.js",
-      appURL + "/lib/typeface-barlow/barlow-all-600.woff2",
 
       // pages
       appURL + "/products",
