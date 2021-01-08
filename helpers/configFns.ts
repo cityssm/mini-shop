@@ -65,6 +65,9 @@ configFallbackValues.set("views.toPayment.headerEjs", "toPayment_redirecting.ejs
 configFallbackValues.set("fees", {});
 configFallbackValues.set("products", {});
 
+configFallbackValues.set("currency.code", "CAD");
+configFallbackValues.set("currency.currencyName", "Canadian Dollars");
+
 
 export function getProperty(propertyName: "application.httpPort"): number;
 export function getProperty(propertyName: "application.https"): configTypes.Config_HTTPSConfig;
@@ -93,6 +96,9 @@ export function getProperty(propertyName: "views.toPayment.headerEjs"): () => st
 
 export function getProperty(propertyName: "views.order.title"): () => string;
 export function getProperty(propertyName: "views.order.headerEjs"): () => string;
+
+export function getProperty(propertyName: "currency.code"): () => string;
+export function getProperty(propertyName: "currency.currencyName"): () => string;
 
 export function getProperty(propertyName: "store.storeType"): string;
 

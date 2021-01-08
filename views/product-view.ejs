@@ -20,7 +20,9 @@
     "image": "<%= urlPrefix %><%= product.image.path %>",
     "offers": {
       "@type": "Offer",
-      "price": "<%= product.price.toFixed(2) %>"
+      "price": "<%= product.price.toFixed(2) %>",
+      "priceCurrency": "<%= configFns.getProperty("currency.code") %>",
+      "url": "<%= urlPrefix %>/products/<%= productSKU %>"
     }
   }
 </script>
@@ -34,7 +36,8 @@
         <img src="<%= urlPrefix %><%= product.image.path %>" alt="<%= product.productName %>" />
       </a>
       <div class="has-text-centered">
-        $<%= product.price.toFixed(2) %><br />
+        $<%= product.price.toFixed(2) %>
+        <abbr title="<%= configFns.getProperty("currency.currencyName") %>"><%= configFns.getProperty("currency.code") %></abbr><br />
         <%
           if (product.fees && product.fees.length > 0) {
         %>

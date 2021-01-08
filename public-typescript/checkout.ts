@@ -208,6 +208,9 @@ interface CartTotals {
 
     cartTotalContainerEle.insertAdjacentHTML("beforeend",
       "<div class=\"is-size-4 has-text-weight-bold\">Total: $" + cartTotal.toFixed(2) + "</div>");
+
+    cartTotalContainerEle.insertAdjacentHTML("beforeend",
+      "<div class=\"is-size-7 has-text-weight-bold\">Prices in " + cityssm.escapeHTML(cartTotalContainerEle.getAttribute("data-currency")) + "</div>");
   };
 
 

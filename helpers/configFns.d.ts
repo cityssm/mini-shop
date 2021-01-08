@@ -19,6 +19,8 @@ export declare function getProperty(propertyName: "views.checkout_shipping.title
 export declare function getProperty(propertyName: "views.toPayment.headerEjs"): () => string;
 export declare function getProperty(propertyName: "views.order.title"): () => string;
 export declare function getProperty(propertyName: "views.order.headerEjs"): () => string;
+export declare function getProperty(propertyName: "currency.code"): () => string;
+export declare function getProperty(propertyName: "currency.currencyName"): () => string;
 export declare function getProperty(propertyName: "store.storeType"): string;
 export declare function getProperty(propertyName: "fees"): {
     [feeName: string]: configTypes.Config_Fee;

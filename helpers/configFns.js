@@ -35,6 +35,8 @@ configFallbackValues.set("views.order.headerEjs", "order_print.ejs");
 configFallbackValues.set("views.toPayment.headerEjs", "toPayment_redirecting.ejs");
 configFallbackValues.set("fees", {});
 configFallbackValues.set("products", {});
+configFallbackValues.set("currency.code", "CAD");
+configFallbackValues.set("currency.currencyName", "Canadian Dollars");
 function getProperty(propertyName) {
     if (configOverrides.hasOwnProperty(propertyName)) {
         return configOverrides[propertyName];

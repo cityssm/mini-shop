@@ -44,6 +44,10 @@ export interface Config {
     fees?: {
         [feeName: string]: Config_Fee;
     };
+    currency?: {
+        code: string;
+        currencyName: string;
+    };
     store?: {
         storeType: "moneris-hpp";
         storeConfig: {
