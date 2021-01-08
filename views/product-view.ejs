@@ -16,6 +16,7 @@
     "@context": "https://schema.org/",
     "@type": "Product",
     "name": "<%= product.productName %>",
+    "description": "<%= product.description || "" %>",
     "sku": "<%= productSKU %>",
     "image": "<%= urlPrefix %><%= product.image.path %>",
     "offers": {
