@@ -34,25 +34,29 @@
     const product = products[productSKU];
   %>
   <div class="column is-4">
-    <div class="card">
-      <% if (product.image) { %>
-        <div class="card-image">
-          <a class="image is-<%= product.image.dimensionClass %>"  href="<%= urlPrefix %>/products/<%= productSKU %>">
-            <img src="<%= urlPrefix %><%= product.image.path %>" alt="<%= product.productName %>" />
-          </a>
-        </div>
-      <% } %>
-      <a class="card-header" href="products/<%= productSKU %>">
-        <h2 class="card-header-title has-text-centered">
-          <%= product.productName %>
-        </h2>
-      </a>
-      <% if (product.description) { %>
-        <div class="card-content">
-          <%= product.description %>
-        </div>
+    <a href="<%= urlPrefix %>/products/<%= productSKU %>">
+      <div class="card">
+        <% if (product.image) { %>
+          <div class="card-image">
+            <div class="image is-<%= product.image.dimensionClass %>">
+              <img src="<%= urlPrefix %><%= product.image.path %>" alt="<%= product.productName %>" />
+            </div>
+          </div>
         <% } %>
-      </div>
+        <div class="card-content">
+          <h2 class="title is-5"><%= product.productName %></h2>
+          <p class="has-text-weight-semibold has-text-right">
+            $<%= product.price.toFixed(2) %>
+            <abbr title="<%= configFns.getProperty("currency.currencyName") %>"><%= configFns.getProperty("currency.code") %></abbr>
+          </p>
+        </div>
+        <% if (product.description) { %>
+          <div class="card-content">
+            <%= product.description %>
+          </div>
+          <% } %>
+        </div>
+      </a>
     </div>
   <%
     }
