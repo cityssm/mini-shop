@@ -36,9 +36,11 @@
       <a class="image has-cursor-zoom-in is-<%= product.image.dimensionClass %> has-tooltip-bottom has-tooltip-arrow" data-tooltip="View Larger Picture" href="<%= urlPrefix %><%= product.image.path %>" target="_blank">
         <img src="<%= urlPrefix %><%= product.image.path %>" alt="<%= product.productName %>" />
       </a>
-      <div class="has-text-centered">
-        $<%= product.price.toFixed(2) %>
-        <abbr title="<%= configFns.getProperty("currency.currencyName") %>"><%= configFns.getProperty("currency.code") %></abbr><br />
+      <div class="has-text-centered mt-2">
+        <span class="has-text-weight-semibold">
+          $<%= product.price.toFixed(2) %>
+          <abbr title="<%= configFns.getProperty("currency.currencyName") %>"><%= configFns.getProperty("currency.code") %></abbr>
+        </span><br />
         <%
           if (product.fees && product.fees.length > 0) {
         %>
