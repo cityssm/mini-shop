@@ -4,6 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
+    "preinstall": "npx npm-force-resolutions",
     "start": "cross-env NODE_ENV=production node ./bin/www",
     "start:lh": "cross-env NODE_ENV=production node ./bin/www-lh",
     "dev": "cross-env NODE_ENV=dev nodemon ./bin/www",
@@ -70,5 +71,8 @@
     "morgan": "^1.10.0",
     "mssql": "^6.3.1",
     "uuid": "^8.3.2"
+  },
+  "resolutions": {
+    "node-addon-api": "2.0.1"
   }
 }
