@@ -76,14 +76,8 @@ app.use(urlPrefix, express.static(path.join(__dirname, "public")));
 app.use(urlPrefix + "/lib/bulma-webapp-js",
   express.static(path.join(__dirname, "node_modules", "@cityssm", "bulma-webapp-js", "dist")));
 
-app.use(urlPrefix + "/lib/fontawesome-free",
-  express.static(path.join(__dirname, "node_modules", "@fortawesome", "fontawesome-free")));
-
 app.use(urlPrefix + "/lib/formToObject",
   express.static(path.join(__dirname, "node_modules", "form_to_object", "dist")));
-
-app.use(urlPrefix + "/lib/typeface-barlow",
-  express.static(path.join(__dirname, "node_modules", "@openfonts", "barlow_all", "files")));
 
 
 /*
