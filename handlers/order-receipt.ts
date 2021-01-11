@@ -1,3 +1,4 @@
+import { recordAbuse } from "@cityssm/express-abuse-points";
 import * as configFns from "../helpers/configFns";
 
 import { getOrder as miniShopDB_getOrder } from "@cityssm/mini-shop-db/getOrder";
@@ -19,10 +20,12 @@ export const handler: RequestHandler = async (req, res) => {
 
     } else {
       return res.render("order", {
+        pageTitle: "Order " + orderNumber,
         order
       });
     }
   } else {
+    recordAbuse(req);
     return res.redirect(configFns.getProperty("reverseProxy.urlPrefix") + "/order/expired");
   }
 };

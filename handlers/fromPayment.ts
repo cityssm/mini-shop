@@ -1,3 +1,4 @@
+import { recordAbuse } from "@cityssm/express-abuse-points";
 import * as configFns from "../helpers/configFns";
 
 import { validate as monerisHPP_validate } from "../helpers/stores/moneris-hpp";
@@ -49,6 +50,7 @@ export const handler: RequestHandler = async (req, res) => {
   if (storeValidatorReturn.isValid && orderRecordMarkedAsPaid) {
     return res.redirect(urlPrefix + "/order/" + storeValidatorReturn.orderNumber + "/" + storeValidatorReturn.orderSecret);
   } else {
+    recordAbuse(req);
     return res.redirect(urlPrefix + "/order/error");
   }
 };

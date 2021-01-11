@@ -10,6 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.handler = void 0;
+const express_abuse_points_1 = require("@cityssm/express-abuse-points");
 const configFns = require("../helpers/configFns");
 const moneris_hpp_1 = require("../helpers/stores/moneris-hpp");
 const testing_free_1 = require("../helpers/stores/testing-free");
@@ -39,6 +40,7 @@ const handler = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         return res.redirect(urlPrefix + "/order/" + storeValidatorReturn.orderNumber + "/" + storeValidatorReturn.orderSecret);
     }
     else {
+        express_abuse_points_1.recordAbuse(req);
         return res.redirect(urlPrefix + "/order/error");
     }
 });

@@ -10,6 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.handler = void 0;
+const express_abuse_points_1 = require("@cityssm/express-abuse-points");
 const configFns = require("../helpers/configFns");
 const getOrder_1 = require("@cityssm/mini-shop-db/getOrder");
 const handler = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -22,11 +23,13 @@ const handler = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         }
         else {
             return res.render("order", {
+                pageTitle: "Order " + orderNumber,
                 order
             });
         }
     }
     else {
+        express_abuse_points_1.recordAbuse(req);
         return res.redirect(configFns.getProperty("reverseProxy.urlPrefix") + "/order/expired");
     }
 });
