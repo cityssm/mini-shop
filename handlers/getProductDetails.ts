@@ -1,7 +1,7 @@
-import type { RequestHandler } from "express";
-
 import * as configFns from "../helpers/configFns";
 import { Config_Fee, Config_Product } from "../types/configTypes";
+
+import type { RequestHandler } from "express";
 
 
 const getProductAndFeeDetails = (productSKUs: string[]) => {

@@ -1,7 +1,7 @@
-import type { RequestHandler } from "express";
-
 import { recordAbuse } from "@cityssm/express-abuse-points";
 import * as configFns from "../helpers/configFns";
+
+import type { RequestHandler } from "express";
 
 
 export const handler: RequestHandler = (req, res) => {
