@@ -45,7 +45,7 @@
   </div>
 </div>
 
-<table class="table is-fullwidth">
+<table class="table is-fullwidth mb-0">
   <thead>
     <tr>
       <th scope="col">Item</th>
@@ -139,12 +139,16 @@
       <th class="has-text-right is-size-5" colspan="2" scope="row">
         Total
       </th>
-      <td class="has-text-right is-size-5">
+      <td class="has-text-right has-text-weight-bold is-size-5">
         $<%= (itemTotal + feeTotal).toFixed(2) %>
       </td>
     </tr>
   </tfoot>
 </table>
+
+<p class="has-text-weight-bold has-text-right is-size-7">
+  Prices in <%= configFns.getProperty("currency.currencyName") %>
+</p>
 
 <h2 class="title is-4">
   <%= configFns.getProperty("views.checkout_shipping.title") %>
