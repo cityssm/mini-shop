@@ -8,10 +8,10 @@
     <%- include('../view-parts/footers/' + siteFooterEjs); -%>
   </footer>
 <% } %>
-<script>
+<script defer>
   window.exports = window.exports || {};
   if (window.document.documentMode) {
     window.document.body.insertAdjacentHTML("afterbegin",
-      "<div class=\"message is-danger\"><p class=\"message-body has-text-centered has-text-weight-bold\">The Internet Explorer web browser is not supported.</p></div>");
+      "<div class=\"message is-danger m-2\"><p class=\"message-body has-text-centered has-text-weight-bold\">The Internet Explorer web browser is not supported.</p></div>");
   }
 </script>
