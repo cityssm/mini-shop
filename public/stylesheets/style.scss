@@ -22,6 +22,16 @@ input[type='number'] {
   }
 }
 
+.facheck {
+  label {
+    cursor: pointer;
+  }
+
+  input:checked + label {
+    font-weight: 600;
+  }
+}
+
 .card-content + .card-content {
   border-top: 1px solid #ededed;
 }
