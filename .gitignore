@@ -1,6 +1,7 @@
 *.db
 *.db-journal
 *.pem
+*.log
 
 .lighthouseci/
 .nyc_output/
