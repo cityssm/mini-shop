@@ -80,7 +80,7 @@
               <br />
               <span class="is-size-7 has-text-weight-normal">
                 <strong><%= (fieldDefinition ? fieldDefinition.fieldName : itemField.formFieldName) %>:</strong>
-                <%= itemField.fieldValue %>
+                <%= itemField.fieldValue === "" ? "(Not Set)" : itemField.fieldValue %>
               </span>
             <%
               }
