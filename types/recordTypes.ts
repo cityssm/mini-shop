@@ -27,6 +27,7 @@ export interface ShippingForm {
 export interface CartItem {
   productSKU: string;
   quantity: string;
+  unitPrice: string;
   [formFieldName: string]: string;
 }
 

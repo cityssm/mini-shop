@@ -100,10 +100,9 @@ export interface Config_Product {
   description?: string;
   image?: {
     path: string;
-    dimensionClass: "square" | "1by1" | "5by4" | "4by3" | "3by2" |
-    "5by3" | "16by9" | "2by1" | "3by1";
+    dimensionClass: "square" | "1by1" | "5by4" | "4by3" | "3by2" | "5by3" | "16by9" | "2by1" | "3by1";
   };
-  price: number;
+  price: number | "form";
   formFieldsToSave?: Array<{
     fieldName: string;
     // formFieldName maxlength = 30

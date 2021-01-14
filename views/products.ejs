@@ -45,10 +45,12 @@
         <% } %>
         <div class="card-content">
           <h2 class="title is-5"><%= product.productName %></h2>
-          <p class="has-text-weight-semibold has-text-right">
-            $<%= product.price.toFixed(2) %>
-            <abbr title="<%= configFns.getProperty("currency.currencyName") %>"><%= configFns.getProperty("currency.code") %></abbr>
-          </p>
+          <% if (typeof (product.price) === "number") { %>
+            <p class="has-text-weight-semibold has-text-right">
+              $<%= product.price.toFixed(2) %>
+              <abbr title="<%= configFns.getProperty("currency.currencyName") %>"><%= configFns.getProperty("currency.code") %></abbr>
+            </p>
+          <% } %>
         </div>
         <% if (product.description) { %>
           <div class="card-content">

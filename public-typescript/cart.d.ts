@@ -1,1 +1,1 @@
-declare const formToObject: (formEle: HTMLFormElement) => {};
+export {};

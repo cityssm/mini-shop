@@ -124,11 +124,13 @@ interface CartTotals {
 
       const quantityColumnEle = productCardContentEle.getElementsByClassName("column--quantity")[0] as HTMLDivElement;
 
+      const unitPrice = (typeof (product.price) === "number" ? product.price : parseFloat(cartItem.unitPrice));
+
       quantityColumnEle.innerText =
         cartItem.quantity +
-        " × $" + product.price.toFixed(2);
+        " × $" + unitPrice.toFixed(2);
 
-      const itemTotal = product.price * parseInt(cartItem.quantity, 10);
+      const itemTotal = unitPrice * parseInt(cartItem.quantity, 10);
 
       const priceColumnEle = productCardContentEle.getElementsByClassName("column--price")[0] as HTMLDivElement;
 

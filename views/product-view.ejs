@@ -21,7 +21,9 @@
     "image": "<%= urlPrefix %><%= product.image.path %>",
     "offers": {
       "@type": "Offer",
-      "price": "<%= product.price.toFixed(2) %>",
+      <% if (typeof (product.price) === "number") { %>
+        "price": "<%= product.price.toFixed(2) %>",
+      <% } %>
       "priceCurrency": "<%= configFns.getProperty("currency.code") %>",
       "url": "<%= urlPrefix %>/products/<%= productSKU %>"
     }
@@ -31,35 +33,40 @@
 <form id="form--product">
   <input name="productSKU" type="hidden" value="<%= productSKU %>" />
   <input name="quantity" type="hidden" value="1" />
+  <% if (typeof (product.price) === "number") { %>
+    <input name="unitPrice" type="hidden" value="<%= product.price.toFixed(2) %>" />
+  <% } %>
   <div class="columns">
     <div class="column is-3-tablet is-4-desktop">
       <a class="image has-cursor-zoom-in is-<%= product.image.dimensionClass %> has-tooltip-bottom has-tooltip-arrow" data-tooltip="View Larger Picture" href="<%= urlPrefix %><%= product.image.path %>" target="_blank">
         <img src="<%= urlPrefix %><%= product.image.path %>" alt="<%= product.productName %>" />
       </a>
-      <div class="has-text-centered mt-2">
-        <span class="has-text-weight-semibold">
-          $<%= product.price.toFixed(2) %>
-          <abbr title="<%= configFns.getProperty("currency.currencyName") %>"><%= configFns.getProperty("currency.code") %></abbr>
-        </span><br />
-        <%
-          if (product.fees && product.fees.length > 0) {
-        %>
-          <span class="is-size-7">
-          Plus
-            <%
-              for (let i = 0; i < product.fees.length; i += 1) {
-                const feeName = product.fees[i];
-                const fee = configFns.getProperty("fees")[feeName];
-            %>
-              <%= (i === 0 ? "" : ", ") + (fee ? fee.feeName : feeName) %>
-            <%
-              }
-            %>
-          </span>
-        <%
-          }
-        %>
-      </div>
+      <% if (typeof (product.price) === "number") { %>
+        <div class="has-text-centered mt-2">
+          <span class="has-text-weight-semibold">
+            $<%= product.price.toFixed(2) %>
+            <abbr title="<%= configFns.getProperty("currency.currencyName") %>"><%= configFns.getProperty("currency.code") %></abbr>
+          </span><br />
+          <%
+            if (product.fees && product.fees.length > 0) {
+          %>
+            <span class="is-size-7">
+            Plus
+              <%
+                for (let i = 0; i < product.fees.length; i += 1) {
+                  const feeName = product.fees[i];
+                  const fee = configFns.getProperty("fees")[feeName];
+              %>
+                <%= (i === 0 ? "" : ", ") + (fee ? fee.feeName : feeName) %>
+              <%
+                }
+              %>
+            </span>
+          <%
+            }
+          %>
+        </div>
+      <% } %>
     </div>
     <div class="column">
       <% if (product.productEjs) { %>

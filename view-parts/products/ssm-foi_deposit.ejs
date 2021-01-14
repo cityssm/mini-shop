@@ -1,0 +1,31 @@
+<%
+  const idPrefix = stringFns.getUID();
+%>
+<div class="message is-info">
+  <p class="message-body">
+    This form should be used to provide a deposit
+    for a pending FOI Request.
+  </p>
+</div>
+<div class="field">
+  <label class="label" for="<%= idPrefix %>_referenceNumber">
+    FOI Reference Number:
+  </label>
+  <div class="control">
+    <input class="input" id="<%= idPrefix %>_referenceNumber" name="referenceNumber" type="text" maxlength="50" required />
+  </div>
+</div>
+<label class="label" for="<%= idPrefix %>_unitPrice">
+  Deposit Amount:
+</label>
+<div class="field has-addons">
+  <div class="control is-expanded has-icons-left">
+    <input class="input" id="<%= idPrefix %>_unitPrice" name="unitPrice" type="number" min="0" max="1000" step="0.01" required onwheel="return false" />
+    <span class="icon is-small is-left">
+      <i class="fas fa-dollar-sign" aria-hidden="true"></i>
+    </span>
+  </div>
+  <div class="control">
+    <span class="button is-static"><%= configFns.getProperty("currency.code") %></span>
+  </div>
+</div>

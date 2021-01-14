@@ -1,3 +1,5 @@
+import type * as recordTypes from "../types/recordTypes";
+
 declare const formToObject: (formEle: HTMLFormElement) => {};
 
 
@@ -6,7 +8,7 @@ exports.cart = (() => {
   const SESSION_STORAGE_KEY = "miniShopCart";
   const CART_MAX_SIZE = 255;
 
-  let cart: Array<{}> = sessionStorage.getItem(SESSION_STORAGE_KEY)
+  let cart: recordTypes.CartItem[] = sessionStorage.getItem(SESSION_STORAGE_KEY)
     ? JSON.parse(sessionStorage.getItem(SESSION_STORAGE_KEY))
     : [];
 
@@ -40,7 +42,7 @@ exports.cart = (() => {
         return false;
       }
 
-      const formObj = formToObject(productFormEle);
+      const formObj = formToObject(productFormEle) as recordTypes.CartItem;
 
       cart.push(formObj);
       toStorageFn();
