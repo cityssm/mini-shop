@@ -12,6 +12,10 @@ $facheck-radio-checked: '\f058';
 
 // Site styles
 
+main {
+  min-height: calc(100vh - 188px);
+}
+
 input[type='number'] {
   -moz-appearance: textfield;
 
@@ -33,7 +37,7 @@ input[type='number'] {
 }
 
 .card-content + .card-content {
-  border-top: 1px solid #ededed;
+  border-top: 1px solid $grey-lightest;
 }
 
 .has-margin-auto {
