@@ -31,7 +31,7 @@
       <div class="column">
         <a class="button is-medium is-<%= backgroundColorClass %> is-radiusless" href="<%= urlPrefix %>/products">
           <% if (logoImagePath) { %>
-            <img class="mr-2" src="<%= urlPrefix %><%= logoImagePath %>" alt="" style="max-height:30px" />
+            <img class="mr-2" src="<%= urlPrefix %><%= logoImagePath %>" alt="<%= configFns.getProperty("application.applicationName") %>" style="max-height:30px" />
           <% } %>
           <span class="is-hidden-mobile"><%= configFns.getProperty("application.applicationName") %></span>
         </a>
