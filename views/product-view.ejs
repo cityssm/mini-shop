@@ -2,7 +2,8 @@
 
 <nav class="breadcrumb has-bullet-separator mt-4" aria-label="breadcrumb">
   <ul>
-    <li><a href="<%= urlPrefix %>/products"><%= configFns.getProperty("views.products.title") %></a></li>
+    <li><a class="has-ws-normal" href="<%= urlPrefix %>/products">
+      <%= configFns.getProperty("views.products.title") %></a></li>
     <li class="is-active">
       <a href="#" aria-current="page"><%= product.productName %></a>
     </li>

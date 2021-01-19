@@ -33,7 +33,7 @@
           <% if (logoImagePath) { %>
             <img class="mr-2" src="<%= urlPrefix %><%= logoImagePath %>" alt="" style="max-height:30px" />
           <% } %>
-          <span><%= configFns.getProperty("application.applicationName") %></span>
+          <span class="is-hidden-mobile"><%= configFns.getProperty("application.applicationName") %></span>
         </a>
       </div>
       <div class="column is-narrow">
