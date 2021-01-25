@@ -35,6 +35,7 @@ const configOverrides: { [propertyName: string]: any } = {};
 
 const configFallbackValues = new Map<string, any>();
 
+configFallbackValues.set("application.applicationName", "Mini Shop");
 configFallbackValues.set("application.httpPort", 7777);
 
 configFallbackValues.set("reverseProxy.disableCompression", false);
@@ -43,7 +44,7 @@ configFallbackValues.set("reverseProxy.blockViaXForwardedFor", false);
 configFallbackValues.set("reverseProxy.urlPrefix", "");
 
 configFallbackValues.set("orderNumberFunction", () => {
-  return uuidv4();
+  return "RCT-" + uuidv4().toUpperCase();
 });
 
 configFallbackValues.set("site.header.backgroundColorClass", "info");

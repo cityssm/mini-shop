@@ -1,6 +1,6 @@
 import type * as sqlTypes from "mssql";
 
-type BulmaBackgroundColors =
+type BulmaColors =
   "white" | "black" | "light" | "dark" | "primary" | "link" | "info" | "success" | "warning" | "danger";
 
 export interface Config {
@@ -24,13 +24,13 @@ export interface Config {
 
   site?: {
     header?: {
-      backgroundColorClass?: BulmaBackgroundColors;
+      backgroundColorClass?: BulmaColors;
       logoImagePath?: string;
     };
     footer?: {
       isVisible?: boolean;
-      backgroundColorClass?: BulmaBackgroundColors;
-      textColorClass?: BulmaBackgroundColors;
+      backgroundColorClass?: BulmaColors;
+      textColorClass?: BulmaColors;
       footerEjs?: string;
     };
   };

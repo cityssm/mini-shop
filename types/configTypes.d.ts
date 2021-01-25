@@ -1,5 +1,5 @@
 import type * as sqlTypes from "mssql";
-declare type BulmaBackgroundColors = "white" | "black" | "light" | "dark" | "primary" | "link" | "info" | "success" | "warning" | "danger";
+declare type BulmaColors = "white" | "black" | "light" | "dark" | "primary" | "link" | "info" | "success" | "warning" | "danger";
 export interface Config {
     application?: {
         httpPort?: number;
@@ -16,13 +16,13 @@ export interface Config {
     orderNumberFunction?: () => string;
     site?: {
         header?: {
-            backgroundColorClass?: BulmaBackgroundColors;
+            backgroundColorClass?: BulmaColors;
             logoImagePath?: string;
         };
         footer?: {
             isVisible?: boolean;
-            backgroundColorClass?: BulmaBackgroundColors;
-            textColorClass?: BulmaBackgroundColors;
+            backgroundColorClass?: BulmaColors;
+            textColorClass?: BulmaColors;
             footerEjs?: string;
         };
     };

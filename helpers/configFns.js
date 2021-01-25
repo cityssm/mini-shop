@@ -14,13 +14,14 @@ catch (e) {
 Object.freeze(config);
 const configOverrides = {};
 const configFallbackValues = new Map();
+configFallbackValues.set("application.applicationName", "Mini Shop");
 configFallbackValues.set("application.httpPort", 7777);
 configFallbackValues.set("reverseProxy.disableCompression", false);
 configFallbackValues.set("reverseProxy.disableEtag", false);
 configFallbackValues.set("reverseProxy.blockViaXForwardedFor", false);
 configFallbackValues.set("reverseProxy.urlPrefix", "");
 configFallbackValues.set("orderNumberFunction", () => {
-    return uuid_1.v4();
+    return "RCT-" + uuid_1.v4().toUpperCase();
 });
 configFallbackValues.set("site.header.backgroundColorClass", "info");
 configFallbackValues.set("site.footer.isVisible", true);

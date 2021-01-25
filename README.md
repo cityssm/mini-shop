@@ -8,13 +8,15 @@
 
 ## Features
 
+-   Completely customizable product pages to capture all the information you need.
+
 -   Ties into Moneris' Hosted Pay Page for payment processing out of the box, but can be integrated with other payment processing tools.
 
 -   Configuration that can be validated in TypeScript.
 
 ## System Requirements
 
--   Any server capable of running [NodeJS](https://nodejs.org) applications.
+-   *Any* server capable of running [NodeJS](https://nodejs.org) applications.
 -   A payment processing platform, like Moneris.
 -   A database on a SQL Server for recording the orders.
 
