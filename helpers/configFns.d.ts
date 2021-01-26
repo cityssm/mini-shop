@@ -23,7 +23,7 @@ export declare function getProperty(propertyName: "currency.code"): () => string
 export declare function getProperty(propertyName: "currency.currencyName"): () => string;
 export declare function getProperty(propertyName: "store.storeType"): string;
 export declare function getProperty(propertyName: "fees"): {
-    [feeName: string]: configTypes.Config_Fee;
+    [feeName: string]: configTypes.Config_FeeDefinition;
 };
 export declare function getProperty(propertyName: "products"): {
     [productSKU: string]: configTypes.Config_Product;

@@ -9,14 +9,12 @@
 ## Features
 
 -   Completely customizable product pages to capture all the information you need.
-
 -   Ties into Moneris' Hosted Pay Page for payment processing out of the box, but can be integrated with other payment processing tools.
-
 -   Configuration that can be validated in TypeScript.
 
 ## System Requirements
 
--   *Any* server capable of running [NodeJS](https://nodejs.org) applications.
+-   _Any_ server capable of running [NodeJS](https://nodejs.org) applications.
 -   A payment processing platform, like Moneris.
 -   A database on a SQL Server for recording the orders.
 
@@ -31,6 +29,11 @@ best practices in performance and accessibility.
 [City of Sault Ste. Marie's Document Requesting Service](https://apps.saultstemarie.ca/cityapps/shop/products)
 
 [![GitHub Workflow Status](https://img.shields.io/github/workflow/status/cityssm/lighthouse-scans/apps.saultstemarie.ca-shop?label=Lighthouse%20Scans)](https://github.com/cityssm/lighthouse-scans/actions?query=workflow%3Aapps.saultstemarie.ca-shop)
+
+## Documentation
+
+-   [Config.js Documentation](docs/configJS.md)
+-   [Store Types](docs/stores.md)
 
 ## Related Projects
 

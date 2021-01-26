@@ -12,7 +12,7 @@ interface ProductDetails {
     [productSKU: string]: configTypes.Config_Product;
   };
   fees?: {
-    [feeName: string]: configTypes.Config_Fee;
+    [feeName: string]: configTypes.Config_FeeDefinition;
   };
 }
 

@@ -103,7 +103,7 @@ export function getProperty(propertyName: "currency.currencyName"): () => string
 
 export function getProperty(propertyName: "store.storeType"): string;
 
-export function getProperty(propertyName: "fees"): { [feeName: string]: configTypes.Config_Fee };
+export function getProperty(propertyName: "fees"): { [feeName: string]: configTypes.Config_FeeDefinition };
 export function getProperty(propertyName: "products"): { [productSKU: string]: configTypes.Config_Product };
 
 

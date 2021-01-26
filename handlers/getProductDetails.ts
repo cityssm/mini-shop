@@ -1,5 +1,5 @@
 import * as configFns from "../helpers/configFns";
-import { Config_Fee, Config_Product } from "../types/configTypes";
+import { Config_FeeDefinition, Config_Product } from "../types/configTypes";
 
 import type { RequestHandler } from "express";
 
@@ -7,7 +7,7 @@ import type { RequestHandler } from "express";
 const getProductAndFeeDetails = (productSKUs: string[]) => {
 
   const products: { [productSKU: string]: Config_Product } = {};
-  const fees: { [feeName: string]: Config_Fee } = {};
+  const fees: { [feeName: string]: Config_FeeDefinition } = {};
 
   for (const productSKU of productSKUs) {
 

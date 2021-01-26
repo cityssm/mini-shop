@@ -27,11 +27,11 @@ export interface Config {
         };
     };
     views?: {
-        products?: Config_View;
-        checkout?: Config_View;
-        checkout_shipping?: Config_View;
-        toPayment?: Config_View;
-        order?: Config_View;
+        products?: Config_ViewDefinition;
+        checkout?: Config_ViewDefinition;
+        checkout_shipping?: Config_ViewDefinition;
+        toPayment?: Config_ViewDefinition;
+        order?: Config_ViewDefinition;
     };
     productCategories?: Array<{
         categoryName: string;
@@ -42,7 +42,7 @@ export interface Config {
         [productSKU: string]: Config_Product;
     };
     fees?: {
-        [feeName: string]: Config_Fee;
+        [feeSKU: string]: Config_FeeDefinition;
     };
     currency?: {
         code: string;
@@ -71,7 +71,7 @@ export interface Config_HTTPSConfig {
     certPath: string;
     passphrase?: string;
 }
-export interface Config_View {
+export interface Config_ViewDefinition {
     title?: string;
     headerEjs?: string;
     footerEjs?: string;
@@ -89,12 +89,12 @@ export interface Config_Product {
         formFieldName: string;
     }>;
     fees?: string[];
-    feeTotals?: {
-        [feeName: string]: number;
-    };
     productEjs?: string;
+    feeTotals?: {
+        [feeSKU: string]: number;
+    };
 }
-export interface Config_Fee {
+export interface Config_FeeDefinition {
     feeName: string;
     feeCalculation: (product: Config_Product) => number;
 }
