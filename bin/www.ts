@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+import { onError, onListening } from "./serverFns";
+
 import * as app from "../app";
 
 import * as http from "http";
@@ -9,42 +11,6 @@ import * as fs from "fs";
 import * as log from "fancy-log";
 
 import * as configFns from "../helpers/configFns";
-
-
-function onError(error: Error) {
-
-  if (error.syscall !== "listen") {
-    throw error;
-  }
-
-  // handle specific listen errors with friendly messages
-  switch (error.code) {
-    case "EACCES":
-      console.error("Requires elevated privileges");
-      process.exit(1);
-    // break;
-
-    case "EADDRINUSE":
-      console.error("Port is already in use.");
-      process.exit(1);
-    // break;
-
-    default:
-      throw error;
-  }
-}
-
-function onListening(server: http.Server | https.Server) {
-
-  const addr = server.address();
-
-  const bind = typeof addr === "string"
-    ? "pipe " + addr
-    : "port " + addr.port.toString();
-
-  log.info("Listening on " + bind);
-
-}
 
 /**
  * Initialize HTTP
@@ -59,7 +25,7 @@ if (httpPort) {
   httpServer.listen(httpPort);
 
   httpServer.on("error", onError);
-  httpServer.on("listening", function() {
+  httpServer.on("listening", () => {
     onListening(httpServer);
   });
 

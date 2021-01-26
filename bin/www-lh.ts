@@ -1,34 +1,12 @@
 #!/usr/bin/env node
 
+import { onError } from "./serverFns";
+
 import * as http from "http";
 
 import * as log from "fancy-log";
 
 import * as configFns from "../helpers/configFns";
-
-
-function onError(error: Error) {
-
-  if (error.syscall !== "listen") {
-    throw error;
-  }
-
-  // handle specific listen errors with friendly messages
-  switch (error.code) {
-    case "EACCES":
-      console.error("Requires elevated privileges");
-      process.exit(1);
-    // break;
-
-    case "EADDRINUSE":
-      console.error("Port is already in use.");
-      process.exit(1);
-    // break;
-
-    default:
-      throw error;
-  }
-}
 
 
 /*

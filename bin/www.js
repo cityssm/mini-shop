@@ -1,41 +1,20 @@
 #!/usr/bin/env node
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const serverFns_1 = require("./serverFns");
 const app = require("../app");
 const http = require("http");
 const https = require("https");
 const fs = require("fs");
 const log = require("fancy-log");
 const configFns = require("../helpers/configFns");
-function onError(error) {
-    if (error.syscall !== "listen") {
-        throw error;
-    }
-    switch (error.code) {
-        case "EACCES":
-            console.error("Requires elevated privileges");
-            process.exit(1);
-        case "EADDRINUSE":
-            console.error("Port is already in use.");
-            process.exit(1);
-        default:
-            throw error;
-    }
-}
-function onListening(server) {
-    const addr = server.address();
-    const bind = typeof addr === "string"
-        ? "pipe " + addr
-        : "port " + addr.port.toString();
-    log.info("Listening on " + bind);
-}
 const httpPort = configFns.getProperty("application.httpPort");
 if (httpPort) {
     const httpServer = http.createServer(app);
     httpServer.listen(httpPort);
-    httpServer.on("error", onError);
-    httpServer.on("listening", function () {
-        onListening(httpServer);
+    httpServer.on("error", serverFns_1.onError);
+    httpServer.on("listening", () => {
+        serverFns_1.onListening(httpServer);
     });
     log.info("HTTP listening on " + httpPort.toString());
 }
@@ -47,9 +26,9 @@ if (httpsConfig) {
         passphrase: httpsConfig.passphrase
     }, app);
     httpsServer.listen(httpsConfig.port);
-    httpsServer.on("error", onError);
+    httpsServer.on("error", serverFns_1.onError);
     httpsServer.on("listening", function () {
-        onListening(httpsServer);
+        serverFns_1.onListening(httpsServer);
     });
     log.info("HTTPS listening on " + httpsConfig.port.toString());
 }
