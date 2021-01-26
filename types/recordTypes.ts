@@ -1,14 +1,3 @@
-export interface MonerisResponse {
-  response_order_id: string;
-  result: string;
-  card: string;
-  cardholder: string;
-  charge_total: string;
-  bank_transaction_id: string;
-  rvar_sGUID: string;
-}
-
-
 export interface ShippingForm {
   fullName: string;
   address: string;

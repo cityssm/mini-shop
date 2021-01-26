@@ -50,7 +50,7 @@ if (httpsConfig) {
 
   httpsServer.on("error", onError);
 
-  httpsServer.on("listening", function() {
+  httpsServer.on("listening", () => {
     onListening(httpsServer);
   });
 

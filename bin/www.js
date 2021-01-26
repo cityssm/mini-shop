@@ -27,7 +27,7 @@ if (httpsConfig) {
     }, app);
     httpsServer.listen(httpsConfig.port);
     httpsServer.on("error", serverFns_1.onError);
-    httpsServer.on("listening", function () {
+    httpsServer.on("listening", () => {
         serverFns_1.onListening(httpsServer);
     });
     log.info("HTTPS listening on " + httpsConfig.port.toString());
