@@ -22,10 +22,11 @@ Be nice!  :smile:
 ### How to report a bug or suggest an enhancement
 
 **If you find a security vulnerability, do NOT open an issue. Email
-[mailto:corporateapps@cityssm.on.ca](corporateapps@cityssm.on.ca) instead.**
+[corporateapps@cityssm.on.ca](mailto:corporateapps@cityssm.on.ca) instead.**
 
 For all other bug reports, feature requests, or enhancements,
-open an issue and use the closest template.
+[open an issue](https://github.com/cityssm/mini-shop/issues/new/choose)
+and use the closest template.
 
 ### Thanks Again
 
