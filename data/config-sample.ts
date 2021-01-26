@@ -95,7 +95,11 @@ const config: configTypes.Config = {
     hst: {
       feeName: "HST",
       feeCalculation: (product: configTypes.Config_Product) => {
-        return product.price * 0.13;
+        if (typeof (product.price) === "string") {
+          return 0;
+        } else {
+          return product.price * 0.13;
+        }
       }
     }
   },
