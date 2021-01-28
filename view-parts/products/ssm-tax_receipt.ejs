@@ -3,11 +3,24 @@
 %>
 <div class="message is-info mb-6">
   <div class="message-body">
-    <p>Tax Receipts can only be issued to property owners who have owned their property for the full calendar year.</p>
+    <p>Tax documents can only be issued to property owners who have owned their property for the full calendar year.</p>
     <p class="mt-1">In cases where ownership has changed mid-year, please refer to your Statement of Adjustments.</p>
   </div>
 </div>
 
+<div class="field">
+  <label class="label" for="<%= idPrefix %>_documentType">
+    Document Type:
+  </label>
+  <div class="control">
+    <div class="select is-fullwidth">
+      <select id="<%= idPrefix %>_documentType" name="documentType" required>
+        <option>Property Tax Receipt</option>
+        <option>Property Tax Bill Reprint</option>
+      </select>
+    </div>
+  </div>
+</div>
 <div class="field">
   <label class="label" for="<%= idPrefix %>_propertyAddress">
     Property Address:
@@ -51,7 +64,7 @@
 
 <div class="message is-info my-6">
   <div class="message-body">
-    <p>Tax receipt requests are non-refundable.</p>
+    <p>Tax document requests are non-refundable.</p>
     <p>Please allow three to five business days for processing.</p>
   </div>
 </div>
