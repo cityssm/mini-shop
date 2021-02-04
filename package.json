@@ -36,7 +36,7 @@
     "@types/mocha": "^8.2.0",
     "@types/morgan": "^1.9.2",
     "@types/mssql": "^6.0.7",
-    "@types/puppeteer": "^5.4.2",
+    "@types/puppeteer": "^5.4.3",
     "@types/uuid": "^8.3.0",
     "@typescript-eslint/eslint-plugin": "^4.14.1",
     "@typescript-eslint/parser": "^4.14.1",
