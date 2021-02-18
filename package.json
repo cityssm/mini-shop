@@ -33,7 +33,7 @@
     "@types/gulp": "^4.0.8",
     "@types/gulp-minify": "^3.1.0",
     "@types/http-errors": "^1.8.0",
-    "@types/mocha": "^8.2.0",
+    "@types/mocha": "^8.2.1",
     "@types/morgan": "^1.9.2",
     "@types/mssql": "^6.0.7",
     "@types/puppeteer": "^5.4.3",
