@@ -10,9 +10,9 @@
   <%
     const shippingName = (order.shippingName || "");
 
-    const shippingFirstName = "";
-    const shippingLastName = "";
-    const shippingCompanyName = shippingName;
+    let shippingFirstName = "";
+    let shippingLastName = "";
+    let shippingCompanyName = shippingName;
 
     if (shippingCompanyName.length > 30) {
       shippingFirstName = shippingName.substring(0, 30);
