@@ -5,7 +5,6 @@ import { abuseCheck } from "@cityssm/express-abuse-points";
 import * as compression from "compression";
 import * as path from "path";
 import * as cookieParser from "cookie-parser";
-import * as logger from "morgan";
 
 import * as miniShopDB from "@cityssm/mini-shop-db/config";
 
@@ -16,6 +15,9 @@ import * as dateTimeFns from "@cityssm/expressjs-server-js/dateTimeFns";
 import * as routerCheckout from "./routes/checkout";
 import * as routerOrder from "./routes/order";
 import * as routerProducts from "./routes/products";
+
+import { debug } from "debug";
+const debugApp = debug("mini-shop:app");
 
 
 /*
@@ -53,7 +55,11 @@ if (!configFns.getProperty("reverseProxy.disableCompression")) {
   app.use(compression());
 }
 
-app.use(logger("dev"));
+app.use((req, _res, next) => {
+  debugApp(req.method + " " + req.url);
+  next();
+});
+
 app.use(express.json());
 
 app.use(express.urlencoded({

@@ -5,7 +5,6 @@ const express_abuse_points_1 = require("@cityssm/express-abuse-points");
 const compression = require("compression");
 const path = require("path");
 const cookieParser = require("cookie-parser");
-const logger = require("morgan");
 const miniShopDB = require("@cityssm/mini-shop-db/config");
 const configFns = require("./helpers/configFns");
 const stringFns = require("@cityssm/expressjs-server-js/stringFns");
@@ -13,6 +12,8 @@ const dateTimeFns = require("@cityssm/expressjs-server-js/dateTimeFns");
 const routerCheckout = require("./routes/checkout");
 const routerOrder = require("./routes/order");
 const routerProducts = require("./routes/products");
+const debug_1 = require("debug");
+const debugApp = debug_1.debug("mini-shop:app");
 miniShopDB.setMSSQLConfig(configFns.getProperty("mssqlConfig"));
 miniShopDB.setOrderNumberFunction(configFns.getProperty("orderNumberFunction"));
 miniShopDB.setProducts(configFns.getProperty("products"));
@@ -30,7 +31,10 @@ app.use(express_abuse_points_1.abuseCheck({
 if (!configFns.getProperty("reverseProxy.disableCompression")) {
     app.use(compression());
 }
-app.use(logger("dev"));
+app.use((req, _res, next) => {
+    debugApp(req.method + " " + req.url);
+    next();
+});
 app.use(express.json());
 app.use(express.urlencoded({
     extended: false

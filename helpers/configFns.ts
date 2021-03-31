@@ -1,9 +1,10 @@
 import { v4 as uuidv4 } from "uuid";
 
-import * as log from "fancy-log";
-
 import type * as configTypes from "../types/configTypes";
 import type * as sqlTypes from "mssql";
+
+import { debug } from "debug";
+const debugConfig = debug("mini-shop:configFns");
 
 
 /*
@@ -20,7 +21,7 @@ try {
 
   config = require("../data/config-sample");
 
-  log.error("No \"data/config.js\" found, using \"data/config-sample.js\".");
+  debugConfig("No \"data/config.js\" found, using \"data/config-sample.js\".");
 }
 
 Object.freeze(config);

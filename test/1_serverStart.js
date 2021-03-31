@@ -1,13 +1,4 @@
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 const assert = require("assert");
 const puppeteer = require("puppeteer");
@@ -51,12 +42,12 @@ describe("mini-shop", () => {
         ];
         for (const url of urls) {
             it("should load - " + url, (done) => {
-                (() => __awaiter(void 0, void 0, void 0, function* () {
+                (async () => {
                     let browser;
                     try {
-                        browser = yield puppeteer.launch();
-                        const page = yield browser.newPage();
-                        yield page.goto(url)
+                        browser = await puppeteer.launch();
+                        const page = await browser.newPage();
+                        await page.goto(url)
                             .then((res) => {
                             assert.strictEqual(res.status(), 200);
                         })
@@ -67,9 +58,9 @@ describe("mini-shop", () => {
                     catch (_e) {
                     }
                     finally {
-                        yield browser.close();
+                        await browser.close();
                     }
-                }))()
+                })()
                     .catch(() => {
                     assert.fail();
                 })
@@ -81,12 +72,12 @@ describe("mini-shop", () => {
     });
     describe("error page tests", () => {
         it("should return a 404 not found error", (done) => {
-            (() => __awaiter(void 0, void 0, void 0, function* () {
+            (async () => {
                 let browser;
                 try {
-                    browser = yield puppeteer.launch();
-                    const page = yield browser.newPage();
-                    yield page.goto(appURL + "/page-not-found")
+                    browser = await puppeteer.launch();
+                    const page = await browser.newPage();
+                    await page.goto(appURL + "/page-not-found")
                         .then((res) => {
                         assert.strictEqual(res.status(), 404);
                     })
@@ -97,9 +88,9 @@ describe("mini-shop", () => {
                 catch (_e) {
                 }
                 finally {
-                    yield browser.close();
+                    await browser.close();
                 }
-            }))()
+            })()
                 .catch(() => {
                 assert.fail();
             })
