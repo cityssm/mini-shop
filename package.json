@@ -54,7 +54,7 @@
   "dependencies": {
     "@cityssm/bulma-webapp-js": "^1.0.0",
     "@cityssm/express-abuse-points": "^0.3.3",
-    "@cityssm/expressjs-server-js": "^1.0.4",
+    "@cityssm/expressjs-server-js": "^1.0.5",
     "@cityssm/mini-shop-db": "^1.4.1",
     "compression": "^1.7.4",
     "cookie-parser": "^1.4.5",
