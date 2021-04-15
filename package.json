@@ -52,7 +52,7 @@
     "typescript": "^4.2.3"
   },
   "dependencies": {
-    "@cityssm/bulma-webapp-js": "^1.0.0",
+    "@cityssm/bulma-webapp-js": "^1.1.2",
     "@cityssm/express-abuse-points": "^0.3.3",
     "@cityssm/expressjs-server-js": "^1.0.4",
     "@cityssm/mini-shop-db": "^1.4.1",
