@@ -24,12 +24,12 @@
   <input name="ship_first_name" type="hidden" value="<%= shippingFirstName.substring(0, 30) %>" />
   <input name="ship_last_name" type="hidden" value="<%= shippingLastName.substring(0, 30) %>" />
   <input name="ship_company_name" type="hidden" value="<%= shippingCompanyName.substring(0, 30) %>" />
-  <input name="ship_address_one" type="hidden" value="<%= order.shippingAddress1.substring(0, 30) %>" />
-  <input name="ship_city" type="hidden" value="<%= order.shippingCity.substring(0, 30) %>" />
-  <input name="ship_state_or_province" type="hidden" value="<%= order.shippingProvince.substring(0, 30) %>" />
-  <input name="ship_postal_code" type="hidden" value="<%= order.shippingPostalCode.substring(0, 30) %>" />
-  <input name="ship_country" type="hidden" value="<%= order.shippingCountry.substring(0, 30) %>" />
-  <input name="ship_phone" type="hidden" value="<%= order.shippingPhoneNumberDay.substring(0, 30) %>" />
+  <input name="ship_address_one" type="hidden" value="<%= (order.shippingAddress1 || "").substring(0, 30) %>" />
+  <input name="ship_city" type="hidden" value="<%= (order.shippingCity || "").substring(0, 30) %>" />
+  <input name="ship_state_or_province" type="hidden" value="<%= (order.shippingProvince || "").substring(0, 30) %>" />
+  <input name="ship_postal_code" type="hidden" value="<%= (order.shippingPostalCode || "").substring(0, 30) %>" />
+  <input name="ship_country" type="hidden" value="<%= (order.shippingCountry || "").substring(0, 30) %>" />
+  <input name="ship_phone" type="hidden" value="<%= (order.shippingPhoneNumberDay || "").substring(0, 30) %>" />
 
   <%
     let itemIndex = 0;
