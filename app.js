@@ -48,7 +48,7 @@ app.use(function (_req, res, next) {
     res.locals.configFns = configFns;
     res.locals.dateTimeFns = dateTimeFns;
     res.locals.stringFns = stringFns;
-    res.locals.urlPrefix = configFns.getProperty("reverseProxy.urlPrefix");
+    res.locals.urlPrefix = urlPrefix;
     res.locals.pageTitle = "";
     next();
 });
