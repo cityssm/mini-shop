@@ -13,7 +13,7 @@
     "dev": "cross-env NODE_ENV=dev DEBUG=mini-shop:* nodemon ./bin/www",
     "test": "mocha --timeout 30000",
     "test:lh": "cross-env NODE_ENV=production DEBUG=mini-shop:* lhci autorun",
-    "coverage": "nyc --reporter=lcov --reporter=text --reporter=text-summary mocha --timeout 30000"
+    "coverage": "c8 --reporter=lcov --reporter=text --reporter=text-summary mocha --timeout 30000"
   },
   "repository": {
     "type": "git",

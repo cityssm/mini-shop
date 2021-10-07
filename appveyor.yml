@@ -16,7 +16,7 @@ install:
   - npm --version
   # install modules
   - sh: npm ci
-  - sh: npm install -g mocha nyc @lhci/cli
+  - sh: npm install -g mocha c8 @lhci/cli
 
 before_test:
   # Download codeclimate test report
@@ -25,7 +25,7 @@ before_test:
 
 test_script:
   - lhci autorun
-  - nyc --reporter=lcov mocha --timeout 30000
+  - c8 --reporter=lcov --reporter=text --reporter=text-summary mocha --timeout 30000
 
 after_test:
   # Send test result to codeclimate
