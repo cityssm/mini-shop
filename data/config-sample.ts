@@ -6,7 +6,7 @@ import type * as configTypes from "../types/configTypes";
 export const config: configTypes.Config = {
 
   application: {
-    httpPort: 52525,
+    httpPort: 52_525,
     applicationName: "Sample Clothing Store"
   },
 
@@ -95,11 +95,9 @@ export const config: configTypes.Config = {
     hst: {
       feeName: "HST",
       feeCalculation: (product: configTypes.Config_Product) => {
-        if (typeof (product.price) === "string") {
-          return 0;
-        } else {
-          return product.price * 0.13;
-        }
+        return typeof (product.price) === "string"
+          ? 0
+          : product.price * 0.13;
       }
     }
   },

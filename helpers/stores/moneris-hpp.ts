@@ -18,9 +18,9 @@ interface MonerisResponse {
 }
 
 
-export const validate = async (req: Request): Promise<StoreValidatorReturn> => {
+export const validate = async (request: Request): Promise<StoreValidatorReturn> => {
 
-  const monerisResponse: MonerisResponse = req.body;
+  const monerisResponse: MonerisResponse = request.body;
 
   /*
    * Check result
@@ -93,7 +93,7 @@ export const validate = async (req: Request): Promise<StoreValidatorReturn> => {
       cardholder: monerisResponse.cardholder,
       card: monerisResponse.card,
       f4l4: monerisResponse.f4l4,
-      charge_total: req.body.charge_total
+      charge_total: request.body.charge_total
     }
   };
 };

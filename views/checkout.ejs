@@ -2,9 +2,9 @@
 
 <nav class="breadcrumb has-bullet-separator mt-4" aria-label="breadcrumb">
   <ul>
-    <li><a class="has-ws-normal" href="<%= urlPrefix %>/products"><%= configFns.getProperty("views.products.title") %></a></li>
+    <li><a class="has-ws-normal" href="<%= urlPrefix %>/products"><%= configFunctions.getProperty("views.products.title") %></a></li>
     <li class="is-active">
-      <a href="#" aria-current="page"><%= configFns.getProperty("views.checkout.title") %></a>
+      <a href="#" aria-current="page"><%= configFunctions.getProperty("views.checkout.title") %></a>
     </li>
   </ul>
 </nav>
@@ -12,7 +12,7 @@
 <div class="level mt-4">
   <div class="level-left">
     <h1 class="title is-3">
-      <%= configFns.getProperty("views.checkout.title") %>
+      <%= configFunctions.getProperty("views.checkout.title") %>
     </h1>
   </div>
   <div class="level-right has-text-right">
@@ -26,7 +26,7 @@
 </div>
 
 <%
-  const checkoutHeaderEJS = configFns.getProperty("views.checkout.headerEjs");
+  const checkoutHeaderEJS = configFunctions.getProperty("views.checkout.headerEjs");
 %>
 <% if (checkoutHeaderEJS) { %>
   <%- include('../view-parts/headers/' + checkoutHeaderEJS); -%>
@@ -40,15 +40,15 @@
 </ul>
 
 <div class="card has-text-right">
-  <div class="card-content" id="container--cartTotal" data-currency="<%= configFns.getProperty("currency.currencyName") %>"></div>
+  <div class="card-content" id="container--cartTotal" data-currency="<%= configFunctions.getProperty("currency.currencyName") %>"></div>
 </div>
 
 <form class="mt-4 is-hidden" id="form--shipping">
   <h2 class="title is-4">
-    <%= configFns.getProperty("views.checkout_shipping.title") %>
+    <%= configFunctions.getProperty("views.checkout_shipping.title") %>
   </h2>
   <%
-    const shippingHeaderEJS = configFns.getProperty("views.checkout_shipping.headerEjs");
+    const shippingHeaderEJS = configFunctions.getProperty("views.checkout_shipping.headerEjs");
   %>
   <% if (shippingHeaderEJS) { %>
     <%- include('../view-parts/headers/' + shippingHeaderEJS); -%>
@@ -136,7 +136,7 @@
   </div>
 
   <%
-    const shippingFooterEJS = configFns.getProperty("views.checkout_shipping.footerEjs");
+    const shippingFooterEJS = configFunctions.getProperty("views.checkout_shipping.footerEjs");
   %>
   <% if (shippingFooterEJS) { %>
     <%- include('../view-parts/footers/' + shippingFooterEJS); -%>

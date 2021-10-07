@@ -1,9 +1,9 @@
 import type { Request } from "express";
 import type { StoreValidatorReturn } from "./types";
 
-export const validate = (req: Request): StoreValidatorReturn => {
+export const validate = (request: Request): StoreValidatorReturn => {
 
-  const orderNumber = req.body.orderNumber;
+  const orderNumber = request.body.orderNumber;
 
   if (!orderNumber || orderNumber === "") {
     return {
@@ -12,7 +12,7 @@ export const validate = (req: Request): StoreValidatorReturn => {
     };
   }
 
-  const orderSecret = req.body.orderSecret;
+  const orderSecret = request.body.orderSecret;
 
   if (!orderSecret || orderSecret === "") {
     return {

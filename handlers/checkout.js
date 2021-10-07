@@ -1,5 +1,5 @@
-export const handler = (_req, res) => {
-    return res.render("checkout", {
+export const handler = (_request, response) => {
+    return response.render("checkout", {
         pageTitle: "Checkout"
     });
 };

@@ -7,7 +7,7 @@
 
   <title>
     <%= (pageTitle ? pageTitle + ": " : "") %>
-    <%= configFns.getProperty("application.applicationName") %>
+    <%= configFunctions.getProperty("application.applicationName") %>
   </title>
 
   <link rel="icon" href="<%= urlPrefix %>/images/favicon.svg" />
@@ -21,8 +21,8 @@
 </head>
 
 <%
-  const logoImagePath = configFns.getProperty("site.header.logoImagePath");
-  const backgroundColorClass = configFns.getProperty("site.header.backgroundColorClass");
+  const logoImagePath = configFunctions.getProperty("site.header.logoImagePath");
+  const backgroundColorClass = configFunctions.getProperty("site.header.backgroundColorClass");
 %>
 
 <body>
@@ -31,9 +31,9 @@
       <div class="column">
         <a class="button is-medium is-<%= backgroundColorClass %> is-radiusless" href="<%= urlPrefix %>/products">
           <% if (logoImagePath) { %>
-            <img class="mr-2" src="<%= urlPrefix %><%= logoImagePath %>" alt="<%= configFns.getProperty("application.applicationName") %>" style="max-height:30px" />
+            <img class="mr-2" src="<%= urlPrefix %><%= logoImagePath %>" alt="<%= configFunctions.getProperty("application.applicationName") %>" style="max-height:30px" />
           <% } %>
-          <span class="is-hidden-mobile"><%= configFns.getProperty("application.applicationName") %></span>
+          <span class="is-hidden-mobile"><%= configFunctions.getProperty("application.applicationName") %></span>
         </a>
       </div>
       <div class="column is-narrow">

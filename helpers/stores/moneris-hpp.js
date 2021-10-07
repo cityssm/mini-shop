@@ -1,6 +1,6 @@
 import { getOrderNumberBySecret } from "@cityssm/mini-shop-db/getOrderNumberBySecret.js";
-export const validate = async (req) => {
-    const monerisResponse = req.body;
+export const validate = async (request) => {
+    const monerisResponse = request.body;
     const resultCode = monerisResponse.result;
     if (!resultCode) {
         return {
@@ -46,7 +46,7 @@ export const validate = async (req) => {
             cardholder: monerisResponse.cardholder,
             card: monerisResponse.card,
             f4l4: monerisResponse.f4l4,
-            charge_total: req.body.charge_total
+            charge_total: request.body.charge_total
         }
     };
 };

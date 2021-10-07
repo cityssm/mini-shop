@@ -3,7 +3,7 @@
 <nav class="breadcrumb has-bullet-separator mt-4" aria-label="breadcrumb">
   <ul>
     <li><a class="has-ws-normal" href="<%= urlPrefix %>/products">
-      <%= configFns.getProperty("views.products.title") %></a></li>
+      <%= configFunctions.getProperty("views.products.title") %></a></li>
     <li class="is-active">
       <a href="#" aria-current="page"><%= product.productName %></a>
     </li>
@@ -25,7 +25,7 @@
       <% if (typeof (product.price) === "number") { %>
         "price": "<%= product.price.toFixed(2) %>",
       <% } %>
-      "priceCurrency": "<%= configFns.getProperty("currency.code") %>",
+      "priceCurrency": "<%= configFunctions.getProperty("currency.code") %>",
       "url": "<%= urlPrefix %>/products/<%= productSKU %>"
     }
   }
@@ -46,7 +46,7 @@
         <div class="has-text-centered mt-2">
           <span class="has-text-weight-semibold">
             $<%= product.price.toFixed(2) %>
-            <abbr title="<%= configFns.getProperty("currency.currencyName") %>"><%= configFns.getProperty("currency.code") %></abbr>
+            <abbr title="<%= configFunctions.getProperty("currency.currencyName") %>"><%= configFunctions.getProperty("currency.code") %></abbr>
           </span><br />
           <%
             if (product.fees && product.fees.length > 0) {
@@ -56,7 +56,7 @@
               <%
                 for (let i = 0; i < product.fees.length; i += 1) {
                   const feeName = product.fees[i];
-                  const fee = configFns.getProperty("fees")[feeName];
+                  const fee = configFunctions.getProperty("fees")[feeName];
               %>
                 <%= (i === 0 ? "" : ", ") + (fee ? fee.feeName : feeName) %>
               <%

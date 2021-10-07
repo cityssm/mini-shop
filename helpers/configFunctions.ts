@@ -4,7 +4,7 @@ import type * as configTypes from "../types/configTypes";
 import type * as sqlTypes from "mssql";
 
 import debug from "debug";
-const debugConfig = debug("mini-shop:configFns");
+const debugConfig = debug("mini-shop:configFunctions");
 
 
 /*
@@ -17,7 +17,7 @@ let config: configTypes.Config = {};
 try {
   config = (await import("../data/config.js")).config;
 
-} catch (e) {
+} catch {
 
   config = (await import("../data/config-sample.js")).config;
 
@@ -32,9 +32,9 @@ Object.freeze(config);
  */
 
 
-const configOverrides: { [propertyName: string]: any } = {};
+const configOverrides: { [propertyName: string]: unknown } = {};
 
-const configFallbackValues = new Map<string, any>();
+const configFallbackValues = new Map<string, unknown>();
 
 configFallbackValues.set("application.applicationName", "Mini Shop");
 configFallbackValues.set("application.httpPort", 7777);
@@ -108,7 +108,7 @@ export function getProperty(propertyName: "fees"): { [feeName: string]: configTy
 export function getProperty(propertyName: "products"): { [productSKU: string]: configTypes.Config_Product };
 
 
-export function getProperty(propertyName: string): any {
+export function getProperty(propertyName: string): unknown {
 
   if (configOverrides.hasOwnProperty(propertyName)) {
     return configOverrides[propertyName];
@@ -116,19 +116,19 @@ export function getProperty(propertyName: string): any {
 
   const propertyNameSplit = propertyName.split(".");
 
-  let currentObj = config;
+  let currentObject = config;
 
-  for (let index = 0; index < propertyNameSplit.length; index += 1) {
+  for (const element of propertyNameSplit) {
 
-    currentObj = currentObj[propertyNameSplit[index]];
+    currentObject = currentObject[element];
 
-    if (!currentObj) {
+    if (!currentObject) {
       return configFallbackValues.get(propertyName);
     }
 
   }
 
-  return currentObj;
+  return currentObject;
 
 }
 
@@ -140,7 +140,7 @@ export function getProperty(propertyName: string): any {
 
 export function overrideProperty(propertyName: "reverseProxy.urlPrefix", propertyValue: string): void;
 
-export function overrideProperty(propertyName: string, propertyValue: any): void {
+export function overrideProperty(propertyName: string, propertyValue: unknown): void {
   configOverrides[propertyName] = propertyValue;
 }
 

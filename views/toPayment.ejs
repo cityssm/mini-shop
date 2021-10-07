@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <title>
-    <%= configFns.getProperty("application.applicationName") %>
+    <%= configFunctions.getProperty("application.applicationName") %>
   </title>
 
   <link rel="icon" href="<%= urlPrefix %>/images/favicon.png" />
@@ -19,7 +19,7 @@
     <main class="container">
       <%
         // header
-        const headerEjs = configFns.getProperty("views.toPayment.headerEjs");
+        const headerEjs = configFunctions.getProperty("views.toPayment.headerEjs");
       %>
       <% if (headerEjs) { %>
         <%- include('../view-parts/headers/' + headerEjs); -%>
@@ -27,13 +27,13 @@
 
       <%
         // store
-        const storeType = configFns.getProperty("store.storeType");
+        const storeType = configFunctions.getProperty("store.storeType");
       %>
       <%- include("../view-parts/stores/" + storeType + ".ejs"); -%>
 
       <%
         // footer
-        const footerEjs = configFns.getProperty("views.toPayment.footerEjs");
+        const footerEjs = configFunctions.getProperty("views.toPayment.footerEjs");
       %>
       <% if (footerEjs) { %>
         <%- include('../view-parts/footers/' + footerEjs); -%>

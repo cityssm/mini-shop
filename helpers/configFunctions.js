@@ -1,11 +1,11 @@
 import { v4 as uuidv4 } from "uuid";
 import debug from "debug";
-const debugConfig = debug("mini-shop:configFns");
+const debugConfig = debug("mini-shop:configFunctions");
 let config = {};
 try {
     config = (await import("../data/config.js")).config;
 }
-catch (e) {
+catch (_a) {
     config = (await import("../data/config-sample.js")).config;
     debugConfig("No \"data/config.js\" found, using \"data/config-sample.js\".");
 }
@@ -41,14 +41,14 @@ export function getProperty(propertyName) {
         return configOverrides[propertyName];
     }
     const propertyNameSplit = propertyName.split(".");
-    let currentObj = config;
-    for (let index = 0; index < propertyNameSplit.length; index += 1) {
-        currentObj = currentObj[propertyNameSplit[index]];
-        if (!currentObj) {
+    let currentObject = config;
+    for (const element of propertyNameSplit) {
+        currentObject = currentObject[element];
+        if (!currentObject) {
             return configFallbackValues.get(propertyName);
         }
     }
-    return currentObj;
+    return currentObject;
 }
 export function overrideProperty(propertyName, propertyValue) {
     configOverrides[propertyName] = propertyValue;

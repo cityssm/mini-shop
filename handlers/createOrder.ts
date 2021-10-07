@@ -4,11 +4,11 @@ import type { RequestHandler } from "express";
 import type { ShippingForm } from "../types/recordTypes";
 
 
-export const handler: RequestHandler = async (req, res) => {
+export const handler: RequestHandler = async (request, response) => {
 
-  const formData = req.body as ShippingForm;
+  const formData = request.body as ShippingForm;
 
   const orderIDs = await miniShopDB_createOrder(formData);
 
-  return res.json(orderIDs);
+  return response.json(orderIDs);
 };

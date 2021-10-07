@@ -1,21 +1,21 @@
 import { recordAbuse } from "@cityssm/express-abuse-points";
-import * as configFns from "../helpers/configFns.js";
+import * as configFunctions from "../helpers/configFunctions.js";
 
 import type { RequestHandler } from "express";
 
 
-export const handler: RequestHandler = (req, res) => {
+export const handler: RequestHandler = (request, response) => {
 
-  const productSKU = req.params.productSKU;
-  const product = configFns.getProperty("products")[productSKU];
+  const productSKU = request.params.productSKU;
+  const product = configFunctions.getProperty("products")[productSKU];
 
   if (!product) {
-    recordAbuse(req);
-    res.status(404);
-    return res.render("product-notFound");
+    recordAbuse(request);
+    response.status(404);
+    return response.render("product-notFound");
   }
 
-  return res.render("product-view", {
+  return response.render("product-view", {
     pageTitle: product.productName,
     productSKU,
     product

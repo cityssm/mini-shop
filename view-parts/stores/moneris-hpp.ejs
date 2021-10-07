@@ -1,6 +1,6 @@
-<form id="form--toPayment" action="<%= configFns.getProperty("store.storeConfig.storeURL") %>" method="post">
-  <input name="ps_store_id" type="hidden" value="<%= configFns.getProperty("store.storeConfig.ps_store_id") %>" />
-  <input name="hpp_key" type="hidden" value="<%= configFns.getProperty("store.storeConfig.hpp_key") %>" />
+<form id="form--toPayment" action="<%= configFunctions.getProperty("store.storeConfig.storeURL") %>" method="post">
+  <input name="ps_store_id" type="hidden" value="<%= configFunctions.getProperty("store.storeConfig.ps_store_id") %>" />
+  <input name="hpp_key" type="hidden" value="<%= configFunctions.getProperty("store.storeConfig.hpp_key") %>" />
 
   <input name="order_id" type="hidden" value="<%= order.orderNumber.substring(0, 50) %>" />
   <input name="rvarSecret" type="hidden" value="<%= order.orderSecret %>" />
@@ -44,7 +44,7 @@
 
       const itemIndexPadded = ("00" + itemIndex.toString()).slice(-3);
 
-      const product = configFns.getProperty("products")[item.productSKU];
+      const product = configFunctions.getProperty("products")[item.productSKU];
   %>
   <input name="id<%= itemIndexPadded %>" type="hidden" value="<%= item.productSKU.substring(0, 10) %>" />
   <input name="description<%= itemIndexPadded %>" type="hidden" value="<%= (product ? product.productName : item.productSKU).substring(0, 15) %>" />
@@ -54,7 +54,7 @@
   <%
     }
 
-    const storeFeeConfig = configFns.getProperty("store.storeConfig.fees") | {};
+    const storeFeeConfig = configFunctions.getProperty("store.storeConfig.fees") | {};
 
     for (const fee of order.fees) {
 
@@ -81,7 +81,7 @@
 
         const itemIndexPadded = ("00" + itemIndex.toString()).slice(-3);
 
-        const feeConfig = configFns.getProperty("fees")[fee.feeName];
+        const feeConfig = configFunctions.getProperty("fees")[fee.feeName];
   %>
       <input name="id<%= itemIndexPadded %>" type="hidden" value="<%= fee.feeName.substring(0, 10) %>" />
       <input name="description<%= itemIndexPadded %>" type="hidden" value="<%= (feeConfig ? feeConfig.feeName : fee.feeName).substring(0, 15) %>" />

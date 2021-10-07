@@ -2,19 +2,19 @@
 
 <nav class="breadcrumb has-bullet-separator mt-4" aria-label="breadcrumb">
   <ul>
-    <li><a href="<%= urlPrefix %>/products"><%= configFns.getProperty("views.products.title") %></a></li>
+    <li><a href="<%= urlPrefix %>/products"><%= configFunctions.getProperty("views.products.title") %></a></li>
     <li class="is-active">
-      <a href="#" aria-current="page"><%= configFns.getProperty("views.order.title") %></a>
+      <a href="#" aria-current="page"><%= configFunctions.getProperty("views.order.title") %></a>
     </li>
   </ul>
 </nav>
 
 <h1 class="title is-3 has-text-centered mt-4">
-  <%= configFns.getProperty("views.order.title") %>
+  <%= configFunctions.getProperty("views.order.title") %>
 </h1>
 
 <%
-  const headerEjs = configFns.getProperty("views.order.headerEjs");
+  const headerEjs = configFunctions.getProperty("views.order.headerEjs");
   if (headerEjs) {
 %>
   <%- include("../view-parts/headers/" + headerEjs); -%>
@@ -59,7 +59,7 @@
 
       for (const item of order.items) {
 
-        const productConfig = configFns.getProperty("products")[item.productSKU];
+        const productConfig = configFunctions.getProperty("products")[item.productSKU];
         itemTotal += item.itemTotal;
     %>
       <tr>
@@ -116,7 +116,7 @@
     <tbody>
       <%
         for (const fee of order.fees) {
-          const feeConfig = configFns.getProperty("fees")[fee.feeName];
+          const feeConfig = configFunctions.getProperty("fees")[fee.feeName];
           feeTotal += fee.feeTotal;
       %>
       <tr>
@@ -147,11 +147,11 @@
 </table>
 
 <p class="has-text-weight-bold has-text-right is-size-7">
-  Prices in <%= configFns.getProperty("currency.currencyName") %>
+  Prices in <%= configFunctions.getProperty("currency.currencyName") %>
 </p>
 
 <h2 class="title is-4">
-  <%= configFns.getProperty("views.checkout_shipping.title") %>
+  <%= configFunctions.getProperty("views.checkout_shipping.title") %>
 </h2>
 
 <div class="columns">
@@ -189,7 +189,7 @@
 </div>
 
 <%
-  const footerEjs = configFns.getProperty("views.order.footerEjs");
+  const footerEjs = configFunctions.getProperty("views.order.footerEjs");
   if (footerEjs) {
 %>
   <%- include("../view-parts/footers/" + footerEjs); -%>

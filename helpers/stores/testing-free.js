@@ -1,12 +1,12 @@
-export const validate = (req) => {
-    const orderNumber = req.body.orderNumber;
+export const validate = (request) => {
+    const orderNumber = request.body.orderNumber;
     if (!orderNumber || orderNumber === "") {
         return {
             isValid: false,
             errorCode: "missingOrderNumber"
         };
     }
-    const orderSecret = req.body.orderSecret;
+    const orderSecret = request.body.orderSecret;
     if (!orderSecret || orderSecret === "") {
         return {
             isValid: false,

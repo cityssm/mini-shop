@@ -83,12 +83,9 @@ export const config = {
         hst: {
             feeName: "HST",
             feeCalculation: (product) => {
-                if (typeof (product.price) === "string") {
-                    return 0;
-                }
-                else {
-                    return product.price * 0.13;
-                }
+                return typeof (product.price) === "string"
+                    ? 0
+                    : product.price * 0.13;
             }
         }
     },

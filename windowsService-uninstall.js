@@ -1,8 +1,6 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const node_windows_1 = require("node-windows");
-const path = require("path");
-var svc = new node_windows_1.Service({
+import { Service } from "node-windows";
+import * as path from "path";
+var svc = new Service({
     name: "Mini Shop",
     script: path.join(__dirname, "bin", "www.js")
 });

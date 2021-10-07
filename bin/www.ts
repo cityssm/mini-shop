@@ -1,4 +1,4 @@
-import { onError, onListening } from "./serverFns.js";
+import { onError, onListening } from "./serverFunctions.js";
 
 import { app } from "../app.js";
 
@@ -6,7 +6,7 @@ import * as http from "http";
 import * as https from "https";
 import * as fs from "fs";
 
-import * as configFunctions from "../helpers/configFns.js";
+import * as configFunctions from "../helpers/configFunctions.js";
 
 import Debug from "debug";
 const debug = Debug("mini-shop:www");

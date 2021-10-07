@@ -3,10 +3,10 @@ import * as assert from "assert";
 import * as puppeteer from "puppeteer";
 
 import * as http from "http";
-import app from "../app";
+import { app } from "../app.js";
 
 import { shutdown as abuseCheckShutdown } from "@cityssm/express-abuse-points";
-import * as configFns from "../helpers/configFns";
+import * as configFunctions from "../helpers/configFunctions.js";
 
 
 describe("mini-shop", () => {
@@ -30,8 +30,8 @@ describe("mini-shop", () => {
       abuseCheckShutdown();
       httpServer.close();
 
-    } catch (_e) {
-      console.log(_e);
+    } catch (error) {
+      console.log(error);
       // ignore
     }
   });
@@ -40,7 +40,7 @@ describe("mini-shop", () => {
     assert.ok(serverStarted);
   });
 
-  const appURL = "http://localhost:" + portNumber.toString() + configFns.getProperty("reverseProxy.urlPrefix");
+  const appURL = "http://localhost:" + portNumber.toString() + configFunctions.getProperty("reverseProxy.urlPrefix");
 
   describe("simple page tests", () => {
 
@@ -75,13 +75,13 @@ describe("mini-shop", () => {
             const page = await browser.newPage();
 
             await page.goto(url)
-              .then((res) => {
-                assert.strictEqual(res.status(), 200);
+              .then((response) => {
+                assert.strictEqual(response.status(), 200);
               })
               .catch(() => {
                 assert.fail();
               });
-          } catch (_e) {
+          } catch (error) {
 
           } finally {
             await browser.close();

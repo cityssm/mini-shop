@@ -1,11 +1,11 @@
-import { onError } from "./serverFns";
-import { app } from "../app.js";
+import { onError } from "./serverFunctions.js";
 import * as http from "http";
-import * as configFunctions from "../helpers/configFns";
+import * as configFunctions from "../helpers/configFunctions.js";
 import Debug from "debug";
-const debug = Debug("mini-shop:www");
+const debug = Debug("mini-shop:www-lh");
 configFunctions.overrideProperty("reverseProxy.urlPrefix", "");
 debug(configFunctions.getProperty("reverseProxy.urlPrefix"));
+const app = (await import("../app.js")).app;
 const httpPort = 50000;
 const httpServer = http.createServer(app);
 httpServer.listen(httpPort);

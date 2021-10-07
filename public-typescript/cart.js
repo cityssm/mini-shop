@@ -1,5 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 exports.cart = (() => {
     const SESSION_STORAGE_KEY = "miniShopCart";
     const CART_MAX_SIZE = 255;
@@ -53,3 +51,4 @@ exports.cart = (() => {
         refresh: toStorageFn
     };
 })();
+export {};

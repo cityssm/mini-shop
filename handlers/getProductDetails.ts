@@ -1,4 +1,4 @@
-import * as configFns from "../helpers/configFns.js";
+import * as configFunctions from "../helpers/configFunctions.js";
 import { Config_FeeDefinition, Config_Product } from "../types/configTypes";
 
 import type { RequestHandler } from "express";
@@ -15,7 +15,7 @@ const getProductAndFeeDetails = (productSKUs: string[]) => {
      * Validate the product SKU
      */
 
-    const product = configFns.getClientSideProduct(productSKU);
+    const product = configFunctions.getClientSideProduct(productSKU);
 
     // If product not available, don't add it to the list.
     if (!product) {
@@ -31,7 +31,7 @@ const getProductAndFeeDetails = (productSKUs: string[]) => {
 
     for (const feeName of product.fees) {
 
-      const fee = configFns.getProperty("fees")[feeName];
+      const fee = configFunctions.getProperty("fees")[feeName];
 
       if (fee) {
         product.feeTotals[feeName] = fee.feeCalculation(product);
@@ -55,11 +55,11 @@ const getProductAndFeeDetails = (productSKUs: string[]) => {
 };
 
 
-export const handler: RequestHandler = (req, res) => {
+export const handler: RequestHandler = (request, response) => {
 
-  const productSKUs = (req.body.productSKUs as string).split(",");
+  const productSKUs = (request.body.productSKUs as string).split(",");
 
-  const returnObj = getProductAndFeeDetails(productSKUs);
+  const returnObject = getProductAndFeeDetails(productSKUs);
 
-  return res.json(returnObj);
+  return response.json(returnObject);
 };

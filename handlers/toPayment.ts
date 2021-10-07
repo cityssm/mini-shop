@@ -3,21 +3,16 @@ import { getOrder as miniShopDB_getOrder } from "@cityssm/mini-shop-db/getOrder.
 import type { RequestHandler } from "express";
 
 
-export const handler: RequestHandler = async (req, res) => {
+export const handler: RequestHandler = async (request, response) => {
 
-  const orderNumber: string = req.body.orderNumber;
-  const orderSecret: string = req.body.orderSecret;
+  const orderNumber: string = request.body.orderNumber;
+  const orderSecret: string = request.body.orderSecret;
 
   const order = await miniShopDB_getOrder(orderNumber, orderSecret, false);
 
-  if (!order) {
-
-    return res.render("toPayment-expired");
-
-  } else {
-
-    return res.render("toPayment", {
+  return !order
+    ? response.render("toPayment-expired")
+    : response.render("toPayment", {
       order
     });
-  }
 };

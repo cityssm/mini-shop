@@ -1,9 +1,9 @@
   </main>
 </div>
-<% if (configFns.getProperty("site.footer.isVisible")) { %>
-  <footer class="px-5 py-3 has-background-<%= configFns.getProperty("site.footer.backgroundColorClass") %> has-text-<%= configFns.getProperty("site.footer.textColorClass") %>">
+<% if (configFunctions.getProperty("site.footer.isVisible")) { %>
+  <footer class="px-5 py-3 has-background-<%= configFunctions.getProperty("site.footer.backgroundColorClass") %> has-text-<%= configFunctions.getProperty("site.footer.textColorClass") %>">
     <%
-      const siteFooterEjs = configFns.getProperty("site.footer.footerEjs");
+      const siteFooterEjs = configFunctions.getProperty("site.footer.footerEjs");
     %>
     <%- include('../view-parts/footers/' + siteFooterEjs); -%>
   </footer>

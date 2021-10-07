@@ -1,5 +1,5 @@
 import { recordAbuse } from "@cityssm/express-abuse-points";
-import * as configFns from "../helpers/configFns.js";
+import * as configFunctions from "../helpers/configFunctions.js";
 
 import { validate as monerisHPP_validate } from "../helpers/stores/moneris-hpp.js";
 import { validate as testingFree_validate } from "../helpers/stores/testing-free.js";
@@ -10,11 +10,11 @@ import type { RequestHandler } from "express";
 import type { StoreValidatorReturn } from "../helpers/stores/types";
 
 
-export const handler: RequestHandler = async (req, res) => {
+export const handler: RequestHandler = async (request, response) => {
 
   // Validate store-specific result
 
-  const storeType = configFns.getProperty("store.storeType");
+  const storeType = configFunctions.getProperty("store.storeType");
 
   let storeValidatorReturn: StoreValidatorReturn = {
     isValid: false,
@@ -24,11 +24,11 @@ export const handler: RequestHandler = async (req, res) => {
   switch (storeType) {
 
     case "moneris-hpp":
-      storeValidatorReturn = await monerisHPP_validate(req);
+      storeValidatorReturn = await monerisHPP_validate(request);
       break;
 
     case "testing-free":
-      storeValidatorReturn = testingFree_validate(req);
+      storeValidatorReturn = testingFree_validate(request);
       break;
 
     default:
@@ -45,12 +45,12 @@ export const handler: RequestHandler = async (req, res) => {
 
   // Redirect to receipt
 
-  const urlPrefix = configFns.getProperty("reverseProxy.urlPrefix");
+  const urlPrefix = configFunctions.getProperty("reverseProxy.urlPrefix");
 
   if (storeValidatorReturn.isValid && orderRecordMarkedAsPaid) {
-    return res.redirect(urlPrefix + "/order/" + storeValidatorReturn.orderNumber + "/" + storeValidatorReturn.orderSecret);
+    return response.redirect(urlPrefix + "/order/" + storeValidatorReturn.orderNumber + "/" + storeValidatorReturn.orderSecret);
   } else {
-    recordAbuse(req);
-    return res.redirect(urlPrefix + "/order/error");
+    recordAbuse(request);
+    return response.redirect(urlPrefix + "/order/error");
   }
 };
