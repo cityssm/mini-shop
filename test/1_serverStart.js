@@ -76,14 +76,14 @@ describe("mini-shop", () => {
                     browser = await puppeteer.launch();
                     const page = await browser.newPage();
                     await page.goto(appURL + "/page-not-found")
-                        .then((res) => {
-                        assert.strictEqual(res.status(), 404);
+                        .then((response) => {
+                        assert.strictEqual(response.status(), 404);
                     })
                         .catch(() => {
                         assert.fail();
                     });
                 }
-                catch (_e) {
+                catch (_a) {
                 }
                 finally {
                     await browser.close();

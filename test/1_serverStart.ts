@@ -12,7 +12,7 @@ import * as configFunctions from "../helpers/configFunctions.js";
 describe("mini-shop", () => {
 
   const httpServer = http.createServer(app);
-  const portNumber = 52525;
+  const portNumber = 52_525;
 
   let serverStarted = false;
 
@@ -110,13 +110,13 @@ describe("mini-shop", () => {
           const page = await browser.newPage();
 
           await page.goto(appURL + "/page-not-found")
-            .then((res) => {
-              assert.strictEqual(res.status(), 404);
+            .then((response) => {
+              assert.strictEqual(response.status(), 404);
             })
             .catch(() => {
               assert.fail();
             });
-        } catch (_e) {
+        } catch {
 
         } finally {
           await browser.close();
