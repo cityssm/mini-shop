@@ -2,8 +2,8 @@ import createError from "http-errors";
 import express from "express";
 
 import { abuseCheck } from "@cityssm/express-abuse-points";
-import * as compression from "compression";
-import * as path from "path";
+import compression from "compression";
+import path from "path";
 import cookieParser from "cookie-parser";
 
 import * as miniShopDB from "@cityssm/mini-shop-db/config.js";
