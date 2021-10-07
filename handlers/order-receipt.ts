@@ -1,7 +1,7 @@
 import { recordAbuse } from "@cityssm/express-abuse-points";
-import * as configFns from "../helpers/configFns";
+import * as configFns from "../helpers/configFns.js";
 
-import { getOrder as miniShopDB_getOrder } from "@cityssm/mini-shop-db/getOrder";
+import { getOrder as miniShopDB_getOrder } from "@cityssm/mini-shop-db/getOrder.js";
 
 import type { RequestHandler } from "express";
 

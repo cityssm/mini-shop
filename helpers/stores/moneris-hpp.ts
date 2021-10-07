@@ -1,4 +1,4 @@
-import { getOrderNumberBySecret } from "@cityssm/mini-shop-db/getOrderNumberBySecret";
+import { getOrderNumberBySecret } from "@cityssm/mini-shop-db/getOrderNumberBySecret.js";
 
 import type { Request } from "express";
 import type { StoreValidatorReturn } from "./types";

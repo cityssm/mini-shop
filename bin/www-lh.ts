@@ -1,12 +1,13 @@
-#!/usr/bin/env node
-
 import { onError } from "./serverFns";
+
+import { app } from "../app.js";
 
 import * as http from "http";
 
-import * as log from "fancy-log";
+import * as configFunctions from "../helpers/configFns";
 
-import * as configFns from "../helpers/configFns";
+import Debug from "debug";
+const debug = Debug("mini-shop:www");
 
 
 /*
@@ -14,8 +15,8 @@ import * as configFns from "../helpers/configFns";
  */
 
 
-configFns.overrideProperty("reverseProxy.urlPrefix", "");
-log(configFns.getProperty("reverseProxy.urlPrefix"));
+configFunctions.overrideProperty("reverseProxy.urlPrefix", "");
+debug(configFunctions.getProperty("reverseProxy.urlPrefix"));
 
 
 /**
@@ -23,9 +24,7 @@ log(configFns.getProperty("reverseProxy.urlPrefix"));
 */
 
 
-import app = require("../app");
-
-const httpPort = 50000;
+const httpPort = 50_000;
 
 const httpServer = http.createServer(app);
 
@@ -34,4 +33,4 @@ httpServer.listen(httpPort);
 httpServer.on("error", onError);
 
 
-log.info("HTTP listening on " + httpPort.toString());
+debug("HTTP listening on " + httpPort.toString());

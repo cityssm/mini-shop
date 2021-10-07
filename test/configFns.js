@@ -1,7 +1,5 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const assert = require("assert");
-const configFns = require("../helpers/configFns");
+import * as assert from "assert";
+import * as configFns from "../helpers/configFns";
 describe("configFns - properties with default values", () => {
     describe("application", () => {
         it("should return a number from application.httpPort", () => {

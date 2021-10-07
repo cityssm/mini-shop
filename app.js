@@ -1,30 +1,30 @@
-"use strict";
-const createError = require("http-errors");
-const express = require("express");
-const express_abuse_points_1 = require("@cityssm/express-abuse-points");
-const compression = require("compression");
-const path = require("path");
-const cookieParser = require("cookie-parser");
-const miniShopDB = require("@cityssm/mini-shop-db/config");
-const configFns = require("./helpers/configFns");
-const stringFns = require("@cityssm/expressjs-server-js/stringFns");
-const dateTimeFns = require("@cityssm/expressjs-server-js/dateTimeFns");
-const routerCheckout = require("./routes/checkout");
-const routerOrder = require("./routes/order");
-const routerProducts = require("./routes/products");
-const debug_1 = require("debug");
-const debugApp = debug_1.debug("mini-shop:app");
+import createError from "http-errors";
+import express from "express";
+import { abuseCheck } from "@cityssm/express-abuse-points";
+import * as compression from "compression";
+import * as path from "path";
+import cookieParser from "cookie-parser";
+import * as miniShopDB from "@cityssm/mini-shop-db/config.js";
+import * as configFns from "./helpers/configFns.js";
+import * as stringFns from "@cityssm/expressjs-server-js/stringFns.js";
+import * as dateTimeFns from "@cityssm/expressjs-server-js/dateTimeFns.js";
+import routerCheckout from "./routes/checkout.js";
+import routerOrder from "./routes/order.js";
+import routerProducts from "./routes/products.js";
+import debug from "debug";
+const debugApp = debug("mini-shop:app");
+const __dirname = ".";
 miniShopDB.setMSSQLConfig(configFns.getProperty("mssqlConfig"));
 miniShopDB.setOrderNumberFunction(configFns.getProperty("orderNumberFunction"));
 miniShopDB.setProducts(configFns.getProperty("products"));
 miniShopDB.setFees(configFns.getProperty("fees"));
-const app = express();
+export const app = express();
 if (!configFns.getProperty("reverseProxy.disableEtag")) {
     app.set("etag", false);
 }
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
-app.use(express_abuse_points_1.abuseCheck({
+app.use(abuseCheck({
     byXForwardedFor: configFns.getProperty("reverseProxy.blockViaXForwardedFor"),
     byIP: !configFns.getProperty("reverseProxy.blockViaXForwardedFor")
 }));
@@ -67,4 +67,4 @@ app.use(function (err, req, res, _next) {
     res.status(err.status || 500);
     res.render("error");
 });
-module.exports = app;
+export default app;

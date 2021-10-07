@@ -1,5 +1,5 @@
 import { recordAbuse } from "@cityssm/express-abuse-points";
-import * as configFns from "../helpers/configFns";
+import * as configFns from "../helpers/configFns.js";
 
 import type { RequestHandler } from "express";
 

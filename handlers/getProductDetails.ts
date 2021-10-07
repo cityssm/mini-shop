@@ -1,4 +1,4 @@
-import * as configFns from "../helpers/configFns";
+import * as configFns from "../helpers/configFns.js";
 import { Config_FeeDefinition, Config_Product } from "../types/configTypes";
 
 import type { RequestHandler } from "express";

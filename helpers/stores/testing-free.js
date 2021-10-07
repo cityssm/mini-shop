@@ -1,7 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.validate = void 0;
-const validate = (req) => {
+export const validate = (req) => {
     const orderNumber = req.body.orderNumber;
     if (!orderNumber || orderNumber === "") {
         return {
@@ -23,4 +20,3 @@ const validate = (req) => {
         paymentID: orderNumber
     };
 };
-exports.validate = validate;

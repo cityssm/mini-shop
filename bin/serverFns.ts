@@ -1,7 +1,8 @@
-import * as log from "fancy-log";
-
 import type * as http from "http";
 import type * as https from "https";
+
+import Debug from "debug";
+const debug = Debug("mini-shop:sreverFns");
 
 
 export const onError = (error: Error) => {
@@ -35,5 +36,5 @@ export const onListening = (server: http.Server | https.Server) => {
     ? "pipe " + addr
     : "port " + addr.port.toString();
 
-  log.info("Listening on " + bind);
+  debug("Listening on " + bind);
 };

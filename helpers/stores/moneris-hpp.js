@@ -1,17 +1,5 @@
-"use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.validate = void 0;
-const getOrderNumberBySecret_1 = require("@cityssm/mini-shop-db/getOrderNumberBySecret");
-const validate = (req) => __awaiter(void 0, void 0, void 0, function* () {
+import { getOrderNumberBySecret } from "@cityssm/mini-shop-db/getOrderNumberBySecret.js";
+export const validate = async (req) => {
     const monerisResponse = req.body;
     const resultCode = monerisResponse.result;
     if (!resultCode) {
@@ -40,7 +28,7 @@ const validate = (req) => __awaiter(void 0, void 0, void 0, function* () {
             errorCode: "missingOrderSecret"
         };
     }
-    const orderNumberDB = yield getOrderNumberBySecret_1.getOrderNumberBySecret(orderSecret);
+    const orderNumberDB = await getOrderNumberBySecret(orderSecret);
     if (!orderNumberDB || !orderNumberForm.includes(orderNumberDB)) {
         return {
             isValid: false,
@@ -61,5 +49,4 @@ const validate = (req) => __awaiter(void 0, void 0, void 0, function* () {
             charge_total: req.body.charge_total
         }
     };
-});
-exports.validate = validate;
+};

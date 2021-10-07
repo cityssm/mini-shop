@@ -1,10 +1,10 @@
 import { recordAbuse } from "@cityssm/express-abuse-points";
-import * as configFns from "../helpers/configFns";
+import * as configFns from "../helpers/configFns.js";
 
-import { validate as monerisHPP_validate } from "../helpers/stores/moneris-hpp";
-import { validate as testingFree_validate } from "../helpers/stores/testing-free";
+import { validate as monerisHPP_validate } from "../helpers/stores/moneris-hpp.js";
+import { validate as testingFree_validate } from "../helpers/stores/testing-free.js";
 
-import { updateOrderAsPaid } from "@cityssm/mini-shop-db/updateOrderAsPaid";
+import { updateOrderAsPaid } from "@cityssm/mini-shop-db/updateOrderAsPaid.js";
 
 import type { RequestHandler } from "express";
 import type { StoreValidatorReturn } from "../helpers/stores/types";

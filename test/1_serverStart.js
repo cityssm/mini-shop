@@ -1,11 +1,9 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const assert = require("assert");
-const puppeteer = require("puppeteer");
-const http = require("http");
-const app = require("../app");
-const express_abuse_points_1 = require("@cityssm/express-abuse-points");
-const configFns = require("../helpers/configFns");
+import * as assert from "assert";
+import * as puppeteer from "puppeteer";
+import * as http from "http";
+import app from "../app";
+import { shutdown as abuseCheckShutdown } from "@cityssm/express-abuse-points";
+import * as configFns from "../helpers/configFns";
 describe("mini-shop", () => {
     const httpServer = http.createServer(app);
     const portNumber = 52525;
@@ -18,7 +16,7 @@ describe("mini-shop", () => {
     });
     after(() => {
         try {
-            express_abuse_points_1.shutdown();
+            abuseCheckShutdown();
             httpServer.close();
         }
         catch (_e) {

@@ -1,15 +1,12 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.getClientSideProduct = exports.overrideProperty = exports.getProperty = void 0;
-const uuid_1 = require("uuid");
-const debug_1 = require("debug");
-const debugConfig = debug_1.debug("mini-shop:configFns");
+import { v4 as uuidv4 } from "uuid";
+import debug from "debug";
+const debugConfig = debug("mini-shop:configFns");
 let config = {};
 try {
-    config = require("../data/config");
+    config = (await import("../data/config.js")).config;
 }
 catch (e) {
-    config = require("../data/config-sample");
+    config = (await import("../data/config-sample.js")).config;
     debugConfig("No \"data/config.js\" found, using \"data/config-sample.js\".");
 }
 Object.freeze(config);
@@ -22,7 +19,7 @@ configFallbackValues.set("reverseProxy.disableEtag", false);
 configFallbackValues.set("reverseProxy.blockViaXForwardedFor", false);
 configFallbackValues.set("reverseProxy.urlPrefix", "");
 configFallbackValues.set("orderNumberFunction", () => {
-    return "RCT-" + uuid_1.v4().toUpperCase();
+    return "RCT-" + uuidv4().toUpperCase();
 });
 configFallbackValues.set("site.header.backgroundColorClass", "info");
 configFallbackValues.set("site.footer.isVisible", true);
@@ -39,7 +36,7 @@ configFallbackValues.set("fees", {});
 configFallbackValues.set("products", {});
 configFallbackValues.set("currency.code", "CAD");
 configFallbackValues.set("currency.currencyName", "Canadian Dollars");
-function getProperty(propertyName) {
+export function getProperty(propertyName) {
     if (configOverrides.hasOwnProperty(propertyName)) {
         return configOverrides[propertyName];
     }
@@ -53,13 +50,11 @@ function getProperty(propertyName) {
     }
     return currentObj;
 }
-exports.getProperty = getProperty;
-function overrideProperty(propertyName, propertyValue) {
+export function overrideProperty(propertyName, propertyValue) {
     configOverrides[propertyName] = propertyValue;
 }
-exports.overrideProperty = overrideProperty;
 const clientSideProducts = {};
-function getClientSideProduct(productSKU) {
+export function getClientSideProduct(productSKU) {
     if (Object.keys(clientSideProducts).length === 0) {
         const serverSideProducts = getProperty("products");
         for (const serverProductSKU of Object.keys(serverSideProducts)) {
@@ -75,4 +70,3 @@ function getClientSideProduct(productSKU) {
     }
     return clientSideProducts[productSKU];
 }
-exports.getClientSideProduct = getClientSideProduct;

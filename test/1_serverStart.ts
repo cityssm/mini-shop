@@ -3,7 +3,7 @@ import * as assert from "assert";
 import * as puppeteer from "puppeteer";
 
 import * as http from "http";
-import * as app from "../app";
+import app from "../app";
 
 import { shutdown as abuseCheckShutdown } from "@cityssm/express-abuse-points";
 import * as configFns from "../helpers/configFns";

@@ -1,11 +1,8 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.handler = void 0;
-const getOrder_1 = require("@cityssm/mini-shop-db/getOrder");
-const handler = async (req, res) => {
+import { getOrder as miniShopDB_getOrder } from "@cityssm/mini-shop-db/getOrder.js";
+export const handler = async (req, res) => {
     const orderNumber = req.body.orderNumber;
     const orderSecret = req.body.orderSecret;
-    const order = await getOrder_1.getOrder(orderNumber, orderSecret, false);
+    const order = await miniShopDB_getOrder(orderNumber, orderSecret, false);
     if (!order) {
         return res.render("toPayment-expired");
     }
@@ -15,4 +12,3 @@ const handler = async (req, res) => {
         });
     }
 };
-exports.handler = handler;

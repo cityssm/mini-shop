@@ -1,10 +1,10 @@
 import { Router } from "express";
 
-import { handler as handler_products } from "../handlers/products";
-import { handler as handler_productView } from "../handlers/product-view";
+import { handler as handler_products } from "../handlers/products.js";
+import { handler as handler_productView } from "../handlers/product-view.js";
 
 
-const router = Router();
+export const router = Router();
 
 
 router.get("/", handler_products);
@@ -13,4 +13,4 @@ router.get("/", handler_products);
 router.get("/:productSKU", handler_productView);
 
 
-export = router;
+export default router;

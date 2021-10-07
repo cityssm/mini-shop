@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 import type * as configTypes from "../types/configTypes";
 
 
-const config: configTypes.Config = {
+export const config: configTypes.Config = {
 
   application: {
     httpPort: 52525,
@@ -110,4 +110,4 @@ const config: configTypes.Config = {
 };
 
 
-module.exports = config;
+export default config;

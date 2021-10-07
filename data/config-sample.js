@@ -1,7 +1,5 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const uuid_1 = require("uuid");
-const config = {
+import { v4 as uuidv4 } from "uuid";
+export const config = {
     application: {
         httpPort: 52525,
         applicationName: "Sample Clothing Store"
@@ -13,7 +11,7 @@ const config = {
             ("0" + (today.getMonth() + 1).toString()).slice(-2) +
             ("0" + today.getDate().toString()).slice(-2) +
             "-" +
-            uuid_1.v4().toUpperCase();
+            uuidv4().toUpperCase();
     },
     mssqlConfig: {
         user: "",
@@ -98,4 +96,4 @@ const config = {
         storeType: "testing-free"
     }
 };
-module.exports = config;
+export default config;

@@ -1,8 +1,6 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.onListening = exports.onError = void 0;
-const log = require("fancy-log");
-const onError = (error) => {
+import Debug from "debug";
+const debug = Debug("mini-shop:sreverFns");
+export const onError = (error) => {
     if (error.syscall !== "listen") {
         throw error;
     }
@@ -17,12 +15,10 @@ const onError = (error) => {
             throw error;
     }
 };
-exports.onError = onError;
-const onListening = (server) => {
+export const onListening = (server) => {
     const addr = server.address();
     const bind = typeof addr === "string"
         ? "pipe " + addr
         : "port " + addr.port.toString();
-    log.info("Listening on " + bind);
+    debug("Listening on " + bind);
 };
-exports.onListening = onListening;

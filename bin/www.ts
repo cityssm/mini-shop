@@ -1,22 +1,21 @@
-#!/usr/bin/env node
+import { onError, onListening } from "./serverFns.js";
 
-import { onError, onListening } from "./serverFns";
-
-import * as app from "../app";
+import { app } from "../app.js";
 
 import * as http from "http";
 import * as https from "https";
 import * as fs from "fs";
 
-import * as log from "fancy-log";
+import * as configFunctions from "../helpers/configFns.js";
 
-import * as configFns from "../helpers/configFns";
+import Debug from "debug";
+const debug = Debug("mini-shop:www");
 
 /**
  * Initialize HTTP
  */
 
-const httpPort = configFns.getProperty("application.httpPort");
+const httpPort = configFunctions.getProperty("application.httpPort");
 
 if (httpPort) {
 
@@ -29,14 +28,14 @@ if (httpPort) {
     onListening(httpServer);
   });
 
-  log.info("HTTP listening on " + httpPort.toString());
+  debug("HTTP listening on " + httpPort.toString());
 }
 
 /**
  * Initialize HTTPS
  */
 
-const httpsConfig = configFns.getProperty("application.https");
+const httpsConfig = configFunctions.getProperty("application.https");
 
 if (httpsConfig) {
 
@@ -54,6 +53,6 @@ if (httpsConfig) {
     onListening(httpsServer);
   });
 
-  log.info("HTTPS listening on " + httpsConfig.port.toString());
+  debug("HTTPS listening on " + httpsConfig.port.toString());
 
 }

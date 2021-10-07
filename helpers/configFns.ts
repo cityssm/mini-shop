@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 import type * as configTypes from "../types/configTypes";
 import type * as sqlTypes from "mssql";
 
-import { debug } from "debug";
+import debug from "debug";
 const debugConfig = debug("mini-shop:configFns");
 
 
@@ -15,11 +15,11 @@ const debugConfig = debug("mini-shop:configFns");
 let config: configTypes.Config = {};
 
 try {
-  config = require("../data/config");
+  config = (await import("../data/config.js")).config;
 
 } catch (e) {
 
-  config = require("../data/config-sample");
+  config = (await import("../data/config-sample.js")).config;
 
   debugConfig("No \"data/config.js\" found, using \"data/config-sample.js\".");
 }

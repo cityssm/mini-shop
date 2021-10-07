@@ -1,24 +1,22 @@
-#!/usr/bin/env node
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const serverFns_1 = require("./serverFns");
-const app = require("../app");
-const http = require("http");
-const https = require("https");
-const fs = require("fs");
-const log = require("fancy-log");
-const configFns = require("../helpers/configFns");
-const httpPort = configFns.getProperty("application.httpPort");
+import { onError, onListening } from "./serverFns.js";
+import { app } from "../app.js";
+import * as http from "http";
+import * as https from "https";
+import * as fs from "fs";
+import * as configFunctions from "../helpers/configFns.js";
+import Debug from "debug";
+const debug = Debug("mini-shop:www");
+const httpPort = configFunctions.getProperty("application.httpPort");
 if (httpPort) {
     const httpServer = http.createServer(app);
     httpServer.listen(httpPort);
-    httpServer.on("error", serverFns_1.onError);
+    httpServer.on("error", onError);
     httpServer.on("listening", () => {
-        serverFns_1.onListening(httpServer);
+        onListening(httpServer);
     });
-    log.info("HTTP listening on " + httpPort.toString());
+    debug("HTTP listening on " + httpPort.toString());
 }
-const httpsConfig = configFns.getProperty("application.https");
+const httpsConfig = configFunctions.getProperty("application.https");
 if (httpsConfig) {
     const httpsServer = https.createServer({
         key: fs.readFileSync(httpsConfig.keyPath),
@@ -26,9 +24,9 @@ if (httpsConfig) {
         passphrase: httpsConfig.passphrase
     }, app);
     httpsServer.listen(httpsConfig.port);
-    httpsServer.on("error", serverFns_1.onError);
+    httpsServer.on("error", onError);
     httpsServer.on("listening", () => {
-        serverFns_1.onListening(httpsServer);
+        onListening(httpsServer);
     });
-    log.info("HTTPS listening on " + httpsConfig.port.toString());
+    debug("HTTPS listening on " + httpsConfig.port.toString());
 }

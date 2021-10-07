@@ -1,13 +1,14 @@
 {
   "compilerOptions": {
     "target": "ES2017",
-    "module": "CommonJS",
+    "module": "ESNext",
     "moduleResolution": "Node",
     "isolatedModules": false,
     "declaration": true,
     "noImplicitAny": false,
     "removeComments": true,
-    "allowUnreachableCode": false
+    "allowUnreachableCode": false,
+    "allowSyntheticDefaultImports": true
   },
   "compileOnSave": true,
   "buildOnSave": true,

@@ -1,23 +1,25 @@
-import * as createError from "http-errors";
-import * as express from "express";
+import createError from "http-errors";
+import express from "express";
 
 import { abuseCheck } from "@cityssm/express-abuse-points";
 import * as compression from "compression";
 import * as path from "path";
-import * as cookieParser from "cookie-parser";
+import cookieParser from "cookie-parser";
 
-import * as miniShopDB from "@cityssm/mini-shop-db/config";
+import * as miniShopDB from "@cityssm/mini-shop-db/config.js";
 
-import * as configFns from "./helpers/configFns";
-import * as stringFns from "@cityssm/expressjs-server-js/stringFns";
-import * as dateTimeFns from "@cityssm/expressjs-server-js/dateTimeFns";
+import * as configFns from "./helpers/configFns.js";
+import * as stringFns from "@cityssm/expressjs-server-js/stringFns.js";
+import * as dateTimeFns from "@cityssm/expressjs-server-js/dateTimeFns.js";
 
-import * as routerCheckout from "./routes/checkout";
-import * as routerOrder from "./routes/order";
-import * as routerProducts from "./routes/products";
+import routerCheckout from "./routes/checkout.js";
+import routerOrder from "./routes/order.js";
+import routerProducts from "./routes/products.js";
 
-import { debug } from "debug";
+import debug from "debug";
 const debugApp = debug("mini-shop:app");
+
+const __dirname = ".";
 
 
 /*
@@ -36,7 +38,7 @@ miniShopDB.setFees(configFns.getProperty("fees"));
  */
 
 
-const app = express();
+export const app = express();
 
 if (!configFns.getProperty("reverseProxy.disableEtag")) {
   app.set("etag", false);
@@ -131,4 +133,4 @@ app.use(function(err: Error, req: express.Request, res: express.Response, _next:
 });
 
 
-export = app;
+export default app;

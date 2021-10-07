@@ -1,13 +1,13 @@
 import { Router } from "express";
 
-import { handler as handler_checkout } from "../handlers/checkout";
-import { handler as handler_getProductDetails } from "../handlers/getProductDetails";
-import { handler as handler_createOrder } from "../handlers/createOrder";
-import { handler as handler_toPayment } from "../handlers/toPayment";
-import { handler as handler_fromPayment } from "../handlers/fromPayment";
+import { handler as handler_checkout } from "../handlers/checkout.js";
+import { handler as handler_getProductDetails } from "../handlers/getProductDetails.js";
+import { handler as handler_createOrder } from "../handlers/createOrder.js";
+import { handler as handler_toPayment } from "../handlers/toPayment.js";
+import { handler as handler_fromPayment } from "../handlers/fromPayment.js";
 
 
-const router = Router();
+export const router = Router();
 
 
 router.get("/", handler_checkout);
@@ -25,4 +25,4 @@ router.post("/toPayment", handler_toPayment);
 router.all("/fromPayment", handler_fromPayment);
 
 
-export = router;
+export default router;
