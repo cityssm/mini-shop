@@ -48,22 +48,39 @@ export interface Config {
         code: string;
         currencyName: string;
     };
-    store?: {
-        storeType: "moneris-hpp";
-        storeConfig: {
-            storeURL: "https://esqa.moneris.com/HPPDP/index.php" | "https://www3.moneris.com/HPPDP/index.php";
-            ps_store_id: string;
-            hpp_key: string;
-            fees?: {
-                gst?: string;
-                pst?: string;
-                hst?: string;
-                shipping?: string;
-            };
+    store?: StoreConfigs;
+}
+interface StoreConfig {
+    storeType: StoreTypes;
+    storeConfig?: Record<string, unknown>;
+}
+export declare type StoreTypes = "moneris-hpp" | "moneris-checkout" | "testing-free";
+declare type StoreConfigs = StoreConfig_MonerisHPP | StoreConfig_MonerisCheckout | StoreConfig_TestingFree;
+interface StoreConfig_MonerisHPP extends StoreConfig {
+    storeType: "moneris-hpp";
+    storeConfig: {
+        storeURL: "https://esqa.moneris.com/HPPDP/index.php" | "https://www3.moneris.com/HPPDP/index.php";
+        ps_store_id: string;
+        hpp_key: string;
+        fees?: {
+            gst?: string;
+            pst?: string;
+            hst?: string;
+            shipping?: string;
         };
-    } | {
-        storeType: "testing-free";
     };
+}
+interface StoreConfig_MonerisCheckout extends StoreConfig {
+    storeType: "moneris-checkout";
+    storeConfig: {
+        store_id: string;
+        api_token: string;
+        checkout_id: string;
+        environment: "qa" | "prod";
+    };
+}
+interface StoreConfig_TestingFree extends StoreConfig {
+    storeType: "testing-free";
 }
 export interface Config_HTTPSConfig {
     port: number;
