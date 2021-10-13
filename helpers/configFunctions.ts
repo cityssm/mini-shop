@@ -102,7 +102,7 @@ export function getProperty(propertyName: "views.order.headerEjs"): () => string
 export function getProperty(propertyName: "currency.code"): () => string;
 export function getProperty(propertyName: "currency.currencyName"): () => string;
 
-export function getProperty(propertyName: "store.storeType"): string;
+export function getProperty(propertyName: "store.storeType"): configTypes.StoreTypes;
 
 export function getProperty(propertyName: "fees"): { [feeName: string]: configTypes.Config_FeeDefinition };
 export function getProperty(propertyName: "products"): { [productSKU: string]: configTypes.Config_Product };
@@ -110,7 +110,7 @@ export function getProperty(propertyName: "products"): { [productSKU: string]: c
 
 export function getProperty(propertyName: string): unknown {
 
-  if (configOverrides.hasOwnProperty(propertyName)) {
+  if (Object.prototype.hasOwnProperty.call(configOverrides, propertyName)) {
     return configOverrides[propertyName];
   }
 
@@ -129,7 +129,6 @@ export function getProperty(propertyName: string): unknown {
   }
 
   return currentObject;
-
 }
 
 
@@ -152,7 +151,7 @@ export function overrideProperty(propertyName: string, propertyValue: unknown): 
 
 const clientSideProducts: { [productSKU: string]: configTypes.Config_Product } = {};
 
-export function getClientSideProduct(productSKU: string) {
+export function getClientSideProduct(productSKU: string): configTypes.Config_Product {
 
   if (Object.keys(clientSideProducts).length === 0) {
 

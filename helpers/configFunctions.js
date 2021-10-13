@@ -37,7 +37,7 @@ configFallbackValues.set("products", {});
 configFallbackValues.set("currency.code", "CAD");
 configFallbackValues.set("currency.currencyName", "Canadian Dollars");
 export function getProperty(propertyName) {
-    if (configOverrides.hasOwnProperty(propertyName)) {
+    if (Object.prototype.hasOwnProperty.call(configOverrides, propertyName)) {
         return configOverrides[propertyName];
     }
     const propertyNameSplit = propertyName.split(".");
