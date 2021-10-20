@@ -1,54 +1,56 @@
-exports.cart = (() => {
-    const SESSION_STORAGE_KEY = "miniShopCart";
-    const CART_MAX_SIZE = 255;
-    let cart = sessionStorage.getItem(SESSION_STORAGE_KEY)
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+window.exports.cart = (function () {
+    var SESSION_STORAGE_KEY = "miniShopCart";
+    var CART_MAX_SIZE = 255;
+    var cart = sessionStorage.getItem(SESSION_STORAGE_KEY)
         ? JSON.parse(sessionStorage.getItem(SESSION_STORAGE_KEY))
         : [];
     if (!cart) {
         cart = [];
     }
-    const toStorageFn = () => {
+    var toStorageFunction = function () {
         sessionStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(cart));
     };
-    const renderCartButtonFn = () => {
-        const cartCountTagEle = document.getElementById("tag--cartCount");
+    var renderCartButtonFunction = function () {
+        var cartCountTagElement = document.querySelector("#tag--cartCount");
         if (cart.length === 0) {
-            cartCountTagEle.classList.add("is-hidden");
+            cartCountTagElement.classList.add("is-hidden");
         }
         else {
-            cartCountTagEle.innerText = cart.length.toString();
-            cartCountTagEle.classList.remove("is-hidden");
+            cartCountTagElement.textContent = cart.length.toString();
+            cartCountTagElement.classList.remove("is-hidden");
         }
     };
-    renderCartButtonFn();
-    const addFn = (productFormEle) => {
+    renderCartButtonFunction();
+    var addFunction = function (productFormElement) {
         if (cart.length >= CART_MAX_SIZE) {
             return false;
         }
-        const formObj = formToObject(productFormEle);
-        cart.push(formObj);
-        toStorageFn();
-        renderCartButtonFn();
+        var formObject = formToObject(productFormElement);
+        cart.push(formObject);
+        toStorageFunction();
+        renderCartButtonFunction();
         return true;
     };
-    const removeFn = (cartIndex) => {
+    var removeFunction = function (cartIndex) {
         cart.splice(cartIndex, 1);
-        toStorageFn();
-        renderCartButtonFn();
+        toStorageFunction();
+        renderCartButtonFunction();
     };
-    const clearFn = () => {
+    var clearFunction = function () {
         cart = [];
-        toStorageFn();
-        renderCartButtonFn();
+        toStorageFunction();
+        renderCartButtonFunction();
     };
-    return {
-        add: addFn,
-        remove: removeFn,
-        clear: clearFn,
-        get: () => {
+    var cartGlobal = {
+        add: addFunction,
+        remove: removeFunction,
+        clear: clearFunction,
+        get: function () {
             return cart;
         },
-        refresh: toStorageFn
+        refresh: toStorageFunction
     };
+    return cartGlobal;
 })();
-export {};

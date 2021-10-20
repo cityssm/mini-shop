@@ -1,9 +1,12 @@
+/* */
+
 import type * as recordTypes from "../types/recordTypes";
+import type * as globalTypes from "../types/globalTypes";
 
-declare const formToObject: (formEle: HTMLFormElement) => {};
+declare const formToObject: (formElement: HTMLFormElement) => Record<string, unknown>;
 
 
-exports.cart = (() => {
+window.exports.cart = (() => {
 
   const SESSION_STORAGE_KEY = "miniShopCart";
   const CART_MAX_SIZE = 255;
@@ -16,62 +19,64 @@ exports.cart = (() => {
     cart = [];
   }
 
-  const toStorageFn = () => {
+  const toStorageFunction = () => {
     sessionStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(cart));
   };
 
-  const renderCartButtonFn = () => {
+  const renderCartButtonFunction = () => {
 
-    const cartCountTagEle = document.getElementById("tag--cartCount");
+    const cartCountTagElement = document.querySelector("#tag--cartCount");
 
     if (cart.length === 0) {
-      cartCountTagEle.classList.add("is-hidden");
+      cartCountTagElement.classList.add("is-hidden");
 
     } else {
-      cartCountTagEle.innerText = cart.length.toString();
-      cartCountTagEle.classList.remove("is-hidden");
+      cartCountTagElement.textContent = cart.length.toString();
+      cartCountTagElement.classList.remove("is-hidden");
     }
   };
 
-  renderCartButtonFn();
+  renderCartButtonFunction();
 
-  const addFn =
-    (productFormEle: HTMLFormElement) => {
+  const addFunction =
+    (productFormElement: HTMLFormElement) => {
 
       if (cart.length >= CART_MAX_SIZE) {
         return false;
       }
 
-      const formObj = formToObject(productFormEle) as recordTypes.CartItem;
+      const formObject = formToObject(productFormElement) as recordTypes.CartItem;
 
-      cart.push(formObj);
-      toStorageFn();
-      renderCartButtonFn();
+      cart.push(formObject);
+      toStorageFunction();
+      renderCartButtonFunction();
 
       return true;
     };
 
-  const removeFn = (cartIndex: number) => {
+  const removeFunction = (cartIndex: number) => {
     cart.splice(cartIndex, 1);
-    toStorageFn();
-    renderCartButtonFn();
+    toStorageFunction();
+    renderCartButtonFunction();
   };
 
 
-  const clearFn = () => {
+  const clearFunction = () => {
     cart = [];
-    toStorageFn();
-    renderCartButtonFn();
+    toStorageFunction();
+    renderCartButtonFunction();
   };
 
 
-  return {
-    add: addFn,
-    remove: removeFn,
-    clear: clearFn,
+  const cartGlobal: globalTypes.CartGlobal = {
+    add: addFunction,
+    remove: removeFunction,
+    clear: clearFunction,
     get: () => {
       return cart;
     },
-    refresh: toStorageFn
+    refresh: toStorageFunction
   };
+
+  return cartGlobal;
 })();

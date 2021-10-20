@@ -1,18 +1,21 @@
-(() => {
-    let isSubmitting = false;
-    const productFormEle = document.getElementById("form--product");
-    productFormEle.addEventListener("submit", (formEvent) => {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+(function () {
+    var cartGlobal = window.exports.cart;
+    var isSubmitting = false;
+    var productFormElement = document.querySelector("#form--product");
+    productFormElement.addEventListener("submit", function (formEvent) {
         formEvent.preventDefault();
         if (isSubmitting) {
             return;
         }
         isSubmitting = true;
-        const success = exports.cart.add(productFormEle);
+        var success = cartGlobal.add(productFormElement);
         if (success) {
-            productFormEle.reset();
-            document.getElementById("modal--success").classList.add("is-active");
-            document.getElementsByTagName("html")[0].classList.add("is-clipped");
-            document.getElementById("successButton--checkout").focus();
+            productFormElement.reset();
+            document.querySelector("#modal--success").classList.add("is-active");
+            document.querySelector("html").classList.add("is-clipped");
+            document.querySelector("#successButton--checkout").focus();
         }
         else {
             isSubmitting = false;
@@ -20,4 +23,3 @@
         }
     });
 })();
-export {};

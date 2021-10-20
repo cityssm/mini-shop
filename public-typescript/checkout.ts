@@ -1,10 +1,11 @@
 import type * as configTypes from "../types/configTypes";
 import type * as recordTypes from "../types/recordTypes";
+import type * as globalTypes from "../types/globalTypes";
 import type * as cityssmTypes from "@cityssm/bulma-webapp-js/src/types";
 
 
 declare const cityssm: cityssmTypes.cityssmGlobal;
-declare const formToObject: (formEle: HTMLFormElement) => {};
+declare const formToObject: (formElement: HTMLFormElement) => unknown;
 
 
 interface ProductDetails {
@@ -29,11 +30,13 @@ interface CartTotals {
 
   const urlPrefix = document.querySelector("main").getAttribute("data-url-prefix");
 
+  const cartGlobal = window.exports.cart as globalTypes.CartGlobal;
+
   let productDetails: ProductDetails = {};
 
-  const cartContainerEle = document.getElementById("card--cart");
-  const cartTotalContainerEle = document.getElementById("container--cartTotal");
-  const shippingFormEle = document.getElementById("form--shipping") as HTMLFormElement;
+  const cartContainerElement = document.querySelector("#card--cart") as HTMLElement;
+  const cartTotalContainerElement = document.querySelector("#container--cartTotal") as HTMLElement;
+  const shippingFormElement = document.querySelector("#form--shipping") as HTMLFormElement;
 
   let cartTotals: CartTotals = {
     itemTotal: 0,
@@ -43,11 +46,11 @@ interface CartTotals {
   let cartItems: recordTypes.CartItem[] = [];
 
 
-  const removeCartItemFn = (clickEvent: Event) => {
+  const removeCartItemFunction = (clickEvent: Event) => {
 
     clickEvent.preventDefault();
 
-    const cartIndex = parseInt((clickEvent.currentTarget as HTMLButtonElement).getAttribute("data-cart-index"), 10);
+    const cartIndex = Number.parseInt((clickEvent.currentTarget as HTMLButtonElement).getAttribute("data-cart-index"), 10);
 
     const cartItem = cartItems[cartIndex];
     const product = productDetails.products[cartItem.productSKU];
@@ -57,19 +60,19 @@ interface CartTotals {
       "Yes, Remove It",
       "warning",
       () => {
-        exports.cart.remove(cartIndex);
-        renderCheckoutFn();
+        cartGlobal.remove(cartIndex);
+        renderCheckoutFunction();
       });
   };
 
 
-  const forEachFn_renderCartItems_calculateTotals =
+  const forEachFunction_renderCartItems_calculateTotals =
     (cartItem: recordTypes.CartItem, cartIndex: number) => {
 
       const product: configTypes.Config_Product = productDetails.products[cartItem.productSKU];
 
       if (!product) {
-        exports.cart.clear();
+        cartGlobal.clear();
         location.reload();
       }
 
@@ -77,10 +80,10 @@ interface CartTotals {
        * Cart Item
        */
 
-      const productCardContentEle = document.createElement("li");
-      productCardContentEle.className = "card-content";
+      const productCardContentElement = document.createElement("li");
+      productCardContentElement.className = "card-content";
 
-      productCardContentEle.innerHTML =
+      productCardContentElement.innerHTML =
         "<div class=\"columns\">" +
         ("<div class=\"column is-narrow has-text-right\">" +
           "<button class=\"button is-inverted is-danger has-tooltip-arrow has-tooltip-right has-tooltip-hidden-mobile\"" +
@@ -97,46 +100,46 @@ interface CartTotals {
         "<div class=\"column is-narrow column--price has-text-weight-bold has-text-right\"></div>" +
         "</div>";
 
-      productCardContentEle.getElementsByTagName("button")[0].addEventListener("click", removeCartItemFn);
+      productCardContentElement.querySelector("button").addEventListener("click", removeCartItemFunction);
 
-      (productCardContentEle.getElementsByClassName("container--productName")[0] as HTMLElement)
-        .innerText = product.productName;
+      (productCardContentElement.querySelector(".container--productName") as HTMLElement)
+        .textContent = product.productName;
 
       if (product.formFieldsToSave && product.formFieldsToSave.length > 0) {
 
-        const formFieldsEle = productCardContentEle.getElementsByClassName("container--formFields")[0] as HTMLElement;
+        const formFieldsElement = productCardContentElement.querySelector(".container--formFields") as HTMLElement;
 
         for (const formFieldToSave of product.formFieldsToSave) {
 
           if (cartItem[formFieldToSave.formFieldName]) {
 
-            formFieldsEle.insertAdjacentHTML("beforeend", "<strong>" + formFieldToSave.fieldName + ":</strong> ");
+            formFieldsElement.insertAdjacentHTML("beforeend", "<strong>" + formFieldToSave.fieldName + ":</strong> ");
 
-            const spanEle = document.createElement("span");
-            spanEle.innerText = cartItem[formFieldToSave.formFieldName];
+            const spanElement = document.createElement("span");
+            spanElement.textContent = cartItem[formFieldToSave.formFieldName];
 
-            formFieldsEle.appendChild(spanEle);
+            formFieldsElement.append(spanElement);
 
-            formFieldsEle.insertAdjacentHTML("beforeend", "<br />");
+            formFieldsElement.insertAdjacentHTML("beforeend", "<br />");
           }
         }
       }
 
-      const quantityColumnEle = productCardContentEle.getElementsByClassName("column--quantity")[0] as HTMLDivElement;
+      const quantityColumnElement = productCardContentElement.querySelector(".column--quantity") as HTMLDivElement;
 
-      const unitPrice = (typeof (product.price) === "number" ? product.price : parseFloat(cartItem.unitPrice));
+      const unitPrice = (typeof (product.price) === "number" ? product.price : Number.parseFloat(cartItem.unitPrice));
 
-      quantityColumnEle.innerText =
+      quantityColumnElement.textContent =
         cartItem.quantity +
         " × $" + unitPrice.toFixed(2);
 
-      const itemTotal = unitPrice * parseInt(cartItem.quantity, 10);
+      const itemTotal = unitPrice * Number.parseInt(cartItem.quantity, 10);
 
-      const priceColumnEle = productCardContentEle.getElementsByClassName("column--price")[0] as HTMLDivElement;
+      const priceColumnElement = productCardContentElement.querySelector(".column--price") as HTMLDivElement;
 
-      priceColumnEle.innerText = "$" + itemTotal.toFixed(2);
+      priceColumnElement.textContent = "$" + itemTotal.toFixed(2);
 
-      cartContainerEle.appendChild(productCardContentEle);
+      cartContainerElement.append(productCardContentElement);
 
       /*
        * Cart Totals
@@ -154,29 +157,29 @@ interface CartTotals {
     };
 
 
-  const renderCheckoutFn = () => {
+  const renderCheckoutFunction = () => {
 
     // Reset cart
 
-    cityssm.clearElement(cartContainerEle);
-    cityssm.clearElement(cartTotalContainerEle);
+    cityssm.clearElement(cartContainerElement);
+    cityssm.clearElement(cartTotalContainerElement);
 
     cartTotals = {
       itemTotal: 0,
       feeTotals: {}
     };
 
-    cartItems = exports.cart.get();
+    cartItems = cartGlobal.get();
 
     // Render items
 
     if (cartItems.length === 0) {
 
-      cartContainerEle.classList.add("is-hidden");
-      shippingFormEle.classList.add("is-hidden");
-      document.getElementById("button--clearCart").classList.add("is-hidden");
+      cartContainerElement.classList.add("is-hidden");
+      shippingFormElement.classList.add("is-hidden");
+      document.querySelector("#button--clearCart").classList.add("is-hidden");
 
-      cartContainerEle.insertAdjacentHTML("beforebegin",
+      cartContainerElement.insertAdjacentHTML("beforebegin",
         "<div class=\"message is-info\">" +
         ("<div class=\"message-body has-text-centered\">" +
           "<p class=\"has-text-weight-bold\">The cart is empty.</p>" +
@@ -186,9 +189,9 @@ interface CartTotals {
 
     } else {
 
-      cartItems.forEach(forEachFn_renderCartItems_calculateTotals);
-      cartContainerEle.classList.remove("is-hidden");
-      shippingFormEle.classList.remove("is-hidden");
+      cartItems.forEach(forEachFunction_renderCartItems_calculateTotals);
+      cartContainerElement.classList.remove("is-hidden");
+      shippingFormElement.classList.remove("is-hidden");
     }
 
     // Render total
@@ -197,30 +200,30 @@ interface CartTotals {
 
     if (Object.keys(cartTotals.feeTotals).length > 0) {
 
-      cartTotalContainerEle.insertAdjacentHTML("beforeend",
+      cartTotalContainerElement.insertAdjacentHTML("beforeend",
         "<div class=\"has-text-weight-bold\">Subtotal: $" + cartTotals.itemTotal.toFixed(2) + "</div>");
 
       for (const feeName of Object.keys(cartTotals.feeTotals)) {
 
-        cartTotalContainerEle.insertAdjacentHTML("beforeend",
+        cartTotalContainerElement.insertAdjacentHTML("beforeend",
           "<div>" + productDetails.fees[feeName].feeName + ": $" + cartTotals.feeTotals[feeName].toFixed(2) + "</div>");
         cartTotal += cartTotals.feeTotals[feeName];
       }
     }
 
-    cartTotalContainerEle.insertAdjacentHTML("beforeend",
+    cartTotalContainerElement.insertAdjacentHTML("beforeend",
       "<div class=\"is-size-4 has-text-weight-bold\">Total: $" + cartTotal.toFixed(2) + "</div>");
 
-    cartTotalContainerEle.insertAdjacentHTML("beforeend",
-      "<div class=\"is-size-7 has-text-weight-bold\">Prices in " + cityssm.escapeHTML(cartTotalContainerEle.getAttribute("data-currency")) + "</div>");
+    cartTotalContainerElement.insertAdjacentHTML("beforeend",
+      "<div class=\"is-size-7 has-text-weight-bold\">Prices in " + cityssm.escapeHTML(cartTotalContainerElement.getAttribute("data-currency")) + "</div>");
   };
 
 
-  const initFn_getDistinctProductSKUs = () => {
+  const initFunction_getDistinctProductSKUs = () => {
 
     const productSKUs: Set<string> = new Set();
 
-    const cart: Array<{ productSKU: string;[formFieldName: string]: string }> = exports.cart.get();
+    const cart: Array<{ productSKU: string;[formFieldName: string]: string }> = cartGlobal.get();
 
     for (const cartProduct of cart) {
       productSKUs.add(cartProduct.productSKU);
@@ -230,12 +233,12 @@ interface CartTotals {
   };
 
 
-  const initFn_loadProductDetails = () => {
+  const initFunction_loadProductDetails = () => {
 
-    const productSKUs = initFn_getDistinctProductSKUs().join(",");
+    const productSKUs = initFunction_getDistinctProductSKUs().join(",");
 
     if (productSKUs === "") {
-      renderCheckoutFn();
+      renderCheckoutFunction();
       return;
     }
 
@@ -250,10 +253,11 @@ interface CartTotals {
       })
       .then((responseProductDetails: ProductDetails) => {
         productDetails = responseProductDetails;
-        renderCheckoutFn();
+        renderCheckoutFunction();
+        return;
       })
       .catch(() => {
-
+        // ignore
       });
   };
 
@@ -261,7 +265,7 @@ interface CartTotals {
   let formIsSubmitting = false;
 
 
-  shippingFormEle.addEventListener("submit", (formEvent) => {
+  shippingFormElement.addEventListener("submit", (formEvent) => {
     formEvent.preventDefault();
 
     if (formIsSubmitting) {
@@ -270,13 +274,13 @@ interface CartTotals {
 
     formIsSubmitting = true;
 
-    const formObj = formToObject(shippingFormEle) as recordTypes.ShippingForm;
+    const formObject = formToObject(shippingFormElement) as recordTypes.ShippingForm;
 
-    formObj.cartItems = exports.cart.get();
+    formObject.cartItems = cartGlobal.get();
 
     fetch(urlPrefix + "/checkout/doCreateOrder", {
       method: "POST",
-      body: JSON.stringify(formObj),
+      body: JSON.stringify(formObject),
       headers: {
         "Content-Type": "application/json"
       }
@@ -287,10 +291,10 @@ interface CartTotals {
       .then((responseOrderNumbers: { success: boolean; orderNumber?: string; orderSecret?: string }) => {
 
         if (responseOrderNumbers.success) {
-          (document.getElementById("toPayment_orderNumber") as HTMLInputElement).value = responseOrderNumbers.orderNumber;
-          (document.getElementById("toPayment_orderSecret") as HTMLInputElement).value = responseOrderNumbers.orderSecret;
+          (document.querySelector("#toPayment_orderNumber") as HTMLInputElement).value = responseOrderNumbers.orderNumber;
+          (document.querySelector("#toPayment_orderSecret") as HTMLInputElement).value = responseOrderNumbers.orderSecret;
 
-          (document.getElementById("form--toPayment") as HTMLFormElement).submit();
+          (document.querySelector("#form--toPayment") as HTMLFormElement).submit();
 
         } else {
 
@@ -301,8 +305,10 @@ interface CartTotals {
 
           formIsSubmitting = false;
         }
+
+        return;
       })
-      .catch((_e) => {
+      .catch(() => {
         cityssm.alertModal("Order Error",
           "An error occurred while trying to create your order. Please try again.",
           "OK",
@@ -314,24 +320,24 @@ interface CartTotals {
 
 
   // Initialize page
-  initFn_loadProductDetails();
+  initFunction_loadProductDetails();
 
 
-  document.getElementById("button--clearCart").addEventListener("click", () => {
+  document.querySelector("#button--clearCart").addEventListener("click", () => {
 
     cityssm.confirmModal("Clear Cart?",
       "Are you sure you want to remove all items from your cart?",
       "Yes, Clear the Cart",
       "warning",
       () => {
-        exports.cart.clear();
-        renderCheckoutFn();
+        cartGlobal.clear();
+        renderCheckoutFunction();
       });
   });
 
 
   // Ensure values in sessionStorage stay available
   window.setTimeout(() => {
-    exports.cart.refresh();
+    cartGlobal.refresh();
   }, 5 * 60 * 1000);
 })();

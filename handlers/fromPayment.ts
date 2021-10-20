@@ -4,7 +4,7 @@ import * as configFunctions from "../helpers/configFunctions.js";
 import { validate as monerisHPP_validate } from "../helpers/stores/moneris-hpp.js";
 import { validate as testingFree_validate } from "../helpers/stores/testing-free.js";
 
-import { updateOrderAsPaid } from "@cityssm/mini-shop-db/updateOrderAsPaid.js";
+import { updateOrderAsPaid } from "@cityssm/mini-shop-db";
 
 import type { RequestHandler } from "express";
 import type { StoreValidatorReturn } from "../helpers/stores/types";

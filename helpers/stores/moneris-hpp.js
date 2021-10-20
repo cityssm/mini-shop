@@ -1,4 +1,4 @@
-import { getOrderNumberBySecret } from "@cityssm/mini-shop-db/getOrderNumberBySecret.js";
+import { getOrderNumberBySecret } from "@cityssm/mini-shop-db";
 export const validate = async (request) => {
     const monerisResponse = request.body;
     const resultCode = monerisResponse.result;

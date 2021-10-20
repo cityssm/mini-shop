@@ -1,6 +1,6 @@
 import { recordAbuse } from "@cityssm/express-abuse-points";
 import * as configFunctions from "../helpers/configFunctions.js";
-import { getOrder as miniShopDB_getOrder } from "@cityssm/mini-shop-db/getOrder.js";
+import { getOrder as miniShopDB_getOrder } from "@cityssm/mini-shop-db";
 export const handler = async (request, response) => {
     const orderNumber = request.params.orderNumber;
     const orderSecret = request.params.orderSecret;

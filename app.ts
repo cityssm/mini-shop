@@ -6,7 +6,7 @@ import compression from "compression";
 import path from "path";
 import cookieParser from "cookie-parser";
 
-import * as miniShopDB from "@cityssm/mini-shop-db/config.js";
+import * as miniShopDB from "@cityssm/mini-shop-db";
 
 import * as configFunctions from "./helpers/configFunctions.js";
 import * as stringFns from "@cityssm/expressjs-server-js/stringFns.js";
@@ -27,10 +27,12 @@ const __dirname = ".";
  */
 
 
-miniShopDB.setMSSQLConfig(configFunctions.getProperty("mssqlConfig"));
-miniShopDB.setOrderNumberFunction(configFunctions.getProperty("orderNumberFunction"));
-miniShopDB.setProducts(configFunctions.getProperty("products"));
-miniShopDB.setFees(configFunctions.getProperty("fees"));
+miniShopDB.setConfig({
+  mssqlConfig: configFunctions.getProperty("mssqlConfig"),
+  orderNumberFunction: configFunctions.getProperty("orderNumberFunction"),
+  products: configFunctions.getProperty("products"),
+  fees: configFunctions.getProperty("fees")
+});
 
 
 /*

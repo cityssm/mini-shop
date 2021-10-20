@@ -1,3 +1,6 @@
+/* eslint-disable unicorn/filename-case */
+
+import type * as globalTypes from "../types/globalTypes";
 import type * as cityssmTypes from "@cityssm/bulma-webapp-js/src/types";
 
 
@@ -6,11 +9,13 @@ declare const cityssm: cityssmTypes.cityssmGlobal;
 
 (() => {
 
+  const cartGlobal = window.exports.cart as globalTypes.CartGlobal;
+
   let isSubmitting = false;
 
-  const productFormEle = document.getElementById("form--product") as HTMLFormElement;
+  const productFormElement = document.querySelector("#form--product") as HTMLFormElement;
 
-  productFormEle.addEventListener("submit", (formEvent) => {
+  productFormElement.addEventListener("submit", (formEvent) => {
     formEvent.preventDefault();
 
     if (isSubmitting) {
@@ -19,16 +24,16 @@ declare const cityssm: cityssmTypes.cityssmGlobal;
 
     isSubmitting = true;
 
-    const success = exports.cart.add(productFormEle);
+    const success = cartGlobal.add(productFormElement);
 
     if (success) {
 
-      productFormEle.reset();
+      productFormElement.reset();
 
-      document.getElementById("modal--success").classList.add("is-active");
-      document.getElementsByTagName("html")[0].classList.add("is-clipped");
+      document.querySelector("#modal--success").classList.add("is-active");
+      document.querySelector("html").classList.add("is-clipped");
 
-      document.getElementById("successButton--checkout").focus();
+      (document.querySelector("#successButton--checkout") as HTMLButtonElement).focus();
 
     } else {
 
