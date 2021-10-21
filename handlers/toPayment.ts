@@ -18,9 +18,19 @@ export const handler: RequestHandler = async (request, response) => {
 
   const storeType = configFunctions.getProperty("store.storeType");
 
-
-
-  return response.render("toPayment", {
+  const toPaymentObject = {
     order
-  });
+  };
+
+  if (storeType === "moneris-checkout") {
+
+    const monerisCheckout = await import("../helpers/stores/moneris-checkout.js");
+    const ticket = await monerisCheckout.preloadRequest(order);
+
+    if (ticket) {
+      toPaymentObject.ticket = ticket;
+    }
+  }
+
+  return response.render("toPayment", toPaymentObject);
 };

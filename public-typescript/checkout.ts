@@ -1,5 +1,5 @@
 import type * as configTypes from "../types/configTypes";
-import type * as recordTypes from "../types/recordTypes";
+import type * as recordTypes from "@cityssm/mini-shop-db/types";
 import type * as globalTypes from "../types/globalTypes";
 import type * as cityssmTypes from "@cityssm/bulma-webapp-js/src/types";
 
@@ -290,6 +290,8 @@ interface CartTotals {
       })
       .then((responseOrderNumbers: { success: boolean; orderNumber?: string; orderSecret?: string }) => {
 
+        formIsSubmitting = false;
+        
         if (responseOrderNumbers.success) {
           (document.querySelector("#toPayment_orderNumber") as HTMLInputElement).value = responseOrderNumbers.orderNumber;
           (document.querySelector("#toPayment_orderSecret") as HTMLInputElement).value = responseOrderNumbers.orderSecret;
@@ -303,7 +305,6 @@ interface CartTotals {
             "OK",
             "danger");
 
-          formIsSubmitting = false;
         }
 
         return;

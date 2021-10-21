@@ -59,8 +59,11 @@ export interface MonerisCheckout_PreloadResponse {
     response: {
         success: "true" | "false";
         ticket?: string;
-        error?: string;
-        data?: string;
+        error?: {
+            [preloadField: string]: {
+                data: string;
+            };
+        };
     };
 }
 export interface MonerisCheckout_ReceiptRequest extends MonerisCheckout_Request {

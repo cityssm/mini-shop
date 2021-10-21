@@ -214,6 +214,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
             });
         }); })
             .then(function (responseOrderNumbers) {
+            formIsSubmitting = false;
             if (responseOrderNumbers.success) {
                 document.querySelector("#toPayment_orderNumber").value = responseOrderNumbers.orderNumber;
                 document.querySelector("#toPayment_orderSecret").value = responseOrderNumbers.orderSecret;
@@ -221,7 +222,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
             }
             else {
                 cityssm.alertModal("Order Error", "An error occurred while trying to create your order. Please try again.", "OK", "danger");
-                formIsSubmitting = false;
             }
             return;
         })

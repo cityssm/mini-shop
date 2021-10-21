@@ -20,7 +20,6 @@ try {
 } catch {
 
   config = (await import("../data/config-sample.js")).config;
-
   debugConfig("No \"data/config.js\" found, using \"data/config-sample.js\".");
 }
 
@@ -102,6 +101,7 @@ export function getProperty(propertyName: "views.order.headerEjs"): () => string
 export function getProperty(propertyName: "currency.code"): () => string;
 export function getProperty(propertyName: "currency.currencyName"): () => string;
 
+export function getProperty(propertyName: "store"): configTypes.StoreConfigs;
 export function getProperty(propertyName: "store.storeType"): configTypes.StoreTypes;
 
 export function getProperty(propertyName: "fees"): { [feeName: string]: configTypes.Config_FeeDefinition };

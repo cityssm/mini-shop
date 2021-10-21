@@ -55,7 +55,7 @@ interface StoreConfig {
     storeConfig?: Record<string, unknown>;
 }
 export declare type StoreTypes = "moneris-hpp" | "moneris-checkout" | "testing-free";
-declare type StoreConfigs = StoreConfig_MonerisHPP | StoreConfig_MonerisCheckout | StoreConfig_TestingFree;
+export declare type StoreConfigs = StoreConfig_MonerisHPP | StoreConfig_MonerisCheckout | StoreConfig_TestingFree;
 interface StoreConfig_MonerisHPP extends StoreConfig {
     storeType: "moneris-hpp";
     storeConfig: {
@@ -70,7 +70,7 @@ interface StoreConfig_MonerisHPP extends StoreConfig {
         };
     };
 }
-interface StoreConfig_MonerisCheckout extends StoreConfig {
+export interface StoreConfig_MonerisCheckout extends StoreConfig {
     storeType: "moneris-checkout";
     storeConfig: {
         store_id: string;

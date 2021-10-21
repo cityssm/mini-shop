@@ -1,6 +1,6 @@
 /* */
 
-import type * as recordTypes from "../types/recordTypes";
+import type * as recordTypes from "@cityssm/mini-shop-db/types";
 import type * as globalTypes from "../types/globalTypes";
 
 declare const formToObject: (formElement: HTMLFormElement) => Record<string, unknown>;

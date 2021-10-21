@@ -1,0 +1,12 @@
+<%
+  const checkoutEnvironment = configFunctions.getProperty("store").storeConfig.environment;
+%>
+
+<div id="monerisCheckout" data-environment="<%= checkoutEnvironment %>" data-ticket="<%= ticket %>"></div>
+
+<% if (checkoutEnvironment === "qa") { %>
+  <script src="https://gatewayt.moneris.com/chkt/js/chkt_v1.00.js"></script>
+<% } else { %>
+  <script src="https://gateway.moneris.com/chkt/js/chkt_v1.00.js"></script>
+<% } %>
+<script src="<%= urlPrefix %>/javascripts/payment-moneris-checkout.min.js" defer></script>

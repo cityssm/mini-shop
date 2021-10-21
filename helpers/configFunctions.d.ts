@@ -21,6 +21,7 @@ export declare function getProperty(propertyName: "views.order.title"): () => st
 export declare function getProperty(propertyName: "views.order.headerEjs"): () => string;
 export declare function getProperty(propertyName: "currency.code"): () => string;
 export declare function getProperty(propertyName: "currency.currencyName"): () => string;
+export declare function getProperty(propertyName: "store"): configTypes.StoreConfigs;
 export declare function getProperty(propertyName: "store.storeType"): configTypes.StoreTypes;
 export declare function getProperty(propertyName: "fees"): {
     [feeName: string]: configTypes.Config_FeeDefinition;

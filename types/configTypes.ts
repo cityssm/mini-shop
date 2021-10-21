@@ -74,7 +74,7 @@ interface StoreConfig {
 
 export type StoreTypes = "moneris-hpp" | "moneris-checkout" | "testing-free";
 
-type StoreConfigs = StoreConfig_MonerisHPP | StoreConfig_MonerisCheckout | StoreConfig_TestingFree;
+export type StoreConfigs = StoreConfig_MonerisHPP | StoreConfig_MonerisCheckout | StoreConfig_TestingFree;
 
 interface StoreConfig_MonerisHPP extends StoreConfig {
   storeType: "moneris-hpp";
@@ -91,7 +91,7 @@ interface StoreConfig_MonerisHPP extends StoreConfig {
   };
 }
 
-interface StoreConfig_MonerisCheckout extends StoreConfig {
+export interface StoreConfig_MonerisCheckout extends StoreConfig {
   storeType: "moneris-checkout";
   storeConfig: {
     store_id: string;
