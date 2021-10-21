@@ -2,6 +2,7 @@
   const idPrefix = stringFns.getUID();
 %>
 
+<input id="<%= idPrefix %>_tagNumber" name="tagNumber" type="hidden" />
 <label class="label" for="<%= idPrefix %>_tagNumber-prefix">
   Tag Number
 </label>
@@ -21,6 +22,7 @@
   </div>
 </div>
 
+<input id="<%= idPrefix %>_offenceDate" name="offenceDate" type="hidden" />
 <label class="label" for="<%= idPrefix %>_offenceDate-year">
   Offence Date
 </label>
@@ -120,3 +122,5 @@
     <input class="input" id="<%= idPrefix %>_unitPrice" name="unitPrice" type="text" inputmode="numeric" minlength="2" maxlength="10" pattern="^\d+(\.\d\d)?" required />
   </div>
 </div>
+
+<script src="<%= urlPrefix %>/javascripts/product-ssm-ticket_parking.min.js" defer></script>
