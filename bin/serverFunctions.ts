@@ -4,7 +4,7 @@ import type * as http from "http";
 import type * as https from "https";
 
 import Debug from "debug";
-const debug = Debug("mini-shop:sreverFns");
+const debug = Debug("mini-shop:serverFunctions");
 
 
 export const onError = (error: Error): void => {

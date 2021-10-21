@@ -1,5 +1,5 @@
 import Debug from "debug";
-const debug = Debug("mini-shop:sreverFns");
+const debug = Debug("mini-shop:serverFunctions");
 export const onError = (error) => {
     if (error.syscall !== "listen") {
         throw error;
