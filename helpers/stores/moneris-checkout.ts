@@ -1,10 +1,14 @@
 import fetch from "node-fetch";
+import { getOrderNumberBySecret } from "@cityssm/mini-shop-db";
+
+import type { Request } from "express";
 
 import * as configFunctions from "../../helpers/configFunctions.js";
 
 import type { StoreConfig_MonerisCheckout } from "../../types/configTypes";
 import type { Order } from "@cityssm/mini-shop-db/types";
-import type { MonerisCheckout_PreloadRequest, MonerisCheckout_PreloadResponse } from "../../types/storeTypes";
+import type { MonerisCheckout_PreloadRequest, MonerisCheckout_PreloadResponse, MonerisCheckout_ReceiptRequest, MonerisCheckout_ReceiptResponse } from "../../types/storeTypes";
+import type { StoreValidatorReturn } from "./types";
 
 import Debug from "debug";
 const debug = Debug("mini-shop:stores:moneris-checkout");
@@ -143,12 +147,7 @@ export const preloadRequest = async (order: Order): Promise<false | string> => {
     txn_total: cartSubtotal.toFixed(2),
     cart: {
       items: cartItems,
-      subtotal: cartSubtotal.toFixed(2),
-      tax: {
-        amount: "0.00",
-        description: "",
-        rate: "0.00"
-      }
+      subtotal: cartSubtotal.toFixed(2)
     }
   };
 
@@ -174,4 +173,115 @@ export const preloadRequest = async (order: Order): Promise<false | string> => {
 
   debug(responseData.response.error);
   return false;
+};
+
+
+export const validate = async (request: Request): Promise<StoreValidatorReturn> => {
+
+  const ticket = request.body.ticket as string;
+
+  // ticket is missing, fail
+  if (!ticket) {
+    return {
+      isValid: false,
+      errorCode: "missingAPIKey"
+    };
+  }
+
+  const orderNumber = request.body.orderNumber as string;
+
+  // order number is missing, fail
+  if (!orderNumber) {
+    return {
+      isValid: false,
+      errorCode: "missingOrderNumber"
+    };
+  }
+
+  const orderSecret = request.body.orderSecret as string;
+
+  // order secret is missing, fail
+  if (!orderSecret) {
+    return {
+      isValid: false,
+      errorCode: "missingOrderSecret"
+    };
+  }
+
+  const requestJSON: MonerisCheckout_ReceiptRequest = {
+    store_id: checkoutConfig.storeConfig.store_id,
+    api_token: checkoutConfig.storeConfig.api_token,
+    checkout_id: checkoutConfig.storeConfig.checkout_id,
+    environment: checkoutConfig.storeConfig.environment,
+    action: "receipt",
+    ticket
+  };
+
+  const response = await fetch(requestURL, {
+    method: "post",
+    body: JSON.stringify(requestJSON),
+    headers: {
+      "Content-Type": "application/json"
+    }
+  });
+
+  // api response error, fail
+  if (!response.ok) {
+    return {
+      isValid: false,
+      errorCode: "unresponsiveAPI"
+    };
+  }
+
+  const responseData = (await response.json()) as MonerisCheckout_ReceiptResponse;
+
+  // response data invalid, fail
+  if (!responseData) {
+    return {
+      isValid: false,
+      errorCode: "invalidAPIResponse"
+    };
+  }
+
+  // transaction not successful, fail
+  if (responseData.response.success !== "true") {
+    return {
+      isValid: false,
+      errorCode: "paymentDeclined"
+    };
+  }
+
+  // response order number mismatch, fail
+  if (responseData.response.request.order_no !== orderNumber) {
+    return {
+      isValid: false,
+      errorCode: "invalidOrderNumber"
+    };
+  }
+
+  const orderNumberDB = await getOrderNumberBySecret(orderSecret);
+
+  // database order number mismatch, fail
+  if (orderNumberDB !== orderNumber) {
+    return {
+      isValid: false,
+      errorCode: "invalidOrderNumber"
+    };
+  }
+
+  // success
+
+  return {
+    isValid: true,
+    orderNumber: orderNumberDB,
+    orderSecret,
+    paymentID: responseData.response.receipt.cc.reference_no,
+    paymentData: {
+      response_code: responseData.response.receipt.cc.response_code,
+      approval_code: responseData.response.receipt.cc.approval_code,
+      card_type: responseData.response.receipt.cc.card_type,
+      first6last4: responseData.response.receipt.cc.first6last4,
+      amount: responseData.response.receipt.cc.amount
+    }
+  };
 };

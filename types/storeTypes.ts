@@ -87,7 +87,7 @@ interface MonerisCheckout_Cart {
   */
   subtotal: string;
 
-  tax: {
+  tax?: {
     amount: string;
     description: string;
 
@@ -124,6 +124,15 @@ interface MonerisCheckout_Recur {
   start_date: string;
 
   bill_now: "true" | "false";
+}
+
+interface MonerisCheckout_FraudResult {
+  decision_origin: "Moneris" | "Merchant";
+  result: string;
+  condition: "0" | "1";
+  status: "success" | "failed" | "disabled" | "ineligible" | "failed_optional" | "failed_mandatory";
+  code: string;
+  details: string;
 }
 
 interface MonerisCheckout_Request {
@@ -221,9 +230,71 @@ export interface MonerisCheckout_ReceiptResponse {
         expiry: string;
         cardholder: string;
       };
+      wallet: {
+        type: "applepay" | "googlepay";
+      };
+      paymentData: {
+        apiVersion: string;
+        apiVersionMinor: string;
+      }
     };
     receipt: {
-
+      /** "a" = approved, "d" = declined */
+      result: "a" | "d";
+      cc: {
+        order_no: string;
+        cust_id: string;
+        transaction_no: string;
+        reference_no: string;
+        transaction_code: "00" | "01" | "06";
+        transaction_type: string;
+        /** YYYY-MM-DD HH:MM:SS */
+        transaction_date_time: string;
+        corporateCard: string;
+        amount: string;
+        response_code: string;
+        iso_response_code: string;
+        approval_code: string;
+        card_type: "V" | "M" | "AX" | "DC" | "NO" | "SE" | "D" | "C1";
+        wallet_type: "applepay" | "googlepay";
+        dynamic_descriptor: string;
+        invoice_number: string;
+        customer_code: string;
+        eci: "5" | "6" | "7";
+        cvd_result_code: string;
+        avs_result_code: string;
+        first6last4: string;
+        /** MMYY */
+        expiry_date: string;
+        recur_success: "true" | "false";
+        issuer_id: string;
+        is_debit: string;
+        ecr_no: string;
+        batch_no: string;
+        sequence_no: string;
+        result: "a" | "d";
+        tokenize: {
+          success: "true" | "false";
+          first4last4: string;
+          data_key: string;
+          status: "001" | "940" | "941" | "942" | "943" | "944" | "945";
+          message: string;
+          mcp: {
+            merchant_settlement_amount: string;
+            cardholder_currency_code: string;
+            mcp_rate: string;
+            decimal_precision: string;
+            cardholder_amount: string;
+            cardholder_currency_desc: string;
+          }
+        };
+        fraud: {
+          cvd: MonerisCheckout_FraudResult;
+          avs: MonerisCheckout_FraudResult;
+          "3d_secure": MonerisCheckout_FraudResult;
+          kount: MonerisCheckout_FraudResult
+        };
+      }
     };
   }
 }

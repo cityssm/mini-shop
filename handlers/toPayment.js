@@ -17,6 +17,9 @@ export const handler = async (request, response) => {
         if (ticket) {
             toPaymentObject.ticket = ticket;
         }
+        else {
+            return response.redirect(configFunctions.getProperty("reverseProxy.urlPrefix") + "/order/error");
+        }
     }
     return response.render("toPayment", toPaymentObject);
 };

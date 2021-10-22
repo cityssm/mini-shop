@@ -1,5 +1,6 @@
 export type StoreValidatorErrorMessage =
   "noHandler" | "noResult" |
+  "missingAPIKey" | "unresponsiveAPI" | "invalidAPIResponse" |
   "missingOrderNumber" | "invalidOrderNumber" |
   "missingOrderSecret" |
   "paymentDeclined";

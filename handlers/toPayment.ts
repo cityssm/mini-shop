@@ -18,7 +18,7 @@ export const handler: RequestHandler = async (request, response) => {
 
   const storeType = configFunctions.getProperty("store.storeType");
 
-  const toPaymentObject = {
+  const toPaymentObject: Record<string, unknown> = {
     order
   };
 
@@ -29,6 +29,8 @@ export const handler: RequestHandler = async (request, response) => {
 
     if (ticket) {
       toPaymentObject.ticket = ticket;
+    } else {
+      return response.redirect (configFunctions.getProperty("reverseProxy.urlPrefix") + "/order/error");
     }
   }
 

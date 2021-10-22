@@ -4,6 +4,12 @@
 
 <div id="monerisCheckout" data-environment="<%= checkoutEnvironment %>" data-ticket="<%= ticket %>"></div>
 
+<form id="form--fromPayment" action="<%= urlPrefix %>/checkout/fromPayment" method="post">
+  <input name="ticket" type="hidden" value="<%= ticket %>" />
+  <input name="orderNumber" type="hidden" value="<%= order.orderNumber %>" />
+  <input name="orderSecret" type="hidden" value="<%= order.orderSecret %>" />
+</form>
+
 <% if (checkoutEnvironment === "qa") { %>
   <script src="https://gatewayt.moneris.com/chkt/js/chkt_v1.00.js"></script>
 <% } else { %>

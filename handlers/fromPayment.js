@@ -1,5 +1,6 @@
 import { recordAbuse } from "@cityssm/express-abuse-points";
 import * as configFunctions from "../helpers/configFunctions.js";
+import { validate as monerisCheckout_validate } from "../helpers/stores/moneris-checkout.js";
 import { validate as monerisHPP_validate } from "../helpers/stores/moneris-hpp.js";
 import { validate as testingFree_validate } from "../helpers/stores/testing-free.js";
 import { updateOrderAsPaid } from "@cityssm/mini-shop-db";
@@ -10,6 +11,9 @@ export const handler = async (request, response) => {
         errorCode: "noHandler"
     };
     switch (storeType) {
+        case "moneris-checkout":
+            storeValidatorReturn = await monerisCheckout_validate(request);
+            break;
         case "moneris-hpp":
             storeValidatorReturn = await monerisHPP_validate(request);
             break;

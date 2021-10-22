@@ -291,7 +291,7 @@ interface CartTotals {
       .then((responseOrderNumbers: { success: boolean; orderNumber?: string; orderSecret?: string }) => {
 
         formIsSubmitting = false;
-        
+
         if (responseOrderNumbers.success) {
           (document.querySelector("#toPayment_orderNumber") as HTMLInputElement).value = responseOrderNumbers.orderNumber;
           (document.querySelector("#toPayment_orderSecret") as HTMLInputElement).value = responseOrderNumbers.orderSecret;

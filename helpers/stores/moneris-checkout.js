@@ -1,4 +1,5 @@
 import fetch from "node-fetch";
+import { getOrderNumberBySecret } from "@cityssm/mini-shop-db";
 import * as configFunctions from "../../helpers/configFunctions.js";
 import Debug from "debug";
 const debug = Debug("mini-shop:stores:moneris-checkout");
@@ -91,12 +92,7 @@ export const preloadRequest = async (order) => {
         txn_total: cartSubtotal.toFixed(2),
         cart: {
             items: cartItems,
-            subtotal: cartSubtotal.toFixed(2),
-            tax: {
-                amount: "0.00",
-                description: "",
-                rate: "0.00"
-            }
+            subtotal: cartSubtotal.toFixed(2)
         }
     };
     const response = await fetch(requestURL, {
@@ -116,4 +112,87 @@ export const preloadRequest = async (order) => {
     }
     debug(responseData.response.error);
     return false;
+};
+export const validate = async (request) => {
+    const ticket = request.body.ticket;
+    if (!ticket) {
+        return {
+            isValid: false,
+            errorCode: "missingAPIKey"
+        };
+    }
+    const orderNumber = request.body.orderNumber;
+    if (!orderNumber) {
+        return {
+            isValid: false,
+            errorCode: "missingOrderNumber"
+        };
+    }
+    const orderSecret = request.body.orderSecret;
+    if (!orderSecret) {
+        return {
+            isValid: false,
+            errorCode: "missingOrderSecret"
+        };
+    }
+    const requestJSON = {
+        store_id: checkoutConfig.storeConfig.store_id,
+        api_token: checkoutConfig.storeConfig.api_token,
+        checkout_id: checkoutConfig.storeConfig.checkout_id,
+        environment: checkoutConfig.storeConfig.environment,
+        action: "receipt",
+        ticket
+    };
+    const response = await fetch(requestURL, {
+        method: "post",
+        body: JSON.stringify(requestJSON),
+        headers: {
+            "Content-Type": "application/json"
+        }
+    });
+    if (!response.ok) {
+        return {
+            isValid: false,
+            errorCode: "unresponsiveAPI"
+        };
+    }
+    const responseData = (await response.json());
+    if (!responseData) {
+        return {
+            isValid: false,
+            errorCode: "invalidAPIResponse"
+        };
+    }
+    if (responseData.response.success !== "true") {
+        return {
+            isValid: false,
+            errorCode: "paymentDeclined"
+        };
+    }
+    if (responseData.response.request.order_no !== orderNumber) {
+        return {
+            isValid: false,
+            errorCode: "invalidOrderNumber"
+        };
+    }
+    const orderNumberDB = await getOrderNumberBySecret(orderSecret);
+    if (orderNumberDB !== orderNumber) {
+        return {
+            isValid: false,
+            errorCode: "invalidOrderNumber"
+        };
+    }
+    return {
+        isValid: true,
+        orderNumber: orderNumberDB,
+        orderSecret,
+        paymentID: responseData.response.receipt.cc.reference_no,
+        paymentData: {
+            response_code: responseData.response.receipt.cc.response_code,
+            approval_code: responseData.response.receipt.cc.approval_code,
+            card_type: responseData.response.receipt.cc.card_type,
+            first6last4: responseData.response.receipt.cc.first6last4,
+            amount: responseData.response.receipt.cc.amount
+        }
+    };
 };
