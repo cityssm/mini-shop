@@ -1,0 +1,139 @@
+<%
+  const idPrefix = stringFns.getUID();
+%>
+
+<div class="message is-info">
+  <div class="message-body">
+    <p class="has-text-weight-bold">
+			Note that only tickets with ICON Location Code <em>0160</em> can be paid for using My Sault Ste. Marie eServices.
+    </p>
+    <p>
+      These tickets originate from either the Wawa, Thessalon and Sault Ste. Marie areas.
+      If your ticket is not from one of these areas and it does not have the 0160 location code,
+      you will need to contact the court that appears on the reverse side of your ticket as your payment cannot be made here.
+		</p>
+		<p>
+			Please refer to the
+			<a target="_blank" href="https://www.saultstemarie.ca/City-Hall/City-Departments/Legal/Provincial-Offences.aspx" title="Provincial Offences Office">Provincial Offences Office page on the City website</a>
+			for more information on the Sault Ste. Marie Provincial Offences Office.
+		</p>
+		<p>
+			For more information on Provincial Offences tickets and fines, please refer to the website for the
+			<a target="_blank" href="http://www.attorneygeneral.jus.gov.on.ca/english/justice-ont/tickets_and_fines.asp" title="Ministry of the Attorney General">Ministry of the Attorney General</a>.
+		</p>
+  </div>
+</div>
+
+<input id="<%= idPrefix %>_offenceNumber" name="offenceNumber" type="hidden" />
+<label class="label" for="<%= idPrefix %>_offenceNumber-suffix">
+  Offence Number
+</label>
+<div class="field has-addons">
+  <div class="control">
+    <span class="button is-static">0160</span>
+  </div>
+  <div class="control">
+    <input class="input" id="<%= idPrefix %>_offenceNumber-suffix" name="offenceNumber-suffix" type="text" minlength="5" maxlength="8"  placeholder="#####" required aria-label="Offence Number Suffix" />
+  </div>
+</div>
+
+<input id="<%= idPrefix %>_offenceDate" name="offenceDate" type="hidden" />
+<label class="label" for="<%= idPrefix %>_offenceDate-year">
+  Offence Date
+</label>
+<div class="field has-addons">
+  <div class="control">
+    <div class="select">
+      <select id="<%= idPrefix %>_offenceDate-year" name="offenceDate-year" title="Offence Year" required>
+        <% const currentYear = new Date().getFullYear(); %>
+        <option value="">(Year)</option>
+        <option><%= currentYear %></option>
+        <option><%= currentYear - 1 %></option>
+      </select>
+    </div>
+  </div>
+  <div class="control">
+    <span class="button is-static">/</span>
+  </div>
+  <div class="control">
+    <div class="select">
+      <select id="<%= idPrefix %>_offenceDate-month" name="offenceDate-month" title="Offence Month" required>
+        <option value="">(Month)</option>
+        <option>01</option>
+        <option>02</option>
+        <option>03</option>
+        <option>04</option>
+        <option>05</option>
+        <option>06</option>
+        <option>07</option>
+        <option>08</option>
+        <option>09</option>
+        <option>10</option>
+        <option>11</option>
+        <option>12</option>
+      </select>
+    </div>
+  </div>
+  <div class="control">
+    <span class="button is-static">/</span>
+  </div>
+  <div class="control">
+    <div class="select">
+      <select id="<%= idPrefix %>_offenceDate-day" name="offenceDate-day" title="Offence Day" required>
+        <option value="">(Day)</option>
+        <option>01</option>
+        <option>02</option>
+        <option>03</option>
+        <option>04</option>
+        <option>05</option>
+        <option>06</option>
+        <option>07</option>
+        <option>08</option>
+        <option>09</option>
+        <option>10</option>
+        <option>11</option>
+        <option>12</option>
+        <option>13</option>
+        <option>14</option>
+        <option>15</option>
+        <option>16</option>
+        <option>17</option>
+        <option>18</option>
+        <option>19</option>
+        <option>20</option>
+        <option>21</option>
+        <option>22</option>
+        <option>23</option>
+        <option>24</option>
+        <option>25</option>
+        <option>26</option>
+        <option>27</option>
+        <option>28</option>
+        <option>29</option>
+        <option>30</option>
+        <option>31</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<label class="label" for="<%= idPrefix %>_nameOnTicket">
+  Name on Ticket
+</label>
+<div class="field">
+  <input class="input" id="<%= idPrefix %>_nameOnTicket" name="nameOnTicket" type="text" maxlength="100" required />
+</div>
+
+<label class="label" for="<%= idPrefix %>_unitPrice">
+  Total Payable
+</label>
+<div class="field has-addons">
+  <div class="control">
+    <span class="button is-static">$</span>
+  </div>
+  <div class="control">
+    <input class="input" id="<%= idPrefix %>_unitPrice" name="unitPrice" type="text" inputmode="numeric" minlength="2" maxlength="10" pattern="^\d+(\.\d\d)?" required />
+  </div>
+</div>
+
+<script src="<%= urlPrefix %>/javascripts/product-ssm-ticket_offenceNotice.min.js" defer></script>
