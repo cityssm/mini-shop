@@ -4,7 +4,7 @@ import * as configFunctions from "../../helpers/configFunctions.js";
 import Debug from "debug";
 const debug = Debug("mini-shop:stores:moneris-checkout");
 const checkoutConfig = configFunctions.getProperty("store");
-const requestURL = checkoutConfig.storeConfig.environment === "qa"
+const requestURL = (checkoutConfig.storeConfig.environment || "") === "qa"
     ? "https://gatewayt.moneris.com/chkt/request/request.php"
     : "https://gateway.moneris.com/chkt/request/request.php;";
 export const preloadRequest = async (order) => {
