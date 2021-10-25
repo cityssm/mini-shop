@@ -1,6 +1,30 @@
 # Store Types
 
+## Moneris Checkout
+
+```javascript
+config.store = {
+  storeType: "moneris-checkout",
+  storeConfig: {
+    store_id: "abcdefg",
+    api_token: "hIjKlMnOp",
+    checkout_id: "qrsTUVwxyZ",
+    environment: "prod"
+  }
+}
+```
+
+## Configuration Settings
+
+-   Under "Checkout Type", choose **"I have my custom order form and want to use Moneris simply for payment processing."**.
+
+-   Under "Payment > Transaction Type", choose **"Purchase"**.
+
+-   It is recommended under "Email Communication" to send Customer Emails on approved transactions.
+
 ## Moneris Hosted Paypage
+
+**Deprecated by Moneris**
 
 ```javascript
 config.store = {
@@ -26,17 +50,16 @@ config.store = {
 -   Set the "Response Method" to **"Sent to your server as a POST"**.
 
 -   Set the "Approved URL" and "Declined URL" to
-    **"https://[storeURL]/checkout/fromPayment"**
+    **"<https://[storeURL]/checkout/fromPayment>"**
     replacing `[storeURL]` with the address to your mini-shop.
 
 -   You can set the fields that are returned along with the transaction response.
     Be sure **"Return other customer fields"** is checked.
 
 -   Consider setting the "Referring URL" (under Security Features) to
-    **"https://[storeURL]/checkout/toPayment"**
+    **"<https://[storeURL]/checkout/toPayment>"**
 
 -   Consider enabling emailed receipts.
-
 
 ### Helpful Links
 
