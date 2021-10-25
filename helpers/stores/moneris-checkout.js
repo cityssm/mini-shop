@@ -7,7 +7,7 @@ const debug = Debug("mini-shop:stores:moneris-checkout");
 const checkoutConfig = configFunctions.getProperty("store");
 const requestURL = (((_a = checkoutConfig === null || checkoutConfig === void 0 ? void 0 : checkoutConfig.storeConfig) === null || _a === void 0 ? void 0 : _a.environment) || "") === "qa"
     ? "https://gatewayt.moneris.com/chkt/request/request.php"
-    : "https://gateway.moneris.com/chkt/request/request.php;";
+    : "https://gateway.moneris.com/chkt/request/request.php";
 export const preloadRequest = async (order) => {
     const contact_details = {
         first_name: order.shippingName,
