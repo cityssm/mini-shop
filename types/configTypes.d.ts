@@ -105,6 +105,7 @@ export interface Config_Product {
         fieldName: string;
         formFieldName: string;
     }>;
+    identifierFormFieldName?: string;
     fees?: string[];
     productEjs?: string;
     feeTotals?: {

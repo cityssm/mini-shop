@@ -131,6 +131,7 @@ export interface Config_Product {
     // formFieldName maxlength = 30
     formFieldName: string;
   }>;
+  identifierFormFieldName?: string;
   fees?: string[];
   productEjs?: string;
   feeTotals?: {
