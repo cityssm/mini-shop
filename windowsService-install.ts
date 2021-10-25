@@ -1,5 +1,7 @@
 import { Service } from "node-windows";
-import * as path from "path";
+import path from "path";
+
+const __dirname = ".";
 
 // Create a new service object
 const svc = new Service({
