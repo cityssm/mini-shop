@@ -57,10 +57,19 @@ export const preloadRequest = async (order) => {
     const cartItems = [];
     let cartSubtotal = 0;
     for (const orderItem of order.items) {
-        const product = configFunctions.getClientSideProduct(orderItem.productSKU);
+        const product = configFunctions.getProperty("products")[orderItem.productSKU];
+        let description = product.productName;
+        if (product.identifierFormFieldName) {
+            const identifierFormField = orderItem.fields.find((itemField) => {
+                return itemField.formFieldName === product.identifierFormFieldName;
+            });
+            if (identifierFormField) {
+                description = identifierFormField.fieldValue + " // " + description;
+            }
+        }
         const cartItem = {
             url: "",
-            description: product.productName.slice(0, 200),
+            description: description.slice(0, 200),
             product_code: orderItem.productSKU.slice(0, 50),
             unit_cost: orderItem.unitPrice.toFixed(2),
             quantity: orderItem.quantity.toString()
