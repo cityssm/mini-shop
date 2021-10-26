@@ -169,7 +169,7 @@ interface CartTotals {
       feeTotals: {}
     };
 
-    cartItems = cartGlobal.get();
+    cartItems = cartGlobal.get().cartItems;
 
     // Render items
 
@@ -223,7 +223,7 @@ interface CartTotals {
 
     const productSKUs: Set<string> = new Set();
 
-    const cart: Array<{ productSKU: string;[formFieldName: string]: string }> = cartGlobal.get();
+    const cart: Array<{ productSKU: string;[formFieldName: string]: string }> = cartGlobal.get().cartItems;
 
     for (const cartProduct of cart) {
       productSKUs.add(cartProduct.productSKU);
@@ -276,7 +276,7 @@ interface CartTotals {
 
     const formObject = formToObject(shippingFormElement) as recordTypes.ShippingForm;
 
-    formObject.cartItems = cartGlobal.get();
+    formObject.cartItems = cartGlobal.get().cartItems;
 
     fetch(urlPrefix + "/checkout/doCreateOrder", {
       method: "POST",
@@ -295,6 +295,8 @@ interface CartTotals {
         if (responseOrderNumbers.success) {
           (document.querySelector("#toPayment_orderNumber") as HTMLInputElement).value = responseOrderNumbers.orderNumber;
           (document.querySelector("#toPayment_orderSecret") as HTMLInputElement).value = responseOrderNumbers.orderSecret;
+
+          cartGlobal.cacheContact();
 
           (document.querySelector("#form--toPayment") as HTMLFormElement).submit();
 
@@ -322,6 +324,22 @@ interface CartTotals {
 
   // Initialize page
   initFunction_loadProductDetails();
+
+  if (cartGlobal.get().fullName !== "") {
+
+    const shippingForm = cartGlobal.get();
+
+    (document.querySelector("#shipping_fullName") as HTMLInputElement).value = shippingForm.fullName;
+    (document.querySelector("#shipping_address") as HTMLInputElement).value = shippingForm.address;
+    (document.querySelector("#shipping_address2") as HTMLInputElement).value = shippingForm.address2;
+    (document.querySelector("#shipping_city") as HTMLInputElement).value = shippingForm.city;
+    (document.querySelector("#shipping_province") as HTMLInputElement).value = shippingForm.province;
+    (document.querySelector("#shipping_country") as HTMLInputElement).value = shippingForm.country;
+    (document.querySelector("#shipping_postalCode") as HTMLInputElement).value = shippingForm.postalCode;
+    (document.querySelector("#shipping_phoneNumberDay") as HTMLInputElement).value = shippingForm.phoneNumberDay;
+    (document.querySelector("#shipping_phoneNumberEvening") as HTMLInputElement).value = shippingForm.phoneNumberEvening;
+    (document.querySelector("#shipping_emailAddress") as HTMLInputElement).value = shippingForm.emailAddress;
+  }
 
 
   document.querySelector("#button--clearCart").addEventListener("click", () => {

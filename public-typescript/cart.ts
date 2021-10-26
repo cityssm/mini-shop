@@ -11,27 +11,39 @@ window.exports.cart = (() => {
   const SESSION_STORAGE_KEY = "miniShopCart";
   const CART_MAX_SIZE = 255;
 
-  let cart: recordTypes.CartItem[] = sessionStorage.getItem(SESSION_STORAGE_KEY)
+  let shippingForm: recordTypes.ShippingForm = sessionStorage.getItem(SESSION_STORAGE_KEY)
     ? JSON.parse(sessionStorage.getItem(SESSION_STORAGE_KEY))
-    : [];
+    : undefined;
 
-  if (!cart) {
-    cart = [];
+  if (!shippingForm || !shippingForm.fullName) {
+    shippingForm = {
+      fullName: "",
+      address: "",
+      address2: "",
+      city: "",
+      province: "",
+      country: "",
+      postalCode: "",
+      phoneNumberDay: "",
+      phoneNumberEvening: "",
+      emailAddress: "",
+      cartItems: []
+    };
   }
 
   const toStorageFunction = () => {
-    sessionStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(cart));
+    sessionStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(shippingForm));
   };
 
   const renderCartButtonFunction = () => {
 
     const cartCountTagElement = document.querySelector("#tag--cartCount");
 
-    if (cart.length === 0) {
+    if (shippingForm.cartItems.length === 0) {
       cartCountTagElement.classList.add("is-hidden");
 
     } else {
-      cartCountTagElement.textContent = cart.length.toString();
+      cartCountTagElement.textContent = shippingForm.cartItems.length.toString();
       cartCountTagElement.classList.remove("is-hidden");
     }
   };
@@ -41,13 +53,13 @@ window.exports.cart = (() => {
   const addFunction =
     (productFormElement: HTMLFormElement) => {
 
-      if (cart.length >= CART_MAX_SIZE) {
+      if (shippingForm.cartItems.length >= CART_MAX_SIZE) {
         return false;
       }
 
       const formObject = formToObject(productFormElement) as recordTypes.CartItem;
 
-      cart.push(formObject);
+      shippingForm.cartItems.push(formObject);
       toStorageFunction();
       renderCartButtonFunction();
 
@@ -55,16 +67,48 @@ window.exports.cart = (() => {
     };
 
   const removeFunction = (cartIndex: number) => {
-    cart.splice(cartIndex, 1);
+    shippingForm.cartItems.splice(cartIndex, 1);
     toStorageFunction();
     renderCartButtonFunction();
   };
 
 
   const clearFunction = () => {
-    cart = [];
+    shippingForm = {
+      fullName: "",
+      address: "",
+      address2: "",
+      city: "",
+      province: "",
+      country: "",
+      postalCode: "",
+      phoneNumberDay: "",
+      phoneNumberEvening: "",
+      emailAddress: "",
+      cartItems: []
+    };
     toStorageFunction();
     renderCartButtonFunction();
+  };
+
+
+  const cacheContactFunction = () => {
+    try {
+
+      shippingForm.fullName = (document.querySelector("#shipping_fullName") as HTMLInputElement).value;
+      shippingForm.address = (document.querySelector("#shipping_address") as HTMLInputElement).value;
+      shippingForm.address2 = (document.querySelector("#shipping_address2") as HTMLInputElement).value;
+      shippingForm.city = (document.querySelector("#shipping_city") as HTMLInputElement).value;
+      shippingForm.province = (document.querySelector("#shipping_province") as HTMLInputElement).value;
+      shippingForm.country = (document.querySelector("#shipping_country") as HTMLInputElement).value;
+      shippingForm.postalCode = (document.querySelector("#shipping_postalCode") as HTMLInputElement).value;
+      shippingForm.phoneNumberDay = (document.querySelector("#shipping_phoneNumberDay") as HTMLInputElement).value;
+      shippingForm.phoneNumberEvening = (document.querySelector("#shipping_phoneNumberEvening") as HTMLInputElement).value;
+      shippingForm.emailAddress = (document.querySelector("#shipping_emailAddress") as HTMLInputElement).value;
+      toStorageFunction();
+    } catch {
+      // ignore
+    }
   };
 
 
@@ -73,9 +117,10 @@ window.exports.cart = (() => {
     remove: removeFunction,
     clear: clearFunction,
     get: () => {
-      return cart;
+      return shippingForm;
     },
-    refresh: toStorageFunction
+    refresh: toStorageFunction,
+    cacheContact: cacheContactFunction
   };
 
   return cartGlobal;

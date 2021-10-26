@@ -123,7 +123,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
             itemTotal: 0,
             feeTotals: {}
         };
-        cartItems = cartGlobal.get();
+        cartItems = cartGlobal.get().cartItems;
         if (cartItems.length === 0) {
             cartContainerElement.classList.add("is-hidden");
             shippingFormElement.classList.add("is-hidden");
@@ -154,7 +154,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
     };
     var initFunction_getDistinctProductSKUs = function () {
         var productSKUs = new Set();
-        var cart = cartGlobal.get();
+        var cart = cartGlobal.get().cartItems;
         for (var _i = 0, cart_1 = cart; _i < cart_1.length; _i++) {
             var cartProduct = cart_1[_i];
             productSKUs.add(cartProduct.productSKU);
@@ -197,7 +197,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
         }
         formIsSubmitting = true;
         var formObject = formToObject(shippingFormElement);
-        formObject.cartItems = cartGlobal.get();
+        formObject.cartItems = cartGlobal.get().cartItems;
         fetch(urlPrefix + "/checkout/doCreateOrder", {
             method: "POST",
             body: JSON.stringify(formObject),
@@ -218,6 +218,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
             if (responseOrderNumbers.success) {
                 document.querySelector("#toPayment_orderNumber").value = responseOrderNumbers.orderNumber;
                 document.querySelector("#toPayment_orderSecret").value = responseOrderNumbers.orderSecret;
+                cartGlobal.cacheContact();
                 document.querySelector("#form--toPayment").submit();
             }
             else {
@@ -231,6 +232,19 @@ Object.defineProperty(exports, "__esModule", { value: true });
         });
     });
     initFunction_loadProductDetails();
+    if (cartGlobal.get().fullName !== "") {
+        var shippingForm = cartGlobal.get();
+        document.querySelector("#shipping_fullName").value = shippingForm.fullName;
+        document.querySelector("#shipping_address").value = shippingForm.address;
+        document.querySelector("#shipping_address2").value = shippingForm.address2;
+        document.querySelector("#shipping_city").value = shippingForm.city;
+        document.querySelector("#shipping_province").value = shippingForm.province;
+        document.querySelector("#shipping_country").value = shippingForm.country;
+        document.querySelector("#shipping_postalCode").value = shippingForm.postalCode;
+        document.querySelector("#shipping_phoneNumberDay").value = shippingForm.phoneNumberDay;
+        document.querySelector("#shipping_phoneNumberEvening").value = shippingForm.phoneNumberEvening;
+        document.querySelector("#shipping_emailAddress").value = shippingForm.emailAddress;
+    }
     document.querySelector("#button--clearCart").addEventListener("click", function () {
         cityssm.confirmModal("Clear Cart?", "Are you sure you want to remove all items from your cart?", "Yes, Clear the Cart", "warning", function () {
             cartGlobal.clear();
