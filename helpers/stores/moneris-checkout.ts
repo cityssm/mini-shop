@@ -238,6 +238,7 @@ export const validate = async (request: Request): Promise<StoreValidatorReturn> 
     }
   });
 
+
   // api response error, fail
   if (!response.ok) {
     return {
@@ -248,6 +249,8 @@ export const validate = async (request: Request): Promise<StoreValidatorReturn> 
 
   const responseData = (await response.json()) as MonerisCheckout_ReceiptResponse;
 
+  debug(responseData);
+
   // response data invalid, fail
   if (!responseData) {
     return {
@@ -256,8 +259,17 @@ export const validate = async (request: Request): Promise<StoreValidatorReturn> 
     };
   }
 
-  // transaction not successful, fail
+  // transaction not successful
+  // error processing, could be approved or declined
   if (responseData.response.success !== "true") {
+    return {
+      isValid: false,
+      errorCode: "paymentError"
+    };
+  }
+
+  // transaction not approved (i.e. declined)
+  if (responseData.response.receipt.result !== "a") {
     return {
       isValid: false,
       errorCode: "paymentDeclined"

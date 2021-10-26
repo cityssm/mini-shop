@@ -3,7 +3,7 @@ export type StoreValidatorErrorMessage =
   "missingAPIKey" | "unresponsiveAPI" | "invalidAPIResponse" |
   "missingOrderNumber" | "invalidOrderNumber" |
   "missingOrderSecret" |
-  "paymentDeclined";
+  "paymentError" | "paymentDeclined";
 
 export type StoreValidatorReturn = {
   isValid: true;

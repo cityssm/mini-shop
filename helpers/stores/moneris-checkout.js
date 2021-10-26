@@ -167,6 +167,7 @@ export const validate = async (request) => {
         };
     }
     const responseData = (await response.json());
+    debug(responseData);
     if (!responseData) {
         return {
             isValid: false,
@@ -174,6 +175,12 @@ export const validate = async (request) => {
         };
     }
     if (responseData.response.success !== "true") {
+        return {
+            isValid: false,
+            errorCode: "paymentError"
+        };
+    }
+    if (responseData.response.receipt.result !== "a") {
         return {
             isValid: false,
             errorCode: "paymentDeclined"
