@@ -6,7 +6,7 @@ window.exports.cart = (function () {
     var shippingForm = sessionStorage.getItem(SESSION_STORAGE_KEY)
         ? JSON.parse(sessionStorage.getItem(SESSION_STORAGE_KEY))
         : undefined;
-    if (!shippingForm || !shippingForm.fullName) {
+    if (!shippingForm || !Object.prototype.hasOwnProperty.call(shippingForm, "fullName")) {
         shippingForm = {
             fullName: "",
             address: "",
