@@ -1,11 +1,6 @@
 import { Service } from "node-windows";
-import path from "path";
-const __dirname = ".";
-const svc = new Service({
-    name: "Mini Shop",
-    description: "A lightweight, highly customizable storefront.",
-    script: path.join(__dirname, "bin", "www.js")
-});
+import { serviceConfig } from "./windowsService.js";
+const svc = new Service(serviceConfig);
 svc.on("install", () => {
     svc.start();
 });

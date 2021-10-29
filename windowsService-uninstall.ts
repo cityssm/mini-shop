@@ -1,13 +1,8 @@
 import { Service } from "node-windows";
-import path from "path";
-
-const __dirname = ".";
+import { serviceConfig } from "./windowsService.js";
 
 // Create a new service object
-const svc = new Service({
-  name: "Mini Shop",
-  script: path.join(__dirname, "bin", "www.js")
-});
+const svc = new Service(serviceConfig);
 
 // Listen for the "uninstall" event so we know when it's done.
 svc.on("uninstall", function() {
