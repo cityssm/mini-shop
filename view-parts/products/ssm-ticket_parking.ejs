@@ -3,6 +3,7 @@
 %>
 
 <input id="<%= idPrefix %>_tagNumber" name="tagNumber" type="hidden" />
+<input class="is-hidden" id="<%= idPrefix %>_tagNumber-isValid" name="tagNumber-isValid" type="checkbox" required />
 <label class="label" for="<%= idPrefix %>_tagNumber-prefix">
   Tag Number
 </label>
@@ -20,6 +21,17 @@
   <div class="control">
     <input class="input" id="<%= idPrefix %>_tagNumber-suffix" name="tagNumber-suffix" type="text" inputmode="numeric" minlength="5" maxlength="5" pattern="\d{5}" placeholder="#####" required aria-label="Tag Number Suffix" />
   </div>
+  <div class="control">
+    <span class="button is-static">
+      <span class="icon is-small tagNumber-isValidIcon"></span>
+    </span>
+  </div>
+</div>
+
+<div class="message is-warning is-hidden tagNumber-isInvalidMessage">
+  <p class="message-body">
+    The selected Tag Number is not available for online payments.
+  </p>
 </div>
 
 <input id="<%= idPrefix %>_offenceDate" name="offenceDate" type="hidden" />
@@ -123,4 +135,5 @@
   </div>
 </div>
 
+<script src="<%= urlPrefix %>/javascripts/product-ssm-ticket_parking.min.js" defer></script>
 <script src="<%= urlPrefix %>/javascripts/product-ssm-ticket.min.js" defer></script>

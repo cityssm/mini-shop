@@ -34,6 +34,7 @@ configFallbackValues.set("views.order.headerEjs", "order_print.ejs");
 configFallbackValues.set("views.toPayment.headerEjs", "toPayment_redirecting.ejs");
 configFallbackValues.set("fees", {});
 configFallbackValues.set("products", {});
+configFallbackValues.set("productHandlers", []);
 configFallbackValues.set("currency.code", "CAD");
 configFallbackValues.set("currency.currencyName", "Canadian Dollars");
 export function getProperty(propertyName) {

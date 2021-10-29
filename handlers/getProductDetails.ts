@@ -63,3 +63,6 @@ export const handler: RequestHandler = (request, response) => {
 
   return response.json(returnObject);
 };
+
+
+export default handler;

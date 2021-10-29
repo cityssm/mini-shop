@@ -3,6 +3,9 @@ import type * as sqlTypes from "mssql";
 type BulmaColors =
   "white" | "black" | "light" | "dark" | "primary" | "link" | "info" | "success" | "warning" | "danger";
 
+export type ProductHandlers =
+  "ssm-ticket_parking/doIsTagNumberEligible";
+
 export interface Config {
 
   application?: {
@@ -53,6 +56,8 @@ export interface Config {
     // productSKU maxlength = 20
     [productSKU: string]: Config_Product;
   };
+
+  productHandlers?: ProductHandlers[];
 
   fees?: {
     // feeSKU maxlength = 20

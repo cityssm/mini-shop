@@ -34,3 +34,4 @@ export const handler = (request, response) => {
     const returnObject = getProductAndFeeDetails(productSKUs);
     return response.json(returnObject);
 };
+export default handler;

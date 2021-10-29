@@ -1,5 +1,6 @@
 import type * as sqlTypes from "mssql";
 declare type BulmaColors = "white" | "black" | "light" | "dark" | "primary" | "link" | "info" | "success" | "warning" | "danger";
+export declare type ProductHandlers = "ssm-ticket_parking/doIsTagNumberEligible";
 export interface Config {
     application?: {
         httpPort?: number;
@@ -41,6 +42,7 @@ export interface Config {
     products?: {
         [productSKU: string]: Config_Product;
     };
+    productHandlers?: ProductHandlers[];
     fees?: {
         [feeSKU: string]: Config_FeeDefinition;
     };

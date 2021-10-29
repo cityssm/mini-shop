@@ -65,6 +65,7 @@ configFallbackValues.set("views.toPayment.headerEjs", "toPayment_redirecting.ejs
 
 configFallbackValues.set("fees", {});
 configFallbackValues.set("products", {});
+configFallbackValues.set("productHandlers", []);
 
 configFallbackValues.set("currency.code", "CAD");
 configFallbackValues.set("currency.currencyName", "Canadian Dollars");
@@ -106,6 +107,7 @@ export function getProperty(propertyName: "store.storeType"): configTypes.StoreT
 
 export function getProperty(propertyName: "fees"): { [feeName: string]: configTypes.Config_FeeDefinition };
 export function getProperty(propertyName: "products"): { [productSKU: string]: configTypes.Config_Product };
+export function getProperty(propertyName: "productHandlers"): configTypes.ProductHandlers[];
 
 
 export function getProperty(propertyName: string): unknown {
