@@ -4,7 +4,7 @@ import type { Config_Product } from "../types/configTypes";
 export const ticket_parking: Config_Product = {
   productName: "Parking Enforcement - Certificate of Infraction",
   image: {
-    path: "/images/ssm-ticket_parking.png",
+    path: "/images/ssm-ticket_parking.jpg",
     dimensionClass: "1by1"
   },
   productEjs: "ssm-ticket_parking.ejs",
@@ -26,7 +26,7 @@ export const ticket_parking: Config_Product = {
 export const ticket_offenceNotice: Config_Product = {
   productName: "Provincial Offences - Offence Notice",
   image: {
-    path: "/images/ssm-ticket_offenceNotice.png",
+    path: "/images/ssm-ticket_offenceNotice.jpg",
     dimensionClass: "1by1"
   },
   productEjs: "ssm-ticket_offenceNotice.ejs",
@@ -48,7 +48,7 @@ export const ticket_offenceNotice: Config_Product = {
 export const ticket_noticeOfFine: Config_Product = {
   productName: "Provincial Offences - Notice of Fine and Due Date",
   image: {
-    path: "/images/ssm-ticket_noticeOfFine.png",
+    path: "/images/ssm-ticket_noticeOfFine.jpg",
     dimensionClass: "1by1"
   },
   productEjs: "ssm-ticket_noticeOfFine.ejs",

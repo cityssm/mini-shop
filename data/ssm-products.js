@@ -1,7 +1,7 @@
 export const ticket_parking = {
     productName: "Parking Enforcement - Certificate of Infraction",
     image: {
-        path: "/images/ssm-ticket_parking.png",
+        path: "/images/ssm-ticket_parking.jpg",
         dimensionClass: "1by1"
     },
     productEjs: "ssm-ticket_parking.ejs",
@@ -21,7 +21,7 @@ export const ticket_parking = {
 export const ticket_offenceNotice = {
     productName: "Provincial Offences - Offence Notice",
     image: {
-        path: "/images/ssm-ticket_offenceNotice.png",
+        path: "/images/ssm-ticket_offenceNotice.jpg",
         dimensionClass: "1by1"
     },
     productEjs: "ssm-ticket_offenceNotice.ejs",
@@ -41,7 +41,7 @@ export const ticket_offenceNotice = {
 export const ticket_noticeOfFine = {
     productName: "Provincial Offences - Notice of Fine and Due Date",
     image: {
-        path: "/images/ssm-ticket_noticeOfFine.png",
+        path: "/images/ssm-ticket_noticeOfFine.jpg",
         dimensionClass: "1by1"
     },
     productEjs: "ssm-ticket_noticeOfFine.ejs",
