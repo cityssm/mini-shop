@@ -1,4 +1,4 @@
-import { captchaIsMatch } from "../helpers/captchaFunctions.js";
+import { captchaIsMatch, purgeCaptcha } from "../helpers/captchaFunctions.js";
 
 import { createOrder as miniShopDB_createOrder } from "@cityssm/mini-shop-db";
 
@@ -20,8 +20,11 @@ export const handler: RequestHandler = async (request, response) => {
 
   const formData = request.body as ShippingForm;
 
-
   const orderIDs = await miniShopDB_createOrder(formData);
+
+  if (orderIDs.success) {
+    purgeCaptcha(captchaKey);
+  }
 
   return response.json(orderIDs);
 };
