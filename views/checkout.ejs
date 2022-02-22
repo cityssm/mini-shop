@@ -135,6 +135,21 @@
     </div>
   </div>
 
+  <div class="columns is-vcentered">
+    <div class="column has-text-centered">
+      <input name="captchaKey" type="hidden" value="<%= captchaKey %>" />
+      <img src="<%= urlPrefix %>/checkout/captcha/<%= captchaKey %>" alt="CAPTCHA Image" />
+    </div>
+    <div class="column">
+      <div class="field">
+        <label class="label" for="captchaText">Enter the Text from the Image</label>
+        <div class="control">
+          <input class="input" id="captchaText" name="captchaText" type="text" required />
+        </div>
+      </div>
+    </div>
+  </div>
+
   <%
     const shippingFooterEJS = configFunctions.getProperty("views.checkout_shipping.footerEjs");
   %>

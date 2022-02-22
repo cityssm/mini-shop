@@ -288,7 +288,7 @@ interface CartTotals {
       .then(async (response) => {
         return await response.json();
       })
-      .then((responseOrderNumbers: { success: boolean; orderNumber?: string; orderSecret?: string }) => {
+      .then((responseOrderNumbers: { success: boolean; message?: string; orderNumber?: string; orderSecret?: string }) => {
 
         formIsSubmitting = false;
 
@@ -302,8 +302,12 @@ interface CartTotals {
 
         } else {
 
+          const errorMessage = responseOrderNumbers.message
+            ? responseOrderNumbers.message
+            : "An error occurred while trying to create your order. Please try again.";
+
           cityssm.alertModal("Order Error",
-            "An error occurred while trying to create your order. Please try again.",
+            errorMessage,
             "OK",
             "danger");
 

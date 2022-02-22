@@ -222,7 +222,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
                 document.querySelector("#form--toPayment").submit();
             }
             else {
-                cityssm.alertModal("Order Error", "An error occurred while trying to create your order. Please try again.", "OK", "danger");
+                var errorMessage = responseOrderNumbers.message
+                    ? responseOrderNumbers.message
+                    : "An error occurred while trying to create your order. Please try again.";
+                cityssm.alertModal("Order Error", errorMessage, "OK", "danger");
             }
             return;
         })
