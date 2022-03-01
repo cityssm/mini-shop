@@ -42,7 +42,7 @@
     "@types/node-windows": "^0.1.2",
     "@types/puppeteer": "^5.4.4",
     "@types/uuid": "^8.3.4",
-    "@typescript-eslint/eslint-plugin": "^5.12.1",
+    "@typescript-eslint/eslint-plugin": "^5.13.0",
     "@typescript-eslint/parser": "^5.12.1",
     "bulma": "^0.9.3",
     "eslint": "^7.32.0",
