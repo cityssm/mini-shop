@@ -66,7 +66,7 @@
     "cookie-parser": "^1.4.6",
     "cross-env": "^7.0.3",
     "debug": "^4.3.3",
-    "ejs": "^3.1.6",
+    "ejs": "^3.1.7",
     "express": "^4.17.3",
     "form_to_object": "^2.0.0",
     "mssql": "^8.0.2",
