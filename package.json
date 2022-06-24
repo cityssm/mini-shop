@@ -53,7 +53,7 @@
     "gulp": "^4.0.2",
     "gulp-minify": "^3.1.0",
     "nodemon": "^2.0.16",
-    "puppeteer": "^14.1.1"
+    "puppeteer": "^15.0.0"
   },
   "dependencies": {
     "@cityssm/bulma-webapp-js": "^1.1.3",
