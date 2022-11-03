@@ -17,7 +17,7 @@ export const handler: RequestHandler = async (request, response, next) => {
   const captcha = new CaptchaGenerator()
     .setDimension(150, 500)
     .setCaptcha({ text: captchaText, size: 60, color: "#ce1036" })
-    .setDecoy({ opacity: 0.4 })
+    .setDecoy({ opacity: 0.2 })
     .setTrace({ color: "#da1039" });
 
   const buffer = await captcha.generate();
