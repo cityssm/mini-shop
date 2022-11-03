@@ -1,4 +1,4 @@
-image: ubuntu
+image: ubuntu2004
 platform: Any CPU
 
 environment:
@@ -7,10 +7,9 @@ environment:
   CC_TEST_REPORTER_ID:
     secure: RVo+XNoMgaRuC1gAM8fEf24FrybrU9mF8t+10/7tO5wCF7CEEvG4mMscMzL/2f+syza3L50Y2y+aQ9EWFRiLQ0TylcYAVdjgjKuaoIrsMpU=
 
-stack: "node 14"
+stack: "node 16"
 
 install:
-  - sh: npm install -g npm@7
   # Output useful info for debugging.
   - node --version
   - npm --version
