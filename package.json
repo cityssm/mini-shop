@@ -71,7 +71,7 @@
     "form_to_object": "^2.0.0",
     "mssql": "^9.0.1",
     "node-cache": "^5.1.2",
-    "node-fetch": "^3.2.10",
+    "node-fetch": "^3.3.0",
     "uuid": "^9.0.0"
   },
   "private": true
