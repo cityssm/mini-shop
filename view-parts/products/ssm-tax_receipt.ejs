@@ -52,7 +52,14 @@
         Taxation Year:
       </label>
       <div class="control">
-        <input class="input" id="<%= idPrefix %>_taxYear" name="taxYear" type="text" pattern="\d{4}" minlength="4" maxlength="4" inputmode="numeric" value="<%= new Date().getFullYear() - 1 %>" required />
+        <div class="select is-fullwidth">
+          <select id="<%= idPrefix %>_taxYear" name="taxYear" required>
+            <% const currentYear = new Date().getFullYear(); %>
+            <% for (let i = currentYear - 1; i >= currentYear - 7; i -= 1) { %>
+              <option value="<%= i %>"><%= i %></option>
+            <% } %>
+          </select>
+        </div>
       </div>
     </div>
   </div>
