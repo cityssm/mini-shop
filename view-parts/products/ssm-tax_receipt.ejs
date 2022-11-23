@@ -55,7 +55,7 @@
         <div class="select is-fullwidth">
           <select id="<%= idPrefix %>_taxYear" name="taxYear" required>
             <% const currentYear = new Date().getFullYear(); %>
-            <% for (let i = currentYear - 1; i >= currentYear - 7; i -= 1) { %>
+            <% for (let i = currentYear; i >= currentYear - 8; i -= 1) { %>
               <option value="<%= i %>"><%= i %></option>
             <% } %>
           </select>
@@ -75,3 +75,5 @@
     <p>Please allow three to five business days for processing.</p>
   </div>
 </div>
+
+<script src="<%= urlPrefix %>/javascripts/product-ssm-tax_receipt.min.js" defer></script>
