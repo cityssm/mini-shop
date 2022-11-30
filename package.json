@@ -59,7 +59,7 @@
     "@cityssm/bulma-webapp-js": "^1.4.3",
     "@cityssm/express-abuse-points": "^1.0.2",
     "@cityssm/expressjs-server-js": "^2.3.3",
-    "@cityssm/mini-shop-db": "^3.2.1",
+    "@cityssm/mini-shop-db": "^3.2.2",
     "@cityssm/mssql-multi-pool": "^2.1.6",
     "captcha-canvas": "3.2.1",
     "compression": "^1.7.4",
