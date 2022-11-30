@@ -15,10 +15,11 @@ const debugConfig = debug("mini-shop:configFunctions");
 let config: configTypes.Config = {};
 
 try {
+  // eslint-disable-next-line node/no-unsupported-features/es-syntax, node/no-unpublished-import, unicorn/no-await-expression-member
   config = (await import("../data/config.js")).config;
-
+  
 } catch {
-
+  // eslint-disable-next-line node/no-unsupported-features/es-syntax, unicorn/no-await-expression-member
   config = (await import("../data/config-sample.js")).config;
   debugConfig("No \"data/config.js\" found, using \"data/config-sample.js\".");
 }
@@ -70,6 +71,8 @@ configFallbackValues.set("productHandlers", []);
 configFallbackValues.set("currency.code", "CAD");
 configFallbackValues.set("currency.currencyName", "Canadian Dollars");
 
+configFallbackValues.set("settings.checkout_includeCaptcha", true);
+
 
 export function getProperty(propertyName: "application.httpPort"): number;
 export function getProperty(propertyName: "application.https"): configTypes.Config_HTTPSConfig;
@@ -109,6 +112,8 @@ export function getProperty(propertyName: "fees"): { [feeName: string]: configTy
 export function getProperty(propertyName: "products"): { [productSKU: string]: configTypes.Config_Product };
 export function getProperty(propertyName: "productHandlers"): configTypes.ProductHandlers[];
 
+export function getProperty(propertyName: "settings.checkout_includeCaptcha"): boolean;
+
 
 export function getProperty(propertyName: string): unknown {
 
@@ -120,15 +125,14 @@ export function getProperty(propertyName: string): unknown {
 
   let currentObject = config;
 
-  for (const element of propertyNameSplit) {
-
-    currentObject = currentObject[element];
-
-    if (!currentObject) {
-      return configFallbackValues.get(propertyName);
+  for (const propertyNamePiece of propertyNameSplit) {
+    if (Object.prototype.hasOwnProperty.call(currentObject, propertyNamePiece)) {
+        currentObject = currentObject[propertyNamePiece];
+        continue;
     }
 
-  }
+    return configFallbackValues.get(propertyName);
+}
 
   return currentObject;
 }

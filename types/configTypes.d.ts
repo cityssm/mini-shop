@@ -51,6 +51,9 @@ export interface Config {
         currencyName: string;
     };
     store?: StoreConfigs;
+    settings?: {
+        checkout_includeCaptcha?: boolean;
+    };
 }
 interface StoreConfig {
     storeType: StoreTypes;

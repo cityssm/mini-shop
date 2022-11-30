@@ -11,7 +11,7 @@ export const handler = async (request, response, next) => {
         .setDimension(150, 500)
         .setCaptcha({ text: captchaText, size: 60, color: "#ce1036" })
         .setDecoy({ opacity: 0.2 })
-        .setTrace({ color: "#da1039" });
+        .setTrace({ color: "#da1039", opacity: 0.3 });
     const buffer = await captcha.generate();
     response.contentType("image/png");
     response.set('Cache-Control', 'public, max-age=31557600');

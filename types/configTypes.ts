@@ -70,6 +70,10 @@ export interface Config {
   };
 
   store?: StoreConfigs;
+
+  settings?: {
+    checkout_includeCaptcha?: boolean;
+  };
 }
 
 interface StoreConfig {

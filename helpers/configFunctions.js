@@ -37,17 +37,19 @@ configFallbackValues.set("products", {});
 configFallbackValues.set("productHandlers", []);
 configFallbackValues.set("currency.code", "CAD");
 configFallbackValues.set("currency.currencyName", "Canadian Dollars");
+configFallbackValues.set("settings.checkout_includeCaptcha", true);
 export function getProperty(propertyName) {
     if (Object.prototype.hasOwnProperty.call(configOverrides, propertyName)) {
         return configOverrides[propertyName];
     }
     const propertyNameSplit = propertyName.split(".");
     let currentObject = config;
-    for (const element of propertyNameSplit) {
-        currentObject = currentObject[element];
-        if (!currentObject) {
-            return configFallbackValues.get(propertyName);
+    for (const propertyNamePiece of propertyNameSplit) {
+        if (Object.prototype.hasOwnProperty.call(currentObject, propertyNamePiece)) {
+            currentObject = currentObject[propertyNamePiece];
+            continue;
         }
+        return configFallbackValues.get(propertyName);
     }
     return currentObject;
 }

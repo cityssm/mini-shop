@@ -30,5 +30,6 @@ export declare function getProperty(propertyName: "products"): {
     [productSKU: string]: configTypes.Config_Product;
 };
 export declare function getProperty(propertyName: "productHandlers"): configTypes.ProductHandlers[];
+export declare function getProperty(propertyName: "settings.checkout_includeCaptcha"): boolean;
 export declare function overrideProperty(propertyName: "reverseProxy.urlPrefix", propertyValue: string): void;
 export declare function getClientSideProduct(productSKU: string): configTypes.Config_Product;
