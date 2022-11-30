@@ -56,7 +56,7 @@
     "puppeteer": "^19.3.0"
   },
   "dependencies": {
-    "@cityssm/bulma-webapp-js": "^1.4.3",
+    "@cityssm/bulma-webapp-js": "^1.5.0",
     "@cityssm/express-abuse-points": "^1.0.2",
     "@cityssm/expressjs-server-js": "^2.3.3",
     "@cityssm/mini-shop-db": "^3.2.2",
