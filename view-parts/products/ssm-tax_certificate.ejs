@@ -1,0 +1,59 @@
+<%
+  const idPrefix = stringFns.getUID();
+%>
+<div class="message is-info mb-6">
+  <div class="message-body">
+    <p>Note that a <strong>minimum of two</strong> details about the property are required.</p>
+  </div>
+</div>
+
+<div class="field">
+  <label class="label" for="<%= idPrefix %>_propertyAddress">
+    Property Address:
+  </label>
+  <div class="control">
+    <input class="input" id="<%= idPrefix %>_propertyAddress" name="propertyAddress" type="text" maxlength="100" />
+  </div>
+</div>
+
+<div class="field">
+  <label class="label" for="<%= idPrefix %>_legalDescription">
+    Legal Description:
+  </label>
+  <div class="control">
+    <input class="input" id="<%= idPrefix %>_legalDescription" name="legalDescription" type="text" maxlength="200" />
+  </div>
+</div>
+
+<div class="field">
+  <label class="label" for="<%= idPrefix %>_rollNumber">
+    15 Digit Roll Number:
+  </label>
+  <div class="control">
+    <input class="input" id="<%= idPrefix %>_rollNumber" name="rollNumber" type="text" pattern="^0[1-6]0[ -]?\d{3}[ -]?\d{3}[ -]?\d{4}[ -]?\d{2}$" minlength="15" maxlength="19" inputmode="numeric" />
+  </div>
+  <p class="help">Roll numbers should start with "0", followed by a number between "1" and "6".</p>
+  <p class="help">
+    Don't know your roll number?
+    Visit the
+    <a href="https://myfinance.saultstemarie.ca/VCH/city/propsearch/pigeneralinquiry.aspx" target="_blank" rel="noopener">My Sault Ste. Marie Property Search</a>.
+  </p>
+</div>
+
+<div class="field">
+  <label class="label" for="<%= idPrefix %>_propertyOwner">
+    Property Owner:
+  </label>
+  <div class="control">
+    <input class="input" id="<%= idPrefix %>_propertyOwner" name="propertyOwner" type="text" maxlength="100"/>
+  </div>
+</div>
+
+<div class="message is-info my-6">
+  <div class="message-body">
+    <p>Tax certificates are issued on Tuesdays and Thursdays.</p>
+    <p>No rush requests please.</p>
+  </div>
+</div>
+
+<script src="<%= urlPrefix %>/javascripts/product-ssm-tax_certificate.min.js" defer></script>
