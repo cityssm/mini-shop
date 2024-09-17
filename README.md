@@ -2,6 +2,7 @@
 
 [![Maintainability](https://img.shields.io/codeclimate/maintainability/cityssm/mini-shop)](https://codeclimate.com/github/cityssm/mini-shop/maintainability)
 [![AppVeyor](https://img.shields.io/appveyor/build/dangowans/mini-shop)](https://ci.appveyor.com/project/dangowans/mini-shop)
+[![DeepSource](https://app.deepsource.com/gh/cityssm/mini-shop.svg/?label=active+issues&show_trend=true&token=ixfKMKwersYh_EKNcNsP2q3v)](https://app.deepsource.com/gh/cityssm/mini-shop/)
 
 [![Mini Shop Screenshot](docs/ssmSample.png)](docs/ssmSample.png)
 
