@@ -1,22 +1,22 @@
-import { onError, onListening } from "./serverFunctions.js";
-import { app } from "../app.js";
-import * as http from "http";
-import * as https from "https";
-import * as fs from "fs";
-import * as configFunctions from "../helpers/configFunctions.js";
-import Debug from "debug";
-const debug = Debug("mini-shop:www");
-const httpPort = configFunctions.getProperty("application.httpPort");
+import fs from 'node:fs';
+import http from 'node:http';
+import https from 'node:https';
+import Debug from 'debug';
+import { app } from '../app.js';
+import * as configFunctions from '../helpers/configFunctions.js';
+import { onError, onListening } from './serverFunctions.js';
+const debug = Debug('mini-shop:www');
+const httpPort = configFunctions.getProperty('application.httpPort');
 if (httpPort) {
     const httpServer = http.createServer(app);
     httpServer.listen(httpPort);
-    httpServer.on("error", onError);
-    httpServer.on("listening", () => {
+    httpServer.on('error', onError);
+    httpServer.on('listening', () => {
         onListening(httpServer);
     });
-    debug("HTTP listening on " + httpPort.toString());
+    debug('HTTP listening on ' + httpPort.toString());
 }
-const httpsConfig = configFunctions.getProperty("application.https");
+const httpsConfig = configFunctions.getProperty('application.https');
 if (httpsConfig) {
     const httpsServer = https.createServer({
         key: fs.readFileSync(httpsConfig.keyPath),
@@ -24,9 +24,9 @@ if (httpsConfig) {
         passphrase: httpsConfig.passphrase
     }, app);
     httpsServer.listen(httpsConfig.port);
-    httpsServer.on("error", onError);
-    httpsServer.on("listening", () => {
+    httpsServer.on('error', onError);
+    httpsServer.on('listening', () => {
         onListening(httpsServer);
     });
-    debug("HTTPS listening on " + httpsConfig.port.toString());
+    debug('HTTPS listening on ' + httpsConfig.port.toString());
 }

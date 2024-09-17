@@ -1,215 +1,217 @@
-interface MonerisCheckout_Address {
+interface MonerisCheckoutAddress {
+  /**
+   * 50-character alphanumeric
+   */
+  address_1: string
 
   /**
    * 50-character alphanumeric
    */
-  address_1: string;
+  address_2: string
 
   /**
    * 50-character alphanumeric
    */
-  address_2: string;
-
-  /**
-   * 50-character alphanumeric
-   */
-  city: string;
+  city: string
 
   /**
    * 2-character alphanumeric
    */
-  province: string;
+  province: string
 
   /**
    * 2-character alphanumeric
    */
-  country: string;
+  country: string
 
   /**
    * 20-character alphanumeric
    */
-  postal_code: string;
+  postal_code: string
 }
 
-interface MonerisCheckout_Contact {
+interface MonerisCheckoutContact {
+  /**
+   * 30-character alphanumeric
+   */
+  first_name: string
 
   /**
    * 30-character alphanumeric
    */
-  first_name: string;
-
-  /**
-   * 30-character alphanumeric
-   */
-  last_name: string;
+  last_name: string
 
   /**
    * 255-character alphanumeric
    */
-  email: string;
+  email: string
 
   /**
    * 30-character alphanumeric
    */
-  phone: string;
+  phone: string
 }
 
-interface MonerisCheckout_Cart {
-  items: {
+interface MonerisCheckoutCart {
+  items: Array<{
     /**
      * URL that corresponds to the image Moneris Checkout shopping cart item.
      */
-    url: string;
+    url: string
 
     /**
      * 200-character alphanumeric
      */
-    description: string;
+    description: string
 
     /**
      * SKU
      * 50-character alphanumeric
      */
-    product_code: string;
+    product_code: string
 
-    unit_cost: string;
+    unit_cost: string
 
     /**
      * 6-digit max
      */
-    quantity: string;
-
-  }[];
+    quantity: string
+  }>
 
   /**
-  * Total dollar amount of the shopping cart, before taxes.
-  * 10-character decimal
-  */
-  subtotal: string;
+   * Total dollar amount of the shopping cart, before taxes.
+   * 10-character decimal
+   */
+  subtotal: string
 
   tax?: {
-    amount: string;
-    description: string;
+    amount: string
+    description: string
 
     /**
-    * Percentage tax rate charged.
-    * Between 0 and 100.
-    * Up to 3 decimal places.
-    */
-    rate: string;
+     * Percentage tax rate charged.
+     * Between 0 and 100.
+     * Up to 3 decimal places.
+     */
+    rate: string
   }
 }
 
-interface MonerisCheckout_Recur {
-
+interface MonerisCheckoutRecur {
   /**
    * The number of times that the transaction must recur
    * Between 1 and 999
    */
-  number_of_recurs: string;
+  number_of_recurs: string
 
   /**
    * Number of recur unit intervals that must pass between recurring billings.
    * Between 1 and 999
    */
-  recur_period: string;
+  recur_period: string
 
-  recur_amount: string;
-  recur_unit: "day" | "week" | "month" | "eom";
+  recur_amount: string
+  recur_unit: 'day' | 'week' | 'month' | 'eom'
 
   /**
    * Date of the first future recurring billing transaction.
    * YYYY/MM/DD
    */
-  start_date: string;
+  start_date: string
 
-  bill_now: "true" | "false";
+  bill_now: 'true' | 'false'
 }
 
-interface MonerisCheckout_FraudResult {
-  decision_origin: "Moneris" | "Merchant";
-  result: string;
-  condition: "0" | "1";
-  status: "success" | "failed" | "disabled" | "ineligible" | "failed_optional" | "failed_mandatory";
-  code: string;
-  details: string;
+interface MonerisCheckoutFraudResult {
+  decision_origin: 'Moneris' | 'Merchant'
+  result: string
+  condition: '0' | '1'
+  status:
+    | 'success'
+    | 'failed'
+    | 'disabled'
+    | 'ineligible'
+    | 'failed_optional'
+    | 'failed_mandatory'
+  code: string
+  details: string
 }
 
-interface MonerisCheckout_Request {
-  store_id: string;
-  api_token: string;
-  checkout_id: string;
+interface MonerisCheckoutRequest {
+  store_id: string
+  api_token: string
+  checkout_id: string
   /** Request Type */
-  action: "preload" | "receipt";
-  environment: "qa" | "prod";
+  action: 'preload' | 'receipt'
+  environment: 'qa' | 'prod'
 }
 
-export interface MonerisCheckout_PreloadRequest extends MonerisCheckout_Request {
-
-  action: "preload";
+export interface MonerisCheckoutPreloadRequest extends MonerisCheckoutRequest {
+  action: 'preload'
 
   /**
    * Transaction Amount
    * The total dollar amount of the transaction.
    * 10-character decimal
    */
-  txn_total: string;
+  txn_total: string
 
   /**
    * Order Number
    * 50-character alphanumeric
    */
-  order_no?: string;
+  order_no?: string
 
   /**
    * Customer ID
    * 50-character alphanumeric
    */
-  cust_id?: string;
+  cust_id?: string
 
   /**
    * Appears on the credit card statement appended to the merchant's business name.
    * 22-character alphanumeric
    * Starts with "/"
    */
-  dynamic_descriptor?: string;
+  dynamic_descriptor?: string
 
-  language?: "en" | "fr";
+  language?: 'en' | 'fr'
 
-  recur?: MonerisCheckout_Recur;
-  cart?: MonerisCheckout_Cart;
-  contact_details?: MonerisCheckout_Contact;
-  shipping_details?: MonerisCheckout_Address;
-  billing_details?: MonerisCheckout_Address;
+  recur?: MonerisCheckoutRecur
+  cart?: MonerisCheckoutCart
+  contact_details?: MonerisCheckoutContact
+  shipping_details?: MonerisCheckoutAddress
+  billing_details?: MonerisCheckoutAddress
 }
 
-export interface MonerisCheckout_PreloadResponse {
+export interface MonerisCheckoutPreloadResponse {
   response: {
-    success: "true" | "false";
-    ticket?: string;
-    error?: {
-      [preloadField: string]: {
-        data: string;
+    success: 'true' | 'false'
+    ticket?: string
+    error?: Record<
+      string,
+      {
+        data: string
       }
-    };
+    >
   }
 }
 
-export interface MonerisCheckout_ReceiptRequest extends MonerisCheckout_Request {
-  action: "receipt";
-  ticket: string;
+export interface MonerisCheckoutReceiptRequest extends MonerisCheckoutRequest {
+  action: 'receipt'
+  ticket: string
 }
 
-export interface MonerisCheckout_ReceiptResponse {
+export interface MonerisCheckoutReceiptResponse {
   response: {
-    success: "true" | "false";
+    success: 'true' | 'false'
     request: {
-      txn_total: string;
-      cc_total: string;
-      ticket: string;
-      cust_id: string;
-      dynamic_descriptor: string;
-      order_no: string;
+      txn_total: string
+      cc_total: string
+      ticket: string
+      cust_id: string
+      dynamic_descriptor: string
+      order_no: string
 
       /**
        * The e-commerce indicator or crypt type that was used to process the transaction.
@@ -218,83 +220,83 @@ export interface MonerisCheckout_ReceiptResponse {
        * 6 - Non-authenticated e-commerce transaction (3-D Secure)
        * 7 - SSL-enabled merchant
        */
-      eci: "5" | "6" | "7";
+      eci: '5' | '6' | '7'
 
-      cust_info: MonerisCheckout_Contact;
-      shipping: MonerisCheckout_Address;
-      billing: MonerisCheckout_Address;
-      recur: MonerisCheckout_Recur;
-      cart: MonerisCheckout_Cart;
+      cust_info: MonerisCheckoutContact
+      shipping: MonerisCheckoutAddress
+      billing: MonerisCheckoutAddress
+      recur: MonerisCheckoutRecur
+      cart: MonerisCheckoutCart
       cc: {
-        first6last4: string;
-        expiry: string;
-        cardholder: string;
-      };
-      wallet: {
-        type: "applepay" | "googlepay";
-      };
-      paymentData: {
-        apiVersion: string;
-        apiVersionMinor: string;
+        first6last4: string
+        expiry: string
+        cardholder: string
       }
-    };
+      wallet: {
+        type: 'applepay' | 'googlepay'
+      }
+      paymentData: {
+        apiVersion: string
+        apiVersionMinor: string
+      }
+    }
     receipt: {
       /** "a" = approved, "d" = declined */
-      result: "a" | "d";
+      result: 'a' | 'd'
       cc: {
-        order_no: string;
-        cust_id: string;
-        transaction_no: string;
-        reference_no: string;
-        transaction_code: "00" | "01" | "06";
-        transaction_type: string;
+        order_no: string
+        cust_id: string
+        transaction_no: string
+        reference_no: string
+        transaction_code: '00' | '01' | '06'
+        transaction_type: string
         /** YYYY-MM-DD HH:MM:SS */
-        transaction_date_time: string;
-        corporateCard: string;
-        amount: string;
-        response_code: string;
-        iso_response_code: string;
-        approval_code: string;
-        card_type: "V" | "M" | "AX" | "DC" | "NO" | "SE" | "D" | "C1";
-        wallet_type: "applepay" | "googlepay";
-        dynamic_descriptor: string;
-        invoice_number: string;
-        customer_code: string;
-        eci: "5" | "6" | "7";
-        cvd_result_code: string;
-        avs_result_code: string;
-        first6last4: string;
+        transaction_date_time: string
+        corporateCard: string
+        amount: string
+        response_code: string
+        iso_response_code: string
+        approval_code: string
+        card_type: 'V' | 'M' | 'AX' | 'DC' | 'NO' | 'SE' | 'D' | 'C1'
+        wallet_type: 'applepay' | 'googlepay'
+        dynamic_descriptor: string
+        invoice_number: string
+        customer_code: string
+        eci: '5' | '6' | '7'
+        cvd_result_code: string
+        avs_result_code: string
+        first6last4: string
         /** MMYY */
-        expiry_date: string;
-        recur_success: "true" | "false";
-        issuer_id: string;
-        is_debit: string;
-        ecr_no: string;
-        batch_no: string;
-        sequence_no: string;
-        result: "a" | "d";
+        expiry_date: string
+        recur_success: 'true' | 'false'
+        issuer_id: string
+        is_debit: string
+        ecr_no: string
+        batch_no: string
+        sequence_no: string
+        result: 'a' | 'd'
         tokenize: {
-          success: "true" | "false";
-          first4last4: string;
-          data_key: string;
-          status: "001" | "940" | "941" | "942" | "943" | "944" | "945";
-          message: string;
+          success: 'true' | 'false'
+          first4last4: string
+          data_key: string
+          status: '001' | '940' | '941' | '942' | '943' | '944' | '945'
+          message: string
           mcp: {
-            merchant_settlement_amount: string;
-            cardholder_currency_code: string;
-            mcp_rate: string;
-            decimal_precision: string;
-            cardholder_amount: string;
-            cardholder_currency_desc: string;
+            merchant_settlement_amount: string
+            cardholder_currency_code: string
+            mcp_rate: string
+            decimal_precision: string
+            cardholder_amount: string
+            cardholder_currency_desc: string
           }
-        };
+        }
         fraud: {
-          cvd: MonerisCheckout_FraudResult;
-          avs: MonerisCheckout_FraudResult;
-          "3d_secure": MonerisCheckout_FraudResult;
-          kount: MonerisCheckout_FraudResult
-        };
+          cvd: MonerisCheckoutFraudResult
+          avs: MonerisCheckoutFraudResult
+          '3d_secure': MonerisCheckoutFraudResult
+          kount: MonerisCheckoutFraudResult
+        }
       }
-    };
+    }
   }
 }

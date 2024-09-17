@@ -30,8 +30,6 @@ after_test:
   # Send test result to codeclimate
   - sh: ./codeclimate-test-reporter before-build
   - sh: ./codeclimate-test-reporter after-build -t lcov --exit-code $?
-  # Send test result to Codacy
-  - sh: bash <(curl -Ls https://coverage.codacy.com/get.sh) report -r ./coverage/lcov.info
 
 # Don't actually build.
 build: off

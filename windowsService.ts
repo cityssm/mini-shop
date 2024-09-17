@@ -1,7 +1,8 @@
-import path from 'path'
+import path from 'node:path'
 
 import type { ServiceConfig } from 'node-windows'
 
+// eslint-disable-next-line @typescript-eslint/naming-convention
 const __dirname = '.'
 
 export const serviceConfig: ServiceConfig = {

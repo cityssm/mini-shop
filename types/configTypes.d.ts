@@ -41,9 +41,7 @@ export interface Config {
     }>;
     products?: Record<string, ConfigProduct>;
     productHandlers?: ProductHandlers[];
-    fees?: {
-        [feeSKU: string]: ConfigFeeDefinition;
-    };
+    fees?: Record<string, ConfigFeeDefinition>;
     currency?: {
         code: string;
         currencyName: string;
@@ -58,8 +56,8 @@ interface StoreConfig {
     storeConfig?: Record<string, unknown>;
 }
 export type StoreTypes = 'moneris-checkout' | 'testing-free';
-export type StoreConfigs = StoreConfig_MonerisCheckout | StoreConfig_TestingFree;
-export interface StoreConfig_MonerisCheckout extends StoreConfig {
+export type StoreConfigs = StoreConfigMonerisCheckout | StoreConfigTestingFree;
+export interface StoreConfigMonerisCheckout extends StoreConfig {
     storeType: 'moneris-checkout';
     storeConfig: {
         store_id: string;
@@ -68,7 +66,7 @@ export interface StoreConfig_MonerisCheckout extends StoreConfig {
         environment: 'qa' | 'prod';
     };
 }
-interface StoreConfig_TestingFree extends StoreConfig {
+interface StoreConfigTestingFree extends StoreConfig {
     storeType: 'testing-free';
 }
 export interface ConfigHTTPSConfig {

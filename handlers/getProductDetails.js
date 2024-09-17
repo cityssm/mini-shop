@@ -9,7 +9,7 @@ const getProductAndFeeDetails = (productSKUs) => {
         }
         let addProductToObject = true;
         product.feeTotals = {};
-        for (const feeName of product.fees) {
+        for (const feeName of product.fees ?? []) {
             const fee = configFunctions.getProperty('fees')[feeName];
             if (fee) {
                 product.feeTotals[feeName] = fee.feeCalculation(product);

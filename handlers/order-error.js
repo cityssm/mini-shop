@@ -1,5 +1,5 @@
-export const handler = (_request, response) => {
-    return response.render("order-error", {
-        pageTitle: "Order Error"
+export function handler(_request, response) {
+    response.render('order-error', {
+        pageTitle: 'Order Error'
     });
-};
+}

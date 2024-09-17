@@ -12,6 +12,7 @@ type BulmaColors =
   | 'warning'
   | 'danger'
 
+// eslint-disable-next-line no-secrets/no-secrets
 export type ProductHandlers = 'ssm-ticket_parking/doIsTagNumberEligible'
 
 export interface Config {
@@ -63,10 +64,7 @@ export interface Config {
 
   productHandlers?: ProductHandlers[]
 
-  fees?: {
-    // feeSKU maxlength = 20
-    [feeSKU: string]: ConfigFeeDefinition
-  }
+  fees?: Record<string, ConfigFeeDefinition>
 
   currency?: {
     code: string
@@ -87,9 +85,9 @@ interface StoreConfig {
 
 export type StoreTypes = 'moneris-checkout' | 'testing-free'
 
-export type StoreConfigs = StoreConfig_MonerisCheckout | StoreConfig_TestingFree
+export type StoreConfigs = StoreConfigMonerisCheckout | StoreConfigTestingFree
 
-export interface StoreConfig_MonerisCheckout extends StoreConfig {
+export interface StoreConfigMonerisCheckout extends StoreConfig {
   storeType: 'moneris-checkout'
   storeConfig: {
     store_id: string
@@ -99,7 +97,7 @@ export interface StoreConfig_MonerisCheckout extends StoreConfig {
   }
 }
 
-interface StoreConfig_TestingFree extends StoreConfig {
+interface StoreConfigTestingFree extends StoreConfig {
   storeType: 'testing-free'
 }
 

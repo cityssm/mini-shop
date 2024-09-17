@@ -1,3 +1,5 @@
+/* eslint-disable unicorn/filename-case, @eslint-community/eslint-comments/disable-enable-pair */
+
 import path from 'node:path'
 
 import { recordAbuse } from '@cityssm/express-abuse-points'

@@ -17,6 +17,7 @@ import routerProducts from './routes/products.js'
 
 const debugApp = debug('mini-shop:app')
 
+// eslint-disable-next-line @typescript-eslint/naming-convention
 const __dirname = '.'
 
 /*
@@ -81,14 +82,14 @@ const urlPrefix = configFunctions.getProperty('reverseProxy.urlPrefix')
 app.use(urlPrefix, express.static(path.join(__dirname, 'public')))
 
 app.use(
-  urlPrefix + '/lib/bulma-webapp-js',
+  `${urlPrefix}/lib/bulma-webapp-js`,
   express.static(
     path.join(__dirname, 'node_modules', '@cityssm', 'bulma-webapp-js', 'dist')
   )
 )
 
 app.use(
-  urlPrefix + '/lib/formToObject',
+  `${urlPrefix}/lib/formToObject`,
   express.static(path.join(__dirname, 'node_modules', 'form_to_object', 'dist'))
 )
 
@@ -106,13 +107,13 @@ app.use(function (_request, response, next) {
   next()
 })
 
-app.all(urlPrefix + '/', (_request, response) => {
-  response.redirect(urlPrefix + '/products')
+app.all(`${urlPrefix}/`, (_request, response) => {
+  response.redirect(`${urlPrefix}/products`)
 })
 
-app.use(urlPrefix + '/checkout', routerCheckout)
-app.use(urlPrefix + '/order', routerOrder)
-app.use(urlPrefix + '/products', routerProducts)
+app.use(`${urlPrefix}/checkout`, routerCheckout)
+app.use(`${urlPrefix}/order`, routerOrder)
+app.use(`${urlPrefix}/products`, routerProducts)
 
 // Catch 404 and forward to error handler
 app.use((_request, _response, next) => {
@@ -128,7 +129,7 @@ app.use(
       request.app.get('env') === 'development' ? error : {}
 
     // Render the error page
-    response.status(error.status || 500)
+    response.status(error.status ?? 500)
     response.render('error')
   }
 )

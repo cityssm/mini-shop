@@ -1,4 +1,4 @@
-import path from 'path';
+import path from 'node:path';
 const __dirname = '.';
 export const serviceConfig = {
     name: 'Mini Shop',

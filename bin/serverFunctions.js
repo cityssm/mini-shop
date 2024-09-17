@@ -1,15 +1,15 @@
-import Debug from "debug";
-const debug = Debug("mini-shop:serverFunctions");
+import Debug from 'debug';
+const debug = Debug('mini-shop:serverFunctions');
 export const onError = (error) => {
-    if (error.syscall !== "listen") {
+    if (error.syscall !== 'listen') {
         throw error;
     }
     switch (error.code) {
-        case "EACCES":
-            console.error("Requires elevated privileges");
+        case 'EACCES':
+            console.error('Requires elevated privileges');
             process.exit(1);
-        case "EADDRINUSE":
-            console.error("Port is already in use.");
+        case 'EADDRINUSE':
+            console.error('Port is already in use.');
             process.exit(1);
         default:
             throw error;
@@ -17,8 +17,6 @@ export const onError = (error) => {
 };
 export const onListening = (server) => {
     const addr = server.address();
-    const bind = typeof addr === "string"
-        ? "pipe " + addr
-        : "port " + addr.port.toString();
-    debug("Listening on " + bind);
+    const bind = typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr.port.toString();
+    debug('Listening on ' + bind);
 };

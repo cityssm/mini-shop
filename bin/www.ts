@@ -1,58 +1,59 @@
-import { onError, onListening } from "./serverFunctions.js";
 
-import { app } from "../app.js";
+import fs from 'node:fs'
+import http from 'node:http'
+import https from 'node:https'
 
-import * as http from "http";
-import * as https from "https";
-import * as fs from "fs";
+import Debug from 'debug'
 
-import * as configFunctions from "../helpers/configFunctions.js";
+import { app } from '../app.js'
+import * as configFunctions from '../helpers/configFunctions.js'
 
-import Debug from "debug";
-const debug = Debug("mini-shop:www");
+
+import { onError, onListening } from './serverFunctions.js'
+const debug = Debug('mini-shop:www')
 
 /**
  * Initialize HTTP
  */
 
-const httpPort = configFunctions.getProperty("application.httpPort");
+const httpPort = configFunctions.getProperty('application.httpPort')
 
 if (httpPort) {
+  const httpServer = http.createServer(app)
 
-  const httpServer = http.createServer(app);
+  httpServer.listen(httpPort)
 
-  httpServer.listen(httpPort);
+  httpServer.on('error', onError)
+  httpServer.on('listening', () => {
+    onListening(httpServer)
+  })
 
-  httpServer.on("error", onError);
-  httpServer.on("listening", () => {
-    onListening(httpServer);
-  });
-
-  debug("HTTP listening on " + httpPort.toString());
+  debug('HTTP listening on ' + httpPort.toString())
 }
 
 /**
  * Initialize HTTPS
  */
 
-const httpsConfig = configFunctions.getProperty("application.https");
+const httpsConfig = configFunctions.getProperty('application.https')
 
 if (httpsConfig) {
+  const httpsServer = https.createServer(
+    {
+      key: fs.readFileSync(httpsConfig.keyPath),
+      cert: fs.readFileSync(httpsConfig.certPath),
+      passphrase: httpsConfig.passphrase
+    },
+    app
+  )
 
-  const httpsServer = https.createServer({
-    key: fs.readFileSync(httpsConfig.keyPath),
-    cert: fs.readFileSync(httpsConfig.certPath),
-    passphrase: httpsConfig.passphrase
-  }, app);
+  httpsServer.listen(httpsConfig.port)
 
-  httpsServer.listen(httpsConfig.port);
+  httpsServer.on('error', onError)
 
-  httpsServer.on("error", onError);
+  httpsServer.on('listening', () => {
+    onListening(httpsServer)
+  })
 
-  httpsServer.on("listening", () => {
-    onListening(httpsServer);
-  });
-
-  debug("HTTPS listening on " + httpsConfig.port.toString());
-
+  debug('HTTPS listening on ' + httpsConfig.port.toString())
 }

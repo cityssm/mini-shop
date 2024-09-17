@@ -1,5 +1,5 @@
-export const handler = (_request, response) => {
-    return response.render("order-expired", {
-        pageTitle: "Order Expired"
+export function handler(_request, response) {
+    response.render('order-expired', {
+        pageTitle: 'Order Expired'
     });
-};
+}

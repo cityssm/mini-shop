@@ -1,16 +1,16 @@
-import * as assert from "assert";
-import * as puppeteer from "puppeteer";
-import * as http from "http";
-import { app } from "../app.js";
-import { shutdown as abuseCheckShutdown } from "@cityssm/express-abuse-points";
-import * as configFunctions from "../helpers/configFunctions.js";
-describe("mini-shop", () => {
+import assert from 'node:assert';
+import http from 'node:http';
+import { shutdown as abuseCheckShutdown } from '@cityssm/express-abuse-points';
+import * as puppeteer from 'puppeteer';
+import { app } from '../app.js';
+import * as configFunctions from '../helpers/configFunctions.js';
+describe('mini-shop', () => {
     const httpServer = http.createServer(app);
     const portNumber = 52_525;
     let serverStarted = false;
     before(() => {
         httpServer.listen(portNumber);
-        httpServer.on("listening", () => {
+        httpServer.on('listening', () => {
             serverStarted = true;
         });
     });
@@ -23,29 +23,33 @@ describe("mini-shop", () => {
             console.log(error);
         }
     });
-    it("should start server starts on port " + portNumber.toString(), () => {
+    it(`should start server starts on port ${portNumber.toString()}`, () => {
         assert.ok(serverStarted);
     });
-    const appURL = "http://localhost:" + portNumber.toString() + configFunctions.getProperty("reverseProxy.urlPrefix");
-    describe("simple page tests", () => {
+    const appURL = 'http://localhost:' +
+        portNumber.toString() +
+        configFunctions.getProperty('reverseProxy.urlPrefix');
+    describe('simple page tests', () => {
         const urls = [
-            appURL + "/stylesheets/style.min.css",
-            appURL + "/javascripts/cart.min.js",
-            appURL + "/javascripts/checkout.min.js",
-            appURL + "/javascripts/product-view.min.js",
-            appURL + "/lib/bulma-webapp-js/cityssm.min.js",
-            appURL + "/lib/formToObject/formToObject.min.js",
-            appURL + "/products",
-            appURL + "/checkout"
+            appURL + '/stylesheets/style.min.css',
+            appURL + '/javascripts/cart.min.js',
+            appURL + '/javascripts/checkout.min.js',
+            appURL + '/javascripts/product-view.min.js',
+            appURL + '/lib/bulma-webapp-js/cityssm.min.js',
+            appURL + '/lib/formToObject/formToObject.min.js',
+            appURL + '/products',
+            appURL + '/checkout'
         ];
         for (const url of urls) {
-            it("should load - " + url, (done) => {
+            it('should load - ' + url, (done) => {
+                ;
                 (async () => {
                     let browser;
                     try {
                         browser = await puppeteer.launch();
                         const page = await browser.newPage();
-                        await page.goto(url)
+                        await page
+                            .goto(url)
                             .then((response) => {
                             assert.strictEqual(response.status(), 200);
                         })
@@ -53,7 +57,7 @@ describe("mini-shop", () => {
                             assert.fail();
                         });
                     }
-                    catch (error) {
+                    catch {
                     }
                     finally {
                         await browser.close();
@@ -68,14 +72,16 @@ describe("mini-shop", () => {
             });
         }
     });
-    describe("error page tests", () => {
-        it("should return a 404 not found error", (done) => {
+    describe('error page tests', () => {
+        it('should return a 404 not found error', (done) => {
+            ;
             (async () => {
                 let browser;
                 try {
                     browser = await puppeteer.launch();
                     const page = await browser.newPage();
-                    await page.goto(appURL + "/page-not-found")
+                    await page
+                        .goto(appURL + '/page-not-found')
                         .then((response) => {
                         assert.strictEqual(response.status(), 404);
                     })

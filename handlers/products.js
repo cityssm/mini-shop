@@ -1,3 +1,3 @@
-export const handler = (_request, response) => {
-    return response.render("products");
-};
+export function handler(_request, response) {
+    response.render('products');
+}

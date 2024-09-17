@@ -5,12 +5,12 @@ import type { Request } from "express";
 
 import * as configFunctions from "../../helpers/configFunctions.js";
 
-import type { StoreConfig_MonerisCheckout } from "../../types/configTypes";
+import type { StoreConfigMonerisCheckout } from "../../types/configTypes";
 import type { Order } from "@cityssm/mini-shop-db/types";
 import type {
-  MonerisCheckout_PreloadRequest,
-  MonerisCheckout_PreloadResponse,
-  MonerisCheckout_ReceiptRequest,
+  MonerisCheckoutPreloadRequest,
+  MonerisCheckoutPreloadResponse,
+  MonerisCheckoutReceiptRequest,
   MonerisCheckout_ReceiptResponse,
 } from "../../types/storeTypes";
 import type { StoreValidatorReturn } from "./types";
@@ -20,7 +20,7 @@ const debug = Debug("mini-shop:stores:moneris-checkout");
 
 const checkoutConfig = configFunctions.getProperty(
   "store"
-) as StoreConfig_MonerisCheckout;
+) as StoreConfigMonerisCheckout;
 
 const requestURL =
   (checkoutConfig?.storeConfig?.environment || "") === "qa"
@@ -147,7 +147,7 @@ export const preloadRequest = async (order: Order): Promise<false | string> => {
    * Build full JSON
    */
 
-  const preloadJSON: MonerisCheckout_PreloadRequest = {
+  const preloadJSON: MonerisCheckoutPreloadRequest = {
     store_id: checkoutConfig.storeConfig.store_id,
     api_token: checkoutConfig.storeConfig.api_token,
     checkout_id: checkoutConfig.storeConfig.checkout_id,
@@ -179,7 +179,7 @@ export const preloadRequest = async (order: Order): Promise<false | string> => {
   }
 
   const responseData =
-    (await response.json()) as MonerisCheckout_PreloadResponse;
+    (await response.json()) as MonerisCheckoutPreloadResponse;
 
   if (responseData.response.success === "true") {
     return responseData.response.ticket;
@@ -222,7 +222,7 @@ export const validate = async (
     };
   }
 
-  const requestJSON: MonerisCheckout_ReceiptRequest = {
+  const requestJSON: MonerisCheckoutReceiptRequest = {
     store_id: checkoutConfig.storeConfig.store_id,
     api_token: checkoutConfig.storeConfig.api_token,
     checkout_id: checkoutConfig.storeConfig.checkout_id,

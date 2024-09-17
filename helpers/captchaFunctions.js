@@ -1,9 +1,9 @@
-import { v4 as uuidv4 } from "uuid";
-import NodeCache from "node-cache";
+import NodeCache from 'node-cache';
+import { v4 as uuidv4 } from 'uuid';
 const timeoutSeconds_initialLoad = 30;
 const timeoutSeconds_postLookup = 15 * 60;
-const delay = (millis) => {
-    return new Promise(resolve => setTimeout(resolve, millis));
+const delay = async (millis) => {
+    return await new Promise((resolve) => setTimeout(resolve, millis));
 };
 const captchaCache = new NodeCache({
     stdTTL: timeoutSeconds_initialLoad,
@@ -12,7 +12,7 @@ const captchaCache = new NodeCache({
 });
 export const generateNewCaptcha = async () => {
     const captchaText = uuidv4().slice(0, 5).toUpperCase();
-    let captchaKey = "";
+    let captchaKey = '';
     do {
         captchaKey = uuidv4();
     } while (captchaCache.has(captchaKey));

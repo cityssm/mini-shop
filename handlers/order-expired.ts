@@ -1,8 +1,9 @@
-import type { RequestHandler } from "express";
+/* eslint-disable unicorn/filename-case, @eslint-community/eslint-comments/disable-enable-pair */
 
+import type { Request, Response } from 'express'
 
-export const handler: RequestHandler = (_request, response) => {
-  return response.render("order-expired", {
-    pageTitle: "Order Expired"
-  });
-};
+export function handler(_request: Request, response: Response): void {
+  response.render('order-expired', {
+    pageTitle: 'Order Expired'
+  })
+}
