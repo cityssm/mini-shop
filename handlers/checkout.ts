@@ -1,17 +1,17 @@
-import { generateNewCaptcha } from "../helpers/captchaFunctions.js";
-import * as configFunctions from "../helpers/configFunctions.js";
+import { generateNewCaptcha } from '../helpers/captchaFunctions.js'
+import * as configFunctions from '../helpers/configFunctions.js'
 
-import type { RequestHandler } from "express";
+import type { RequestHandler } from 'express'
 
 export const handler: RequestHandler = async (_request, response) => {
   const captchaKey = configFunctions.getProperty(
-    "settings.checkout_includeCaptcha"
+    'settings.checkout_includeCaptcha'
   )
     ? await generateNewCaptcha()
-    : "";
+    : ''
 
-  return response.render("checkout", {
-    pageTitle: "Checkout",
-    captchaKey,
-  });
-};
+  return response.render('checkout', {
+    pageTitle: 'Checkout',
+    captchaKey
+  })
+}

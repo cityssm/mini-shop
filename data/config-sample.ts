@@ -94,7 +94,7 @@ export const config: configTypes.Config = {
   fees: {
     hst: {
       feeName: "HST",
-      feeCalculation: (product: configTypes.Config_Product) => {
+      feeCalculation: (product: configTypes.ConfigProduct) => {
         return typeof (product.price) === "string"
           ? 0
           : product.price * 0.13;

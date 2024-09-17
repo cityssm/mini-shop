@@ -1,0 +1,1 @@
+type HTMLInputSelectElement = HTMLInputElement | HTMLSelectElement;

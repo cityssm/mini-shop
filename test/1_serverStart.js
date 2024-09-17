@@ -6,7 +6,7 @@ import { shutdown as abuseCheckShutdown } from "@cityssm/express-abuse-points";
 import * as configFunctions from "../helpers/configFunctions.js";
 describe("mini-shop", () => {
     const httpServer = http.createServer(app);
-    const portNumber = 52525;
+    const portNumber = 52_525;
     let serverStarted = false;
     before(() => {
         httpServer.listen(portNumber);
@@ -83,7 +83,7 @@ describe("mini-shop", () => {
                         assert.fail();
                     });
                 }
-                catch (_a) {
+                catch {
                 }
                 finally {
                     await browser.close();

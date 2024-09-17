@@ -1,43 +1,44 @@
-import * as sqlPool from "@cityssm/mssql-multi-pool";
-import * as configFunctions from "../configFunctions.js";
+import * as sqlPool from '@cityssm/mssql-multi-pool'
+import * as configFunctions from '../configFunctions.js'
 
-import type * as sqlTypes from "mssql";
+import type * as sqlTypes from 'mssql'
 
-
-let tagNumberCache: Set<string>;
-let tagNumberCacheExpiryMillis = 0;
-
+let tagNumberCache: Set<string>
+let tagNumberCacheExpiryMillis = 0
 
 const refreshTagNumberCache = async () => {
+  const pool: sqlTypes.ConnectionPool = await sqlPool.connect(
+    configFunctions.getProperty('mssqlConfig')
+  )
 
-  const pool: sqlTypes.ConnectionPool =
-    await sqlPool.connect(configFunctions.getProperty("mssqlConfig"));
+  const result: sqlTypes.IResult<{ tagNumber: string }> = await pool
+    .request()
+    .query(
+      'select tagNumber from MiniShop.Products_SSMTicketParking_Ineligible'
+    )
 
-  const result: sqlTypes.IResult<{ tagNumber: string }> = await pool.request()
-    .query("select tagNumber from MiniShop.Products_SSMTicketParking_Ineligible");
-
-  const temporaryCache: Set<string> = new Set();
+  const temporaryCache: Set<string> = new Set()
 
   if (result.recordset) {
     for (const record of result.recordset) {
-      temporaryCache.add(record.tagNumber.toLowerCase());
+      temporaryCache.add(record.tagNumber.toLowerCase())
     }
   }
 
-  tagNumberCache = temporaryCache;
-  tagNumberCacheExpiryMillis = Date.now() + (3 * 60 * 60 * 1000);
-};
+  tagNumberCache = temporaryCache
+  tagNumberCacheExpiryMillis = Date.now() + 3 * 60 * 60 * 1000
+}
 
-
-export const isTagNumberEligible = async (tagNumber: string): Promise<boolean> => {
-
+export const isTagNumberEligible = async (
+  tagNumber: string
+): Promise<boolean> => {
   if (tagNumberCacheExpiryMillis < Date.now()) {
-    await refreshTagNumberCache();
+    await refreshTagNumberCache()
   }
 
   if (tagNumberCache.has(tagNumber.toLowerCase())) {
-    return false;
+    return false
   }
 
-  return true;
-};
+  return true
+}

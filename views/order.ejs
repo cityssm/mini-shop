@@ -48,7 +48,7 @@
 <table class="table is-fullwidth mb-0">
   <thead>
     <tr>
-      <th scope="col">Item</th>
+      <th scope="col" colspan="2">Item</th>
       <th class="has-text-right" scope="col">Price</th>
       <th class="has-text-right" scope="col">Total</th>
     </tr>
@@ -61,9 +61,22 @@
 
         const productConfig = configFunctions.getProperty("products")[item.productSKU];
         itemTotal += item.itemTotal;
+
+        let itemHasDownload = productConfig?.hasDownload ?? false
+
+        if (itemHasDownload && item.productSKU === 'oab') {
+
+          const permitType = item.fields.find((possibleField) => {
+            return possibleField.formFieldName === 'permitType'
+          })?.fieldValue ?? ''
+
+          if (!permitType.startsWith('renew_')) {
+            itemHasDownload = false
+          }
+        }
     %>
       <tr>
-        <th scope="row">
+        <th scope="row" <%- itemHasDownload ? "" : ' colspan="2"' %>>
           <%= (productConfig ? productConfig.productName : item.productSKU) %>
           <% if (item.fields) { %>
             <%
@@ -87,6 +100,11 @@
             %>
           <% } %>
         </th>
+        <% if (itemHasDownload) { %>
+          <td>
+            <a class="button is-primary" href="<%= urlPrefix %>/order/<%= order.paymentID %>/<%= order.orderSecret %>/<%= item.itemIndex %>/download" target="_blank">Download Now</a>
+          </td>
+        <% } %>
         <td class="has-text-right">
           <%= item.quantity %>
           &times;
@@ -100,7 +118,7 @@
       }
     %>
     <tr>
-      <th class="has-text-right" colspan="2" scope="row">
+      <th class="has-text-right" colspan="3" scope="row">
         Item Total
       </th>
       <td class="has-text-right has-text-weight-bold">
@@ -120,7 +138,7 @@
           feeTotal += fee.feeTotal;
       %>
       <tr>
-        <th class="has-text-right has-text-weight-normal" colspan="2" scope="row">
+        <th class="has-text-right has-text-weight-normal" colspan="3" scope="row">
           <%= (feeConfig ? feeConfig.feeName : fee.feeName) %>
         </th>
         <td class="has-text-right">
@@ -136,7 +154,7 @@
   %>
   <tfoot>
     <tr>
-      <th class="has-text-right is-size-5" colspan="2" scope="row">
+      <th class="has-text-right is-size-5" colspan="3" scope="row">
         Total
       </th>
       <td class="has-text-right has-text-weight-bold is-size-5">
@@ -199,7 +217,7 @@
 
 <%- include('../view-parts/_footerA'); -%>
 <script src="<%= urlPrefix %>/lib/formToObject/formToObject.min.js"></script>
-<script src="<%= urlPrefix %>/javascripts/cart.min.js"></script>
+<script src="<%= urlPrefix %>/javascripts/cart.js"></script>
 <script>
   exports.cart.clear();
 </script>

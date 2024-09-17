@@ -1,0 +1,268 @@
+<html>
+<head>
+  <title>Open-Air Burning Permit</title>
+  <meta charset="utf-8" />
+  <style>
+    * {
+      box-sizing: border-box;
+      font-size: 8pt;
+    }
+
+    html {
+      font-family: Arial, sans-serif;
+    }
+
+    .narrow {
+      font-family: 'Arial Narrow', Arial, sans-serif;
+    }
+
+    .page {
+      margin: 20px 30px;
+    }
+
+    h1 {
+      margin: 0;
+    }
+
+    table {
+      width: 100%;
+    }
+
+    table th {
+      padding: 5px 10px 5px 0;
+      text-align: left;
+      width: 1px;
+      white-space: nowrap;
+    }
+
+    table td {
+      padding: 5px;
+      margin: 0;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    ol {
+      margin: 0;
+      padding: 0;
+    }
+
+    li {
+      padding-bottom: 5px;
+    }
+
+    .caps {
+      text-transform: uppercase;
+    }
+
+    .bold {
+      font-weight: bold;
+    }
+
+    .nowrap {
+      white-space: nowrap;
+    }
+
+    .checkbox {
+      display: inline-block;
+      border: 1px solid #000;
+      width: 8pt;
+      height: 8pt;
+      margin-left: 5px;
+    }
+
+    .field {
+      border-bottom: 1px solid #000;
+    }
+
+    .center {
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <table>
+      <tbody>
+        <tr>
+          <td style="width:25%">
+            <img src="http://localhost:<%= configFunctions.getProperty("application.httpPort") %><%= configFunctions.getProperty('reverseProxy.urlPrefix') %>/images/_private/fireServices_bw.jpg" alt="" style="width:90px" />
+          </td>
+          <td class="center">
+            <div>
+              <span class="caps bold" style="font-size:14pt;">Sault Ste. Marie Fire Services</span><br />
+              <span style="font-size:11pt">72 Tancred St., Sault Ste. Marie, Ontario &nbsp;P6A 2W1</span>
+            </div>
+            <h1 class="caps bold" style="font-size:18pt">Open-Air Burning Permit</h1>
+            <div class="bold" style="font-size:13pt">
+              No Burning After 11:00 pm
+            </div>
+          </td>
+          <td style="width:25%;text-align:right;font-size:6pt">
+            Emergency Dial 911<br />
+            <br />
+            Approved <span class="checkbox"></span><br />
+            Denied <span class="checkbox"></span><br />
+            Owner Approval <span class="checkbox"></span><br />
+            Please Call Office 705-949-3333 ext. 3 <span class="checkbox"></span><br />
+            <br />
+            Call to Renew 705-949-3333 ext. 3
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table>
+      <tbody>
+        <tr>
+          <th>Name of Person</th>
+          <td class="field" colspan="5"><%= order.shippingName %></td>
+        </tr>
+        <tr>
+          <th>Address</th>
+          <td class="field" colspan="5"><%= item.streetAddress %></td>
+        </tr>
+        <tr>
+          <th>Phone Number</th>
+          <td class="field" colspan="5"><%= order.shippingPhoneNumberDay %></td>
+        </tr>
+        <tr>
+          <th>Location</th>
+          <td class="field" colspan="5">&nbsp;</td>
+        </tr>
+        <tr>
+          <th rowspan="3" style="vertical-align:top">Comments</th>
+          <td class="field" colspan="5">&nbsp;</td>
+        </tr>
+        <tr>
+          <td class="field" colspan="5">&nbsp;</td>
+        </tr>
+        <tr>
+          <td class="field" colspan="5">&nbsp;</td>
+        </tr>
+        <tr>
+          <th>Valid From</th>
+          <td class="field"><%= dateTimeFunctions.dateToString(order.orderTime) %></td>
+          <th>To</th>
+          <td class="field"><%= dateTimeFunctions.dateToString(expiryDate) %></td>
+          <th>Signature of Officer</th>
+          <td class="field" style="width:40%">&nbsp;</td>
+        </tr>
+        <tr>
+          <td class="bold narrow nowrap" colspan="4" style="padding-left:0">
+            I have read, understand and agree to abide by all Open-Air Burning Guidelines.
+          </td>
+          <th>Permit Holder</th>
+          <td class="field">&nbsp;</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2 class="center" style="font-size:16pt">The Permit Holder Shall Adhere to the Following Guidelines:</h2>
+
+    <table class="narrow" style="table-layout:fixed">
+      <tbody>
+        <tr>
+          <td>
+            <ol>
+              <li>
+                <strong>Burn only clean dry material.</strong>
+                Materials such as petroleum products, plastics, rubber, painted materials shall not be burned.
+                Materials the create excessive smoke such as leaves, grass clippings, construction or demolition debris shall not be burned.
+              </li>
+              <li>
+                Ensure the fire is located an approved distance from any structure and/or
+                any combustible material. (trees, woodpiles, fences, etc.)
+              </li>
+              <li>
+                Burn less than one cubic metre of material at a time.
+              </li>
+              <li>
+                Stay with the fire at all times until it is completely extinguished.
+              </li>
+              <li>
+                Have an adequate water supply to contain or extinguish the fire.
+              </li>
+            </ol>
+          </td>
+          <td>
+            <ol start="6">
+              <li>
+                Open-air burning <strong>must not</strong> be conducted under the following weather conditions:
+                during rain or fog and/or during excessive wind.
+              </li>
+              <li>
+                <strong>Common courtesy to your neighbours is expected.</strong>
+                (clothes lines, open windows, etc.)
+              </li>
+              <li>
+                Tenants must have written approval from owner.
+              </li>
+              <li>Whenever conditions warrant the S.S.M. Fire Services of the M.N.R. can declare a ban on all burning.
+                All open-air burning is prohibited within the municipality until such time that the ban has been lifted.
+            </ol>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="center" style="font-size:13pt">
+      <p>
+        Open-Air Burning is regulated under Article 2.4.4.4 of Ontario Fire Code.
+      </p>
+      <p class="bold">
+        Any contravention of this approval and/or guidelines will result in the permit being revoked for 90 days<br />
+        and/or fines up to $50,000 or imprisonment for up to one year or both.
+      </p>
+      <p>
+        Sault Ste. Marie Fire Services assumes no liability from damages that may be caused by this approval.
+      </p>
+    </div>
+    <p class="bold center" style="font-size:16pt;font-style:italic">
+      Test Your Smoke Alarm Weekly
+    </p>
+
+    <div style="border:1px solid #000;width:60%;margin:0 auto;padding:20px">
+      <table>
+        <tbody>
+          <tr>
+            <th>Receipt Number</th>
+            <td class="field"><%= order.paymentID %></td>
+          </tr>
+          <tr>
+            <th>Permit Type</th>
+            <td class="field">
+              <%
+                switch (permitType) {
+
+                  case "renew_1yr":
+              %>
+                    Permit Renewal (One Year)
+              <%
+                    break;
+
+                  case "renew_4yr":
+              %>
+                    Permit Renewal (Four Years)
+              <%
+                    break;
+                }
+              %>
+            </td>
+          </tr>
+          <tr>
+            <th>Amount Paid</th>
+            <td class="field">$<%= item.unitPrice.toFixed(2) %></td>
+          </tr>
+          <tr>
+            <th>Payment Time</th>
+            <td class="field">
+              <%= dateTimeFunctions.dateToString(order.paymentTime) %>
+              <%= dateTimeFunctions.dateToTimeString(order.paymentTime) %>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</body>
+</html>

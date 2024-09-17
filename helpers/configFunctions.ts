@@ -1,9 +1,9 @@
+import debug from "debug";
+import type * as sqlTypes from "mssql";
 import { v4 as uuidv4 } from "uuid";
 
 import type * as configTypes from "../types/configTypes";
-import type * as sqlTypes from "mssql";
 
-import debug from "debug";
 const debugConfig = debug("mini-shop:configFunctions");
 
 
@@ -15,11 +15,11 @@ const debugConfig = debug("mini-shop:configFunctions");
 let config: configTypes.Config = {};
 
 try {
-  // eslint-disable-next-line node/no-unsupported-features/es-syntax, node/no-unpublished-import, unicorn/no-await-expression-member
+  // eslint-disable-next-line unicorn/no-await-expression-member
   config = (await import("../data/config.js")).config;
   
 } catch {
-  // eslint-disable-next-line node/no-unsupported-features/es-syntax, unicorn/no-await-expression-member
+  // eslint-disable-next-line unicorn/no-await-expression-member
   config = (await import("../data/config-sample.js")).config;
   debugConfig("No \"data/config.js\" found, using \"data/config-sample.js\".");
 }
@@ -32,7 +32,7 @@ Object.freeze(config);
  */
 
 
-const configOverrides: { [propertyName: string]: unknown } = {};
+const configOverrides: Record<string, unknown> = {};
 
 const configFallbackValues = new Map<string, unknown>();
 
@@ -75,7 +75,7 @@ configFallbackValues.set("settings.checkout_includeCaptcha", true);
 
 
 export function getProperty(propertyName: "application.httpPort"): number;
-export function getProperty(propertyName: "application.https"): configTypes.Config_HTTPSConfig;
+export function getProperty(propertyName: "application.https"): configTypes.ConfigHTTPSConfig;
 
 export function getProperty(propertyName: "reverseProxy.disableCompression"): boolean;
 export function getProperty(propertyName: "reverseProxy.disableEtag"): boolean;
@@ -108,8 +108,8 @@ export function getProperty(propertyName: "currency.currencyName"): () => string
 export function getProperty(propertyName: "store"): configTypes.StoreConfigs;
 export function getProperty(propertyName: "store.storeType"): configTypes.StoreTypes;
 
-export function getProperty(propertyName: "fees"): { [feeName: string]: configTypes.Config_FeeDefinition };
-export function getProperty(propertyName: "products"): { [productSKU: string]: configTypes.Config_Product };
+export function getProperty(propertyName: "fees"): Record<string, configTypes.ConfigFeeDefinition>;
+export function getProperty(propertyName: "products"): Record<string, configTypes.ConfigProduct>;
 export function getProperty(propertyName: "productHandlers"): configTypes.ProductHandlers[];
 
 export function getProperty(propertyName: "settings.checkout_includeCaptcha"): boolean;
@@ -155,9 +155,9 @@ export function overrideProperty(propertyName: string, propertyValue: unknown): 
  */
 
 
-const clientSideProducts: { [productSKU: string]: configTypes.Config_Product } = {};
+const clientSideProducts: Record<string, configTypes.ConfigProduct> = {};
 
-export function getClientSideProduct(productSKU: string): configTypes.Config_Product {
+export function getClientSideProduct(productSKU: string): configTypes.ConfigProduct {
 
   if (Object.keys(clientSideProducts).length === 0) {
 

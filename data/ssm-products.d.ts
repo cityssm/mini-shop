@@ -1,4 +1,4 @@
-import type { Config_Product } from "../types/configTypes";
-export declare const ticket_parking: Config_Product;
-export declare const ticket_offenceNotice: Config_Product;
-export declare const ticket_noticeOfFine: Config_Product;
+import type { ConfigProduct } from "../types/configTypes";
+export declare const ticket_parking: ConfigProduct;
+export declare const ticket_offenceNotice: ConfigProduct;
+export declare const ticket_noticeOfFine: ConfigProduct;

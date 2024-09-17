@@ -8,7 +8,7 @@ const delay = (millis) => {
 const captchaCache = new NodeCache({
     stdTTL: timeoutSeconds_initialLoad,
     useClones: false,
-    maxKeys: 100000
+    maxKeys: 100_000
 });
 export const generateNewCaptcha = async () => {
     const captchaText = uuidv4().slice(0, 5).toUpperCase();
@@ -19,8 +19,8 @@ export const generateNewCaptcha = async () => {
     try {
         captchaCache.set(captchaKey, captchaText);
     }
-    catch (_a) {
-        await delay(10000);
+    catch {
+        await delay(10_000);
         return await generateNewCaptcha();
     }
     return captchaKey;

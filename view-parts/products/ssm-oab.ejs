@@ -1,0 +1,295 @@
+<% const idPrefix = stringFns.getUID(); %>
+
+<div class="message is-warning">
+  <p class="message-body">
+    Note that you may only purchase Open-Air Burning Permits for properties that
+    you own.
+  </p>
+</div>
+
+<div class="content">
+  <p>
+    Planning a small fire? The
+    <a href="https://www.ontario.ca/laws/regulation/070213" target="_blank"
+      >Ontario Fire Code</a
+    >
+    requires that all open-air burning must be approved by Fire Services.
+  </p>
+
+  <p>
+    Open-air burning permits can be obtained online at any time using the form
+    below. You may also contact Fire Services at 705-949-3333 ext. 3 Monday to
+    Friday between 9:00 a.m. and 4:00 p.m. to arrange for a burning permit.
+  </p>
+
+  <p>
+    Before a new permit can be issued, a Fire Prevention Officer will perform a
+    site inspection (a non-refundable inspection fee applies), at which time
+    conditions for approval will be reviewed.
+  </p>
+  <p>
+    Approval guidelines address such issues as material to be burned, distances
+    from structures and combustible materials, weather conditions, and so on.
+    Someone must stay with the fire at all times until it is completely
+    extinguished and equipment must be available to extinguish the fire in the
+    event that it gets out of control or is causing an adverse effect.
+  </p>
+  <p>
+    Sault Fire Services has recently added a significant condition to the
+    open-air burning permit process. A permit will not be issued unless the
+    homeowner agrees to allow the Fire Prevention Officer to check the home's
+    smoke alarm.
+  </p>
+  <p>
+    If smoke alarms are working and all other terms of approval have been met,
+    an open-air burning permit is issued. Once the permit expires, it is the
+    owner's responsibility to renew the permit, which, in most instances, may be
+    done over the telephone or through this website. (Call 705-949-3333 ext. 3
+    to renew an existing permit.)
+  </p>
+  <p>
+    Obtaining authorization to have an open-air fire does not relieve an owner
+    from the obligation to comply with the
+    <a href="https://www.ontario.ca/laws/statute/90e19" target="_blank"
+      >Environmental Protection Act of Ontario</a
+    >. While burning, there is an obligation to ensure that smoke does not
+    interfere with the ability of neighbours to enjoy their properties.
+  </p>
+  <p>
+    Tenants are reminded that written approval from the homeowner will be
+    required prior to issuance of a burning permit for rented properties.
+  </p>
+</div>
+
+<h2 class="title is-4">Open-Air Burning Guidelines</h2>
+
+<div class="content">
+  <p>
+    The following guidelines are to be strictly adhered to by a person or
+    persons doing the burning. Fire Services takes a "Zero Tolerance" approach
+    to any violation of these approvals.
+  </p>
+
+  <ol>
+    <li>Open-air burning shall not be permitted unless approved.</li>
+    <li>Burning must cease prior to 11 p.m.</li>
+    <li>
+      Burn only dry material. All other material such as petroleum products,
+      plastics, rubber, painted lumber etc., that will cause excessive smoke or
+      fumes
+      <strong style="text-transform: uppercase">must not be burned</strong>.
+      Mixed demolition debris is not suitable for open-air burning.
+    </li>
+    <li>
+      Keep the fire at an approved distance from any structure and/or any
+      combustible material (trees, grass, woodpiles, etc.).
+    </li>
+    <li>Burn less than 1 cubic metre of material at a time.</li>
+    <li>
+      Stay with the fire at all times until it is completely extinguished.
+    </li>
+    <li>
+      Equipment and resources must be available at the burning site to
+      extinguish the fire, in the event that the fire gets out of control or is
+      causing an adverse effect.
+    </li>
+    <li>
+      Open-air burning must not be conducted during rain or fog (smoke cannot
+      disperse properly), and when wind speeds are high or wind direction
+      changes frequently (fire may spread rapidly).
+    </li>
+    <li>
+      Common courtesy for your neighbours is expected (i.e. clotheslines, open
+      window, etc.). If we receive a complaint, Fire Services must respond. If
+      the complaint is deemed legitimate, the permit will be cancelled for 90
+      days and/or charges will be laid under the
+      <a href="https://www.ontario.ca/laws/statute/97f04" target="_blank"
+        >Fire Protection and Prevention Act</a
+      >.
+    </li>
+    <li>
+      Open-air burning will not be approved for Industrial or Commercial
+      occupancies.
+    </li>
+    <li>
+      Obtaining authorization to have an open-air fire does not relieve an owner
+      from the obligation to comply with the
+      <a href="https://www.ontario.ca/laws/statute/90e19" target="_blank"
+        >Environmental Protection Act of Ontario</a
+      >.
+    </li>
+    <li>
+      Tenants are reminded that written approval from the homeowner will be
+      required prior to issuance of a burning permit for rented properties.
+    </li>
+  </ol>
+
+  <p style="text-transform: uppercase">
+    Open-air burning is approved under the above noted rules. Any contravention
+    of these rules will result in an immediate 90 day suspension of the permit
+    and/or prosecution under the Ontario Fire Code and Fire Protection and
+    Prevention Act.
+  </p>
+
+  <p>
+    Whenever the Ministry of Natural Resources has a ban on burning, all permits
+    in Sault Ste. Marie are cancelled until such time that the ban has been
+    lifted.
+  </p>
+</div>
+
+<h2 class="title is-4">Required Permit Details</h2>
+
+<input id="<%= idPrefix %>_unitPrice" name="unitPrice" type="hidden" value="" required />
+
+<div class="message is-warning">
+  <p class="message-body">
+    Properties currently under suspension cannot obtain new permits or renew
+    permits. Fire Services will validate all permit requests. If there is a
+    discrepancy in the information provided, an attempt will be made to contact
+    the purchaser or may result in the permit being voided.
+  </p>
+</div>
+
+<div class="message is-info">
+  <p class="message-body">
+    Owner contact details are provided at checkout.
+  </p>
+</div>
+
+<div class="field">
+  <label class="label" for="<%= idPrefix %>_streetAddress"
+    >Street Address</label
+  >
+  <div class="control">
+    <input
+      class="input"
+      id="<%= idPrefix %>_streetAddress"
+      name="streetAddress"
+      type="text"
+      maxlength="100"
+      placeholder="ex. 99 Foster Drive"
+      required
+    />
+  </div>
+</div>
+
+<label class="checkbox">
+  <input
+    id="<%= idPrefix %>_ownerResponsibility"
+    name="ownerResponsibility"
+    type="checkbox"
+    required
+  />
+  It is the owner's responsibility to be aware of the expiry date and when to
+  renew.
+</label>
+
+<label class="checkbox">
+  <input
+    id="<%= idPrefix %>_understandGuidelines"
+    name="understandGuidelines"
+    type="checkbox"
+    required
+  />
+  I have read, understand, and will follow the guidelines above.
+</label>
+
+<fieldset class="mt-5">
+  <legend class="title is-5">Permit Type</legend>
+
+  <% if (Number.isFinite(product.data?.new)) { %>
+    <div class="content">
+      <div class="control">
+        <label class="radio">
+          <input
+            id="<%= idPrefix %>_permitType_new"
+            name="permitType"
+            value="new"
+            data-unit-price="<%= product.data.new %>"
+            type="radio"
+            aria-describedby="<%= idPrefix %>_permitType_new_description"
+            checked
+            required
+          />
+          New Burning Permit - $<%= product.data.new %>
+        </label>
+      </div>
+
+      <p id="<%= idPrefix %>_permitType_new_description">
+        New permits purchased online require an inspection and approval before
+        burning is allowed and will expire three years after the date of
+        inspection.
+      </p>
+      <p>Only choose <strong>new</strong> if</p>
+      <ul>
+        <li>You are the new owner of this property; <strong>or</strong></li>
+        <li>
+          You own this property and have not had an open air burning permit at
+          this property in the past; <strong>or</strong>
+        </li>
+        <li>
+          You are a tenant and possess the homeowner's written authorization at
+          the time of inspection.
+        </li>
+      </ul>
+      <p>If a new permit is <strong>denied, $<%= product.data.new_refund ?? 0 %> will be refunded</strong>.</p>
+    </div>
+  <% } %>
+
+  <% if (Number.isFinite(product.data?.renew_4yr)) { %>
+    <div class="content">
+      <div class="control">
+        <label class="radio">
+          <input
+            id="<%= idPrefix %>_permitType_renew_4yr"
+            name="permitType"
+            value="renew_4yr"
+            data-unit-price="<%= product.data.renew_4yr %>"
+            type="radio"
+            aria-describedby="<%= idPrefix %>_permitType_renew_4yr_description"
+            required
+          />
+          Four Year Permit Renewal - $63
+        </label>
+      </div>
+
+      <p id="<%= idPrefix %>_permitType_renew_4yr_description">
+        Current owners must have or have been issued a permit at this property in
+        the past. Renewals purchased online become active immediately, and expire
+        four years after the date of purchase.
+      </p>
+    </div>
+  <% } %>
+  
+  <% if (Number.isFinite(product.data?.renew_1yr)) { %>
+    <div class="content">
+      <div class="control">
+        <label class="radio">
+          <input
+            id="<%= idPrefix %>_permitType_renew_1yr"
+            name="permitType"
+            value="renew_1yr"
+            data-unit-price="<%= product.data.renew_1yr %>"
+            type="radio"
+            aria-describedby="<%= idPrefix %>_permitType_renew_1yr_description"
+            required
+          />
+          One Year Permit Renewal - $<%= product.data.renew_1yr %>
+        </label>
+      </div>
+      <p id="<%= idPrefix %>_permitType_renew_1yr_description">
+        Current owners must have or have been issued a permit at this property in
+        the past. Renewals purchased online become active immediately, and expire
+        one year after the date of purchase.
+      </p>
+    </div>
+  <% } %>
+
+  <p>
+    If a renewal permit is
+    <strong>voided, the purchase will be refunded</strong>.
+  </p>
+</fieldset>
+
+<script src="<%= urlPrefix %>/javascripts/product-ssm-oab.js" defer></script>

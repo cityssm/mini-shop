@@ -1,7 +1,7 @@
-import type { Config_Product } from "../types/configTypes";
+import type { ConfigProduct } from "../types/configTypes";
 
 
-export const ticket_parking: Config_Product = {
+export const ticket_parking: ConfigProduct = {
   productName: "Parking Enforcement - Certificate of Infraction",
   image: {
     path: "/images/ssm-ticket_parking.jpg",
@@ -23,7 +23,7 @@ export const ticket_parking: Config_Product = {
 };
 
 
-export const ticket_offenceNotice: Config_Product = {
+export const ticket_offenceNotice: ConfigProduct = {
   productName: "Provincial Offences - Offence Notice",
   image: {
     path: "/images/ssm-ticket_offenceNotice.jpg",
@@ -45,7 +45,7 @@ export const ticket_offenceNotice: Config_Product = {
 };
 
 
-export const ticket_noticeOfFine: Config_Product = {
+export const ticket_noticeOfFine: ConfigProduct = {
   productName: "Provincial Offences - Notice of Fine and Due Date",
   image: {
     path: "/images/ssm-ticket_noticeOfFine.jpg",

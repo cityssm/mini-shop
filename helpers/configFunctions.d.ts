@@ -1,7 +1,7 @@
-import type * as configTypes from "../types/configTypes";
 import type * as sqlTypes from "mssql";
+import type * as configTypes from "../types/configTypes";
 export declare function getProperty(propertyName: "application.httpPort"): number;
-export declare function getProperty(propertyName: "application.https"): configTypes.Config_HTTPSConfig;
+export declare function getProperty(propertyName: "application.https"): configTypes.ConfigHTTPSConfig;
 export declare function getProperty(propertyName: "reverseProxy.disableCompression"): boolean;
 export declare function getProperty(propertyName: "reverseProxy.disableEtag"): boolean;
 export declare function getProperty(propertyName: "reverseProxy.blockViaXForwardedFor"): boolean;
@@ -23,13 +23,9 @@ export declare function getProperty(propertyName: "currency.code"): () => string
 export declare function getProperty(propertyName: "currency.currencyName"): () => string;
 export declare function getProperty(propertyName: "store"): configTypes.StoreConfigs;
 export declare function getProperty(propertyName: "store.storeType"): configTypes.StoreTypes;
-export declare function getProperty(propertyName: "fees"): {
-    [feeName: string]: configTypes.Config_FeeDefinition;
-};
-export declare function getProperty(propertyName: "products"): {
-    [productSKU: string]: configTypes.Config_Product;
-};
+export declare function getProperty(propertyName: "fees"): Record<string, configTypes.ConfigFeeDefinition>;
+export declare function getProperty(propertyName: "products"): Record<string, configTypes.ConfigProduct>;
 export declare function getProperty(propertyName: "productHandlers"): configTypes.ProductHandlers[];
 export declare function getProperty(propertyName: "settings.checkout_includeCaptcha"): boolean;
 export declare function overrideProperty(propertyName: "reverseProxy.urlPrefix", propertyValue: string): void;
-export declare function getClientSideProduct(productSKU: string): configTypes.Config_Product;
+export declare function getClientSideProduct(productSKU: string): configTypes.ConfigProduct;

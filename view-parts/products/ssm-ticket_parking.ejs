@@ -123,7 +123,7 @@
 </label>
 <div class="field">
   <div class="control">
-    <input class="input" id="<%= idPrefix %>_licencePlate" name="licencePlate" type="text" minlength="2" maxlength="10" pattern="^[\dA-Za-z -]+$" required />
+    <input class="input" id="<%= idPrefix %>_licencePlate" name="licencePlate" type="text" minlength="2" maxlength="10" pattern="^[\dA-Za-z \-]+$" required />
   </div>
 </div>
 
@@ -139,5 +139,5 @@
   </div>
 </div>
 
-<script src="<%= urlPrefix %>/javascripts/product-ssm-ticket_parking.min.js" defer></script>
-<script src="<%= urlPrefix %>/javascripts/product-ssm-ticket.min.js" defer></script>
+<script src="<%= urlPrefix %>/javascripts/product-ssm-ticket_parking.js" defer></script>
+<script src="<%= urlPrefix %>/javascripts/product-ssm-ticket.js" defer></script>

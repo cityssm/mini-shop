@@ -1,11 +1,11 @@
-import { v4 as uuidv4 } from "uuid";
 import debug from "debug";
+import { v4 as uuidv4 } from "uuid";
 const debugConfig = debug("mini-shop:configFunctions");
 let config = {};
 try {
     config = (await import("../data/config.js")).config;
 }
-catch (_a) {
+catch {
     config = (await import("../data/config-sample.js")).config;
     debugConfig("No \"data/config.js\" found, using \"data/config-sample.js\".");
 }

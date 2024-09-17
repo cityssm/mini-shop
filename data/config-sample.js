@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
 export const config = {
     application: {
-        httpPort: 52525,
+        httpPort: 52_525,
         applicationName: "Sample Clothing Store"
     },
     orderNumberFunction: () => {

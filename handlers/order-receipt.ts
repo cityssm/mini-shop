@@ -1,27 +1,28 @@
-import { recordAbuse } from "@cityssm/express-abuse-points";
-import * as configFunctions from "../helpers/configFunctions.js";
+import { recordAbuse } from '@cityssm/express-abuse-points'
+import { getOrder as miniShopDB_getOrder } from '@cityssm/mini-shop-db'
+import type { Request, Response } from 'express'
 
-import { getOrder as miniShopDB_getOrder } from "@cityssm/mini-shop-db";
+import * as configFunctions from '../helpers/configFunctions.js'
 
-import type { RequestHandler } from "express";
+export async function handler(request: Request, response: Response): Promise<void> {
+  const orderNumber = request.params.orderNumber
+  const orderSecret = request.params.orderSecret
 
-
-export const handler: RequestHandler = async (request, response) => {
-
-  const orderNumber = request.params.orderNumber;
-  const orderSecret = request.params.orderSecret;
-
-  const order = await miniShopDB_getOrder(orderNumber, orderSecret, true);
+  const order = await miniShopDB_getOrder(orderNumber, orderSecret, true)
 
   if (order) {
-    return order.redirectURL && order.redirectURL !== ""
-      ? response.redirect(order.redirectURL + "/" + orderNumber + "/" + orderSecret)
-      : response.render("order", {
-        pageTitle: "Order " + orderNumber,
+    order.redirectURL && order.redirectURL !== ''
+      ? response.redirect(
+        order.redirectURL + '/' + orderNumber + '/' + orderSecret
+      )
+      : response.render('order', {
+        pageTitle: 'Order ' + orderNumber,
         order
-      });
+      })
   } else {
-    recordAbuse(request);
-    return response.redirect(configFunctions.getProperty("reverseProxy.urlPrefix") + "/order/expired");
+    recordAbuse(request)
+    response.redirect(
+      configFunctions.getProperty('reverseProxy.urlPrefix') + '/order/expired'
+    )
   }
-};
+}

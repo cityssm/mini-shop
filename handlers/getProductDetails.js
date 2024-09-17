@@ -1,4 +1,4 @@
-import * as configFunctions from "../helpers/configFunctions.js";
+import * as configFunctions from '../helpers/configFunctions.js';
 const getProductAndFeeDetails = (productSKUs) => {
     const products = {};
     const fees = {};
@@ -10,7 +10,7 @@ const getProductAndFeeDetails = (productSKUs) => {
         let addProductToObject = true;
         product.feeTotals = {};
         for (const feeName of product.fees) {
-            const fee = configFunctions.getProperty("fees")[feeName];
+            const fee = configFunctions.getProperty('fees')[feeName];
             if (fee) {
                 product.feeTotals[feeName] = fee.feeCalculation(product);
                 fees[feeName] = fee;
@@ -30,7 +30,7 @@ const getProductAndFeeDetails = (productSKUs) => {
     };
 };
 export const handler = (request, response) => {
-    const productSKUs = request.body.productSKUs.split(",");
+    const productSKUs = request.body.productSKUs.split(',');
     const returnObject = getProductAndFeeDetails(productSKUs);
     return response.json(returnObject);
 };

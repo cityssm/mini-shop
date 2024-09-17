@@ -7,24 +7,27 @@ import * as configFunctions from "../../helpers/configFunctions.js";
 
 import type { StoreConfig_MonerisCheckout } from "../../types/configTypes";
 import type { Order } from "@cityssm/mini-shop-db/types";
-import type { MonerisCheckout_PreloadRequest, MonerisCheckout_PreloadResponse, MonerisCheckout_ReceiptRequest, MonerisCheckout_ReceiptResponse } from "../../types/storeTypes";
+import type {
+  MonerisCheckout_PreloadRequest,
+  MonerisCheckout_PreloadResponse,
+  MonerisCheckout_ReceiptRequest,
+  MonerisCheckout_ReceiptResponse,
+} from "../../types/storeTypes";
 import type { StoreValidatorReturn } from "./types";
 
 import Debug from "debug";
 const debug = Debug("mini-shop:stores:moneris-checkout");
 
+const checkoutConfig = configFunctions.getProperty(
+  "store"
+) as StoreConfig_MonerisCheckout;
 
-const checkoutConfig = configFunctions.getProperty("store") as StoreConfig_MonerisCheckout;
-
-
-const requestURL = (checkoutConfig ?.storeConfig ?.environment || "") === "qa"
-  ? "https://gatewayt.moneris.com/chkt/request/request.php"
-  : "https://gateway.moneris.com/chkt/request/request.php";
-
+const requestURL =
+  (checkoutConfig?.storeConfig?.environment || "") === "qa"
+    ? "https://gatewayt.moneris.com/chkt/request/request.php"
+    : "https://gateway.moneris.com/chkt/request/request.php";
 
 export const preloadRequest = async (order: Order): Promise<false | string> => {
-
-
   /*
    * contact_details
    */
@@ -33,45 +36,45 @@ export const preloadRequest = async (order: Order): Promise<false | string> => {
     first_name: order.shippingName,
     last_name: "",
     email: order.shippingEmailAddress,
-    phone: order.shippingPhoneNumberDay
+    phone: order.shippingPhoneNumberDay,
   };
 
   if (order.shippingName.length > 30) {
-
     contact_details.first_name = "";
     let populateFirstName = true;
 
     const orderNameSplit = order.shippingName.split(" ");
 
     for (const orderNamePiece of orderNameSplit) {
-
       if (populateFirstName) {
-
         if ((contact_details.first_name + " " + orderNamePiece).length <= 30) {
-          contact_details.first_name = (contact_details.first_name + " " + orderNamePiece).trim();
+          contact_details.first_name = (
+            contact_details.first_name +
+            " " +
+            orderNamePiece
+          ).trim();
           continue;
-
         } else if (contact_details.first_name === "") {
           contact_details.first_name = orderNamePiece.slice(0, 30);
           populateFirstName = false;
           continue;
-
         } else {
           populateFirstName = false;
         }
       } else {
-
         if ((contact_details.last_name + " " + orderNamePiece).length <= 30) {
-          contact_details.last_name = (contact_details.last_name + " " + orderNamePiece).trim();
+          contact_details.last_name = (
+            contact_details.last_name +
+            " " +
+            orderNamePiece
+          ).trim();
           continue;
-
         } else if (contact_details.last_name === "") {
           contact_details.last_name = orderNamePiece.slice(0, 30);
         }
 
         break;
       }
-
     }
   }
 
@@ -85,7 +88,7 @@ export const preloadRequest = async (order: Order): Promise<false | string> => {
     city: (order.shippingCity || "").slice(0, 50),
     province: (order.shippingProvince || "").slice(0, 2),
     country: (order.shippingCountry || "").slice(0, 2),
-    postal_code: (order.shippingPostalCode || "").slice(0, 20)
+    postal_code: (order.shippingPostalCode || "").slice(0, 20),
   };
 
   /*
@@ -96,13 +99,12 @@ export const preloadRequest = async (order: Order): Promise<false | string> => {
   let cartSubtotal = 0;
 
   for (const orderItem of order.items) {
-
-    const product = configFunctions.getProperty("products")[orderItem.productSKU];
+    const product =
+      configFunctions.getProperty("products")[orderItem.productSKU];
 
     let description = product.productName;
 
     if (product.identifierFormFieldName) {
-
       const identifierFormField = orderItem.fields.find((itemField) => {
         return itemField.formFieldName === product.identifierFormFieldName;
       });
@@ -117,7 +119,7 @@ export const preloadRequest = async (order: Order): Promise<false | string> => {
       description: description.slice(0, 200),
       product_code: orderItem.productSKU.slice(0, 50),
       unit_cost: orderItem.unitPrice.toFixed(2),
-      quantity: orderItem.quantity.toString()
+      quantity: orderItem.quantity.toString(),
     };
 
     cartSubtotal += orderItem.unitPrice * orderItem.quantity;
@@ -126,7 +128,6 @@ export const preloadRequest = async (order: Order): Promise<false | string> => {
   }
 
   for (const orderFee of order.fees) {
-
     const fee = configFunctions.getProperty("fees")[orderFee.feeName];
 
     const cartItem = {
@@ -134,7 +135,7 @@ export const preloadRequest = async (order: Order): Promise<false | string> => {
       description: fee.feeName.slice(0, 200),
       product_code: orderFee.feeName.slice(0, 50),
       unit_cost: orderFee.feeTotal.toFixed(2),
-      quantity: "1"
+      quantity: "1",
     };
 
     cartSubtotal += orderFee.feeTotal;
@@ -160,16 +161,16 @@ export const preloadRequest = async (order: Order): Promise<false | string> => {
     txn_total: cartSubtotal.toFixed(2),
     cart: {
       items: cartItems,
-      subtotal: cartSubtotal.toFixed(2)
-    }
+      subtotal: cartSubtotal.toFixed(2),
+    },
   };
 
   const response = await fetch(requestURL, {
     method: "post",
     body: JSON.stringify(preloadJSON),
     headers: {
-      "Content-Type": "application/json"
-    }
+      "Content-Type": "application/json",
+    },
   });
 
   if (!response.ok) {
@@ -177,8 +178,8 @@ export const preloadRequest = async (order: Order): Promise<false | string> => {
     return false;
   }
 
-  const responseData = (await response.json()) as MonerisCheckout_PreloadResponse;
-
+  const responseData =
+    (await response.json()) as MonerisCheckout_PreloadResponse;
 
   if (responseData.response.success === "true") {
     return responseData.response.ticket;
@@ -188,16 +189,16 @@ export const preloadRequest = async (order: Order): Promise<false | string> => {
   return false;
 };
 
-
-export const validate = async (request: Request): Promise<StoreValidatorReturn> => {
-
+export const validate = async (
+  request: Request
+): Promise<StoreValidatorReturn> => {
   const ticket = request.body.ticket as string;
 
   // ticket is missing, fail
   if (!ticket) {
     return {
       isValid: false,
-      errorCode: "missingAPIKey"
+      errorCode: "missingAPIKey",
     };
   }
 
@@ -207,7 +208,7 @@ export const validate = async (request: Request): Promise<StoreValidatorReturn> 
   if (!orderNumber) {
     return {
       isValid: false,
-      errorCode: "missingOrderNumber"
+      errorCode: "missingOrderNumber",
     };
   }
 
@@ -217,7 +218,7 @@ export const validate = async (request: Request): Promise<StoreValidatorReturn> 
   if (!orderSecret) {
     return {
       isValid: false,
-      errorCode: "missingOrderSecret"
+      errorCode: "missingOrderSecret",
     };
   }
 
@@ -227,27 +228,27 @@ export const validate = async (request: Request): Promise<StoreValidatorReturn> 
     checkout_id: checkoutConfig.storeConfig.checkout_id,
     environment: checkoutConfig.storeConfig.environment,
     action: "receipt",
-    ticket
+    ticket,
   };
 
   const response = await fetch(requestURL, {
     method: "post",
     body: JSON.stringify(requestJSON),
     headers: {
-      "Content-Type": "application/json"
-    }
+      "Content-Type": "application/json",
+    },
   });
-
 
   // api response error, fail
   if (!response.ok) {
     return {
       isValid: false,
-      errorCode: "unresponsiveAPI"
+      errorCode: "unresponsiveAPI",
     };
   }
 
-  const responseData = (await response.json()) as MonerisCheckout_ReceiptResponse;
+  const responseData =
+    (await response.json()) as MonerisCheckout_ReceiptResponse;
 
   debug(responseData);
 
@@ -255,7 +256,7 @@ export const validate = async (request: Request): Promise<StoreValidatorReturn> 
   if (!responseData) {
     return {
       isValid: false,
-      errorCode: "invalidAPIResponse"
+      errorCode: "invalidAPIResponse",
     };
   }
 
@@ -264,7 +265,7 @@ export const validate = async (request: Request): Promise<StoreValidatorReturn> 
   if (responseData.response.success !== "true") {
     return {
       isValid: false,
-      errorCode: "paymentError"
+      errorCode: "paymentError",
     };
   }
 
@@ -272,7 +273,7 @@ export const validate = async (request: Request): Promise<StoreValidatorReturn> 
   if (responseData.response.receipt.result !== "a") {
     return {
       isValid: false,
-      errorCode: "paymentDeclined"
+      errorCode: "paymentDeclined",
     };
   }
 
@@ -280,7 +281,7 @@ export const validate = async (request: Request): Promise<StoreValidatorReturn> 
   if (responseData.response.request.order_no !== orderNumber) {
     return {
       isValid: false,
-      errorCode: "invalidOrderNumber"
+      errorCode: "invalidOrderNumber",
     };
   }
 
@@ -290,7 +291,7 @@ export const validate = async (request: Request): Promise<StoreValidatorReturn> 
   if (orderNumberDB !== orderNumber) {
     return {
       isValid: false,
-      errorCode: "invalidOrderNumber"
+      errorCode: "invalidOrderNumber",
     };
   }
 
@@ -306,7 +307,7 @@ export const validate = async (request: Request): Promise<StoreValidatorReturn> 
       approval_code: responseData.response.receipt.cc.approval_code,
       card_type: responseData.response.receipt.cc.card_type,
       first6last4: responseData.response.receipt.cc.first6last4,
-      amount: responseData.response.receipt.cc.amount
-    }
+      amount: responseData.response.receipt.cc.amount,
+    },
   };
 };
