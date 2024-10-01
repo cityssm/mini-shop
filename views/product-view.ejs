@@ -3,21 +3,25 @@
 <nav class="breadcrumb has-bullet-separator mt-4" aria-label="breadcrumb">
   <ul>
     <li><a class="has-ws-normal" href="<%= urlPrefix %>/products">
-      <%= configFunctions.getProperty("views.products.title") %></a></li>
+      <%= configFunctions.getPropertyByLanguage("views.products.title", preferredLanguage) %></a></li>
     <li class="is-active">
-      <a href="#" aria-current="page"><%= product.productName %></a>
+      <a href="#" aria-current="page">
+        <%= translationHelpers.getStringByLanguage(product.productName, preferredLanguage) %>
+      </a>
     </li>
   </ul>
 </nav>
 
-<h1 class="title has-text-centered mt-4"><%= product.productName %></h1>
+<h1 class="title has-text-centered mt-4">
+  <%= translationHelpers.getStringByLanguage(product.productName, preferredLanguage) %>
+</h1>
 
 <script type="application/ld+json">
   {
     "@context": "https://schema.org/",
     "@type": "Product",
-    "name": "<%= product.productName %>",
-    "description": "<%= product.description || "" %>",
+    "name": "<%= translationHelpers.getStringByLanguage(product.productName, preferredLanguage) %>",
+    "description": "<%= translationHelpers.getStringByLanguage(product.description, preferredLanguage) || "" %>",
     "sku": "<%= productSKU %>",
     "image": "<%= urlPrefix %><%= product.image.path %>",
     "offers": {
@@ -40,13 +44,15 @@
   <div class="columns">
     <div class="column is-3-tablet is-4-desktop">
       <a class="image has-cursor-zoom-in is-<%= product.image.dimensionClass %> has-tooltip-bottom has-tooltip-arrow" data-tooltip="View Larger Picture" href="<%= urlPrefix %><%= product.image.path %>" target="_blank">
-        <img src="<%= urlPrefix %><%= product.image.path %>" alt="<%= product.productName %>" />
+        <img src="<%= urlPrefix %><%= product.image.path %>" alt="<%= translationHelpers.getStringByLanguage(product.productName, preferredLanguage) %>" />
       </a>
       <% if (typeof (product.price) === "number") { %>
         <div class="has-text-centered mt-2">
           <span class="has-text-weight-semibold">
             $<%= product.price.toFixed(2) %>
-            <abbr title="<%= configFunctions.getProperty("currency.currencyName") %>"><%= configFunctions.getProperty("currency.code") %></abbr>
+            <abbr title="<%= configFunctions.getProperty("currency.currencyName") %>">
+              <%= configFunctions.getProperty("currency.code") %>
+            </abbr>
           </span><br />
           <%
             if (product.fees && product.fees.length > 0) {
@@ -58,7 +64,7 @@
                   const feeName = product.fees[i];
                   const fee = configFunctions.getProperty("fees")[feeName];
               %>
-                <%= (i === 0 ? "" : ", ") + (fee ? fee.feeName : feeName) %>
+                <%= (i === 0 ? "" : ", ") + (fee ? translationHelpers.getStringByLanguage(fee.feeName, preferredLanguage) : feeName) %>
               <%
                 }
               %>

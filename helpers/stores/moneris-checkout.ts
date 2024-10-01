@@ -1,21 +1,21 @@
-import fetch from "node-fetch";
 import { getOrderNumberBySecret } from "@cityssm/mini-shop-db";
-
+import type { Order } from "@cityssm/mini-shop-db/types";
+import Debug from "debug";
 import type { Request } from "express";
+import fetch from "node-fetch";
+
 
 import * as configFunctions from "../../helpers/configFunctions.js";
-
 import type { StoreConfigMonerisCheckout } from "../../types/configTypes";
-import type { Order } from "@cityssm/mini-shop-db/types";
 import type {
   MonerisCheckoutPreloadRequest,
   MonerisCheckoutPreloadResponse,
   MonerisCheckoutReceiptRequest,
-  MonerisCheckout_ReceiptResponse,
+  MonerisCheckoutReceiptResponse
 } from "../../types/storeTypes";
+
 import type { StoreValidatorReturn } from "./types";
 
-import Debug from "debug";
 const debug = Debug("mini-shop:stores:moneris-checkout");
 
 const checkoutConfig = configFunctions.getProperty(
@@ -248,7 +248,7 @@ export const validate = async (
   }
 
   const responseData =
-    (await response.json()) as MonerisCheckout_ReceiptResponse;
+    (await response.json()) as MonerisCheckoutReceiptResponse;
 
   debug(responseData);
 

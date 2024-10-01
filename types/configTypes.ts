@@ -1,3 +1,4 @@
+import type { LanguageCode } from 'iso-639-1'
 import type * as sqlTypes from 'mssql'
 
 type BulmaColors =
@@ -15,11 +16,13 @@ type BulmaColors =
 // eslint-disable-next-line no-secrets/no-secrets
 export type ProductHandlers = 'ssm-ticket_parking/doIsTagNumberEligible'
 
+export type StringWithTranslations = Partial<Record<LanguageCode, string>>
+
 export interface Config {
   application?: {
     httpPort?: number
     https?: ConfigHTTPSConfig
-    applicationName?: string
+    applicationName?: string | StringWithTranslations
   }
 
   reverseProxy?: {
@@ -30,6 +33,8 @@ export interface Config {
   }
 
   mssqlConfig?: sqlTypes.config
+
+  languages?: LanguageCode[]
 
   orderNumberFunction?: () => string
 
@@ -55,7 +60,7 @@ export interface Config {
   }
 
   productCategories?: Array<{
-    categoryName: string
+    categoryName: string | StringWithTranslations
     categoryEjs?: string
     productSKUs: string[]
   }>
@@ -109,14 +114,14 @@ export interface ConfigHTTPSConfig {
 }
 
 export interface ConfigViewDefinition {
-  title?: string
+  title?: string | StringWithTranslations
   headerEjs?: string
   footerEjs?: string
 }
 
 export interface ConfigProduct {
-  productName: string
-  description?: string
+  productName?: string | StringWithTranslations
+  description?: string | StringWithTranslations
   data?: Record<string, unknown>
   image?: {
     path: string
@@ -133,7 +138,7 @@ export interface ConfigProduct {
   }
   price: number | 'form'
   formFieldsToSave?: Array<{
-    fieldName: string
+    fieldName?: string | StringWithTranslations
     // formFieldName maxlength = 30
     formFieldName: string
   }>
@@ -145,6 +150,6 @@ export interface ConfigProduct {
 }
 
 export interface ConfigFeeDefinition {
-  feeName: string
+  feeName?: string | StringWithTranslations
   feeCalculation: (product: ConfigProduct) => number
 }

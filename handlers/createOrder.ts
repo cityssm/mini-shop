@@ -1,10 +1,10 @@
-import * as configFunctions from '../helpers/configFunctions.js'
-import { captchaIsMatch, purgeCaptcha } from '../helpers/captchaFunctions.js'
 
 import { createOrder as miniShopDB_createOrder } from '@cityssm/mini-shop-db'
-
-import type { RequestHandler } from 'express'
 import type { ShippingForm } from '@cityssm/mini-shop-db/types'
+import type { RequestHandler } from 'express'
+
+import { captchaIsMatch, purgeCaptcha } from '../helpers/captchaFunctions.js'
+import * as configFunctions from '../helpers/configFunctions.js'
 
 export const handler: RequestHandler = async (request, response) => {
   if (configFunctions.getProperty('settings.checkout_includeCaptcha')) {

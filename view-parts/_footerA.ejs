@@ -8,10 +8,41 @@
     <%- include('../view-parts/footers/' + siteFooterEjs); -%>
   </footer>
 <% } %>
+<script src="<%= urlPrefix %>/lib/js-cookie/js.cookie.min.js"></script>
+<script src="<%= urlPrefix %>/lib/bulma-js/bulma-js.js"></script>
 <script>
   window.exports = window.exports || {};
-  if (window.document.documentMode) {
-    window.document.body.insertAdjacentHTML("afterbegin",
-      "<div class=\"message is-danger m-2\"><p class=\"message-body has-text-centered has-text-weight-bold\">The Internet Explorer web browser is not supported.</p></div>");
+
+  bulmaJS.init()
+
+  function setPreferredLanguage(clickEvent) {
+    clickEvent.preventDefault();
+
+    const preferredLanguage = clickEvent.currentTarget.dataset.lang
+
+    Cookies.set('preferredLanguage', preferredLanguage)
+
+    window.location.reload()
+  }
+
+  const languageSettingElements = document.querySelectorAll('a.option--preferredLanguage')
+
+  for (const languageSettingElement of languageSettingElements) {
+    languageSettingElement.addEventListener('click', setPreferredLanguage)
+  }
+
+  function MiniShop_getStringByLanguage(languageStringProperty) {
+    const preferredLanguage = '<%= preferredLanguage %>';
+
+    if (languageStringProperty === undefined) {
+      return undefined
+    } else if (typeof languageStringProperty === 'string') {
+      return languageStringProperty
+    } else {
+      return (
+        languageStringProperty[preferredLanguage] ??
+        languageStringProperty[Object.keys(languageStringProperty)[0]]
+      )
+    }
   }
 </script>

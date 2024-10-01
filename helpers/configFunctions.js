@@ -1,6 +1,41 @@
+import { Configurator } from '@cityssm/configurator';
 import debug from 'debug';
+import iso639 from 'iso-639-1';
 import { v4 as uuidv4 } from 'uuid';
+import { getStringByLanguage } from './translationHelpers.js';
 const debugConfig = debug('mini-shop:configFunctions');
+const defaultValues = {
+    'application.applicationName': 'Mini Shop',
+    'application.httpPort': 7777,
+    'reverseProxy.disableCompression': false,
+    'reverseProxy.disableEtag': false,
+    'reverseProxy.blockViaXForwardedFor': false,
+    'reverseProxy.urlPrefix': '',
+    mssqlConfig: undefined,
+    languages: [],
+    orderNumberFunction: () => {
+        return 'RCT-' + uuidv4().toUpperCase();
+    },
+    'site.header.backgroundColorClass': 'info',
+    'site.footer.isVisible': true,
+    'site.footer.backgroundColorClass': 'dark',
+    'site.footer.textColorClass': 'light',
+    'site.footer.footerEjs': 'site_thanks.ejs',
+    'views.products.title': 'Products',
+    'views.checkout.title': 'Checkout',
+    'views.checkout_shipping.title': 'Shipping Details',
+    'views.order.title': 'Order Summary',
+    'views.order.headerEjs': 'order_print.ejs',
+    'views.toPayment.headerEjs': 'toPayment_redirecting.ejs',
+    fees: {},
+    products: {},
+    productHandlers: [],
+    store: undefined,
+    'store.storeType': undefined,
+    'currency.code': 'CAD',
+    'currency.currencyName': 'Canadian Dollars',
+    'settings.checkout_includeCaptcha': true
+};
 let config = {};
 try {
     config = (await import('../data/config.js')).config;
@@ -9,49 +44,13 @@ catch {
     config = (await import('../data/config-sample.js')).config;
     debugConfig('No "data/config.js" found, using "data/config-sample.js".');
 }
-Object.freeze(config);
+const configurator = new Configurator(defaultValues, config);
 const configOverrides = {};
-const configFallbackValues = new Map();
-configFallbackValues.set('application.applicationName', 'Mini Shop');
-configFallbackValues.set('application.httpPort', 7777);
-configFallbackValues.set('reverseProxy.disableCompression', false);
-configFallbackValues.set('reverseProxy.disableEtag', false);
-configFallbackValues.set('reverseProxy.blockViaXForwardedFor', false);
-configFallbackValues.set('reverseProxy.urlPrefix', '');
-configFallbackValues.set('orderNumberFunction', () => {
-    return 'RCT-' + uuidv4().toUpperCase();
-});
-configFallbackValues.set('site.header.backgroundColorClass', 'info');
-configFallbackValues.set('site.footer.isVisible', true);
-configFallbackValues.set('site.footer.backgroundColorClass', 'dark');
-configFallbackValues.set('site.footer.textColorClass', 'light');
-configFallbackValues.set('site.footer.footerEjs', 'site_thanks.ejs');
-configFallbackValues.set('views.products.title', 'Products');
-configFallbackValues.set('views.checkout.title', 'Checkout');
-configFallbackValues.set('views.checkout_shipping.title', 'Shipping Details');
-configFallbackValues.set('views.order.title', 'Order Summary');
-configFallbackValues.set('views.order.headerEjs', 'order_print.ejs');
-configFallbackValues.set('views.toPayment.headerEjs', 'toPayment_redirecting.ejs');
-configFallbackValues.set('fees', {});
-configFallbackValues.set('products', {});
-configFallbackValues.set('productHandlers', []);
-configFallbackValues.set('currency.code', 'CAD');
-configFallbackValues.set('currency.currencyName', 'Canadian Dollars');
-configFallbackValues.set('settings.checkout_includeCaptcha', true);
-export function getProperty(propertyName) {
-    if (Object.prototype.hasOwnProperty.call(configOverrides, propertyName)) {
+export function getProperty(propertyName, fallbackValue) {
+    if (Object.hasOwn(configOverrides, propertyName)) {
         return configOverrides[propertyName];
     }
-    const propertyNameSplit = propertyName.split('.');
-    let currentObject = config;
-    for (const propertyNamePiece of propertyNameSplit) {
-        if (Object.prototype.hasOwnProperty.call(currentObject, propertyNamePiece)) {
-            currentObject = currentObject[propertyNamePiece];
-            continue;
-        }
-        return configFallbackValues.get(propertyName);
-    }
-    return currentObject;
+    return configurator.getConfigProperty(propertyName, fallbackValue);
 }
 export function overrideProperty(propertyName, propertyValue) {
     configOverrides[propertyName] = propertyValue;
@@ -72,4 +71,19 @@ export function getClientSideProduct(productSKU) {
         }
     }
     return clientSideProducts[productSKU];
+}
+export function getPropertyByLanguage(propertyName, preferredLanguage = 'en') {
+    const languageStringProperty = getProperty(propertyName);
+    return getStringByLanguage(languageStringProperty, preferredLanguage);
+}
+export function getLanguages() {
+    const configLanguages = getProperty('languages');
+    const languages = [];
+    for (const configLanguage of configLanguages) {
+        languages.push([
+            configLanguage,
+            iso639.getNativeName(configLanguage) ?? configLanguage
+        ]);
+    }
+    return languages;
 }

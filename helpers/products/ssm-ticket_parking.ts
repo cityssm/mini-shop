@@ -1,7 +1,7 @@
 import * as sqlPool from '@cityssm/mssql-multi-pool'
-import * as configFunctions from '../configFunctions.js'
-
 import type * as sqlTypes from 'mssql'
+
+import * as configFunctions from '../configFunctions.js'
 
 let tagNumberCache: Set<string>
 let tagNumberCacheExpiryMillis = 0

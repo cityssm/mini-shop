@@ -5,7 +5,7 @@
 %>
 
 <h1 class="title is-3 has-text-centered mt-4">
-  <%= viewConfig.title || "Products" %>
+  <%= translationHelpers.getStringByLanguage(viewConfig.title, preferredLanguage) || "Products" %>
 </h1>
 
 <% if (viewConfig.headerEjs) { %>
@@ -19,7 +19,7 @@
   for (const productCategory of productCategories) {
 %>
 
-<h2 class="title is-4"><%= productCategory.categoryName %></h2>
+<h2 class="title is-4"><%= translationHelpers.getStringByLanguage(productCategory.categoryName, preferredLanguage) %></h2>
 
 <% if (productCategory.categoryEjs) { %>
   <%- include('../view-parts/categories/' + productCategory.categoryEjs); -%>
@@ -39,22 +39,26 @@
         <% if (product.image) { %>
           <div class="card-image">
             <div class="image is-<%= product.image.dimensionClass %>">
-              <img src="<%= urlPrefix %><%= product.image.path %>" alt="<%= product.productName %>" />
+              <img src="<%= urlPrefix %><%= product.image.path %>" alt="<%= translationHelpers.getStringByLanguage(product.productName, preferredLanguage) %>" />
             </div>
           </div>
         <% } %>
         <div class="card-content">
-          <h2 class="title is-5"><%= product.productName %></h2>
+          <h2 class="title is-5">
+            <%= translationHelpers.getStringByLanguage(product.productName, preferredLanguage) %>
+          </h2>
           <% if (typeof (product.price) === "number") { %>
             <p class="has-text-weight-semibold has-text-right">
               $<%= product.price.toFixed(2) %>
-              <abbr title="<%= configFunctions.getProperty("currency.currencyName") %>"><%= configFunctions.getProperty("currency.code") %></abbr>
+              <abbr title="<%= configFunctions.getProperty("currency.currencyName") %>">
+                <%= configFunctions.getProperty("currency.code") %>
+              </abbr>
             </p>
           <% } %>
         </div>
         <% if (product.description) { %>
           <div class="card-content">
-            <%= product.description %>
+            <%= translationHelpers.getStringByLanguage(product.description, preferredLanguage) %>
           </div>
           <% } %>
         </div>

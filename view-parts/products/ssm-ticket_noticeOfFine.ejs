@@ -4,30 +4,53 @@
 
 <div class="message is-info">
   <div class="message-body">
-    <p class="has-text-weight-bold">
-			Note that only tickets with ICON Location Code <em>0160</em> can be paid for using My Sault Ste. Marie eServices.
-    </p>
-    <p>
-      These tickets originate from either the Wawa, Thessalon and Sault Ste. Marie areas.
-      If your ticket is not from one of these areas and it does not have the 0160 location code,
-      you will need to contact the court that appears on the reverse side of your ticket as your payment cannot be made here.
-		</p>
-		<p>
-			Please refer to the
-			<a target="_blank" href="https://www.saultstemarie.ca/City-Hall/City-Departments/Legal/Provincial-Offences.aspx" title="Provincial Offences Office">Provincial Offences Office page on the City website</a>
-			for more information on the Sault Ste. Marie Provincial Offences Office.
-		</p>
-		<p>
-			For more information on Provincial Offences tickets and fines, please refer to the website for the
-			<a target="_blank" href="https://www.attorneygeneral.jus.gov.on.ca/english/justice-ont/tickets_and_fines.php" title="Ministry of the Attorney General">Ministry of the Attorney General</a>.
-		</p>
+    <% if (preferredLanguage === 'fr') { %>
+      <p class="has-text-weight-bold">
+        Veuillez noter que seules les contraventions portant le code d'emplacement ICON <em>0160</em>
+        peuvent être payées au moyen des services électroniques eServices My Sault Ste. Marie.
+      </p>
+      <p>
+        Ces contraventions proviennent des régions de Wawa, Thessalon ou Sault Ste. Marie.
+        Si votre contravention a été émise ailleurs que dans ces trois secteurs et ne porte pas le code d'emplacement 0160,
+        vous devez communiquer avec la cour indiquée au verso de votre contravention, car le paiement ne peut pas se faire ici.
+      </p>
+      <p>
+        Pour obtenir plus de renseignements sur le Bureau des infractions provinciales de Sault Ste. Marie,
+        veuillez vous reporter à la 
+        <a target="_blank" href="https://www.saultstemarie.ca/City-Hall/City-Departments/Legal/Provincial-Offences.aspx" title="Bureau des infractions provinciales">
+          page du Bureau des infractions provinciales sur le site web de la ville</a>.
+      </p>
+      <p>
+        Pour obtenir plus de renseignements sur les contraventions et amendes liées aux infractions provinciales,
+        veuillez vous reporter au site Web du
+        <a target="_blank" href="https://www.ontario.ca/fr/page/verifiez-en-ligne-letat-de-vos-contraventions-et-amendes-pour-infractions-routieres-ou-demandez-une" title="Ministry of the Attorney General">ministère du Procureur général</a>. 
+      </p>
+    <% } else { %>
+      <p class="has-text-weight-bold">
+        Note that only tickets with ICON Location Code <em>0160</em> can be paid for using My Sault Ste. Marie eServices.
+      </p>
+      <p>
+        These tickets originate from either the Wawa, Thessalon and Sault Ste. Marie areas.
+        If your ticket is not from one of these areas and it does not have the 0160 location code,
+        you will need to contact the court that appears on the reverse side of your ticket as your payment cannot be made here.
+      </p>
+      <p>
+        Please refer to the
+        <a target="_blank" href="https://www.saultstemarie.ca/City-Hall/City-Departments/Legal/Provincial-Offences.aspx" title="Provincial Offences Office">Provincial Offences Office page on the City website</a>
+        for more information on the Sault Ste. Marie Provincial Offences Office.
+      </p>
+      <p>
+        For more information on Provincial Offences tickets and fines, please refer to the website for the
+        <a target="_blank" href="https://www.ontario.ca/page/check-status-traffic-tickets-and-fines-online-or-request-meeting-resolve-your-case/" title="Ministry of the Attorney General">Ministry of the Attorney General</a>.
+      </p>
+    <% } %>
   </div>
 </div>
 
 <input id="<%= idPrefix %>_fileNumber" name="fileNumber" type="hidden" />
 <input id="<%= idPrefix %>_fileNumber-a" name="fileNumber-a" type="hidden" value="0160" />
 <label class="label" for="<%= idPrefix %>_fileNumber-b">
-  File Number
+  <%= preferredLanguage === 'fr' ? `Numéro de dossier` : 'File Number' %>
 </label>
 <div class="field has-addons">
   <div class="control">
@@ -37,26 +60,28 @@
     <input class="input" id="<%= idPrefix %>_fileNumber-b" name="fileNumber-b" type="text" maxlength="3"  placeholder="###" required aria-label="File Number Second Part" />
   </div>
   <div class="control">
-    <input class="input" id="<%= idPrefix %>_fileNumber-c" name="fileNumber-c" type="text" maxlength="2"  placeholder="##" required aria-label="File Number Second Part" />
+    <input class="input" id="<%= idPrefix %>_fileNumber-c" name="fileNumber-c" type="text" maxlength="2"  placeholder="##" required aria-label="File Number Third Part" />
   </div>
   <div class="control">
-    <input class="input" id="<%= idPrefix %>_fileNumber-d" name="fileNumber-d" type="text" maxlength="8"  placeholder="########" required aria-label="File Number Second Part" />
+    <input class="input" id="<%= idPrefix %>_fileNumber-d" name="fileNumber-d" type="text" maxlength="8"  placeholder="########" required aria-label="File Number Fourth Part" />
   </div>
   <div class="control">
-    <input class="input" id="<%= idPrefix %>_fileNumber-e" name="fileNumber-e" type="text" maxlength="2"  placeholder="##" required aria-label="File Number Second Part" />
+    <input class="input" id="<%= idPrefix %>_fileNumber-e" name="fileNumber-e" type="text" maxlength="2"  placeholder="##" required aria-label="File Number Fifth Part" />
   </div>
 </div>
 
 <input id="<%= idPrefix %>_offenceDate" name="offenceDate" type="hidden" />
 <label class="label" for="<%= idPrefix %>_offenceDate-year">
-  Offence Date
+  <%= preferredLanguage === 'fr' ? "Date d'infraction" : 'Offence Date' %>
 </label>
 <div class="field has-addons">
   <div class="control">
     <div class="select">
-      <select id="<%= idPrefix %>_offenceDate-year" name="offenceDate-year" title="Offence Year" required>
+      <select id="<%= idPrefix %>_offenceDate-year" name="offenceDate-year" title="<%= preferredLanguage === 'fr' ? `Année d'infraction` : 'Offence Year' %>" required>
         <% const currentYear = new Date().getFullYear(); %>
-        <option value="">(Year)</option>
+        <option value="">
+          <%= preferredLanguage === 'fr' ? '(Année)' : '(Year)' %>
+        </option>
         <option><%= currentYear %></option>
         <option><%= currentYear - 1 %></option>
         <option><%= currentYear - 2 %></option>
@@ -86,8 +111,10 @@
   </div>
   <div class="control">
     <div class="select">
-      <select id="<%= idPrefix %>_offenceDate-month" name="offenceDate-month" title="Offence Month" required>
-        <option value="">(Month)</option>
+      <select id="<%= idPrefix %>_offenceDate-month" name="offenceDate-month" title="<%= preferredLanguage === 'fr' ? `Mois d'infraction` : 'Offence Month' %>" required>
+        <option value="">
+          <%= preferredLanguage === 'fr' ? '(Mois)' : '(Month)' %>
+        </option>
         <option>01</option>
         <option>02</option>
         <option>03</option>
@@ -108,8 +135,10 @@
   </div>
   <div class="control">
     <div class="select">
-      <select id="<%= idPrefix %>_offenceDate-day" name="offenceDate-day" title="Offence Day" required>
-        <option value="">(Day)</option>
+      <select id="<%= idPrefix %>_offenceDate-day" name="offenceDate-day" title="<%= preferredLanguage === 'fr' ? `Jour d'infraction` : 'Offence Day' %>" required>
+        <option value="">
+          <%= preferredLanguage === 'fr' ? '(Jour)' : '(Day)' %>
+        </option>
         <option>01</option>
         <option>02</option>
         <option>03</option>
@@ -147,14 +176,14 @@
 </div>
 
 <label class="label" for="<%= idPrefix %>_nameOnTicket">
-  Name on Ticket
+  <%= preferredLanguage === 'fr' ? 'Nom sur la contravention' : 'Name on Ticket' %>
 </label>
 <div class="field">
   <input class="input" id="<%= idPrefix %>_nameOnTicket" name="nameOnTicket" type="text" maxlength="100" required />
 </div>
 
 <label class="label" for="<%= idPrefix %>_unitPrice">
-  Total Payable
+  <%= preferredLanguage === 'fr' ? `Total de l'amende` : 'Total Payable' %>
 </label>
 <div class="field has-addons">
   <div class="control">

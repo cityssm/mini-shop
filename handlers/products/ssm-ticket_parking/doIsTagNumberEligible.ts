@@ -9,7 +9,11 @@ export async function handler(
   // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
   const tagNumber = request.body.tagNumber as string
 
-  const isEligible = await isTagNumberEligible(tagNumber)
+  let isEligible = true
+
+  try {
+    isEligible = await isTagNumberEligible(tagNumber)
+  } catch {}
 
   response.json({
     tagNumber,

@@ -1,10 +1,62 @@
+import { Configurator } from '@cityssm/configurator'
 import debug from 'debug'
+import iso639, { type LanguageCode } from 'iso-639-1'
 import type * as sqlTypes from 'mssql'
 import { v4 as uuidv4 } from 'uuid'
 
-import type * as configTypes from '../types/configTypes'
+import type * as configTypes from '../types/configTypes.js'
+
+import { getStringByLanguage } from './translationHelpers.js'
 
 const debugConfig = debug('mini-shop:configFunctions')
+
+const defaultValues = {
+  'application.applicationName': 'Mini Shop' as
+    | string
+    | configTypes.StringWithTranslations,
+  'application.httpPort': 7777,
+
+  'reverseProxy.disableCompression': false,
+  'reverseProxy.disableEtag': false,
+  'reverseProxy.blockViaXForwardedFor': false,
+  'reverseProxy.urlPrefix': '',
+
+  mssqlConfig: undefined as unknown as sqlTypes.config,
+
+  languages: [] as LanguageCode[],
+
+  orderNumberFunction: () => {
+    return 'RCT-' + uuidv4().toUpperCase()
+  },
+
+  'site.header.backgroundColorClass': 'info',
+
+  'site.footer.isVisible': true,
+  'site.footer.backgroundColorClass': 'dark',
+  'site.footer.textColorClass': 'light',
+  'site.footer.footerEjs': 'site_thanks.ejs',
+
+  'views.products.title': 'Products',
+  'views.checkout.title': 'Checkout',
+  'views.checkout_shipping.title': 'Shipping Details',
+
+  'views.order.title': 'Order Summary',
+  'views.order.headerEjs': 'order_print.ejs',
+
+  'views.toPayment.headerEjs': 'toPayment_redirecting.ejs',
+
+  fees: {} as unknown as Record<string, configTypes.ConfigFeeDefinition>,
+  products: {} as unknown as Record<string, configTypes.ConfigProduct>,
+  productHandlers: [] as configTypes.ProductHandlers[],
+
+  store: undefined as unknown as configTypes.StoreConfigs,
+  'store.storeType': undefined as unknown as configTypes.StoreTypes,
+
+  'currency.code': 'CAD',
+  'currency.currencyName': 'Canadian Dollars',
+
+  'settings.checkout_includeCaptcha': true
+}
 
 /*
  * LOAD CONFIGURATION
@@ -21,7 +73,10 @@ try {
   debugConfig('No "data/config.js" found, using "data/config-sample.js".')
 }
 
-Object.freeze(config)
+const configurator = new Configurator(
+  defaultValues,
+  config as unknown as Record<string, unknown>
+)
 
 /*
  * SET UP FALLBACK VALUES
@@ -29,137 +84,19 @@ Object.freeze(config)
 
 const configOverrides: Record<string, unknown> = {}
 
-const configFallbackValues = new Map<string, unknown>()
-
-configFallbackValues.set('application.applicationName', 'Mini Shop')
-configFallbackValues.set('application.httpPort', 7777)
-
-configFallbackValues.set('reverseProxy.disableCompression', false)
-configFallbackValues.set('reverseProxy.disableEtag', false)
-configFallbackValues.set('reverseProxy.blockViaXForwardedFor', false)
-configFallbackValues.set('reverseProxy.urlPrefix', '')
-
-configFallbackValues.set('orderNumberFunction', () => {
-  return 'RCT-' + uuidv4().toUpperCase()
-})
-
-configFallbackValues.set('site.header.backgroundColorClass', 'info')
-
-configFallbackValues.set('site.footer.isVisible', true)
-configFallbackValues.set('site.footer.backgroundColorClass', 'dark')
-configFallbackValues.set('site.footer.textColorClass', 'light')
-configFallbackValues.set('site.footer.footerEjs', 'site_thanks.ejs')
-
-configFallbackValues.set('views.products.title', 'Products')
-configFallbackValues.set('views.checkout.title', 'Checkout')
-configFallbackValues.set('views.checkout_shipping.title', 'Shipping Details')
-
-configFallbackValues.set('views.order.title', 'Order Summary')
-configFallbackValues.set('views.order.headerEjs', 'order_print.ejs')
-
-configFallbackValues.set(
-  'views.toPayment.headerEjs',
-  'toPayment_redirecting.ejs'
-)
-
-configFallbackValues.set('fees', {})
-configFallbackValues.set('products', {})
-configFallbackValues.set('productHandlers', [])
-
-configFallbackValues.set('currency.code', 'CAD')
-configFallbackValues.set('currency.currencyName', 'Canadian Dollars')
-
-configFallbackValues.set('settings.checkout_includeCaptcha', true)
-
-export function getProperty(propertyName: 'application.httpPort'): number
-export function getProperty(
-  propertyName: 'application.https'
-): configTypes.ConfigHTTPSConfig
-
-export function getProperty(
-  propertyName: 'reverseProxy.disableCompression'
-): boolean
-export function getProperty(propertyName: 'reverseProxy.disableEtag'): boolean
-export function getProperty(
-  propertyName: 'reverseProxy.blockViaXForwardedFor'
-): boolean
-export function getProperty(propertyName: 'reverseProxy.urlPrefix'): ''
-
-export function getProperty(propertyName: 'mssqlConfig'): sqlTypes.config
-
-export function getProperty(propertyName: 'orderNumberFunction'): () => string
-
-export function getProperty(
-  propertyName: 'site.header.backgroundColorClass'
-): () => string
-
-export function getProperty(
-  propertyName: 'site.footer.isVisible'
-): () => boolean
-export function getProperty(
-  propertyName: 'site.footer.backgroundColorClass'
-): () => string
-export function getProperty(
-  propertyName: 'site.footer.textColorClass'
-): () => string
-export function getProperty(propertyName: 'site.footer.footerEjs'): () => string
-
-export function getProperty(propertyName: 'views.products.title'): () => string
-export function getProperty(propertyName: 'views.checkout.title'): () => string
-export function getProperty(
-  propertyName: 'views.checkout_shipping.title'
-): () => string
-
-export function getProperty(
-  propertyName: 'views.toPayment.headerEjs'
-): () => string
-
-export function getProperty(propertyName: 'views.order.title'): () => string
-export function getProperty(propertyName: 'views.order.headerEjs'): () => string
-
-export function getProperty(propertyName: 'currency.code'): () => string
-export function getProperty(propertyName: 'currency.currencyName'): () => string
-
-export function getProperty(propertyName: 'store'): configTypes.StoreConfigs
-export function getProperty(
-  propertyName: 'store.storeType'
-): configTypes.StoreTypes
-
-export function getProperty(
-  propertyName: 'fees'
-): Record<string, configTypes.ConfigFeeDefinition>
-export function getProperty(
-  propertyName: 'products'
-): Record<string, configTypes.ConfigProduct>
-export function getProperty(
-  propertyName: 'productHandlers'
-): configTypes.ProductHandlers[]
-
-export function getProperty(
-  propertyName: 'settings.checkout_includeCaptcha'
-): boolean
-
-export function getProperty(propertyName: string): unknown {
-  if (Object.prototype.hasOwnProperty.call(configOverrides, propertyName)) {
-    return configOverrides[propertyName]
+export function getProperty<K extends keyof typeof defaultValues>(
+  propertyName: K,
+  fallbackValue?: (typeof defaultValues)[K]
+): (typeof defaultValues)[K] {
+  if (Object.hasOwn(configOverrides, propertyName)) {
+    return configOverrides[propertyName] as (typeof defaultValues)[K]
   }
 
-  const propertyNameSplit = propertyName.split('.')
-
-  let currentObject = config
-
-  for (const propertyNamePiece of propertyNameSplit) {
-    if (
-      Object.prototype.hasOwnProperty.call(currentObject, propertyNamePiece)
-    ) {
-      currentObject = currentObject[propertyNamePiece]
-      continue
-    }
-
-    return configFallbackValues.get(propertyName)
-  }
-
-  return currentObject
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+  return configurator.getConfigProperty(
+    propertyName,
+    fallbackValue
+  ) as (typeof defaultValues)[K]
 }
 
 /*
@@ -204,4 +141,32 @@ export function getClientSideProduct(
   }
 
   return clientSideProducts[productSKU]
+}
+
+
+export function getPropertyByLanguage<K extends keyof typeof defaultValues>(
+  propertyName: K,
+  preferredLanguage: LanguageCode = 'en'
+): string | undefined {
+  const languageStringProperty = getProperty(propertyName) as
+    | string
+    | configTypes.StringWithTranslations
+    | undefined
+
+  return getStringByLanguage(languageStringProperty, preferredLanguage)
+}
+
+export function getLanguages(): string[][] {
+  const configLanguages = getProperty('languages')
+
+  const languages: string[][] = []
+
+  for (const configLanguage of configLanguages) {
+    languages.push([
+      configLanguage,
+      iso639.getNativeName(configLanguage) ?? configLanguage
+    ])
+  }
+
+  return languages
 }

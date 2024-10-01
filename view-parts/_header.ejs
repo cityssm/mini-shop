@@ -1,13 +1,13 @@
  %><!DOCTYPE html>
-<html lang="en">
+<html lang="<%= preferredLanguage %>">
 
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <title>
-    <%= (pageTitle ? pageTitle + ": " : "") %>
-    <%= configFunctions.getProperty("application.applicationName") %>
+    <%= (pageTitle ? translationHelpers.getStringByLanguage(pageTitle, preferredLanguage) + ": " : "") %>
+    <%= configFunctions.getPropertyByLanguage("application.applicationName", preferredLanguage) %>
   </title>
 
   <link rel="icon" href="<%= urlPrefix %>/images/favicon.svg" />
@@ -30,11 +30,47 @@
       <div class="column">
         <a class="button is-medium is-<%= backgroundColorClass %> is-radiusless" href="<%= urlPrefix %>/products">
           <% if (logoImagePath) { %>
-            <img class="mr-2" src="<%= urlPrefix %><%= logoImagePath %>" alt="<%= configFunctions.getProperty("application.applicationName") %>" style="max-height:30px" />
+            <img class="mr-2" src="<%= urlPrefix %><%= logoImagePath %>" alt="<%= configFunctions.getPropertyByLanguage("application.applicationName", preferredLanguage) %>" style="max-height:30px" />
           <% } %>
-          <span class="is-hidden-mobile"><%= configFunctions.getProperty("application.applicationName") %></span>
+          <span class="is-hidden-mobile"><%= configFunctions.getPropertyByLanguage("application.applicationName", preferredLanguage) %></span>
         </a>
       </div>
+      <%
+        const languages = configFunctions.getLanguages()
+
+        if (languages.length > 1) {
+      %>
+        <div class="column is-narrow">
+          <div class="dropdown is-right">
+            <div class="dropdown-trigger">
+              <button class="button is-medium is-<%= backgroundColorClass %> is-radiusless has-tooltip-arrow has-tooltip-left" data-tooltip="Language" type="button">
+                <span class="icon">
+                  <i class="fas fa-language" aria-hidden="true"></i>
+                </span>
+                <span class="sr-only">Language Settings</span>
+              </button>
+            </div>
+            <div class="dropdown-menu">
+              <div class="dropdown-content">
+                <% for (const language of languages) { %>
+                  <a class="dropdown-item option--preferredLanguage" data-lang="<%= language[0] %>" href="#">
+                    <span class="icon">
+                      <% if (preferredLanguage === language[0]) { %>
+                        <i class="fas fa-fw fa-check" aria-hidden="true"></i>
+                      <% } else { %>
+                        <i class="fas fa-fw fa-caret-right" aria-hidden="true"></i>
+                      <% } %>
+                    </span>
+                    <span><%= language[1] %></span>
+                  </a>  
+                <% } %>
+              </div>
+            </div>
+          </div>
+        </div>
+      <%
+        }
+      %>
       <div class="column is-narrow">
         <a class="button is-medium is-<%= backgroundColorClass %> is-radiusless has-tooltip-arrow has-tooltip-left" data-tooltip="Cart and Checkout" href="<%= urlPrefix %>/checkout">
           <span class="icon">

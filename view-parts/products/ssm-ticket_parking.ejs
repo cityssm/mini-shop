@@ -5,13 +5,15 @@
 <input id="<%= idPrefix %>_tagNumber" name="tagNumber" type="hidden" />
 <input class="is-hidden" id="<%= idPrefix %>_tagNumber-isValid" name="tagNumber-isValid" type="checkbox" required />
 <label class="label" for="<%= idPrefix %>_tagNumber-prefix">
-  Tag Number
+  <%= preferredLanguage === 'fr' ? 'Numéro Tag' : 'Tag Number' %>
 </label>
 <div class="field has-addons">
   <div class="control">
     <div class="select">
       <select id="<%= idPrefix %>_tagNumber-prefix" name="tagNumber-prefix" required>
-        <option value="">(Select One)</option>
+        <option value="">
+          <%= preferredLanguage === 'fr' ? '(Un seul choix)' : '(Select One)' %>
+        </option>
         <option>PD</option>
         <option>PS</option>
         <option>SC</option>
@@ -36,14 +38,16 @@
 
 <input id="<%= idPrefix %>_offenceDate" name="offenceDate" type="hidden" />
 <label class="label" for="<%= idPrefix %>_offenceDate-year">
-  Offence Date
+  <%= preferredLanguage === 'fr' ? "Date d'infraction" : 'Offence Date' %>
 </label>
 <div class="field has-addons">
   <div class="control">
     <div class="select">
-      <select id="<%= idPrefix %>_offenceDate-year" name="offenceDate-year" title="Offence Year" required>
+      <select id="<%= idPrefix %>_offenceDate-year" name="offenceDate-year" title="<%= preferredLanguage === 'fr' ? `Année d'infraction` : 'Offence Year' %>" required>
         <% const currentYear = new Date().getFullYear(); %>
-        <option value="">(Year)</option>
+        <option value="">
+          <%= preferredLanguage === 'fr' ? '(Année)' : '(Year)' %>
+        </option>
         <option><%= currentYear %></option>
         <option><%= currentYear - 1 %></option>
         <option><%= currentYear - 2 %></option>
@@ -58,8 +62,10 @@
   </div>
   <div class="control">
     <div class="select">
-      <select id="<%= idPrefix %>_offenceDate-month" name="offenceDate-month" title="Offence Month" required>
-        <option value="">(Month)</option>
+      <select id="<%= idPrefix %>_offenceDate-month" name="offenceDate-month" title="<%= preferredLanguage === 'fr' ? `Mois d'infraction` : 'Offence Month' %>" required>
+        <option value="">
+          <%= preferredLanguage === 'fr' ? '(Mois)' : '(Month)' %>
+        </option>
         <option>01</option>
         <option>02</option>
         <option>03</option>
@@ -80,8 +86,10 @@
   </div>
   <div class="control">
     <div class="select">
-      <select id="<%= idPrefix %>_offenceDate-day" name="offenceDate-day" title="Offence Day" required>
-        <option value="">(Day)</option>
+      <select id="<%= idPrefix %>_offenceDate-day" name="offenceDate-day" title="<%= preferredLanguage === 'fr' ? `Jour d'infraction` : 'Offence Day' %>" required>
+        <option value="">
+          <%= preferredLanguage === 'fr' ? '(Jour)' : '(Day)' %>
+        </option>
         <option>01</option>
         <option>02</option>
         <option>03</option>
@@ -119,7 +127,7 @@
 </div>
 
 <label class="label" for="<%= idPrefix %>_licencePlate">
-  Licence Plate
+  <%= preferredLanguage === 'fr' ? `Plaque d'immatriculation` : 'Licence Plate' %>
 </label>
 <div class="field">
   <div class="control">
@@ -128,7 +136,7 @@
 </div>
 
 <label class="label" for="<%= idPrefix %>_unitPrice">
-  Total Fine
+  <%= preferredLanguage === 'fr' ? `Total de l'amende` : 'Total Fine' %>
 </label>
 <div class="field has-addons">
   <div class="control">

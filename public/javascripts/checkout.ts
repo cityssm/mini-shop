@@ -7,6 +7,8 @@ import type * as globalTypes from '../../types/globalTypes.js'
 declare const cityssm: cityssmTypes.cityssmGlobal
 declare const formToObject: (formElement: HTMLFormElement) => unknown
 
+declare const MiniShop_getStringByLanguage: (languageStringProperty: string | configTypes.StringWithTranslations): string
+
 interface ProductDetails {
   products?: Record<string, configTypes.ConfigProduct>
   fees?: Record<string, configTypes.ConfigFeeDefinition>
@@ -18,7 +20,7 @@ interface CartTotals {
 }
 
 ;(() => {
-  const urlPrefix = document.querySelector('main').dataset.urlPrefix
+  const urlPrefix = (document.querySelector('main') as HTMLElement).dataset.urlPrefix
 
   const cartGlobal = window.exports.cart as globalTypes.CartGlobal
 
@@ -45,7 +47,7 @@ interface CartTotals {
     clickEvent.preventDefault()
 
     const cartIndex = Number.parseInt(
-      clickEvent.currentTarget as HTMLButtonElement.dataset.cartIndex,
+      (clickEvent.currentTarget as HTMLButtonElement).dataset.cartIndex,
       10
     )
 
@@ -53,7 +55,7 @@ interface CartTotals {
     const product = productDetails.products[cartItem.productSKU]
 
     cityssm.confirmModal(
-      'Remove "' + product.productName + '"?',
+      `Remove "${product.productName}"?`,
       'Are you sure you want to remove this item from your cart?',
       'Yes, Remove It',
       'warning',
@@ -104,13 +106,12 @@ interface CartTotals {
 
     productCardContentElement
       .querySelector('button')
-      .addEventListener('click', removeCartItemFunction)
-
+      ?.addEventListener('click', removeCartItemFunction)
     ;(
       productCardContentElement.querySelector(
         '.container--productName'
       ) as HTMLElement
-    ).textContent = product.productName
+    ).textContent = MiniShop_getStringByLanguage(product.productName)
 
     if (product.formFieldsToSave && product.formFieldsToSave.length > 0) {
       const formFieldsElement = productCardContentElement.querySelector(
@@ -121,7 +122,7 @@ interface CartTotals {
         if (cartItem[formFieldToSave.formFieldName]) {
           formFieldsElement.insertAdjacentHTML(
             'beforeend',
-            '<strong>' + formFieldToSave.fieldName + ':</strong> '
+            `<strong>${MiniShop_getStringByLanguage(formFieldToSave.fieldName)}:</strong> `
           )
 
           const spanElement = document.createElement('span')
@@ -335,7 +336,6 @@ interface CartTotals {
             ).value = responseOrderNumbers.orderSecret
 
             cartGlobal.cacheContact()
-
             ;(
               document.querySelector('#form--toPayment') as HTMLFormElement
             ).submit()

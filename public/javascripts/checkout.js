@@ -15,10 +15,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
     let cartItems = [];
     const removeCartItemFunction = (clickEvent) => {
         clickEvent.preventDefault();
-        const cartIndex = Number.parseInt(clickEvent.currentTarget, 10);
+        const cartIndex = Number.parseInt(clickEvent.currentTarget.dataset.cartIndex, 10);
         const cartItem = cartItems[cartIndex];
         const product = productDetails.products[cartItem.productSKU];
-        cityssm.confirmModal('Remove "' + product.productName + '"?', 'Are you sure you want to remove this item from your cart?', 'Yes, Remove It', 'warning', () => {
+        cityssm.confirmModal(`Remove "${product.productName}"?`, 'Are you sure you want to remove this item from your cart?', 'Yes, Remove It', 'warning', () => {
             cartGlobal.remove(cartIndex);
             renderCheckoutFunction();
         });
@@ -51,13 +51,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
                 '</div>';
         productCardContentElement
             .querySelector('button')
-            .addEventListener('click', removeCartItemFunction);
-        productCardContentElement.querySelector('.container--productName').textContent = product.productName;
+            ?.addEventListener('click', removeCartItemFunction);
+        productCardContentElement.querySelector('.container--productName').textContent = MiniShop_getStringByLanguage(product.productName);
         if (product.formFieldsToSave && product.formFieldsToSave.length > 0) {
             const formFieldsElement = productCardContentElement.querySelector('.container--formFields');
             for (const formFieldToSave of product.formFieldsToSave) {
                 if (cartItem[formFieldToSave.formFieldName]) {
-                    formFieldsElement.insertAdjacentHTML('beforeend', '<strong>' + formFieldToSave.fieldName + ':</strong> ');
+                    formFieldsElement.insertAdjacentHTML('beforeend', `<strong>${MiniShop_getStringByLanguage(formFieldToSave.fieldName)}:</strong> `);
                     const spanElement = document.createElement('span');
                     spanElement.textContent = cartItem[formFieldToSave.formFieldName];
                     formFieldsElement.append(spanElement);

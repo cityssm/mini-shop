@@ -1,7 +1,7 @@
-import fetch from "node-fetch";
 import { getOrderNumberBySecret } from "@cityssm/mini-shop-db";
-import * as configFunctions from "../../helpers/configFunctions.js";
 import Debug from "debug";
+import fetch from "node-fetch";
+import * as configFunctions from "../../helpers/configFunctions.js";
 const debug = Debug("mini-shop:stores:moneris-checkout");
 const checkoutConfig = configFunctions.getProperty("store");
 const requestURL = (checkoutConfig?.storeConfig?.environment || "") === "qa"
