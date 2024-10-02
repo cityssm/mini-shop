@@ -17,9 +17,15 @@ declare const defaultValues: {
     'site.footer.textColorClass': string;
     'site.footer.footerEjs': string;
     'views.products.title': string;
-    'views.checkout.title': string;
+    'views.checkout.title': {
+        en: string;
+        fr: string;
+    };
     'views.checkout_shipping.title': string;
-    'views.order.title': string;
+    'views.order.title': {
+        en: string;
+        fr: string;
+    };
     'views.order.headerEjs': string;
     'views.toPayment.headerEjs': string;
     fees: Record<string, configTypes.ConfigFeeDefinition>;
@@ -28,7 +34,10 @@ declare const defaultValues: {
     store: configTypes.StoreConfigs;
     'store.storeType': configTypes.StoreTypes;
     'currency.code': string;
-    'currency.currencyName': string;
+    'currency.currencyName': {
+        en: string;
+        fr: string;
+    };
     'settings.checkout_includeCaptcha': boolean;
 };
 export declare function getProperty<K extends keyof typeof defaultValues>(propertyName: K, fallbackValue?: (typeof defaultValues)[K]): (typeof defaultValues)[K];

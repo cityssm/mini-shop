@@ -41,12 +41,12 @@
 <ul class="card" id="card--cart">
   <li class="card-content has-text-centered">
     <i class="fas fa-6x fa-pulse fa-spinner" aria-hidden="true"></i>
-    <span class="is-sr-only">Loading cart</span>
+    <span class="is-sr-only"><%= translationHelpers.getStringByLanguage(translationHelpers.miniShopTranslations.loading, preferredLanguage) %></span>
   </li>
 </ul>
 
 <div class="card has-text-right">
-  <div class="card-content" id="container--cartTotal" data-currency="<%= configFunctions.getProperty("currency.currencyName") %>"></div>
+  <div class="card-content" id="container--cartTotal" data-currency="<%= configFunctions.getPropertyByLanguage("currency.currencyName", preferredLanguage) %>"></div>
 </div>
 
 <form class="mt-4 is-hidden" id="form--shipping">
@@ -200,9 +200,9 @@
 <script src="<%= urlPrefix %>/javascripts/cart.js"></script>
 <script src="<%= urlPrefix %>/lib/bulma-webapp-js/cityssm.min.js"></script>
 <script>
-  const MiniShop_translations = {
-    removeFromCart: `<%= translationHelpers.getStringByLanguage(translationHelpers.miniShopTranslations.removeFromCart, preferredLanguage) %>`
-  }
+  const MiniShop_translations = <%- JSON.stringify(translationHelpers.getTranslationStrings(
+    ['cancel', 'cartIsEmpty', 'checkout', 'clearCart', 'clearCartConfirm', 'clearCartOk', 'removeFromCart', 'removeFromCartConfirm', 'removeFromCartOk', 'returnToProducts'], preferredLanguage)) 
+    %>;
 </script>
 <script src="<%= urlPrefix %>/javascripts/checkout.js"></script>
 <%- include('../view-parts/_footerB'); -%>

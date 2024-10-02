@@ -73,7 +73,7 @@ export interface Config {
 
   currency?: {
     code: string
-    currencyName: string
+    currencyName: string | StringWithTranslations
   }
 
   store?: StoreConfigs

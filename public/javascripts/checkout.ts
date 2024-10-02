@@ -1,9 +1,11 @@
+import type { BulmaJS } from '@cityssm/bulma-js/types.js'
 import type * as cityssmTypes from '@cityssm/bulma-webapp-js/src/types.js'
 import type * as recordTypes from '@cityssm/mini-shop-db/types.js'
 
 import type * as configTypes from '../../types/configTypes.js'
 import type * as globalTypes from '../../types/globalTypes.js'
 
+declare const bulmaJS: BulmaJS
 declare const cityssm: cityssmTypes.cityssmGlobal
 declare const formToObject: (formElement: HTMLFormElement) => unknown
 
@@ -58,16 +60,21 @@ interface CartTotals {
     const cartItem = cartItems[cartIndex]
     const product = productDetails.products[cartItem.productSKU]
 
-    cityssm.confirmModal(
-      `Remove "${MiniShop_getStringByLanguage(product.productName)}"?`,
-      'Are you sure you want to remove this item from your cart?',
-      'Yes, Remove It',
-      'warning',
-      () => {
-        cartGlobal.remove(cartIndex)
-        renderCheckoutFunction()
+    bulmaJS.confirm({
+      title: MiniShop_getStringByLanguage(product.productName),
+      message: MiniShop_translations.removeFromCartConfirm,
+      contextualColorName: 'warning',
+      okButton: {
+        text: MiniShop_translations.removeFromCartOk,
+        callbackFunction() {
+          cartGlobal.remove(cartIndex)
+          renderCheckoutFunction()
+        }
+      },
+      cancelButton: {
+        text: MiniShop_translations.cancel
       }
-    )
+    })
   }
 
   const forEachFunction_renderCartItems_calculateTotals = (
@@ -198,8 +205,8 @@ interface CartTotals {
         'beforebegin',
         `<div class="message is-info">
           <div class="message-body has-text-centered">
-            <p class="has-text-weight-bold">${MiniShop_translations.emptyCart}</p>
-            <p><a href="${cityssm.escapeHTML(urlPrefix)}/products">View Available Products</a></p>
+            <p class="has-text-weight-bold">${MiniShop_translations.cartIsEmpty}</p>
+            <p><a href="${cityssm.escapeHTML(urlPrefix)}/products">${MiniShop_translations.returnToProducts}</a></p>
           </div>
           </div>`
       )
@@ -243,7 +250,7 @@ interface CartTotals {
 
     cartTotalContainerElement.insertAdjacentHTML(
       'beforeend',
-      '<div class="is-size-7 has-text-weight-bold">Prices in ' +
+      '<div class="is-size-7 has-text-weight-bold">' +
         cityssm.escapeHTML(cartTotalContainerElement.dataset.currency) +
         '</div>'
     )
@@ -270,7 +277,7 @@ interface CartTotals {
       return
     }
 
-    fetch(urlPrefix + '/checkout/doGetProductDetails', {
+    fetch(`${urlPrefix}/checkout/doGetProductDetails`, {
       method: 'POST',
       body: new URLSearchParams({
         productSKUs
@@ -329,12 +336,12 @@ interface CartTotals {
               document.querySelector(
                 '#toPayment_orderNumber'
               ) as HTMLInputElement
-            ).value = responseOrderNumbers.orderNumber
+            ).value = responseOrderNumbers.orderNumber ?? ''
             ;(
               document.querySelector(
                 '#toPayment_orderSecret'
               ) as HTMLInputElement
-            ).value = responseOrderNumbers.orderSecret
+            ).value = responseOrderNumbers.orderSecret ?? ''
 
             cartGlobal.cacheContact()
             ;(
@@ -393,18 +400,25 @@ interface CartTotals {
     ).value = shippingForm.emailAddress
   }
 
-  document.querySelector('#button--clearCart')?.addEventListener('click', () => {
-    cityssm.confirmModal(
-      'Clear Cart?',
-      'Are you sure you want to remove all items from your cart?',
-      'Yes, Clear the Cart',
-      'warning',
-      () => {
-        cartGlobal.clear()
-        renderCheckoutFunction()
-      }
-    )
-  })
+  document
+    .querySelector('#button--clearCart')
+    ?.addEventListener('click', () => {
+      bulmaJS.confirm({
+        title: MiniShop_translations.clearCart,
+        message: MiniShop_translations.clearCartConfirm,
+        contextualColorName: 'warning',
+        okButton: {
+          text: MiniShop_translations.clearCartOk,
+          callbackFunction() {
+            cartGlobal.clear()
+            renderCheckoutFunction()
+          }
+        },
+        cancelButton: {
+          text: MiniShop_translations.cancel
+        }
+      })
+    })
 
   // Ensure values in sessionStorage stay available
   window.setTimeout(

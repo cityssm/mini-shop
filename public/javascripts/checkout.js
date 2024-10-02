@@ -19,9 +19,20 @@ Object.defineProperty(exports, "__esModule", { value: true });
         const cartIndex = Number.parseInt(clickEvent.currentTarget.dataset.cartIndex, 10);
         const cartItem = cartItems[cartIndex];
         const product = productDetails.products[cartItem.productSKU];
-        cityssm.confirmModal(`Remove "${MiniShop_getStringByLanguage(product.productName)}"?`, 'Are you sure you want to remove this item from your cart?', 'Yes, Remove It', 'warning', () => {
-            cartGlobal.remove(cartIndex);
-            renderCheckoutFunction();
+        bulmaJS.confirm({
+            title: MiniShop_getStringByLanguage(product.productName),
+            message: MiniShop_translations.removeFromCartConfirm,
+            contextualColorName: 'warning',
+            okButton: {
+                text: MiniShop_translations.removeFromCartOk,
+                callbackFunction() {
+                    cartGlobal.remove(cartIndex);
+                    renderCheckoutFunction();
+                }
+            },
+            cancelButton: {
+                text: MiniShop_translations.cancel
+            }
         });
     };
     const forEachFunction_renderCartItems_calculateTotals = (cartItem, cartIndex) => {
@@ -97,8 +108,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
             document.querySelector('#button--clearCart')?.classList.add('is-hidden');
             cartContainerElement.insertAdjacentHTML('beforebegin', `<div class="message is-info">
           <div class="message-body has-text-centered">
-            <p class="has-text-weight-bold">${MiniShop_translations.emptyCart}</p>
-            <p><a href="${cityssm.escapeHTML(urlPrefix)}/products">View Available Products</a></p>
+            <p class="has-text-weight-bold">${MiniShop_translations.cartIsEmpty}</p>
+            <p><a href="${cityssm.escapeHTML(urlPrefix)}/products">${MiniShop_translations.returnToProducts}</a></p>
           </div>
           </div>`);
         }
@@ -124,7 +135,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
         cartTotalContainerElement.insertAdjacentHTML('beforeend', '<div class="is-size-4 has-text-weight-bold">Total: $' +
             cartTotal.toFixed(2) +
             '</div>');
-        cartTotalContainerElement.insertAdjacentHTML('beforeend', '<div class="is-size-7 has-text-weight-bold">Prices in ' +
+        cartTotalContainerElement.insertAdjacentHTML('beforeend', '<div class="is-size-7 has-text-weight-bold">' +
             cityssm.escapeHTML(cartTotalContainerElement.dataset.currency) +
             '</div>');
     };
@@ -142,7 +153,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
             renderCheckoutFunction();
             return;
         }
-        fetch(urlPrefix + '/checkout/doGetProductDetails', {
+        fetch(`${urlPrefix}/checkout/doGetProductDetails`, {
             method: 'POST',
             body: new URLSearchParams({
                 productSKUs
@@ -181,8 +192,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
             formIsSubmitting = false;
             if (responseOrderNumbers.success) {
                 ;
-                document.querySelector('#toPayment_orderNumber').value = responseOrderNumbers.orderNumber;
-                document.querySelector('#toPayment_orderSecret').value = responseOrderNumbers.orderSecret;
+                document.querySelector('#toPayment_orderNumber').value = responseOrderNumbers.orderNumber ?? '';
+                document.querySelector('#toPayment_orderSecret').value = responseOrderNumbers.orderSecret ?? '';
                 cartGlobal.cacheContact();
                 document.querySelector('#form--toPayment').submit();
             }
@@ -218,10 +229,23 @@ Object.defineProperty(exports, "__esModule", { value: true });
         document.querySelector('#shipping_phoneNumberEvening').value = shippingForm.phoneNumberEvening;
         document.querySelector('#shipping_emailAddress').value = shippingForm.emailAddress;
     }
-    document.querySelector('#button--clearCart')?.addEventListener('click', () => {
-        cityssm.confirmModal('Clear Cart?', 'Are you sure you want to remove all items from your cart?', 'Yes, Clear the Cart', 'warning', () => {
-            cartGlobal.clear();
-            renderCheckoutFunction();
+    document
+        .querySelector('#button--clearCart')
+        ?.addEventListener('click', () => {
+        bulmaJS.confirm({
+            title: MiniShop_translations.clearCart,
+            message: MiniShop_translations.clearCartConfirm,
+            contextualColorName: 'warning',
+            okButton: {
+                text: MiniShop_translations.clearCartOk,
+                callbackFunction() {
+                    cartGlobal.clear();
+                    renderCheckoutFunction();
+                }
+            },
+            cancelButton: {
+                text: MiniShop_translations.cancel
+            }
         });
     });
     window.setTimeout(() => {

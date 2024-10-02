@@ -1,5 +1,14 @@
 <% const idPrefix = stringFns.getUID(); %>
 
+<% if (preferredLanguage !== 'en') { %>
+  <div class="message is-warning">
+    <p class="message-body">
+      <strong>Cet article n'est actuellement proposé qu'en anglais.</strong>
+    </p>
+  </div>
+  <div lang="en">
+<% } %>
+
 <div class="message is-warning">
   <p class="message-body">
     Note that you may only purchase Open-Air Burning Permits for properties that
@@ -291,5 +300,9 @@
     <strong>voided, the purchase will be refunded</strong>.
   </p>
 </fieldset>
+
+<% if (preferredLanguage !== 'en') { %>
+  </div>
+<% } %>
 
 <script src="<%= urlPrefix %>/javascripts/product-ssm-oab.js" defer></script>

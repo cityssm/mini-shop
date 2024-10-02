@@ -1,6 +1,16 @@
 <%
   const idPrefix = stringFns.getUID();
 %>
+
+<% if (preferredLanguage !== 'en') { %>
+  <div class="message is-warning">
+    <p class="message-body">
+      <strong>Cet article n'est actuellement proposé qu'en anglais.</strong>
+    </p>
+  </div>
+  <div lang="en">
+<% } %>
+
 <div class="message is-info mb-6">
   <div class="message-body">
     <p>Note that a <strong>minimum of two</strong> details about the property are required.</p>
@@ -55,5 +65,9 @@
     <p>No rush requests please.</p>
   </div>
 </div>
+
+<% if (preferredLanguage !== 'en') { %>
+  </div>
+<% } %>
 
 <script src="<%= urlPrefix %>/javascripts/product-ssm-tax_certificate.js" defer></script>

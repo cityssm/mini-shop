@@ -1,6 +1,8 @@
 <div class="message is-success">
   <p class="message-body">
-    <strong>Your order has been processed successfully.</strong><br />
-    Please print or archive the information below for your records.
+    <strong>
+      <%= translationHelpers.getStringByLanguage(translationHelpers.miniShopTranslations.orderProcessed, preferredLanguage) %>
+    </strong><br />
+    <%= translationHelpers.getStringByLanguage(translationHelpers.miniShopTranslations.orderPrint, preferredLanguage) %>
   </p>
 </div>

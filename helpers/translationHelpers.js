@@ -26,6 +26,14 @@ export function getStringByLanguage(languageStringProperty, preferredLanguage) {
             languageStringProperty[Object.keys(languageStringProperty)[0]]);
     }
 }
+export function getTranslationStrings(translationStrings, preferredLanguage) {
+    const result = {};
+    for (const translationString of translationStrings) {
+        result[translationString] =
+            getStringByLanguage(miniShopTranslations[translationString], preferredLanguage) ?? '';
+    }
+    return result;
+}
 export const miniShopTranslations = {
     addToCart: {
         en: 'Add to Cart',
@@ -39,9 +47,17 @@ export const miniShopTranslations = {
         en: 'Address',
         fr: 'Adresse'
     },
+    cancel: {
+        en: 'Cancel',
+        fr: 'Résilier'
+    },
     cart: {
         en: 'Cart',
         fr: 'Panier'
+    },
+    cartIsEmpty: {
+        en: 'The cart is empty.',
+        fr: 'Le panier est vide.'
     },
     checkout: {
         en: 'Checkout',
@@ -54,6 +70,18 @@ export const miniShopTranslations = {
     clearCart: {
         en: 'Clear Cart',
         fr: 'Vider le panier'
+    },
+    clearCartConfirm: {
+        en: 'Are you sure you want to remove all items from your cart?',
+        fr: 'Êtes-vous sûr de vouloir supprimer tous les articles de votre panier?'
+    },
+    clearCartOk: {
+        en: 'Yes, Clear the Cart',
+        fr: 'Oui, vider le panier'
+    },
+    contactIsRequired: {
+        en: 'Contact information is required to deliver your order.',
+        fr: 'Les coordonnées sont nécessaires pour livrer votre commande.'
     },
     continueShopping: {
         en: 'Continue Shopping',
@@ -71,10 +99,6 @@ export const miniShopTranslations = {
         en: 'Email Address',
         fr: 'Adresse électronique'
     },
-    emptyCart: {
-        en: 'The cart is empty.',
-        fr: 'Le panier est vide.'
-    },
     eveningTelephone: {
         en: 'Evening Telephone Number',
         fr: 'Numéro de téléphone du soir'
@@ -91,6 +115,9 @@ export const miniShopTranslations = {
         en: 'Language',
         fr: 'Langue'
     },
+    loading: {
+        en: 'Loading'
+    },
     name: {
         en: 'Full Name',
         fr: 'Nom'
@@ -98,6 +125,18 @@ export const miniShopTranslations = {
     order: {
         en: 'Order',
         fr: 'Achat'
+    },
+    orderExpired: {
+        en: 'This order is no longer available.',
+        fr: "Cette commande n'est plus disponible."
+    },
+    orderPrint: {
+        en: 'Please print or archive the information below for your records.',
+        fr: 'Veuillez imprimer ou archiver les informations ci-dessous pour vos dossiers.'
+    },
+    orderProcessed: {
+        en: 'Your order has been processed successfully.',
+        fr: 'Votre commande a été traitée avec succès.'
     },
     postalCode: {
         en: 'Postal Code',
@@ -131,6 +170,14 @@ export const miniShopTranslations = {
         en: 'Remove from Cart',
         fr: 'Retirer du panier'
     },
+    removeFromCartConfirm: {
+        en: 'Are you sure you want to remove this item from your cart?',
+        fr: 'Êtes-vous sûr de vouloir supprimer cet article de votre panier?'
+    },
+    removeFromCartOk: {
+        en: 'Yes, Remove Item',
+        fr: "Oui, supprimer l'élément"
+    },
     returnToProducts: {
         en: 'Return to Products',
         fr: 'Retour aux produits'
@@ -138,6 +185,10 @@ export const miniShopTranslations = {
     total: {
         en: 'Total',
         fr: 'Total'
+    },
+    tryAgain: {
+        en: 'Try Again',
+        fr: 'Essayer à nouveau'
     },
     viewLargerPicture: {
         en: 'View Larger Picture',

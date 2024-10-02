@@ -3,7 +3,9 @@
 <div class="message is-danger mt-6">
   <p class="message-body has-text-centered">
     <strong>An error occurred while processing this order.</strong><br />
-    <a href="<%= urlPrefix %>/checkout">Try Again</a>
+    <a href="<%= urlPrefix %>/checkout">
+      <%= translationHelpers.getStringByLanguage(translationHelpers.miniShopTranslations.tryAgain, preferredLanguage) %>
+    </a>
   </p>
 </div>
 

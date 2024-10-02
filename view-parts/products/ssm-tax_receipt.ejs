@@ -1,6 +1,16 @@
 <%
   const idPrefix = stringFns.getUID();
 %>
+
+<% if (preferredLanguage !== 'en') { %>
+  <div class="message is-warning">
+    <p class="message-body">
+      <strong>Cet article n'est actuellement proposé qu'en anglais.</strong>
+    </p>
+  </div>
+  <div lang="en">
+<% } %>
+
 <div class="message is-info mb-6">
   <div class="message-body">
     <p>Tax documents can only be issued to property owners who have owned their property for the full calendar year.</p>
@@ -75,5 +85,9 @@
     <p>Please allow three to five business days for processing.</p>
   </div>
 </div>
+
+<% if (preferredLanguage !== 'en') { %>
+  </div>
+<% } %>
 
 <script src="<%= urlPrefix %>/javascripts/product-ssm-tax_receipt.js" defer></script>

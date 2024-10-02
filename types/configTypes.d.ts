@@ -47,7 +47,7 @@ export interface Config {
     fees?: Record<string, ConfigFeeDefinition>;
     currency?: {
         code: string;
-        currencyName: string;
+        currencyName: string | StringWithTranslations;
     };
     store?: StoreConfigs;
     settings?: {

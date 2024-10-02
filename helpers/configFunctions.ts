@@ -37,10 +37,18 @@ const defaultValues = {
   'site.footer.footerEjs': 'site_thanks.ejs',
 
   'views.products.title': 'Products',
-  'views.checkout.title': 'Checkout',
+
+  'views.checkout.title': {
+    en: 'Checkout',
+    fr: 'Paiement'
+  },
+
   'views.checkout_shipping.title': 'Shipping Details',
 
-  'views.order.title': 'Order Summary',
+  'views.order.title': {
+    en: 'Order Summary',
+    fr: 'Récapitulation'
+  },
   'views.order.headerEjs': 'order_print.ejs',
 
   'views.toPayment.headerEjs': 'toPayment_redirecting.ejs',
@@ -53,7 +61,10 @@ const defaultValues = {
   'store.storeType': undefined as unknown as configTypes.StoreTypes,
 
   'currency.code': 'CAD',
-  'currency.currencyName': 'Canadian Dollars',
+  'currency.currencyName': {
+    en: 'Canadian Dollars',
+    fr: 'Dollars canadiens'
+  },
 
   'settings.checkout_includeCaptcha': true
 }
@@ -142,7 +153,6 @@ export function getClientSideProduct(
 
   return clientSideProducts[productSKU]
 }
-
 
 export function getPropertyByLanguage<K extends keyof typeof defaultValues>(
   propertyName: K,

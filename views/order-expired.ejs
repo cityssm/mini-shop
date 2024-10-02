@@ -2,8 +2,12 @@
 
 <div class="message is-danger mt-6">
   <p class="message-body has-text-centered">
-    <strong>This order is no longer available.</strong><br />
-    <a href="<%= urlPrefix %>/">Return to Products</a>
+    <strong>
+      <%= translationHelpers.getStringByLanguage(translationHelpers.miniShopTranslations.orderExpired, preferredLanguage) %>
+    </strong><br />
+    <a href="<%= urlPrefix %>/">
+      <%= translationHelpers.getStringByLanguage(translationHelpers.miniShopTranslations.returnToProducts, preferredLanguage) %>
+    </a>
   </p>
 </div>
 
