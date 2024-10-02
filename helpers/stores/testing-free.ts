@@ -1,24 +1,24 @@
-import type { Request } from "express";
-import type { StoreValidatorReturn } from "./types";
+import type { Request } from 'express'
+
+import type { StoreValidatorReturn } from './types.js'
 
 export const validate = (request: Request): StoreValidatorReturn => {
+  const orderNumber = request.body.orderNumber
 
-  const orderNumber = request.body.orderNumber;
-
-  if (!orderNumber || orderNumber === "") {
+  if (!orderNumber || orderNumber === '') {
     return {
       isValid: false,
-      errorCode: "missingOrderNumber"
-    };
+      errorCode: 'missingOrderNumber'
+    }
   }
 
-  const orderSecret = request.body.orderSecret;
+  const orderSecret = request.body.orderSecret
 
-  if (!orderSecret || orderSecret === "") {
+  if (!orderSecret || orderSecret === '') {
     return {
       isValid: false,
-      errorCode: "missingOrderSecret"
-    };
+      errorCode: 'missingOrderSecret'
+    }
   }
 
   return {
@@ -26,5 +26,5 @@ export const validate = (request: Request): StoreValidatorReturn => {
     orderNumber,
     orderSecret,
     paymentID: orderNumber
-  };
-};
+  }
+}
