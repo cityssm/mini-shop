@@ -1,32 +1,32 @@
-import { getOrderNumberBySecret } from "@cityssm/mini-shop-db";
-import Debug from "debug";
-import fetch from "node-fetch";
-import * as configFunctions from "../../helpers/configFunctions.js";
-const debug = Debug("mini-shop:stores:moneris-checkout");
-const checkoutConfig = configFunctions.getProperty("store");
-const requestURL = (checkoutConfig?.storeConfig?.environment || "") === "qa"
-    ? "https://gatewayt.moneris.com/chkt/request/request.php"
-    : "https://gateway.moneris.com/chkt/request/request.php";
+import { getOrderNumberBySecret } from '@cityssm/mini-shop-db';
+import Debug from 'debug';
+import fetch from 'node-fetch';
+import * as configFunctions from '../../helpers/configFunctions.js';
+const debug = Debug('mini-shop:stores:moneris-checkout');
+const checkoutConfig = configFunctions.getProperty('store');
+const requestURL = (checkoutConfig?.storeConfig?.environment || '') === 'qa'
+    ? 'https://gatewayt.moneris.com/chkt/request/request.php'
+    : 'https://gateway.moneris.com/chkt/request/request.php';
 export const preloadRequest = async (order) => {
     const contact_details = {
         first_name: order.shippingName,
-        last_name: "",
+        last_name: '',
         email: order.shippingEmailAddress,
-        phone: order.shippingPhoneNumberDay,
+        phone: order.shippingPhoneNumberDay
     };
     if (order.shippingName.length > 30) {
-        contact_details.first_name = "";
+        contact_details.first_name = '';
         let populateFirstName = true;
-        const orderNameSplit = order.shippingName.split(" ");
+        const orderNameSplit = order.shippingName.split(' ');
         for (const orderNamePiece of orderNameSplit) {
             if (populateFirstName) {
-                if ((contact_details.first_name + " " + orderNamePiece).length <= 30) {
+                if ((contact_details.first_name + ' ' + orderNamePiece).length <= 30) {
                     contact_details.first_name = (contact_details.first_name +
-                        " " +
+                        ' ' +
                         orderNamePiece).trim();
                     continue;
                 }
-                else if (contact_details.first_name === "") {
+                else if (contact_details.first_name === '') {
                     contact_details.first_name = orderNamePiece.slice(0, 30);
                     populateFirstName = false;
                     continue;
@@ -36,13 +36,13 @@ export const preloadRequest = async (order) => {
                 }
             }
             else {
-                if ((contact_details.last_name + " " + orderNamePiece).length <= 30) {
+                if ((contact_details.last_name + ' ' + orderNamePiece).length <= 30) {
                     contact_details.last_name = (contact_details.last_name +
-                        " " +
+                        ' ' +
                         orderNamePiece).trim();
                     continue;
                 }
-                else if (contact_details.last_name === "") {
+                else if (contact_details.last_name === '') {
                     contact_details.last_name = orderNamePiece.slice(0, 30);
                 }
                 break;
@@ -50,44 +50,44 @@ export const preloadRequest = async (order) => {
         }
     }
     const shippingBilling_details = {
-        address_1: (order.shippingAddress1 || "").slice(0, 50),
-        address_2: (order.shippingAddress2 || "").slice(0, 50),
-        city: (order.shippingCity || "").slice(0, 50),
-        province: (order.shippingProvince || "").slice(0, 2),
-        country: (order.shippingCountry || "").slice(0, 2),
-        postal_code: (order.shippingPostalCode || "").slice(0, 20),
+        address_1: (order.shippingAddress1 ?? '').slice(0, 50),
+        address_2: (order.shippingAddress2 ?? '').slice(0, 50),
+        city: (order.shippingCity ?? '').slice(0, 50),
+        province: (order.shippingProvince ?? '').slice(0, 2),
+        country: (order.shippingCountry ?? '').slice(0, 2),
+        postal_code: (order.shippingPostalCode ?? '').slice(0, 20)
     };
     const cartItems = [];
     let cartSubtotal = 0;
     for (const orderItem of order.items) {
-        const product = configFunctions.getProperty("products")[orderItem.productSKU];
+        const product = configFunctions.getProperty('products')[orderItem.productSKU];
         let description = product.productName;
         if (product.identifierFormFieldName) {
-            const identifierFormField = orderItem.fields.find((itemField) => {
+            const identifierFormField = orderItem.fields?.find((itemField) => {
                 return itemField.formFieldName === product.identifierFormFieldName;
             });
             if (identifierFormField) {
-                description = identifierFormField.fieldValue + " // " + description;
+                description = identifierFormField.fieldValue + ' // ' + description;
             }
         }
         const cartItem = {
-            url: "",
+            url: '',
             description: description.slice(0, 200),
             product_code: orderItem.productSKU.slice(0, 50),
             unit_cost: orderItem.unitPrice.toFixed(2),
-            quantity: orderItem.quantity.toString(),
+            quantity: orderItem.quantity.toString()
         };
         cartSubtotal += orderItem.unitPrice * orderItem.quantity;
         cartItems.push(cartItem);
     }
     for (const orderFee of order.fees) {
-        const fee = configFunctions.getProperty("fees")[orderFee.feeName];
+        const fee = configFunctions.getProperty('fees')[orderFee.feeName];
         const cartItem = {
-            url: "",
+            url: '',
             description: fee.feeName.slice(0, 200),
             product_code: orderFee.feeName.slice(0, 50),
             unit_cost: orderFee.feeTotal.toFixed(2),
-            quantity: "1",
+            quantity: '1'
         };
         cartSubtotal += orderFee.feeTotal;
         cartItems.push(cartItem);
@@ -97,7 +97,7 @@ export const preloadRequest = async (order) => {
         api_token: checkoutConfig.storeConfig.api_token,
         checkout_id: checkoutConfig.storeConfig.checkout_id,
         environment: checkoutConfig.storeConfig.environment,
-        action: "preload",
+        action: 'preload',
         order_no: order.orderNumber,
         contact_details,
         shipping_details: shippingBilling_details,
@@ -105,22 +105,22 @@ export const preloadRequest = async (order) => {
         txn_total: cartSubtotal.toFixed(2),
         cart: {
             items: cartItems,
-            subtotal: cartSubtotal.toFixed(2),
-        },
+            subtotal: cartSubtotal.toFixed(2)
+        }
     };
     const response = await fetch(requestURL, {
-        method: "post",
+        method: 'post',
         body: JSON.stringify(preloadJSON),
         headers: {
-            "Content-Type": "application/json",
-        },
+            'Content-Type': 'application/json'
+        }
     });
     if (!response.ok) {
-        debug("Response returned a non-OK response.");
+        debug('Response returned a non-OK response.');
         return false;
     }
     const responseData = (await response.json());
-    if (responseData.response.success === "true") {
+    if (responseData.response.success === 'true') {
         return responseData.response.ticket;
     }
     debug(responseData.response.error);
@@ -131,21 +131,21 @@ export const validate = async (request) => {
     if (!ticket) {
         return {
             isValid: false,
-            errorCode: "missingAPIKey",
+            errorCode: 'missingAPIKey'
         };
     }
     const orderNumber = request.body.orderNumber;
     if (!orderNumber) {
         return {
             isValid: false,
-            errorCode: "missingOrderNumber",
+            errorCode: 'missingOrderNumber'
         };
     }
     const orderSecret = request.body.orderSecret;
     if (!orderSecret) {
         return {
             isValid: false,
-            errorCode: "missingOrderSecret",
+            errorCode: 'missingOrderSecret'
         };
     }
     const requestJSON = {
@@ -153,20 +153,20 @@ export const validate = async (request) => {
         api_token: checkoutConfig.storeConfig.api_token,
         checkout_id: checkoutConfig.storeConfig.checkout_id,
         environment: checkoutConfig.storeConfig.environment,
-        action: "receipt",
-        ticket,
+        action: 'receipt',
+        ticket
     };
     const response = await fetch(requestURL, {
-        method: "post",
+        method: 'post',
         body: JSON.stringify(requestJSON),
         headers: {
-            "Content-Type": "application/json",
-        },
+            'Content-Type': 'application/json'
+        }
     });
     if (!response.ok) {
         return {
             isValid: false,
-            errorCode: "unresponsiveAPI",
+            errorCode: 'unresponsiveAPI'
         };
     }
     const responseData = (await response.json());
@@ -174,32 +174,32 @@ export const validate = async (request) => {
     if (!responseData) {
         return {
             isValid: false,
-            errorCode: "invalidAPIResponse",
+            errorCode: 'invalidAPIResponse'
         };
     }
-    if (responseData.response.success !== "true") {
+    if (responseData.response.success !== 'true') {
         return {
             isValid: false,
-            errorCode: "paymentError",
+            errorCode: 'paymentError'
         };
     }
-    if (responseData.response.receipt.result !== "a") {
+    if (responseData.response.receipt.result !== 'a') {
         return {
             isValid: false,
-            errorCode: "paymentDeclined",
+            errorCode: 'paymentDeclined'
         };
     }
     if (responseData.response.request.order_no !== orderNumber) {
         return {
             isValid: false,
-            errorCode: "invalidOrderNumber",
+            errorCode: 'invalidOrderNumber'
         };
     }
     const orderNumberDB = await getOrderNumberBySecret(orderSecret);
     if (orderNumberDB !== orderNumber) {
         return {
             isValid: false,
-            errorCode: "invalidOrderNumber",
+            errorCode: 'invalidOrderNumber'
         };
     }
     return {
@@ -212,7 +212,7 @@ export const validate = async (request) => {
             approval_code: responseData.response.receipt.cc.approval_code,
             card_type: responseData.response.receipt.cc.card_type,
             first6last4: responseData.response.receipt.cc.first6last4,
-            amount: responseData.response.receipt.cc.amount,
-        },
+            amount: responseData.response.receipt.cc.amount
+        }
     };
 };

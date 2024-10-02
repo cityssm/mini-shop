@@ -1,31 +1,30 @@
-import { getOrderNumberBySecret } from "@cityssm/mini-shop-db";
-import type { Order } from "@cityssm/mini-shop-db/types";
-import Debug from "debug";
-import type { Request } from "express";
-import fetch from "node-fetch";
+import { getOrderNumberBySecret } from '@cityssm/mini-shop-db'
+import type { Order } from '@cityssm/mini-shop-db/types'
+import Debug from 'debug'
+import type { Request } from 'express'
+import fetch from 'node-fetch'
 
-
-import * as configFunctions from "../../helpers/configFunctions.js";
-import type { StoreConfigMonerisCheckout } from "../../types/configTypes";
+import * as configFunctions from '../../helpers/configFunctions.js'
+import type { StoreConfigMonerisCheckout } from '../../types/configTypes'
 import type {
   MonerisCheckoutPreloadRequest,
   MonerisCheckoutPreloadResponse,
   MonerisCheckoutReceiptRequest,
   MonerisCheckoutReceiptResponse
-} from "../../types/storeTypes";
+} from '../../types/storeTypes'
 
-import type { StoreValidatorReturn } from "./types";
+import type { StoreValidatorReturn } from './types'
 
-const debug = Debug("mini-shop:stores:moneris-checkout");
+const debug = Debug('mini-shop:stores:moneris-checkout')
 
 const checkoutConfig = configFunctions.getProperty(
-  "store"
-) as StoreConfigMonerisCheckout;
+  'store'
+) as StoreConfigMonerisCheckout
 
 const requestURL =
-  (checkoutConfig?.storeConfig?.environment || "") === "qa"
-    ? "https://gatewayt.moneris.com/chkt/request/request.php"
-    : "https://gateway.moneris.com/chkt/request/request.php";
+  (checkoutConfig?.storeConfig?.environment || '') === 'qa'
+    ? 'https://gatewayt.moneris.com/chkt/request/request.php'
+    : 'https://gateway.moneris.com/chkt/request/request.php'
 
 export const preloadRequest = async (order: Order): Promise<false | string> => {
   /*
@@ -34,46 +33,46 @@ export const preloadRequest = async (order: Order): Promise<false | string> => {
 
   const contact_details = {
     first_name: order.shippingName,
-    last_name: "",
+    last_name: '',
     email: order.shippingEmailAddress,
-    phone: order.shippingPhoneNumberDay,
-  };
+    phone: order.shippingPhoneNumberDay
+  }
 
   if (order.shippingName.length > 30) {
-    contact_details.first_name = "";
-    let populateFirstName = true;
+    contact_details.first_name = ''
+    let populateFirstName = true
 
-    const orderNameSplit = order.shippingName.split(" ");
+    const orderNameSplit = order.shippingName.split(' ')
 
     for (const orderNamePiece of orderNameSplit) {
       if (populateFirstName) {
-        if ((contact_details.first_name + " " + orderNamePiece).length <= 30) {
+        if ((contact_details.first_name + ' ' + orderNamePiece).length <= 30) {
           contact_details.first_name = (
             contact_details.first_name +
-            " " +
+            ' ' +
             orderNamePiece
-          ).trim();
-          continue;
-        } else if (contact_details.first_name === "") {
-          contact_details.first_name = orderNamePiece.slice(0, 30);
-          populateFirstName = false;
-          continue;
+          ).trim()
+          continue
+        } else if (contact_details.first_name === '') {
+          contact_details.first_name = orderNamePiece.slice(0, 30)
+          populateFirstName = false
+          continue
         } else {
-          populateFirstName = false;
+          populateFirstName = false
         }
       } else {
-        if ((contact_details.last_name + " " + orderNamePiece).length <= 30) {
+        if ((contact_details.last_name + ' ' + orderNamePiece).length <= 30) {
           contact_details.last_name = (
             contact_details.last_name +
-            " " +
+            ' ' +
             orderNamePiece
-          ).trim();
-          continue;
-        } else if (contact_details.last_name === "") {
-          contact_details.last_name = orderNamePiece.slice(0, 30);
+          ).trim()
+          continue
+        } else if (contact_details.last_name === '') {
+          contact_details.last_name = orderNamePiece.slice(0, 30)
         }
 
-        break;
+        break
       }
     }
   }
@@ -83,64 +82,64 @@ export const preloadRequest = async (order: Order): Promise<false | string> => {
    */
 
   const shippingBilling_details = {
-    address_1: (order.shippingAddress1 || "").slice(0, 50),
-    address_2: (order.shippingAddress2 || "").slice(0, 50),
-    city: (order.shippingCity || "").slice(0, 50),
-    province: (order.shippingProvince || "").slice(0, 2),
-    country: (order.shippingCountry || "").slice(0, 2),
-    postal_code: (order.shippingPostalCode || "").slice(0, 20),
-  };
+    address_1: (order.shippingAddress1 ?? '').slice(0, 50),
+    address_2: (order.shippingAddress2 ?? '').slice(0, 50),
+    city: (order.shippingCity ?? '').slice(0, 50),
+    province: (order.shippingProvince ?? '').slice(0, 2),
+    country: (order.shippingCountry ?? '').slice(0, 2),
+    postal_code: (order.shippingPostalCode ?? '').slice(0, 20)
+  }
 
   /*
    * cart
    */
 
-  const cartItems = [];
-  let cartSubtotal = 0;
+  const cartItems = []
+  let cartSubtotal = 0
 
   for (const orderItem of order.items) {
     const product =
-      configFunctions.getProperty("products")[orderItem.productSKU];
+      configFunctions.getProperty('products')[orderItem.productSKU]
 
-    let description = product.productName;
+    let description = product.productName
 
     if (product.identifierFormFieldName) {
-      const identifierFormField = orderItem.fields.find((itemField) => {
-        return itemField.formFieldName === product.identifierFormFieldName;
-      });
+      const identifierFormField = orderItem.fields?.find((itemField) => {
+        return itemField.formFieldName === product.identifierFormFieldName
+      })
 
       if (identifierFormField) {
-        description = identifierFormField.fieldValue + " // " + description;
+        description = identifierFormField.fieldValue + ' // ' + description
       }
     }
 
     const cartItem = {
-      url: "",
+      url: '',
       description: description.slice(0, 200),
       product_code: orderItem.productSKU.slice(0, 50),
       unit_cost: orderItem.unitPrice.toFixed(2),
-      quantity: orderItem.quantity.toString(),
-    };
+      quantity: orderItem.quantity.toString()
+    }
 
-    cartSubtotal += orderItem.unitPrice * orderItem.quantity;
+    cartSubtotal += orderItem.unitPrice * orderItem.quantity
 
-    cartItems.push(cartItem);
+    cartItems.push(cartItem)
   }
 
   for (const orderFee of order.fees) {
-    const fee = configFunctions.getProperty("fees")[orderFee.feeName];
+    const fee = configFunctions.getProperty('fees')[orderFee.feeName]
 
     const cartItem = {
-      url: "",
+      url: '',
       description: fee.feeName.slice(0, 200),
       product_code: orderFee.feeName.slice(0, 50),
       unit_cost: orderFee.feeTotal.toFixed(2),
-      quantity: "1",
-    };
+      quantity: '1'
+    }
 
-    cartSubtotal += orderFee.feeTotal;
+    cartSubtotal += orderFee.feeTotal
 
-    cartItems.push(cartItem);
+    cartItems.push(cartItem)
   }
 
   /*
@@ -152,7 +151,7 @@ export const preloadRequest = async (order: Order): Promise<false | string> => {
     api_token: checkoutConfig.storeConfig.api_token,
     checkout_id: checkoutConfig.storeConfig.checkout_id,
     environment: checkoutConfig.storeConfig.environment,
-    action: "preload",
+    action: 'preload',
     order_no: order.orderNumber,
 
     contact_details,
@@ -161,65 +160,64 @@ export const preloadRequest = async (order: Order): Promise<false | string> => {
     txn_total: cartSubtotal.toFixed(2),
     cart: {
       items: cartItems,
-      subtotal: cartSubtotal.toFixed(2),
-    },
-  };
+      subtotal: cartSubtotal.toFixed(2)
+    }
+  }
 
   const response = await fetch(requestURL, {
-    method: "post",
+    method: 'post',
     body: JSON.stringify(preloadJSON),
     headers: {
-      "Content-Type": "application/json",
-    },
-  });
+      'Content-Type': 'application/json'
+    }
+  })
 
   if (!response.ok) {
-    debug("Response returned a non-OK response.");
-    return false;
+    debug('Response returned a non-OK response.')
+    return false
   }
 
-  const responseData =
-    (await response.json()) as MonerisCheckoutPreloadResponse;
+  const responseData = (await response.json()) as MonerisCheckoutPreloadResponse
 
-  if (responseData.response.success === "true") {
-    return responseData.response.ticket;
+  if (responseData.response.success === 'true') {
+    return responseData.response.ticket
   }
 
-  debug(responseData.response.error);
-  return false;
-};
+  debug(responseData.response.error)
+  return false
+}
 
 export const validate = async (
   request: Request
 ): Promise<StoreValidatorReturn> => {
-  const ticket = request.body.ticket as string;
+  const ticket = request.body.ticket as string
 
   // ticket is missing, fail
   if (!ticket) {
     return {
       isValid: false,
-      errorCode: "missingAPIKey",
-    };
+      errorCode: 'missingAPIKey'
+    }
   }
 
-  const orderNumber = request.body.orderNumber as string;
+  const orderNumber = request.body.orderNumber as string
 
   // order number is missing, fail
   if (!orderNumber) {
     return {
       isValid: false,
-      errorCode: "missingOrderNumber",
-    };
+      errorCode: 'missingOrderNumber'
+    }
   }
 
-  const orderSecret = request.body.orderSecret as string;
+  const orderSecret = request.body.orderSecret as string
 
   // order secret is missing, fail
   if (!orderSecret) {
     return {
       isValid: false,
-      errorCode: "missingOrderSecret",
-    };
+      errorCode: 'missingOrderSecret'
+    }
   }
 
   const requestJSON: MonerisCheckoutReceiptRequest = {
@@ -227,72 +225,71 @@ export const validate = async (
     api_token: checkoutConfig.storeConfig.api_token,
     checkout_id: checkoutConfig.storeConfig.checkout_id,
     environment: checkoutConfig.storeConfig.environment,
-    action: "receipt",
-    ticket,
-  };
+    action: 'receipt',
+    ticket
+  }
 
   const response = await fetch(requestURL, {
-    method: "post",
+    method: 'post',
     body: JSON.stringify(requestJSON),
     headers: {
-      "Content-Type": "application/json",
-    },
-  });
+      'Content-Type': 'application/json'
+    }
+  })
 
   // api response error, fail
   if (!response.ok) {
     return {
       isValid: false,
-      errorCode: "unresponsiveAPI",
-    };
+      errorCode: 'unresponsiveAPI'
+    }
   }
 
-  const responseData =
-    (await response.json()) as MonerisCheckoutReceiptResponse;
+  const responseData = (await response.json()) as MonerisCheckoutReceiptResponse
 
-  debug(responseData);
+  debug(responseData)
 
   // response data invalid, fail
   if (!responseData) {
     return {
       isValid: false,
-      errorCode: "invalidAPIResponse",
-    };
+      errorCode: 'invalidAPIResponse'
+    }
   }
 
   // transaction not successful
   // error processing, could be approved or declined
-  if (responseData.response.success !== "true") {
+  if (responseData.response.success !== 'true') {
     return {
       isValid: false,
-      errorCode: "paymentError",
-    };
+      errorCode: 'paymentError'
+    }
   }
 
   // transaction not approved (i.e. declined)
-  if (responseData.response.receipt.result !== "a") {
+  if (responseData.response.receipt.result !== 'a') {
     return {
       isValid: false,
-      errorCode: "paymentDeclined",
-    };
+      errorCode: 'paymentDeclined'
+    }
   }
 
   // response order number mismatch, fail
   if (responseData.response.request.order_no !== orderNumber) {
     return {
       isValid: false,
-      errorCode: "invalidOrderNumber",
-    };
+      errorCode: 'invalidOrderNumber'
+    }
   }
 
-  const orderNumberDB = await getOrderNumberBySecret(orderSecret);
+  const orderNumberDB = await getOrderNumberBySecret(orderSecret)
 
   // database order number mismatch, fail
   if (orderNumberDB !== orderNumber) {
     return {
       isValid: false,
-      errorCode: "invalidOrderNumber",
-    };
+      errorCode: 'invalidOrderNumber'
+    }
   }
 
   // success
@@ -307,7 +304,7 @@ export const validate = async (
       approval_code: responseData.response.receipt.cc.approval_code,
       card_type: responseData.response.receipt.cc.card_type,
       first6last4: responseData.response.receipt.cc.first6last4,
-      amount: responseData.response.receipt.cc.amount,
-    },
-  };
-};
+      amount: responseData.response.receipt.cc.amount
+    }
+  }
+}
