@@ -1,5 +1,6 @@
 import type { Order } from '@cityssm/mini-shop-db/types';
 import type { Request } from 'express';
-import type { StoreValidatorReturn } from './types';
-export declare const preloadRequest: (order: Order) => Promise<false | string>;
-export declare const validate: (request: Request) => Promise<StoreValidatorReturn>;
+import type { LanguageCode } from 'iso-639-1';
+import type { StoreValidatorReturn } from './types.js';
+export declare function preloadRequest(order: Order, preferredLanguage: LanguageCode): Promise<false | string>;
+export declare function validate(request: Request): Promise<StoreValidatorReturn>;

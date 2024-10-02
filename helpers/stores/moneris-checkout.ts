@@ -2,18 +2,20 @@ import { getOrderNumberBySecret } from '@cityssm/mini-shop-db'
 import type { Order } from '@cityssm/mini-shop-db/types'
 import Debug from 'debug'
 import type { Request } from 'express'
+import type { LanguageCode } from 'iso-639-1'
 import fetch from 'node-fetch'
 
 import * as configFunctions from '../../helpers/configFunctions.js'
-import type { StoreConfigMonerisCheckout } from '../../types/configTypes'
+import type { StoreConfigMonerisCheckout } from '../../types/configTypes.js'
 import type {
   MonerisCheckoutPreloadRequest,
   MonerisCheckoutPreloadResponse,
   MonerisCheckoutReceiptRequest,
   MonerisCheckoutReceiptResponse
-} from '../../types/storeTypes'
+} from '../../types/storeTypes.js'
+import { getStringByLanguage } from '../translationHelpers.js'
 
-import type { StoreValidatorReturn } from './types'
+import type { StoreValidatorReturn } from './types.js'
 
 const debug = Debug('mini-shop:stores:moneris-checkout')
 
@@ -22,15 +24,17 @@ const checkoutConfig = configFunctions.getProperty(
 ) as StoreConfigMonerisCheckout
 
 const requestURL =
-  (checkoutConfig?.storeConfig?.environment || '') === 'qa'
+  (checkoutConfig.storeConfig.environment ?? '') === 'qa'
     ? 'https://gatewayt.moneris.com/chkt/request/request.php'
     : 'https://gateway.moneris.com/chkt/request/request.php'
 
-export const preloadRequest = async (order: Order): Promise<false | string> => {
+export async function preloadRequest(
+  order: Order,
+  preferredLanguage: LanguageCode
+): Promise<false | string> {
   /*
    * contact_details
    */
-
   const contact_details = {
     first_name: order.shippingName,
     last_name: '',
@@ -80,7 +84,6 @@ export const preloadRequest = async (order: Order): Promise<false | string> => {
   /*
    * shipping_details, billing_details
    */
-
   const shippingBilling_details = {
     address_1: (order.shippingAddress1 ?? '').slice(0, 50),
     address_2: (order.shippingAddress2 ?? '').slice(0, 50),
@@ -93,15 +96,24 @@ export const preloadRequest = async (order: Order): Promise<false | string> => {
   /*
    * cart
    */
+  const cartItems: Array<{
+    url: string
+    description: string
+    product_code: string
+    unit_cost: string
+    quantity: string
+  }> = []
 
-  const cartItems = []
   let cartSubtotal = 0
 
-  for (const orderItem of order.items) {
+  for (const orderItem of order.items ?? []) {
     const product =
       configFunctions.getProperty('products')[orderItem.productSKU]
 
-    let description = product.productName
+    let description = getStringByLanguage(
+      product.productName,
+      preferredLanguage
+    )
 
     if (product.identifierFormFieldName) {
       const identifierFormField = orderItem.fields?.find((itemField) => {
@@ -115,7 +127,7 @@ export const preloadRequest = async (order: Order): Promise<false | string> => {
 
     const cartItem = {
       url: '',
-      description: description.slice(0, 200),
+      description: description?.slice(0, 200) ?? '',
       product_code: orderItem.productSKU.slice(0, 50),
       unit_cost: orderItem.unitPrice.toFixed(2),
       quantity: orderItem.quantity.toString()
@@ -126,12 +138,14 @@ export const preloadRequest = async (order: Order): Promise<false | string> => {
     cartItems.push(cartItem)
   }
 
-  for (const orderFee of order.fees) {
+  for (const orderFee of order.fees ?? []) {
     const fee = configFunctions.getProperty('fees')[orderFee.feeName]
 
     const cartItem = {
       url: '',
-      description: fee.feeName.slice(0, 200),
+      description:
+        getStringByLanguage(fee.feeName, preferredLanguage)?.slice(0, 200) ??
+        '',
       product_code: orderFee.feeName.slice(0, 50),
       unit_cost: orderFee.feeTotal.toFixed(2),
       quantity: '1'
@@ -145,7 +159,6 @@ export const preloadRequest = async (order: Order): Promise<false | string> => {
   /*
    * Build full JSON
    */
-
   const preloadJSON: MonerisCheckoutPreloadRequest = {
     store_id: checkoutConfig.storeConfig.store_id,
     api_token: checkoutConfig.storeConfig.api_token,
@@ -153,6 +166,10 @@ export const preloadRequest = async (order: Order): Promise<false | string> => {
     environment: checkoutConfig.storeConfig.environment,
     action: 'preload',
     order_no: order.orderNumber,
+
+    language: (['en', 'fr'].includes(preferredLanguage)
+      ? preferredLanguage
+      : 'en') as 'en' | 'fr',
 
     contact_details,
     shipping_details: shippingBilling_details,
@@ -187,9 +204,9 @@ export const preloadRequest = async (order: Order): Promise<false | string> => {
   return false
 }
 
-export const validate = async (
+export async function validate(
   request: Request
-): Promise<StoreValidatorReturn> => {
+): Promise<StoreValidatorReturn> {
   const ticket = request.body.ticket as string
 
   // ticket is missing, fail
@@ -293,7 +310,6 @@ export const validate = async (
   }
 
   // success
-
   return {
     isValid: true,
     orderNumber: orderNumberDB,

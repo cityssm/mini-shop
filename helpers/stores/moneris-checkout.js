@@ -2,12 +2,13 @@ import { getOrderNumberBySecret } from '@cityssm/mini-shop-db';
 import Debug from 'debug';
 import fetch from 'node-fetch';
 import * as configFunctions from '../../helpers/configFunctions.js';
+import { getStringByLanguage } from '../translationHelpers.js';
 const debug = Debug('mini-shop:stores:moneris-checkout');
 const checkoutConfig = configFunctions.getProperty('store');
-const requestURL = (checkoutConfig?.storeConfig?.environment || '') === 'qa'
+const requestURL = (checkoutConfig.storeConfig.environment ?? '') === 'qa'
     ? 'https://gatewayt.moneris.com/chkt/request/request.php'
     : 'https://gateway.moneris.com/chkt/request/request.php';
-export const preloadRequest = async (order) => {
+export async function preloadRequest(order, preferredLanguage) {
     const contact_details = {
         first_name: order.shippingName,
         last_name: '',
@@ -59,9 +60,9 @@ export const preloadRequest = async (order) => {
     };
     const cartItems = [];
     let cartSubtotal = 0;
-    for (const orderItem of order.items) {
+    for (const orderItem of order.items ?? []) {
         const product = configFunctions.getProperty('products')[orderItem.productSKU];
-        let description = product.productName;
+        let description = getStringByLanguage(product.productName, preferredLanguage);
         if (product.identifierFormFieldName) {
             const identifierFormField = orderItem.fields?.find((itemField) => {
                 return itemField.formFieldName === product.identifierFormFieldName;
@@ -72,7 +73,7 @@ export const preloadRequest = async (order) => {
         }
         const cartItem = {
             url: '',
-            description: description.slice(0, 200),
+            description: description?.slice(0, 200) ?? '',
             product_code: orderItem.productSKU.slice(0, 50),
             unit_cost: orderItem.unitPrice.toFixed(2),
             quantity: orderItem.quantity.toString()
@@ -80,11 +81,12 @@ export const preloadRequest = async (order) => {
         cartSubtotal += orderItem.unitPrice * orderItem.quantity;
         cartItems.push(cartItem);
     }
-    for (const orderFee of order.fees) {
+    for (const orderFee of order.fees ?? []) {
         const fee = configFunctions.getProperty('fees')[orderFee.feeName];
         const cartItem = {
             url: '',
-            description: fee.feeName.slice(0, 200),
+            description: getStringByLanguage(fee.feeName, preferredLanguage)?.slice(0, 200) ??
+                '',
             product_code: orderFee.feeName.slice(0, 50),
             unit_cost: orderFee.feeTotal.toFixed(2),
             quantity: '1'
@@ -99,6 +101,9 @@ export const preloadRequest = async (order) => {
         environment: checkoutConfig.storeConfig.environment,
         action: 'preload',
         order_no: order.orderNumber,
+        language: (['en', 'fr'].includes(preferredLanguage)
+            ? preferredLanguage
+            : 'en'),
         contact_details,
         shipping_details: shippingBilling_details,
         billing_details: shippingBilling_details,
@@ -125,8 +130,8 @@ export const preloadRequest = async (order) => {
     }
     debug(responseData.response.error);
     return false;
-};
-export const validate = async (request) => {
+}
+export async function validate(request) {
     const ticket = request.body.ticket;
     if (!ticket) {
         return {
@@ -215,4 +220,4 @@ export const validate = async (request) => {
             amount: responseData.response.receipt.cc.amount
         }
     };
-};
+}

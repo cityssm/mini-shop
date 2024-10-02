@@ -1,3 +1,4 @@
+export const preferredLanguageCookieKey = 'preferredLanguage';
 export function removeTranslationFromProduct(configProduct, language) {
     const miniShopDatabaseProduct = {
         productName: getStringByLanguage(configProduct.productName, language),

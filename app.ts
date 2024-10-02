@@ -117,11 +117,9 @@ app.use(
  * ROUTES
  */
 
-const preferredLanguageCookieKey = 'preferredLanguage'
-
 app.use((request, response, next) => {
   // eslint-disable-next-line security/detect-object-injection, @typescript-eslint/no-unsafe-member-access
-  let languageToSet = request.cookies[preferredLanguageCookieKey] as
+  let languageToSet = request.cookies[translationHelpers.preferredLanguageCookieKey] as
     | string
     | undefined
 
@@ -139,7 +137,7 @@ app.use((request, response, next) => {
   for (const availableLanguage of availableLanguages) {
     if (languageToSet.startsWith(availableLanguage)) {
       debugApp('set language')
-      response.cookie(preferredLanguageCookieKey, availableLanguage)
+      response.cookie(translationHelpers.preferredLanguageCookieKey, availableLanguage)
       next()
       return
     }
@@ -149,13 +147,14 @@ app.use((request, response, next) => {
     languageToSet = availableLanguages[0]
   }
 
-  response.cookie(preferredLanguageCookieKey, languageToSet)
+  response.cookie(translationHelpers.preferredLanguageCookieKey, languageToSet)
   next()
 })
 
 // Make config objects available to the templates
 app.use((request, response, next) => {
-  response.locals.preferredLanguage = request.cookies[preferredLanguageCookieKey] ?? 'en'
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+  response.locals.preferredLanguage = request.cookies[translationHelpers.preferredLanguageCookieKey] ?? 'en'
   response.locals.configFunctions = configFunctions
   response.locals.translationHelpers = translationHelpers
   response.locals.dateTimeFns = dateTimeFns

@@ -6,6 +6,8 @@ import type {
   StringWithTranslations
 } from '../types/configTypes.js'
 
+export const preferredLanguageCookieKey = 'preferredLanguage'
+
 export function removeTranslationFromProduct(
   configProduct: ConfigProduct,
   language: LanguageCode

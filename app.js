@@ -54,9 +54,8 @@ app.use(`${urlPrefix}/lib/js-cookie`, express.static(path.join(__dirname, 'node_
 app.use(`${urlPrefix}/lib/bulma-js`, express.static(path.join(__dirname, 'node_modules', '@cityssm', 'bulma-js', 'dist')));
 app.use(`${urlPrefix}/lib/bulma-webapp-js`, express.static(path.join(__dirname, 'node_modules', '@cityssm', 'bulma-webapp-js', 'dist')));
 app.use(`${urlPrefix}/lib/formToObject`, express.static(path.join(__dirname, 'node_modules', 'form_to_object', 'dist')));
-const preferredLanguageCookieKey = 'preferredLanguage';
 app.use((request, response, next) => {
-    let languageToSet = request.cookies[preferredLanguageCookieKey];
+    let languageToSet = request.cookies[translationHelpers.preferredLanguageCookieKey];
     const availableLanguages = configFunctions.getProperty('languages');
     if (availableLanguages.includes(languageToSet)) {
         next();
@@ -67,7 +66,7 @@ app.use((request, response, next) => {
     for (const availableLanguage of availableLanguages) {
         if (languageToSet.startsWith(availableLanguage)) {
             debugApp('set language');
-            response.cookie(preferredLanguageCookieKey, availableLanguage);
+            response.cookie(translationHelpers.preferredLanguageCookieKey, availableLanguage);
             next();
             return;
         }
@@ -75,11 +74,11 @@ app.use((request, response, next) => {
     if (availableLanguages.length > 0) {
         languageToSet = availableLanguages[0];
     }
-    response.cookie(preferredLanguageCookieKey, languageToSet);
+    response.cookie(translationHelpers.preferredLanguageCookieKey, languageToSet);
     next();
 });
 app.use((request, response, next) => {
-    response.locals.preferredLanguage = request.cookies[preferredLanguageCookieKey] ?? 'en';
+    response.locals.preferredLanguage = request.cookies[translationHelpers.preferredLanguageCookieKey] ?? 'en';
     response.locals.configFunctions = configFunctions;
     response.locals.translationHelpers = translationHelpers;
     response.locals.dateTimeFns = dateTimeFns;
