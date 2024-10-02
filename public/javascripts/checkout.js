@@ -2,7 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 ;
 (() => {
-    const urlPrefix = document.querySelector('main').dataset.urlPrefix;
+    const urlPrefix = document.querySelector('main').dataset
+        .urlPrefix;
     const cartGlobal = window.exports.cart;
     let productDetails = {};
     const cartContainerElement = document.querySelector('#card--cart');
@@ -18,7 +19,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
         const cartIndex = Number.parseInt(clickEvent.currentTarget.dataset.cartIndex, 10);
         const cartItem = cartItems[cartIndex];
         const product = productDetails.products[cartItem.productSKU];
-        cityssm.confirmModal(`Remove "${product.productName}"?`, 'Are you sure you want to remove this item from your cart?', 'Yes, Remove It', 'warning', () => {
+        cityssm.confirmModal(`Remove "${MiniShop_getStringByLanguage(product.productName)}"?`, 'Are you sure you want to remove this item from your cart?', 'Yes, Remove It', 'warning', () => {
             cartGlobal.remove(cartIndex);
             renderCheckoutFunction();
         });
@@ -31,24 +32,23 @@ Object.defineProperty(exports, "__esModule", { value: true });
         }
         const productCardContentElement = document.createElement('li');
         productCardContentElement.className = 'card-content';
-        productCardContentElement.innerHTML =
-            '<div class="columns">' +
-                ('<div class="column is-narrow has-text-right">' +
-                    '<button class="button is-inverted is-danger has-tooltip-arrow has-tooltip-right has-tooltip-hidden-mobile"' +
-                    ' data-cart-index="' +
-                    cartIndex.toString() +
-                    '" data-tooltip="Remove from Cart" type="button" aria-label="Remove from Cart">' +
-                    '<i class="fas fa-times" aria-hidden="true"></i>' +
-                    '<span class="is-hidden-tablet ml-2">Remove from Cart</span>' +
-                    '</button>' +
-                    '</div>') +
-                ('<div class="column">' +
-                    '<strong class="container--productName"></strong><br />' +
-                    '<div class="is-size-7 container--formFields"></div>' +
-                    '</div>') +
-                '<div class="column is-narrow column--quantity has-text-right"></div>' +
-                '<div class="column is-narrow column--price has-text-weight-bold has-text-right"></div>' +
-                '</div>';
+        productCardContentElement.innerHTML = `<div class="columns">
+        <div class="column is-narrow has-text-right">
+          <button class="button is-inverted is-danger has-tooltip-arrow has-tooltip-right has-tooltip-hidden-mobile"
+            data-cart-index="${cartIndex.toString()}"
+            data-tooltip="${MiniShop_translations.removeFromCart}"
+            type="button" aria-label="${MiniShop_translations.removeFromCart}">
+            <i class="fas fa-times" aria-hidden="true"></i>
+            <span class="is-hidden-tablet ml-2">${MiniShop_translations.removeFromCart}</span>
+          </button>
+        </div>
+        <div class="column">
+          <strong class="container--productName"></strong><br />
+          <div class="is-size-7 container--formFields"></div>
+        </div>
+        <div class="column is-narrow column--quantity has-text-right"></div>
+        <div class="column is-narrow column--price has-text-weight-bold has-text-right"></div>
+        </div>`;
         productCardContentElement
             .querySelector('button')
             ?.addEventListener('click', removeCartItemFunction);
@@ -94,15 +94,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
         if (cartItems.length === 0) {
             cartContainerElement.classList.add('is-hidden');
             shippingFormElement.classList.add('is-hidden');
-            document.querySelector('#button--clearCart').classList.add('is-hidden');
-            cartContainerElement.insertAdjacentHTML('beforebegin', '<div class="message is-info">' +
-                ('<div class="message-body has-text-centered">' +
-                    '<p class="has-text-weight-bold">The cart is empty.</p>' +
-                    '<p><a href="' +
-                    cityssm.escapeHTML(urlPrefix) +
-                    '/products">View Available Products</a></p>' +
-                    '</div>') +
-                '</div>');
+            document.querySelector('#button--clearCart')?.classList.add('is-hidden');
+            cartContainerElement.insertAdjacentHTML('beforebegin', `<div class="message is-info">
+          <div class="message-body has-text-centered">
+            <p class="has-text-weight-bold">${MiniShop_translations.emptyCart}</p>
+            <p><a href="${cityssm.escapeHTML(urlPrefix)}/products">View Available Products</a></p>
+          </div>
+          </div>`);
         }
         else {
             cartItems.forEach(forEachFunction_renderCartItems_calculateTotals);
@@ -220,7 +218,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
         document.querySelector('#shipping_phoneNumberEvening').value = shippingForm.phoneNumberEvening;
         document.querySelector('#shipping_emailAddress').value = shippingForm.emailAddress;
     }
-    document.querySelector('#button--clearCart').addEventListener('click', () => {
+    document.querySelector('#button--clearCart')?.addEventListener('click', () => {
         cityssm.confirmModal('Clear Cart?', 'Are you sure you want to remove all items from your cart?', 'Yes, Clear the Cart', 'warning', () => {
             cartGlobal.clear();
             renderCheckoutFunction();

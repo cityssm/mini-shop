@@ -2,9 +2,15 @@
 
 <nav class="breadcrumb has-bullet-separator mt-4" aria-label="breadcrumb">
   <ul>
-    <li><a href="<%= urlPrefix %>/products"><%= configFunctions.getPropertyByLanguage("views.products.title", preferredLanguage) %></a></li>
+    <li>
+      <a href="<%= urlPrefix %>/products">
+        <%= configFunctions.getPropertyByLanguage("views.products.title", preferredLanguage) %>
+      </a>
+    </li>
     <li class="is-active">
-      <a href="#" aria-current="page"><%= configFunctions.getPropertyByLanguage("views.order.title", preferredLanguage) %></a>
+      <a href="#" aria-current="page">
+        <%= configFunctions.getPropertyByLanguage("views.order.title", preferredLanguage) %>
+      </a>
     </li>
   </ul>
 </nav>
@@ -25,7 +31,9 @@
 <div class="columns">
   <div class="column">
     <div class="block">
-      <strong>Order:</strong><br />
+      <strong>
+        <%= translationHelpers.getStringByLanguage(translationHelpers.miniShopTranslations.order, preferredLanguage) %>:
+      </strong><br />
       <span class="is-size-7">
         <%= order.orderNumber %><br />
         <%= dateTimeFns.dateToString(order.orderTime) %>
@@ -35,7 +43,9 @@
   </div>
   <div class="column">
     <div class="block">
-      <strong>Receipt:</strong><br />
+      <strong>
+        <%= translationHelpers.getStringByLanguage(translationHelpers.miniShopTranslations.receipt, preferredLanguage) %>:
+      </strong><br />
       <span class="is-size-7">
         <%= order.paymentID %><br />
         <%= dateTimeFns.dateToString(order.paymentTime) %>
@@ -48,9 +58,15 @@
 <table class="table is-fullwidth mb-0">
   <thead>
     <tr>
-      <th scope="col" colspan="2">Item</th>
-      <th class="has-text-right" scope="col">Price</th>
-      <th class="has-text-right" scope="col">Total</th>
+      <th scope="col" colspan="2">
+        <%= translationHelpers.getStringByLanguage(translationHelpers.miniShopTranslations.item, preferredLanguage) %>
+      </th>
+      <th class="has-text-right" scope="col">
+        <%= translationHelpers.getStringByLanguage(translationHelpers.miniShopTranslations.price, preferredLanguage) %>
+      </th>
+      <th class="has-text-right" scope="col">
+        <%= translationHelpers.getStringByLanguage(translationHelpers.miniShopTranslations.total, preferredLanguage) %>
+      </th>
     </tr>
   </thead>
   <tbody>
@@ -119,7 +135,7 @@
     %>
     <tr>
       <th class="has-text-right" colspan="3" scope="row">
-        Item Total
+        <%= translationHelpers.getStringByLanguage(translationHelpers.miniShopTranslations.itemTotal, preferredLanguage) %>
       </th>
       <td class="has-text-right has-text-weight-bold">
         $<%= itemTotal.toFixed(2) %>
@@ -139,7 +155,7 @@
       %>
       <tr>
         <th class="has-text-right has-text-weight-normal" colspan="3" scope="row">
-          <%= (feeConfig ? feeConfig.feeName : fee.feeName) %>
+          <%= (feeConfig ? translationHelpers.getStringByLanguage(feeConfig.feeName, preferredLanguage) : fee.feeName) %>
         </th>
         <td class="has-text-right">
           $<%= fee.feeTotal.toFixed(2) %>
@@ -155,7 +171,7 @@
   <tfoot>
     <tr>
       <th class="has-text-right is-size-5" colspan="3" scope="row">
-        Total
+        <%= translationHelpers.getStringByLanguage(translationHelpers.miniShopTranslations.total, preferredLanguage) %>
       </th>
       <td class="has-text-right has-text-weight-bold is-size-5">
         $<%= (itemTotal + feeTotal).toFixed(2) %>
@@ -175,11 +191,11 @@
 <div class="columns">
   <div class="column">
     <div class="block">
-      <strong>Full Name:</strong><br />
+      <strong><%= translationHelpers.getStringByLanguage(translationHelpers.miniShopTranslations.name, preferredLanguage) %>:</strong><br />
       <%= order.shippingName %>
     </div>
     <div class="block">
-      <strong>Address:</strong><br />
+      <strong><%= translationHelpers.getStringByLanguage(translationHelpers.miniShopTranslations.address, preferredLanguage) %>:</strong><br />
       <%= order.shippingAddress1 %><br />
       <% if (order.shippingAddress2) { %>
         <%= order.shippingAddress2 %><br />
@@ -190,17 +206,17 @@
   </div>
   <div class="column">
     <div class="block">
-      <strong>Daytime Phone Number:</strong><br />
+      <strong><%= translationHelpers.getStringByLanguage(translationHelpers.miniShopTranslations.daytimeTelephone, preferredLanguage) %>:</strong><br />
       <%= order.shippingPhoneNumberDay %>
     </div>
     <% if (order.shippingPhoneNumberEvening) { %>
       <div class="block">
-        <strong>Evening Phone Number:</strong><br />
+        <strong><%= translationHelpers.getStringByLanguage(translationHelpers.miniShopTranslations.eveningTelephone, preferredLanguage) %>:</strong><br />
         <%= order.shippingPhoneNumberEvening %>
       </div>
     <% } %>
     <div class="block">
-      <strong>Email Address:</strong><br />
+      <strong><%= translationHelpers.getStringByLanguage(translationHelpers.miniShopTranslations.emailAddress, preferredLanguage) %>:</strong><br />
       <%= order.shippingEmailAddress %>
     </div>
   </div>

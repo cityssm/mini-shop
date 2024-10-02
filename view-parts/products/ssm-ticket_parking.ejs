@@ -21,7 +21,8 @@
     </div>
   </div>
   <div class="control">
-    <input class="input" id="<%= idPrefix %>_tagNumber-suffix" name="tagNumber-suffix" type="text" inputmode="numeric" minlength="5" maxlength="5" pattern="\d{5}" placeholder="#####" required aria-label="Tag Number Suffix" />
+    <input class="input" id="<%= idPrefix %>_tagNumber-suffix" name="tagNumber-suffix" type="text" inputmode="numeric" minlength="5" maxlength="5" pattern="\d{5}" placeholder="#####" required
+      aria-label="<%= preferredLanguage === 'fr' ? 'Suffixe du Numéro Tag' : 'Tag Number' %>" />
   </div>
   <div class="control">
     <span class="button is-static">
@@ -32,7 +33,11 @@
 
 <div class="message is-warning is-hidden tagNumber-isInvalidMessage">
   <p class="message-body">
-    The selected Tag Number is not available for online payments.
+    <% if (preferredLanguage === 'fr') { %>
+      Le numéro tag sélectionné n'est pas disponible pour les paiements en ligne.
+    <% } else { %>
+      The selected Tag Number is not available for online payments.
+    <% } %>
   </p>
 </div>
 
@@ -43,7 +48,8 @@
 <div class="field has-addons">
   <div class="control">
     <div class="select">
-      <select id="<%= idPrefix %>_offenceDate-year" name="offenceDate-year" title="<%= preferredLanguage === 'fr' ? `Année d'infraction` : 'Offence Year' %>" required>
+      <select id="<%= idPrefix %>_offenceDate-year" name="offenceDate-year"
+        title="<%= preferredLanguage === 'fr' ? `Année d'infraction` : 'Offence Year' %>" required>
         <% const currentYear = new Date().getFullYear(); %>
         <option value="">
           <%= preferredLanguage === 'fr' ? '(Année)' : '(Year)' %>
@@ -62,7 +68,8 @@
   </div>
   <div class="control">
     <div class="select">
-      <select id="<%= idPrefix %>_offenceDate-month" name="offenceDate-month" title="<%= preferredLanguage === 'fr' ? `Mois d'infraction` : 'Offence Month' %>" required>
+      <select id="<%= idPrefix %>_offenceDate-month" name="offenceDate-month"
+        title="<%= preferredLanguage === 'fr' ? `Mois d'infraction` : 'Offence Month' %>" required>
         <option value="">
           <%= preferredLanguage === 'fr' ? '(Mois)' : '(Month)' %>
         </option>
@@ -86,7 +93,8 @@
   </div>
   <div class="control">
     <div class="select">
-      <select id="<%= idPrefix %>_offenceDate-day" name="offenceDate-day" title="<%= preferredLanguage === 'fr' ? `Jour d'infraction` : 'Offence Day' %>" required>
+      <select id="<%= idPrefix %>_offenceDate-day" name="offenceDate-day"
+        title="<%= preferredLanguage === 'fr' ? `Jour d'infraction` : 'Offence Day' %>" required>
         <option value="">
           <%= preferredLanguage === 'fr' ? '(Jour)' : '(Day)' %>
         </option>

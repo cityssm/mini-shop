@@ -1,8 +1,15 @@
 <div class="message is-info">
   <p class="message-body">
-    After submitting this form, you will be redirected
-    to a secure, third-party service to finish making your payment.
-    Once the payment is complete, you will return to this website
-    to finalize your order.
+    <% if (preferredLanguage === 'fr') { %>
+      Après avoir soumis ce formulaire,
+      vous serez redirigé vers un service tiers sécurisé pour finaliser votre paiement.
+      Une fois le paiement effectué,
+      vous reviendrez sur ce site pour finaliser votre commande.
+    <% } else { %>
+      After submitting this form, you will be redirected
+      to a secure, third-party service to finish making your payment.
+      Once the payment is complete, you will return to this website
+      to finalize your order.
+    <% } %>
   </p>
 </div>

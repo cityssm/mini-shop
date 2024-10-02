@@ -43,14 +43,17 @@
   <% } %>
   <div class="columns">
     <div class="column is-3-tablet is-4-desktop">
-      <a class="image has-cursor-zoom-in is-<%= product.image.dimensionClass %> has-tooltip-bottom has-tooltip-arrow" data-tooltip="View Larger Picture" href="<%= urlPrefix %><%= product.image.path %>" target="_blank">
+      <a class="image has-cursor-zoom-in is-<%= product.image.dimensionClass %> has-tooltip-bottom has-tooltip-arrow"
+        data-tooltip="<%= translationHelpers.getStringByLanguage(translationHelpers.miniShopTranslations.viewLargerPicture, preferredLanguage) %>"
+        href="<%= urlPrefix %><%= product.image.path %>"
+        target="_blank">
         <img src="<%= urlPrefix %><%= product.image.path %>" alt="<%= translationHelpers.getStringByLanguage(product.productName, preferredLanguage) %>" />
       </a>
       <% if (typeof (product.price) === "number") { %>
         <div class="has-text-centered mt-2">
           <span class="has-text-weight-semibold">
             $<%= product.price.toFixed(2) %>
-            <abbr title="<%= configFunctions.getProperty("currency.currencyName") %>">
+            <abbr title="<%= configFunctions.getPropertyByLanguage("currency.currencyName", preferredLanguage) %>">
               <%= configFunctions.getProperty("currency.code") %>
             </abbr>
           </span><br />
@@ -84,7 +87,7 @@
           <span class="icon is-small">
             <i class="fas fa-cart-plus" aria-hidden="true"></i>
           </span>
-          <span>Add to Cart</span>
+          <span><%= translationHelpers.getStringByLanguage(translationHelpers.miniShopTranslations.addToCart, preferredLanguage) %></span>
         </button>
       </div>
     </div>
@@ -98,17 +101,17 @@
       <div class="message-body">
         <p class="is-size-4 has-text-centered">
           <i class="fas fa-3x fa-check" aria-hidden="true"></i><br />
-          Added to the cart successfully.
+          <%= translationHelpers.getStringByLanguage(translationHelpers.miniShopTranslations.addedToCartSuccessfully, preferredLanguage) %>
         </p>
         <div class="columns mt-3">
           <div class="column">
             <a class="button is-info is-fullwidth" href="<%= urlPrefix %>/products">
-              Continue Shopping
+              <%= translationHelpers.getStringByLanguage(translationHelpers.miniShopTranslations.continueShopping, preferredLanguage) %>
             </a>
           </div>
           <div class="column">
             <a class="button is-success is-fullwidth" id="successButton--checkout" href="<%= urlPrefix %>/checkout">
-              Proceed to Checkout
+              <%= translationHelpers.getStringByLanguage(translationHelpers.miniShopTranslations.proceedToCheckout, preferredLanguage) %>
             </a>
           </div>
         </div>

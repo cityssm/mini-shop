@@ -1,8 +1,24 @@
 <p class="is-size-7 has-text-right">
   <a class="has-text-weight-semibold has-text-<%= configFunctions.getProperty("site.footer.textColorClass") %>" href="https://saultstemarie.ca/" target="_blank" rel="noopener">
-    The Corporation of the City of <span class="has-ws-nowrap">Sault Ste. Marie</span>
+    <% if (preferredLanguage === 'fr') { %>
+      Corporation of de ville de <span class="has-ws-nowrap">Sault Ste. Marie</span>
+    <% } else { %>
+      The Corporation of the City of <span class="has-ws-nowrap">Sault Ste. Marie</span>
+    <% } %>
   </a><br />
-  <a class="has-text-<%= configFunctions.getProperty("site.footer.textColorClass") %>" href="https://saultstemarie.ca/Disclaimer.aspx" target="_blank" rel="noopener">Privacy Policy and Disclaimer</a>
+  <a class="has-text-<%= configFunctions.getProperty("site.footer.textColorClass") %>" href="https://saultstemarie.ca/Disclaimer.aspx" target="_blank" rel="noopener">
+    <% if (preferredLanguage === 'fr') { %>
+      Politique de confidentialité et clause de non-responsabilité
+    <% } else { %>
+      Privacy Policy and Disclaimer
+    <% } %>
+  </a>
   <span aria-hidden="true">&middot;</span>
-  <a class="has-text-<%= configFunctions.getProperty("site.footer.textColorClass") %>" href="https://saultstemarie.ca/Contact-Us.aspx" target="_blank" rel="noopener">Contact</a>
+  <a class="has-text-<%= configFunctions.getProperty("site.footer.textColorClass") %>" href="https://saultstemarie.ca/Contact-Us.aspx" target="_blank" rel="noopener">
+    <% if (preferredLanguage === 'fr') { %>
+      Contactez-nous
+    <% } else { %>
+      Contact Us
+    <% } %>
+  </a>
 </p>

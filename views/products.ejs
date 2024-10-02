@@ -50,7 +50,7 @@
           <% if (typeof (product.price) === "number") { %>
             <p class="has-text-weight-semibold has-text-right">
               $<%= product.price.toFixed(2) %>
-              <abbr title="<%= configFunctions.getProperty("currency.currencyName") %>">
+              <abbr title="<%= configFunctions.getPropertyByLanguage("currency.currencyName", preferredLanguage) %>">
                 <%= configFunctions.getProperty("currency.code") %>
               </abbr>
             </p>

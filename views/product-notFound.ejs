@@ -2,17 +2,25 @@
 
 <nav class="breadcrumb has-bullet-separator mt-4" aria-label="breadcrumb">
   <ul>
-    <li><a href="<%= urlPrefix %>/products"><%= configFunctions.getProperty("views.products.title") %></a></li>
+    <li><a href="<%= urlPrefix %>/products">
+      <%= configFunctions.getPropertyByLanguage("views.products.title", preferredLanguage) %>
+    </a></li>
     <li class="is-active">
-      <a href="#" aria-current="page">Product Not Found</a>
+      <a href="#" aria-current="page">
+        <%= translationHelpers.getStringByLanguage(translationHelpers.miniShopTranslations.productNotFound, preferredLanguage) %>
+      </a>
     </li>
   </ul>
 </nav>
 
 <div class="message is-danger">
   <p class="message-body has-text-centered">
-    <span class="has-text-weight-bold">Product Not Found</span><br />
-    <a href="<%= urlPrefix %>/">Return to Products</a>
+    <span class="has-text-weight-bold">
+      <%= translationHelpers.getStringByLanguage(translationHelpers.miniShopTranslations.productNotFound, preferredLanguage) %>
+    </span><br />
+    <a href="<%= urlPrefix %>/">
+      <%= translationHelpers.getStringByLanguage(translationHelpers.miniShopTranslations.returnToProducts, preferredLanguage) %>
+    </a>
   </p>
 </div>
 

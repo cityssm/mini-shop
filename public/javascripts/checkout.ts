@@ -7,7 +7,10 @@ import type * as globalTypes from '../../types/globalTypes.js'
 declare const cityssm: cityssmTypes.cityssmGlobal
 declare const formToObject: (formElement: HTMLFormElement) => unknown
 
-declare const MiniShop_getStringByLanguage: (languageStringProperty: string | configTypes.StringWithTranslations): string
+declare const MiniShop_getStringByLanguage: (
+  languageStringProperty: string | configTypes.StringWithTranslations
+) => string
+declare const MiniShop_translations: Record<string, string>
 
 interface ProductDetails {
   products?: Record<string, configTypes.ConfigProduct>
@@ -20,7 +23,8 @@ interface CartTotals {
 }
 
 ;(() => {
-  const urlPrefix = (document.querySelector('main') as HTMLElement).dataset.urlPrefix
+  const urlPrefix = (document.querySelector('main') as HTMLElement).dataset
+    .urlPrefix
 
   const cartGlobal = window.exports.cart as globalTypes.CartGlobal
 
@@ -55,7 +59,7 @@ interface CartTotals {
     const product = productDetails.products[cartItem.productSKU]
 
     cityssm.confirmModal(
-      `Remove "${product.productName}"?`,
+      `Remove "${MiniShop_getStringByLanguage(product.productName)}"?`,
       'Are you sure you want to remove this item from your cart?',
       'Yes, Remove It',
       'warning',
@@ -85,24 +89,23 @@ interface CartTotals {
     const productCardContentElement = document.createElement('li')
     productCardContentElement.className = 'card-content'
 
-    productCardContentElement.innerHTML =
-      '<div class="columns">' +
-      ('<div class="column is-narrow has-text-right">' +
-        '<button class="button is-inverted is-danger has-tooltip-arrow has-tooltip-right has-tooltip-hidden-mobile"' +
-        ' data-cart-index="' +
-        cartIndex.toString() +
-        '" data-tooltip="Remove from Cart" type="button" aria-label="Remove from Cart">' +
-        '<i class="fas fa-times" aria-hidden="true"></i>' +
-        '<span class="is-hidden-tablet ml-2">Remove from Cart</span>' +
-        '</button>' +
-        '</div>') +
-      ('<div class="column">' +
-        '<strong class="container--productName"></strong><br />' +
-        '<div class="is-size-7 container--formFields"></div>' +
-        '</div>') +
-      '<div class="column is-narrow column--quantity has-text-right"></div>' +
-      '<div class="column is-narrow column--price has-text-weight-bold has-text-right"></div>' +
-      '</div>'
+    productCardContentElement.innerHTML = `<div class="columns">
+        <div class="column is-narrow has-text-right">
+          <button class="button is-inverted is-danger has-tooltip-arrow has-tooltip-right has-tooltip-hidden-mobile"
+            data-cart-index="${cartIndex.toString()}"
+            data-tooltip="${MiniShop_translations.removeFromCart}"
+            type="button" aria-label="${MiniShop_translations.removeFromCart}">
+            <i class="fas fa-times" aria-hidden="true"></i>
+            <span class="is-hidden-tablet ml-2">${MiniShop_translations.removeFromCart}</span>
+          </button>
+        </div>
+        <div class="column">
+          <strong class="container--productName"></strong><br />
+          <div class="is-size-7 container--formFields"></div>
+        </div>
+        <div class="column is-narrow column--quantity has-text-right"></div>
+        <div class="column is-narrow column--price has-text-weight-bold has-text-right"></div>
+        </div>`
 
     productCardContentElement
       .querySelector('button')
@@ -189,18 +192,16 @@ interface CartTotals {
     if (cartItems.length === 0) {
       cartContainerElement.classList.add('is-hidden')
       shippingFormElement.classList.add('is-hidden')
-      document.querySelector('#button--clearCart').classList.add('is-hidden')
+      document.querySelector('#button--clearCart')?.classList.add('is-hidden')
 
       cartContainerElement.insertAdjacentHTML(
         'beforebegin',
-        '<div class="message is-info">' +
-          ('<div class="message-body has-text-centered">' +
-            '<p class="has-text-weight-bold">The cart is empty.</p>' +
-            '<p><a href="' +
-            cityssm.escapeHTML(urlPrefix) +
-            '/products">View Available Products</a></p>' +
-            '</div>') +
-          '</div>'
+        `<div class="message is-info">
+          <div class="message-body has-text-centered">
+            <p class="has-text-weight-bold">${MiniShop_translations.emptyCart}</p>
+            <p><a href="${cityssm.escapeHTML(urlPrefix)}/products">View Available Products</a></p>
+          </div>
+          </div>`
       )
     } else {
       cartItems.forEach(forEachFunction_renderCartItems_calculateTotals)
@@ -392,7 +393,7 @@ interface CartTotals {
     ).value = shippingForm.emailAddress
   }
 
-  document.querySelector('#button--clearCart').addEventListener('click', () => {
+  document.querySelector('#button--clearCart')?.addEventListener('click', () => {
     cityssm.confirmModal(
       'Clear Cart?',
       'Are you sure you want to remove all items from your cart?',
