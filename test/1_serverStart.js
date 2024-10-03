@@ -11,9 +11,7 @@ await describe('mini-shop', async () => {
     let serverStarted = false;
     before(() => {
         httpServer.listen(portNumber);
-        httpServer.on('listening', () => {
-            serverStarted = true;
-        });
+        serverStarted = true;
     });
     after(() => {
         try {
