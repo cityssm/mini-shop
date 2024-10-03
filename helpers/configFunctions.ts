@@ -36,19 +36,23 @@ const defaultValues = {
   'site.footer.textColorClass': 'light',
   'site.footer.footerEjs': 'site_thanks.ejs',
 
-  'views.products.title': 'Products',
+  'views.products.title': 'Products' as unknown as
+    | string
+    | configTypes.StringWithTranslations,
 
   'views.checkout.title': {
     en: 'Checkout',
     fr: 'Paiement'
-  },
+  } as unknown as string | configTypes.StringWithTranslations,
 
-  'views.checkout_shipping.title': 'Shipping Details',
+  'views.checkout_shipping.title': 'Shipping Details' as unknown as
+    | string
+    | configTypes.StringWithTranslations,
 
   'views.order.title': {
     en: 'Order Summary',
     fr: 'Récapitulation'
-  },
+  } as unknown as string | configTypes.StringWithTranslations,
   'views.order.headerEjs': 'order_print.ejs',
 
   'views.toPayment.headerEjs': 'toPayment_redirecting.ejs',
@@ -64,7 +68,7 @@ const defaultValues = {
   'currency.currencyName': {
     en: 'Canadian Dollars',
     fr: 'Dollars canadiens'
-  },
+  } as unknown as string | configTypes.StringWithTranslations,
 
   'settings.checkout_includeCaptcha': true
 }
