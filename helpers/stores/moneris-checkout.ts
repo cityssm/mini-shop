@@ -6,7 +6,6 @@ import type { LanguageCode } from 'iso-639-1'
 import fetch from 'node-fetch'
 
 import * as configFunctions from '../../helpers/configFunctions.js'
-import type { StoreConfigMonerisCheckout } from '../../types/configTypes.js'
 import type {
   MonerisCheckoutPreloadRequest,
   MonerisCheckoutPreloadResponse,
@@ -21,10 +20,10 @@ const debug = Debug('mini-shop:stores:moneris-checkout')
 
 const checkoutConfig = configFunctions.getProperty(
   'store'
-) as StoreConfigMonerisCheckout
+)
 
 const requestURL =
-  (checkoutConfig.storeConfig.environment ?? '') === 'qa'
+  checkoutConfig.storeConfig?.environment === 'qa'
     ? 'https://gatewayt.moneris.com/chkt/request/request.php'
     : 'https://gateway.moneris.com/chkt/request/request.php'
 
@@ -32,6 +31,11 @@ export async function preloadRequest(
   order: Order,
   preferredLanguage: LanguageCode
 ): Promise<false | string> {
+  if (checkoutConfig.storeType !== 'moneris-checkout') {
+    debug(`Invalid storeType: ${checkoutConfig.storeType}`)
+    return false
+  }
+
   /*
    * contact_details
    */

@@ -1,4 +1,4 @@
-export type StoreValidatorErrorMessage = "noHandler" | "noResult" | "missingAPIKey" | "unresponsiveAPI" | "invalidAPIResponse" | "missingOrderNumber" | "invalidOrderNumber" | "missingOrderSecret" | "paymentError" | "paymentDeclined";
+export type StoreValidatorErrorMessage = 'invalidStoreType' | 'noHandler' | 'noResult' | 'missingAPIKey' | 'unresponsiveAPI' | 'invalidAPIResponse' | 'missingOrderNumber' | 'invalidOrderNumber' | 'missingOrderSecret' | 'paymentError' | 'paymentDeclined';
 export type StoreValidatorReturn = {
     isValid: true;
     orderNumber: string;

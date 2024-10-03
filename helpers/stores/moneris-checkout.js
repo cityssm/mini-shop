@@ -5,10 +5,14 @@ import * as configFunctions from '../../helpers/configFunctions.js';
 import { getStringByLanguage } from '../translationHelpers.js';
 const debug = Debug('mini-shop:stores:moneris-checkout');
 const checkoutConfig = configFunctions.getProperty('store');
-const requestURL = (checkoutConfig.storeConfig.environment ?? '') === 'qa'
+const requestURL = checkoutConfig.storeConfig?.environment === 'qa'
     ? 'https://gatewayt.moneris.com/chkt/request/request.php'
     : 'https://gateway.moneris.com/chkt/request/request.php';
 export async function preloadRequest(order, preferredLanguage) {
+    if (checkoutConfig.storeType !== 'moneris-checkout') {
+        debug(`Invalid storeType: ${checkoutConfig.storeType}`);
+        return false;
+    }
     const contact_details = {
         first_name: order.shippingName,
         last_name: '',
