@@ -2,6 +2,7 @@
 
 [![Maintainability](https://img.shields.io/codeclimate/maintainability/cityssm/mini-shop)](https://codeclimate.com/github/cityssm/mini-shop/maintainability)
 [![DeepSource](https://app.deepsource.com/gh/cityssm/mini-shop.svg/?label=active+issues&show_trend=true&token=ixfKMKwersYh_EKNcNsP2q3v)](https://app.deepsource.com/gh/cityssm/mini-shop/)
+[![Coverage Testing](https://github.com/cityssm/mini-shop/actions/workflows/coverage.yml/badge.svg)](https://github.com/cityssm/mini-shop/actions/workflows/coverage.yml)
 
 [![Mini Shop Screenshot](docs/ssmSample.png)](docs/ssmSample.png)
 
