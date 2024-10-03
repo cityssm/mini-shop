@@ -211,6 +211,14 @@ export async function preloadRequest(
 export async function validate(
   request: Request
 ): Promise<StoreValidatorReturn> {
+  if (checkoutConfig.storeType !== 'moneris-checkout') {
+    debug(`Invalid storeType: ${checkoutConfig.storeType}`)
+    return {
+      isValid: false,
+      errorCode: 'invalidStoreType'
+    }
+  }
+
   const ticket = request.body.ticket as string
 
   // ticket is missing, fail
