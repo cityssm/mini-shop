@@ -32,9 +32,9 @@ describe('mini-shop', () => {
     describe('simple page tests', () => {
         const urls = [
             appURL + '/stylesheets/style.min.css',
-            appURL + '/javascripts/cart.min.js',
-            appURL + '/javascripts/checkout.min.js',
-            appURL + '/javascripts/product-view.min.js',
+            appURL + '/javascripts/cart.js',
+            appURL + '/javascripts/checkout.js',
+            appURL + '/javascripts/product-view.js',
             appURL + '/lib/bulma-webapp-js/cityssm.min.js',
             appURL + '/lib/formToObject/formToObject.min.js',
             appURL + '/products',

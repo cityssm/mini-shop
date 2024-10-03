@@ -46,9 +46,9 @@ describe('mini-shop', () => {
       appURL + '/stylesheets/style.min.css',
 
       // javascripts
-      appURL + '/javascripts/cart.min.js',
-      appURL + '/javascripts/checkout.min.js',
-      appURL + '/javascripts/product-view.min.js',
+      appURL + '/javascripts/cart.js',
+      appURL + '/javascripts/checkout.js',
+      appURL + '/javascripts/product-view.js',
 
       // libraries
       appURL + '/lib/bulma-webapp-js/cityssm.min.js',
