@@ -1,5 +1,6 @@
 import { getOrder as miniShopDB_getOrder } from '@cityssm/mini-shop-db'
 import type { RequestHandler } from 'express'
+import type { LanguageCode } from 'iso-639-1'
 
 import * as configFunctions from '../helpers/configFunctions.js'
 import { preferredLanguageCookieKey } from '../helpers/translationHelpers.js'
@@ -17,7 +18,7 @@ export const handler: RequestHandler = async (request, response) => {
 
   const storeType = configFunctions.getProperty('store.storeType')
 
-  const preferredLanguage = request.cookies[preferredLanguageCookieKey] ?? 'en'
+  const preferredLanguage = (request.cookies[preferredLanguageCookieKey] ?? 'en') as LanguageCode
 
   const toPaymentObject: Record<string, unknown> = {
     order

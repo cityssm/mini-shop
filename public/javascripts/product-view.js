@@ -13,8 +13,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
         const success = cartGlobal.add(productFormElement);
         if (success) {
             productFormElement.reset();
-            document.querySelector('#modal--success').classList.add('is-active');
-            document.querySelector('html').classList.add('is-clipped');
+            document.querySelector('#modal--success')?.classList.add('is-active');
+            document.querySelector('html')?.classList.add('is-clipped');
             document.querySelector('#successButton--checkout').focus();
         }
         else {

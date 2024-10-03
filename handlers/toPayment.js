@@ -10,7 +10,7 @@ export const handler = async (request, response) => {
         return;
     }
     const storeType = configFunctions.getProperty('store.storeType');
-    const preferredLanguage = request.cookies[preferredLanguageCookieKey] ?? 'en';
+    const preferredLanguage = (request.cookies[preferredLanguageCookieKey] ?? 'en');
     const toPaymentObject = {
         order
     };

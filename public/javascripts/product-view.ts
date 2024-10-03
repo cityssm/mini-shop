@@ -1,7 +1,7 @@
 /* eslint-disable unicorn/filename-case */
 
-import type * as globalTypes from '../../types/globalTypes'
-import type * as cityssmTypes from '@cityssm/bulma-webapp-js/src/types'
+import type * as globalTypes from '../../types/globalTypes.js'
+import type * as cityssmTypes from '@cityssm/bulma-webapp-js/src/types.js'
 
 declare const cityssm: cityssmTypes.cityssmGlobal
 
@@ -28,8 +28,8 @@ declare const cityssm: cityssmTypes.cityssmGlobal
     if (success) {
       productFormElement.reset()
 
-      document.querySelector('#modal--success').classList.add('is-active')
-      document.querySelector('html').classList.add('is-clipped')
+      document.querySelector('#modal--success')?.classList.add('is-active')
+      document.querySelector('html')?.classList.add('is-clipped')
 
       ;(
         document.querySelector('#successButton--checkout') as HTMLButtonElement
