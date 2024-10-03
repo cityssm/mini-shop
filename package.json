@@ -1,6 +1,6 @@
 {
   "name": "mini-shop",
-  "version": "3.0.0-beta",
+  "version": "3.0.0-rc",
   "description": "A lightweight, highly customizable storefront.",
   "type": "module",
   "exports": "./app.js",
