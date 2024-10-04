@@ -54,9 +54,9 @@ app.use(
     ),
     byIP: !configFunctions.getProperty('reverseProxy.blockViaXForwardedFor'),
     abusePoints: 1,
-    abusePointsMax: 5,
+    abusePointsMax: 50,
     clearIntervalMillis: 30 * 60 * 60 * 1000,
-    expiryMillis: 10 * 60 * 60 * 1000
+    expiryMillis: 60 * 60 * 1000
   })
 )
 
