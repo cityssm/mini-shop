@@ -32,9 +32,9 @@ app.use(abuseCheck({
     byXForwardedFor: configFunctions.getProperty('reverseProxy.blockViaXForwardedFor'),
     byIP: !configFunctions.getProperty('reverseProxy.blockViaXForwardedFor'),
     abusePoints: 1,
-    abusePointsMax: 50,
-    clearIntervalMillis: 30 * 60 * 60 * 1000,
-    expiryMillis: 60 * 60 * 1000
+    abusePointsMax: 20,
+    clearIntervalMillis: 60 * 60 * 1000,
+    expiryMillis: 5 * 60 * 1000
 }));
 if (!configFunctions.getProperty('reverseProxy.disableCompression')) {
     app.use(compression());
