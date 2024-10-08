@@ -4,6 +4,23 @@ import http from 'node:http';
 import { shutdown as abuseCheckShutdown } from '@cityssm/express-abuse-points';
 import { app } from '../app.js';
 import { overrideProperty } from '../helpers/configFunctions.js';
+function runCypress(browser, done) {
+    let cypressCommand = `cypress run --config-file cypress.config.js --browser ${browser}`;
+    if ((process.env.CYPRESS_RECORD_KEY ?? '') !== '') {
+        cypressCommand += ` --tag "${browser},${process.version}" --record`;
+    }
+    const childProcess = exec(cypressCommand);
+    childProcess.stdout?.on('data', (data) => {
+        console.log(data);
+    });
+    childProcess.stderr?.on('data', (data) => {
+        console.error(data);
+    });
+    childProcess.on('exit', (code) => {
+        assert.ok(code === 0);
+        done();
+    });
+}
 describe('mini-shop', () => {
     overrideProperty('reverseProxy.urlPrefix', '');
     const httpServer = http.createServer(app);
@@ -27,22 +44,11 @@ describe('mini-shop', () => {
         assert.ok(serverStarted);
     });
     describe('Cypress tests', () => {
-        it('should run Cypress tests', (done) => {
-            let cypressCommand = 'cypress run --config-file cypress.config.ts --browser chrome';
-            if ((process.env.CYPRESS_RECORD_KEY ?? '') !== '') {
-                cypressCommand += ' --record';
-            }
-            const childProcess = exec(cypressCommand);
-            childProcess.stdout?.on('data', (data) => {
-                console.log(data);
-            });
-            childProcess.stderr?.on('data', (data) => {
-                console.error(data);
-            });
-            childProcess.on('exit', (code) => {
-                assert.strictEqual(code, 0);
-                done();
-            });
-        });
+        it('Should run Cypress tests in Chrome', (done) => {
+            runCypress('chrome', done);
+        }).timeout(30 * 60 * 60 * 1000);
+        it('Should run Cypress tests in Firefox', (done) => {
+            runCypress('firefox', done);
+        }).timeout(30 * 60 * 60 * 1000);
     }).timeout(30 * 60 * 60 * 1000);
 });
