@@ -38,6 +38,7 @@ miniShopDB.setConfig({
  */
 
 export const app = express()
+app.disable('x-powered-by')
 
 if (!configFunctions.getProperty('reverseProxy.disableEtag')) {
   app.set('etag', false)
