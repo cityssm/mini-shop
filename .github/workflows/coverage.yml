@@ -28,7 +28,7 @@ jobs:
       - name: Install Package
         run: |
           npm ci
-          npm install -g c8 mocha
+          npm install -g c8 mocha cypress@13
 
       - name: Code Climate (Before)
         if: ${{ github.event_name != 'pull_request' && env.CC_TEST_REPORTER_ID != '' && matrix.node == 20 }}
@@ -36,6 +36,11 @@ jobs:
           curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./codeclimate-test-reporter
           chmod +x codeclimate-test-reporter
           ./codeclimate-test-reporter before-build
+      
+      - name: Verify Cypress
+        run: cypress verify
+        env:
+          CYPRESS_VERIFY_TIMEOUT: 600000
       
       - name: Run Coverage Testing
         run: npm run coverage

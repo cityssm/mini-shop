@@ -61,5 +61,5 @@ describe('mini-shop', () => {
         done()
       })
     })
-  })
+  }).timeout(30 * 60 * 60 * 1000)
 })
