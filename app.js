@@ -9,11 +9,11 @@ import debug from 'debug';
 import express from 'express';
 import createError from 'http-errors';
 import * as configFunctions from './helpers/configFunctions.js';
+import { fixFees, fixProducts } from './helpers/miniShopDatabaseHelpers.js';
 import * as translationHelpers from './helpers/translationHelpers.js';
 import routerCheckout from './routes/checkout.js';
 import routerOrder from './routes/order.js';
 import routerProducts from './routes/products.js';
-import { fixFees, fixProducts } from './helpers/miniShopDatabaseHelpers.js';
 const debugApp = debug('mini-shop:app');
 const __dirname = '.';
 miniShopDB.setConfig({

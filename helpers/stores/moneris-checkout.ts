@@ -1,5 +1,5 @@
 import { getOrderNumberBySecret } from '@cityssm/mini-shop-db'
-import type { Order } from '@cityssm/mini-shop-db/types'
+import type { Order } from '@cityssm/mini-shop-db/types.js'
 import Debug from 'debug'
 import type { Request } from 'express'
 import type { LanguageCode } from 'iso-639-1'

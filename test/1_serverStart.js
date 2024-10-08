@@ -1,11 +1,9 @@
 import assert from 'node:assert';
+import { exec } from 'node:child_process';
 import http from 'node:http';
-import { after, before, describe, it } from 'node:test';
 import { shutdown as abuseCheckShutdown } from '@cityssm/express-abuse-points';
-import * as puppeteer from 'puppeteer';
 import { app } from '../app.js';
-import * as configFunctions from '../helpers/configFunctions.js';
-await describe('mini-shop', async () => {
+describe('mini-shop', () => {
     const httpServer = http.createServer(app);
     const portNumber = 52_525;
     let serverStarted = false;
@@ -14,6 +12,7 @@ await describe('mini-shop', async () => {
         serverStarted = true;
     });
     after(() => {
+        console.log('Shitting down...');
         try {
             abuseCheckShutdown();
             httpServer.close();
@@ -22,66 +21,26 @@ await describe('mini-shop', async () => {
             console.log(error);
         }
     });
-    await it(`should start server starts on port ${portNumber.toString()}`, () => {
+    it(`should start server starts on port ${portNumber.toString()}`, () => {
         assert.ok(serverStarted);
     });
-    const appURL = `http://localhost:${portNumber.toString()}${configFunctions.getProperty('reverseProxy.urlPrefix')}`;
-    await describe('simple page tests', async () => {
-        const urls = [
-            appURL + '/stylesheets/style.min.css',
-            appURL + '/javascripts/cart.js',
-            appURL + '/javascripts/checkout.js',
-            appURL + '/javascripts/product-view.js',
-            appURL + '/lib/bulma-webapp-js/cityssm.min.js',
-            appURL + '/lib/formToObject/formToObject.min.js',
-            appURL + '/products',
-            appURL + '/checkout'
-        ];
-        for (const url of urls) {
-            await it('should load - ' + url, async () => {
-                let browser;
-                try {
-                    browser = await puppeteer.launch();
-                    const page = await browser.newPage();
-                    await page
-                        .goto(url)
-                        .then((response) => {
-                        assert.strictEqual(response.status(), 200);
-                    })
-                        .catch(() => {
-                        assert.fail();
-                    });
-                }
-                catch {
-                    assert.fail();
-                }
-                finally {
-                    await browser.close();
-                }
+    describe('Cypress tests', () => {
+        it('should run Cypress tests', (done) => {
+            let cypressCommand = 'cypress run --config-file cypress.config.ts --browser chrome';
+            if ((process.env.CYPRESS_RECORD_KEY ?? '') !== '') {
+                cypressCommand += ' --record';
+            }
+            const childProcess = exec(cypressCommand);
+            childProcess.stdout?.on('data', (data) => {
+                console.log(data);
             });
-        }
-    });
-    await describe('error page tests', async () => {
-        await it('should return a 404 not found error', async () => {
-            let browser;
-            try {
-                browser = await puppeteer.launch();
-                const page = await browser.newPage();
-                await page
-                    .goto(appURL + '/page-not-found')
-                    .then((response) => {
-                    assert.strictEqual(response.status(), 404);
-                })
-                    .catch(() => {
-                    assert.fail();
-                });
-            }
-            catch {
-                assert.fail();
-            }
-            finally {
-                await browser.close();
-            }
+            childProcess.stderr?.on('data', (data) => {
+                console.error(data);
+            });
+            childProcess.on('exit', (code) => {
+                assert.strictEqual(code, 0);
+                done();
+            });
         });
     });
 });

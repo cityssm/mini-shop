@@ -11,9 +11,11 @@
     "start": "cross-env NODE_ENV=production node ./bin/www",
     "start:lh": "cross-env NODE_ENV=production DEBUG=mini-shop:* node ./bin/www-lh",
     "dev": "cross-env NODE_ENV=dev DEBUG=mini-shop:*,mini-shop-db:* nodemon ./bin/www.js",
-    "test": "cross-env NODE_ENV=dev DEBUG=mini-shop:*,mini-shop-db:* node --test",
+    "cy:open": "cypress open --config-file cypress.config.ts",
+    "cy:run": "cypress run --config-file cypress.config.ts",
+    "test": "cross-env NODE_ENV=dev DEBUG=mini-shop:*,mini-shop-db:* mocha --timeout 30000",
     "test:lh": "cross-env NODE_ENV=production DEBUG=mini-shop:* lhci autorun",
-    "coverage": "cross-env NODE_ENV=dev DEBUG=mini-shop:*,mini-shop-db:* c8 --reporter=lcov --reporter=text --reporter=text-summary node --test"
+    "coverage": "cross-env NODE_ENV=dev DEBUG=mini-shop:*,mini-shop-db:* c8 --reporter=lcov --reporter=text --reporter=text-summary mocha --timeout 30000"
   },
   "repository": {
     "type": "git",
@@ -35,11 +37,14 @@
     "@types/ejs": "^3.1.5",
     "@types/express": "^5.0.0",
     "@types/http-errors": "^2.0.4",
+    "@types/mocha": "^10.0.9",
     "@types/mssql": "^9.1.5",
     "@types/node-windows": "^0.1.6",
     "@types/uuid": "^10.0.0",
     "bulma": "^0.9.4",
-    "eslint-config-cityssm": "^10.1.1",
+    "cypress": "^13.15.0",
+    "cypress-axe": "^1.5.0",
+    "eslint-config-cityssm": "^11.0.0",
     "nodemon": "^3.1.7",
     "prettier-config-cityssm": "^1.0.0"
   },
@@ -47,7 +52,7 @@
     "@cityssm/bulma-js": "^0.5.0",
     "@cityssm/bulma-webapp-js": "^1.5.0",
     "@cityssm/configurator": "^0.1.0",
-    "@cityssm/express-abuse-points": "^2.0.0",
+    "@cityssm/express-abuse-points": "^3.0.0",
     "@cityssm/expressjs-server-js": "^2.3.3",
     "@cityssm/mini-shop-db": "^3.2.2",
     "@cityssm/mssql-multi-pool": "^3.2.0",

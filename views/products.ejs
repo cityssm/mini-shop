@@ -39,7 +39,7 @@
         <% if (product.image) { %>
           <div class="card-image">
             <div class="image is-<%= product.image.dimensionClass %>">
-              <img src="<%= urlPrefix %><%= product.image.path %>" alt="<%= translationHelpers.getStringByLanguage(product.productName, preferredLanguage) %>" />
+              <img src="<%= urlPrefix %><%= product.image.path %>" alt="" />
             </div>
           </div>
         <% } %>

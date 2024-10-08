@@ -30,7 +30,7 @@
       <div class="column">
         <a class="button is-medium is-<%= backgroundColorClass %> is-radiusless" href="<%= urlPrefix %>/products">
           <% if (logoImagePath) { %>
-            <img class="mr-2" src="<%= urlPrefix %><%= logoImagePath %>" alt="<%= configFunctions.getPropertyByLanguage("application.applicationName", preferredLanguage) %>" style="max-height:30px" />
+            <img class="mr-2" src="<%= urlPrefix %><%= logoImagePath %>" alt="" style="max-height:30px" />
           <% } %>
           <span class="is-hidden-mobile"><%= configFunctions.getPropertyByLanguage("application.applicationName", preferredLanguage) %></span>
         </a>
