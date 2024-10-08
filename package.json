@@ -13,7 +13,6 @@
     "cy:open": "cypress open --config-file cypress.config.ts",
     "cy:run": "cypress run --config-file cypress.config.ts",
     "test": "cross-env NODE_ENV=dev DEBUG=mini-shop:*,mini-shop-db:* mocha --timeout 30000",
-    "test:lh": "cross-env NODE_ENV=production DEBUG=mini-shop:* lhci autorun",
     "coverage": "cross-env NODE_ENV=dev DEBUG=mini-shop:*,mini-shop-db:* c8 --reporter=lcov --reporter=text --reporter=text-summary mocha --timeout 30000"
   },
   "repository": {
