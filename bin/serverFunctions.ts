@@ -14,26 +14,29 @@ export const onError = (error: Error): void => {
 
   // handle specific listen errors with friendly messages
   switch (error.code) {
-    case 'EACCES':
+    case 'EACCES': {
       console.error('Requires elevated privileges')
       process.exit(1)
-    // break;
+      break
+    }
 
-    case 'EADDRINUSE':
+    case 'EADDRINUSE': {
       console.error('Port is already in use.')
       process.exit(1)
-    // break;
+      break
+    }
 
-    default:
+    default: {
       throw error
+    }
   }
 }
 
 export const onListening = (server: http.Server | https.Server): void => {
-  const addr = server.address()
+  const addr = server.address() ?? '127.0.0.1'
 
   const bind =
-    typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr.port.toString()
+    typeof addr === 'string' ? `pipe ${addr}` : `port ${addr.port.toString()}`
 
-  debug('Listening on ' + bind)
+  debug(`Listening on ${bind}`)
 }

@@ -7,6 +7,7 @@ const debugConfig = debug('mini-shop:configFunctions');
 const defaultValues = {
     'application.applicationName': 'Mini Shop',
     'application.httpPort': 7777,
+    'application.https': undefined,
     'reverseProxy.disableCompression': false,
     'reverseProxy.disableEtag': false,
     'reverseProxy.blockViaXForwardedFor': false,
@@ -14,7 +15,7 @@ const defaultValues = {
     mssqlConfig: undefined,
     languages: [],
     orderNumberFunction: () => {
-        return 'RCT-' + uuidv4().toUpperCase();
+        return `RCT-${uuidv4().toUpperCase()}`;
     },
     'site.header.backgroundColorClass': 'info',
     'site.footer.isVisible': true,

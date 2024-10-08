@@ -1,2 +1,2 @@
-import type { RequestHandler } from 'express';
-export declare const handler: RequestHandler;
+import type { NextFunction, Request, Response } from 'express';
+export declare function handler(request: Request, response: Response, next: NextFunction): Promise<void>;

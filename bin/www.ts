@@ -18,7 +18,7 @@ const debug = Debug('mini-shop:www')
 
 const httpPort = configFunctions.getProperty('application.httpPort')
 
-if (httpPort) {
+if (httpPort !== undefined) {
   const httpServer = http.createServer(app)
 
   httpServer.listen(httpPort)
@@ -28,7 +28,7 @@ if (httpPort) {
     onListening(httpServer)
   })
 
-  debug('HTTP listening on ' + httpPort.toString())
+  debug(`HTTP listening on ${httpPort.toString()}`)
 }
 
 /**
@@ -37,7 +37,7 @@ if (httpPort) {
 
 const httpsConfig = configFunctions.getProperty('application.https')
 
-if (httpsConfig) {
+if (httpsConfig !== undefined) {
   const httpsServer = https.createServer(
     {
       key: fs.readFileSync(httpsConfig.keyPath),
@@ -55,5 +55,5 @@ if (httpsConfig) {
     onListening(httpsServer)
   })
 
-  debug('HTTPS listening on ' + httpsConfig.port.toString())
+  debug(`HTTPS listening on ${httpsConfig.port.toString()}`)
 }

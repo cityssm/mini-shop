@@ -1,6 +1,6 @@
 import { CaptchaGenerator } from 'captcha-canvas';
 import { getCaptchaText } from '../helpers/captchaFunctions.js';
-export const handler = async (request, response, next) => {
+export async function handler(request, response, next) {
     const captchaKey = request.params.captchaKey;
     const captchaText = getCaptchaText(captchaKey);
     if (!captchaText) {
@@ -16,5 +16,5 @@ export const handler = async (request, response, next) => {
     const buffer = await captcha.generate();
     response.contentType('image/png');
     response.set('Cache-Control', 'public, max-age=31557600');
-    return response.send(buffer);
-};
+    response.send(buffer);
+}

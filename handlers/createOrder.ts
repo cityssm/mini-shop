@@ -1,21 +1,25 @@
-
 import { createOrder as miniShopDB_createOrder } from '@cityssm/mini-shop-db'
 import type { ShippingForm } from '@cityssm/mini-shop-db/types'
-import type { RequestHandler } from 'express'
+import type { Request, Response } from 'express'
 
 import { captchaIsMatch, purgeCaptcha } from '../helpers/captchaFunctions.js'
 import * as configFunctions from '../helpers/configFunctions.js'
 
-export const handler: RequestHandler = async (request, response) => {
+export async function handler(
+  request: Request,
+  response: Response
+): Promise<void> {
   if (configFunctions.getProperty('settings.checkout_includeCaptcha')) {
-    const captchaKey = request.body.captchaKey
-    const captchaText = request.body.captchaText
+    const captchaKey = request.body.captchaKey as string
+    const captchaText = request.body.captchaText as string
 
     if (!captchaIsMatch(captchaKey, captchaText)) {
-      return response.json({
+      response.json({
         success: false,
         message: 'Image text does not match.'
       })
+
+      return
     }
   }
 
@@ -30,5 +34,5 @@ export const handler: RequestHandler = async (request, response) => {
     purgeCaptcha(request.body.captchaKey)
   }
 
-  return response.json(orderIDs)
+  response.json(orderIDs)
 }

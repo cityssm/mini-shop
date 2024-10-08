@@ -1,9 +1,13 @@
 import { CaptchaGenerator } from 'captcha-canvas'
-import type { RequestHandler } from 'express'
+import type { NextFunction, Request, Response } from 'express'
 
 import { getCaptchaText } from '../helpers/captchaFunctions.js'
 
-export const handler: RequestHandler = async (request, response, next) => {
+export async function handler(
+  request: Request,
+  response: Response,
+  next: NextFunction
+): Promise<void> {
   const captchaKey = request.params.captchaKey
   const captchaText = getCaptchaText(captchaKey)
 
@@ -23,5 +27,6 @@ export const handler: RequestHandler = async (request, response, next) => {
 
   response.contentType('image/png')
   response.set('Cache-Control', 'public, max-age=31557600')
-  return response.send(buffer)
+
+  response.send(buffer)
 }

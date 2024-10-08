@@ -5,18 +5,23 @@ export const onError = (error) => {
         throw error;
     }
     switch (error.code) {
-        case 'EACCES':
+        case 'EACCES': {
             console.error('Requires elevated privileges');
             process.exit(1);
-        case 'EADDRINUSE':
+            break;
+        }
+        case 'EADDRINUSE': {
             console.error('Port is already in use.');
             process.exit(1);
-        default:
+            break;
+        }
+        default: {
             throw error;
+        }
     }
 };
 export const onListening = (server) => {
-    const addr = server.address();
-    const bind = typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr.port.toString();
-    debug('Listening on ' + bind);
+    const addr = server.address() ?? '127.0.0.1';
+    const bind = typeof addr === 'string' ? `pipe ${addr}` : `port ${addr.port.toString()}`;
+    debug(`Listening on ${bind}`);
 };

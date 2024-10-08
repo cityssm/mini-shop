@@ -14,7 +14,9 @@ const defaultValues = {
   'application.applicationName': 'Mini Shop' as
     | string
     | configTypes.StringWithTranslations,
-  'application.httpPort': 7777,
+  'application.httpPort': 7777 as number | undefined,
+
+  'application.https': undefined as undefined | configTypes.ConfigHTTPSConfig,
 
   'reverseProxy.disableCompression': false,
   'reverseProxy.disableEtag': false,
@@ -26,7 +28,7 @@ const defaultValues = {
   languages: [] as LanguageCode[],
 
   orderNumberFunction: () => {
-    return 'RCT-' + uuidv4().toUpperCase()
+    return `RCT-${uuidv4().toUpperCase()}`
   },
 
   'site.header.backgroundColorClass': 'info',

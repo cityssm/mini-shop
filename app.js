@@ -34,7 +34,8 @@ app.use(abuseCheck({
     abusePoints: 1,
     abusePointsMax: 20,
     clearIntervalMillis: 60 * 60 * 1000,
-    expiryMillis: 5 * 60 * 1000
+    expiryMillis: 5 * 60 * 1000,
+    abuseMessageText: 'Access temporarily restricted.'
 }));
 if (!configFunctions.getProperty('reverseProxy.disableCompression')) {
     app.use(compression());

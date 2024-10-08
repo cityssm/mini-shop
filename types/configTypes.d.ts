@@ -13,7 +13,7 @@ export interface Config {
         disableCompression: boolean;
         disableEtag: boolean;
         blockViaXForwardedFor: boolean;
-        urlPrefix: string;
+        urlPrefix?: string;
     };
     mssqlConfig?: sqlTypes.config;
     languages?: LanguageCode[];

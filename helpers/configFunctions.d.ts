@@ -3,7 +3,8 @@ import type * as sqlTypes from 'mssql';
 import type * as configTypes from '../types/configTypes.js';
 declare const defaultValues: {
     'application.applicationName': string | configTypes.StringWithTranslations;
-    'application.httpPort': number;
+    'application.httpPort': number | undefined;
+    'application.https': undefined | configTypes.ConfigHTTPSConfig;
     'reverseProxy.disableCompression': boolean;
     'reverseProxy.disableEtag': boolean;
     'reverseProxy.blockViaXForwardedFor': boolean;

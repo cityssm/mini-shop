@@ -1,15 +1,16 @@
 import { createOrder as miniShopDB_createOrder } from '@cityssm/mini-shop-db';
 import { captchaIsMatch, purgeCaptcha } from '../helpers/captchaFunctions.js';
 import * as configFunctions from '../helpers/configFunctions.js';
-export const handler = async (request, response) => {
+export async function handler(request, response) {
     if (configFunctions.getProperty('settings.checkout_includeCaptcha')) {
         const captchaKey = request.body.captchaKey;
         const captchaText = request.body.captchaText;
         if (!captchaIsMatch(captchaKey, captchaText)) {
-            return response.json({
+            response.json({
                 success: false,
                 message: 'Image text does not match.'
             });
+            return;
         }
     }
     const formData = request.body;
@@ -18,5 +19,5 @@ export const handler = async (request, response) => {
         orderIDs.success) {
         purgeCaptcha(request.body.captchaKey);
     }
-    return response.json(orderIDs);
-};
+    response.json(orderIDs);
+}

@@ -7,17 +7,17 @@ import * as configFunctions from '../helpers/configFunctions.js';
 import { onError, onListening } from './serverFunctions.js';
 const debug = Debug('mini-shop:www');
 const httpPort = configFunctions.getProperty('application.httpPort');
-if (httpPort) {
+if (httpPort !== undefined) {
     const httpServer = http.createServer(app);
     httpServer.listen(httpPort);
     httpServer.on('error', onError);
     httpServer.on('listening', () => {
         onListening(httpServer);
     });
-    debug('HTTP listening on ' + httpPort.toString());
+    debug(`HTTP listening on ${httpPort.toString()}`);
 }
 const httpsConfig = configFunctions.getProperty('application.https');
-if (httpsConfig) {
+if (httpsConfig !== undefined) {
     const httpsServer = https.createServer({
         key: fs.readFileSync(httpsConfig.keyPath),
         cert: fs.readFileSync(httpsConfig.certPath),
@@ -28,5 +28,5 @@ if (httpsConfig) {
     httpsServer.on('listening', () => {
         onListening(httpsServer);
     });
-    debug('HTTPS listening on ' + httpsConfig.port.toString());
+    debug(`HTTPS listening on ${httpsConfig.port.toString()}`);
 }
