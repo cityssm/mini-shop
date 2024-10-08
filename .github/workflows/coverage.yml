@@ -13,6 +13,7 @@ jobs:
         node: [ 18, 20, 21 ]
     env:
       CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+      CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
       CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
       DEEPSOURCE_DSN: ${{ secrets.DEEPSOURCE_DSN }}
     name: Node ${{ matrix.node }}
