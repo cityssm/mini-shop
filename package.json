@@ -9,7 +9,6 @@
   },
   "scripts": {
     "start": "cross-env NODE_ENV=production node ./bin/www",
-    "start:lh": "cross-env NODE_ENV=production DEBUG=mini-shop:* node ./bin/www-lh",
     "dev": "cross-env NODE_ENV=dev DEBUG=mini-shop:*,mini-shop-db:* nodemon ./bin/www.js",
     "cy:open": "cypress open --config-file cypress.config.ts",
     "cy:run": "cypress run --config-file cypress.config.ts",

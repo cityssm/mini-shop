@@ -28,7 +28,7 @@ jobs:
       - name: Install Package
         run: |
           npm ci
-          npm install -g c8 @lhci/cli
+          npm install -g c8 mocha
 
       - name: Code Climate (Before)
         if: ${{ github.event_name != 'pull_request' && env.CC_TEST_REPORTER_ID != '' && matrix.node == 20 }}
@@ -37,9 +37,6 @@ jobs:
           chmod +x codeclimate-test-reporter
           ./codeclimate-test-reporter before-build
       
-      - name: Run Lighthouse Test
-        run: lhci autorun
-
       - name: Run Coverage Testing
         run: npm run coverage
 

@@ -5,8 +5,11 @@ import http from 'node:http'
 import { shutdown as abuseCheckShutdown } from '@cityssm/express-abuse-points'
 
 import { app } from '../app.js'
+import { overrideProperty } from '../helpers/configFunctions.js'
 
 describe('mini-shop', () => {
+  overrideProperty('reverseProxy.urlPrefix', '')
+
   const httpServer = http.createServer(app)
   const portNumber = 52_525
 
