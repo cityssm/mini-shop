@@ -17,6 +17,9 @@ export function fixProducts(configProducts) {
 export function fixFees(configFees) {
     const miniShopFees = {};
     for (const [feeSKU, fee] of Object.entries(configFees)) {
+        if (fee === undefined) {
+            continue;
+        }
         const miniShopDatabaseFee = {
             feeSKU,
             feeName: getStringByLanguage(fee.feeName, language),

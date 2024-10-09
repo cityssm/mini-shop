@@ -1,6 +1,9 @@
 import type { Request, Response } from 'express'
 
-import * as configFunctions from '../helpers/configFunctions.js'
+import {
+  getClientSideProduct,
+  getProperty
+} from '../helpers/configFunctions.js'
 import type {
   ConfigFeeDefinition,
   ConfigProduct
@@ -17,7 +20,7 @@ function getProductAndFeeDetails(productSKUs: string[]): {
     /*
      * Validate the product SKU
      */
-    const product = configFunctions.getClientSideProduct(productSKU)
+    const product = getClientSideProduct(productSKU)
 
     // If product not available, don't add it to the list.
     if (product === undefined) {
@@ -31,7 +34,7 @@ function getProductAndFeeDetails(productSKUs: string[]): {
     product.feeTotals = {}
 
     for (const feeName of product.fees ?? []) {
-      const fee = configFunctions.getProperty('fees')[feeName]
+      const fee = getProperty('fees')[feeName]
 
       if (fee) {
         product.feeTotals[feeName] = fee.feeCalculation(product)
@@ -54,8 +57,11 @@ function getProductAndFeeDetails(productSKUs: string[]): {
   }
 }
 
-export default function handler(request: Request, response: Response): void {
-  const productSKUs = (request.body.productSKUs as string).split(',')
+export default function handler(
+  request: Request<unknown, unknown, { productSKUs: string }>,
+  response: Response
+): void {
+  const productSKUs = request.body.productSKUs.split(',')
 
   const returnObject = getProductAndFeeDetails(productSKUs)
 

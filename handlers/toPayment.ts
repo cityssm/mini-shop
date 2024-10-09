@@ -2,7 +2,7 @@ import { getOrder as miniShopDB_getOrder } from '@cityssm/mini-shop-db'
 import type { Request, Response } from 'express'
 import type { LanguageCode } from 'iso-639-1'
 
-import * as configFunctions from '../helpers/configFunctions.js'
+import { getProperty } from '../helpers/configFunctions.js'
 import { preferredLanguageCookieKey } from '../helpers/translationHelpers.js'
 
 export default async function handler(
@@ -23,7 +23,7 @@ export default async function handler(
     return
   }
 
-  const storeType = configFunctions.getProperty('store.storeType')
+  const storeType = getProperty('store.storeType')
 
   const preferredLanguage = (request.cookies[preferredLanguageCookieKey] ??
     'en') as LanguageCode
@@ -44,9 +44,7 @@ export default async function handler(
     if (ticket) {
       toPaymentObject.ticket = ticket
     } else {
-      response.redirect(
-        configFunctions.getProperty('reverseProxy.urlPrefix') + '/order/error'
-      )
+      response.redirect(getProperty('reverseProxy.urlPrefix') + '/order/error')
       return
     }
   }

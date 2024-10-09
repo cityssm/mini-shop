@@ -1,4 +1,4 @@
-export declare const generateNewCaptcha: () => Promise<string>;
-export declare const getCaptchaText: (captchaKey: string) => string;
-export declare const captchaIsMatch: (captchaKey: string, captchaText: string) => boolean;
-export declare const purgeCaptcha: (captchaKey: string) => void;
+export declare function generateNewCaptcha(): Promise<string>;
+export declare function getCaptchaText(captchaKey: string): string;
+export declare function captchaIsMatch(captchaKey: string, captchaText: string): boolean;
+export declare function purgeCaptcha(captchaKey: string): void;

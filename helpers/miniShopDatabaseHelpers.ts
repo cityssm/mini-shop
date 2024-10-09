@@ -40,11 +40,15 @@ export function fixProducts(
 }
 
 export function fixFees(
-  configFees: Record<string, ConfigFeeDefinition>
+  configFees: Record<string, ConfigFeeDefinition | undefined>
 ): Record<string, MiniShopDatabaseFee> {
   const miniShopFees: Record<string, MiniShopDatabaseFee> = {}
 
   for (const [feeSKU, fee] of Object.entries(configFees)) {
+    if (fee === undefined) {
+      continue
+    }
+
     const miniShopDatabaseFee: MiniShopDatabaseFee = {
       feeSKU,
       feeName: getStringByLanguage(fee.feeName, language) as string,

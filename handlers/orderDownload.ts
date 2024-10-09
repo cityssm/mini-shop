@@ -9,7 +9,6 @@ import * as ejs from 'ejs'
 import type { NextFunction, Request, Response } from 'express'
 
 import * as configFunctions from '../helpers/configFunctions.js'
-import type { ConfigProduct } from '../types/configTypes.js'
 
 export default async function handler(
   request: Request,
@@ -65,9 +64,7 @@ export default async function handler(
    * Get Product Properties
    */
 
-  const product = configFunctions.getProperty('products')[item.productSKU] as
-    | ConfigProduct
-    | undefined
+  const product = configFunctions.getProperty('products')[item.productSKU]
 
   if (product === undefined || !(product.hasDownload ?? false)) {
     recordAbuse(request)

@@ -3,13 +3,13 @@ import type { ShippingForm } from '@cityssm/mini-shop-db/types'
 import type { Request, Response } from 'express'
 
 import { captchaIsMatch, purgeCaptcha } from '../helpers/captchaFunctions.js'
-import * as configFunctions from '../helpers/configFunctions.js'
+import { getProperty } from '../helpers/configFunctions.js'
 
 export default async function handler(
   request: Request,
   response: Response
 ): Promise<void> {
-  if (configFunctions.getProperty('settings.checkout_includeCaptcha')) {
+  if (getProperty('settings.checkout_includeCaptcha')) {
     const captchaKey = request.body.captchaKey as string
     const captchaText = request.body.captchaText as string
 
@@ -28,7 +28,7 @@ export default async function handler(
   const orderIDs = await miniShopDB_createOrder(formData)
 
   if (
-    configFunctions.getProperty('settings.checkout_includeCaptcha') &&
+    getProperty('settings.checkout_includeCaptcha') &&
     orderIDs.success
   ) {
     purgeCaptcha(request.body.captchaKey)

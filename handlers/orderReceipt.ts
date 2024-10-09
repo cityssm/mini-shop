@@ -2,7 +2,7 @@ import { recordAbuse } from '@cityssm/express-abuse-points'
 import { getOrder as miniShopDB_getOrder } from '@cityssm/mini-shop-db'
 import type { Request, Response } from 'express'
 
-import * as configFunctions from '../helpers/configFunctions.js'
+import { getProperty } from '../helpers/configFunctions.js'
 
 export default async function handler(
   request: Request,
@@ -19,13 +19,11 @@ export default async function handler(
           order.redirectURL + '/' + orderNumber + '/' + orderSecret
         )
       : response.render('order', {
-          pageTitle: 'Order ' + orderNumber,
+          pageTitle: `Order ${orderNumber}`,
           order
         })
   } else {
     recordAbuse(request)
-    response.redirect(
-      configFunctions.getProperty('reverseProxy.urlPrefix') + '/order/expired'
-    )
+    response.redirect(`${getProperty('reverseProxy.urlPrefix')}/order/expired`)
   }
 }

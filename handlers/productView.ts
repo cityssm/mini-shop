@@ -1,11 +1,11 @@
 import { recordAbuse } from '@cityssm/express-abuse-points'
 import type { Request, Response } from 'express'
 
-import * as configFunctions from '../helpers/configFunctions.js'
+import { getProperty } from '../helpers/configFunctions.js'
 
 export default function handler(request: Request, response: Response): void {
   const productSKU = request.params.productSKU
-  const product = configFunctions.getProperty('products')[productSKU]
+  const product = getProperty('products')[productSKU]
 
   if (product === undefined) {
     recordAbuse(request)

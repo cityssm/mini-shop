@@ -2,19 +2,25 @@ import type { Request } from 'express'
 
 import type { StoreValidatorReturn } from './types.js'
 
-export const validate = (request: Request): StoreValidatorReturn => {
-  const orderNumber = request.body.orderNumber
+export function validate(
+  request: Request<
+    unknown,
+    unknown,
+    { orderNumber?: string; orderSecret?: string }
+  >
+): StoreValidatorReturn {
+  const orderNumber = request.body.orderNumber as string | undefined
 
-  if (!orderNumber || orderNumber === '') {
+  if ((orderNumber ?? '') === '') {
     return {
       isValid: false,
       errorCode: 'missingOrderNumber'
     }
   }
 
-  const orderSecret = request.body.orderSecret
+  const orderSecret = request.body.orderSecret as string | undefined
 
-  if (!orderSecret || orderSecret === '') {
+  if ((orderSecret ?? '') === '') {
     return {
       isValid: false,
       errorCode: 'missingOrderSecret'
@@ -23,8 +29,8 @@ export const validate = (request: Request): StoreValidatorReturn => {
 
   return {
     isValid: true,
-    orderNumber,
-    orderSecret,
-    paymentID: orderNumber
+    orderNumber: orderNumber as string,
+    orderSecret: orderSecret as string,
+    paymentID: orderNumber as string
   }
 }

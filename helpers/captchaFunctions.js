@@ -1,16 +1,16 @@
 import NodeCache from 'node-cache';
 import { v4 as uuidv4 } from 'uuid';
-const timeoutSeconds_initialLoad = 30;
-const timeoutSeconds_postLookup = 15 * 60;
-const delay = async (millis) => {
-    return await new Promise((resolve) => setTimeout(resolve, millis));
-};
+const timeoutSecondsInitialLoad = 30;
+const timeoutSecondsPostLookup = 15 * 60;
+async function delay(millis) {
+    await new Promise((resolve) => setTimeout(resolve, millis));
+}
 const captchaCache = new NodeCache({
-    stdTTL: timeoutSeconds_initialLoad,
+    stdTTL: timeoutSecondsInitialLoad,
     useClones: false,
     maxKeys: 100_000
 });
-export const generateNewCaptcha = async () => {
+export async function generateNewCaptcha() {
     const captchaText = uuidv4().slice(0, 5).toUpperCase();
     let captchaKey = '';
     do {
@@ -24,15 +24,15 @@ export const generateNewCaptcha = async () => {
         return await generateNewCaptcha();
     }
     return captchaKey;
-};
-export const getCaptchaText = (captchaKey) => {
+}
+export function getCaptchaText(captchaKey) {
     const captchaText = captchaCache.get(captchaKey);
-    if (captchaText) {
-        captchaCache.set(captchaKey, captchaText, timeoutSeconds_postLookup);
+    if (captchaText !== undefined) {
+        captchaCache.set(captchaKey, captchaText, timeoutSecondsPostLookup);
     }
     return captchaText;
-};
-export const captchaIsMatch = (captchaKey, captchaText) => {
+}
+export function captchaIsMatch(captchaKey, captchaText) {
     if (!captchaCache.has(captchaKey)) {
         return false;
     }
@@ -40,7 +40,7 @@ export const captchaIsMatch = (captchaKey, captchaText) => {
         return false;
     }
     return true;
-};
-export const purgeCaptcha = (captchaKey) => {
+}
+export function purgeCaptcha(captchaKey) {
     captchaCache.del(captchaKey);
-};
+}

@@ -1,5 +1,5 @@
 import { getOrder as miniShopDB_getOrder } from '@cityssm/mini-shop-db';
-import * as configFunctions from '../helpers/configFunctions.js';
+import { getProperty } from '../helpers/configFunctions.js';
 import { preferredLanguageCookieKey } from '../helpers/translationHelpers.js';
 export default async function handler(request, response) {
     const orderNumber = request.body.orderNumber;
@@ -9,7 +9,7 @@ export default async function handler(request, response) {
         response.render('toPayment-expired');
         return;
     }
-    const storeType = configFunctions.getProperty('store.storeType');
+    const storeType = getProperty('store.storeType');
     const preferredLanguage = (request.cookies[preferredLanguageCookieKey] ??
         'en');
     const toPaymentObject = {
@@ -22,7 +22,7 @@ export default async function handler(request, response) {
             toPaymentObject.ticket = ticket;
         }
         else {
-            response.redirect(configFunctions.getProperty('reverseProxy.urlPrefix') + '/order/error');
+            response.redirect(getProperty('reverseProxy.urlPrefix') + '/order/error');
             return;
         }
     }

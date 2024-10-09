@@ -1,13 +1,13 @@
-export const validate = (request) => {
+export function validate(request) {
     const orderNumber = request.body.orderNumber;
-    if (!orderNumber || orderNumber === '') {
+    if ((orderNumber ?? '') === '') {
         return {
             isValid: false,
             errorCode: 'missingOrderNumber'
         };
     }
     const orderSecret = request.body.orderSecret;
-    if (!orderSecret || orderSecret === '') {
+    if ((orderSecret ?? '') === '') {
         return {
             isValid: false,
             errorCode: 'missingOrderSecret'
@@ -15,8 +15,8 @@ export const validate = (request) => {
     }
     return {
         isValid: true,
-        orderNumber,
-        orderSecret,
+        orderNumber: orderNumber,
+        orderSecret: orderSecret,
         paymentID: orderNumber
     };
-};
+}

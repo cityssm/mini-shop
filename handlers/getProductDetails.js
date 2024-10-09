@@ -1,16 +1,16 @@
-import * as configFunctions from '../helpers/configFunctions.js';
+import { getClientSideProduct, getProperty } from '../helpers/configFunctions.js';
 function getProductAndFeeDetails(productSKUs) {
     const products = {};
     const fees = {};
     for (const productSKU of productSKUs) {
-        const product = configFunctions.getClientSideProduct(productSKU);
+        const product = getClientSideProduct(productSKU);
         if (product === undefined) {
             continue;
         }
         let addProductToObject = true;
         product.feeTotals = {};
         for (const feeName of product.fees ?? []) {
-            const fee = configFunctions.getProperty('fees')[feeName];
+            const fee = getProperty('fees')[feeName];
             if (fee) {
                 product.feeTotals[feeName] = fee.feeCalculation(product);
                 fees[feeName] = fee;

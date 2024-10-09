@@ -6,6 +6,7 @@ import type { LanguageCode } from 'iso-639-1'
 import fetch from 'node-fetch'
 
 import * as configFunctions from '../../helpers/configFunctions.js'
+import type { ConfigFeeDefinition, ConfigProduct } from '../../types/configTypes.js'
 import type {
   MonerisCheckoutPreloadRequest,
   MonerisCheckoutPreloadResponse,
@@ -15,7 +16,6 @@ import type {
 import { getStringByLanguage } from '../translationHelpers.js'
 
 import type { StoreValidatorReturn } from './types.js'
-import { ConfigFeeDefinition, ConfigProduct } from '../../types/configTypes.js'
 
 const debug = Debug('mini-shop:stores:moneris-checkout')
 
