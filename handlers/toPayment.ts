@@ -1,13 +1,20 @@
 import { getOrder as miniShopDB_getOrder } from '@cityssm/mini-shop-db'
-import type { RequestHandler } from 'express'
+import type { Request, Response } from 'express'
 import type { LanguageCode } from 'iso-639-1'
 
 import * as configFunctions from '../helpers/configFunctions.js'
 import { preferredLanguageCookieKey } from '../helpers/translationHelpers.js'
 
-export const handler: RequestHandler = async (request, response) => {
-  const orderNumber: string = request.body.orderNumber
-  const orderSecret: string = request.body.orderSecret
+export default async function handler(
+  request: Request<
+    unknown,
+    unknown,
+    { orderNumber: string; orderSecret: string }
+  >,
+  response: Response
+): Promise<void> {
+  const orderNumber = request.body.orderNumber
+  const orderSecret = request.body.orderSecret
 
   const order = await miniShopDB_getOrder(orderNumber, orderSecret, false)
 
@@ -18,7 +25,8 @@ export const handler: RequestHandler = async (request, response) => {
 
   const storeType = configFunctions.getProperty('store.storeType')
 
-  const preferredLanguage = (request.cookies[preferredLanguageCookieKey] ?? 'en') as LanguageCode
+  const preferredLanguage = (request.cookies[preferredLanguageCookieKey] ??
+    'en') as LanguageCode
 
   const toPaymentObject: Record<string, unknown> = {
     order
@@ -28,7 +36,10 @@ export const handler: RequestHandler = async (request, response) => {
     const monerisCheckout = await import(
       '../helpers/stores/moneris-checkout.js'
     )
-    const ticket = await monerisCheckout.preloadRequest(order, preferredLanguage)
+    const ticket = await monerisCheckout.preloadRequest(
+      order,
+      preferredLanguage
+    )
 
     if (ticket) {
       toPaymentObject.ticket = ticket

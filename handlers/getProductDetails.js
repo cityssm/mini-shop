@@ -1,10 +1,10 @@
 import * as configFunctions from '../helpers/configFunctions.js';
-const getProductAndFeeDetails = (productSKUs) => {
+function getProductAndFeeDetails(productSKUs) {
     const products = {};
     const fees = {};
     for (const productSKU of productSKUs) {
         const product = configFunctions.getClientSideProduct(productSKU);
-        if (!product) {
+        if (product === undefined) {
             continue;
         }
         let addProductToObject = true;
@@ -28,10 +28,9 @@ const getProductAndFeeDetails = (productSKUs) => {
         products,
         fees
     };
-};
-export const handler = (request, response) => {
+}
+export default function handler(request, response) {
     const productSKUs = request.body.productSKUs.split(',');
     const returnObject = getProductAndFeeDetails(productSKUs);
-    return response.json(returnObject);
-};
-export default handler;
+    response.json(returnObject);
+}

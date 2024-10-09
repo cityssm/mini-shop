@@ -1,7 +1,7 @@
 import { getOrder as miniShopDB_getOrder } from '@cityssm/mini-shop-db';
 import * as configFunctions from '../helpers/configFunctions.js';
 import { preferredLanguageCookieKey } from '../helpers/translationHelpers.js';
-export const handler = async (request, response) => {
+export default async function handler(request, response) {
     const orderNumber = request.body.orderNumber;
     const orderSecret = request.body.orderSecret;
     const order = await miniShopDB_getOrder(orderNumber, orderSecret, false);
@@ -10,7 +10,8 @@ export const handler = async (request, response) => {
         return;
     }
     const storeType = configFunctions.getProperty('store.storeType');
-    const preferredLanguage = (request.cookies[preferredLanguageCookieKey] ?? 'en');
+    const preferredLanguage = (request.cookies[preferredLanguageCookieKey] ??
+        'en');
     const toPaymentObject = {
         order
     };
@@ -26,4 +27,4 @@ export const handler = async (request, response) => {
         }
     }
     response.render('toPayment', toPaymentObject);
-};
+}

@@ -3,7 +3,7 @@ import { updateOrderAsPaid } from '@cityssm/mini-shop-db';
 import * as configFunctions from '../helpers/configFunctions.js';
 import { validate as monerisCheckout_validate } from '../helpers/stores/moneris-checkout.js';
 import { validate as testingFree_validate } from '../helpers/stores/testing-free.js';
-export const handler = async (request, response) => {
+export default async function handler(request, response) {
     const storeType = configFunctions.getProperty('store.storeType');
     let storeValidatorReturn = {
         isValid: false,
@@ -38,4 +38,4 @@ export const handler = async (request, response) => {
         recordAbuse(request);
         response.redirect(urlPrefix + '/order/error');
     }
-};
+}

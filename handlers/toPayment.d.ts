@@ -1,2 +1,5 @@
-import type { RequestHandler } from 'express';
-export declare const handler: RequestHandler;
+import type { Request, Response } from 'express';
+export default function handler(request: Request<unknown, unknown, {
+    orderNumber: string;
+    orderSecret: string;
+}>, response: Response): Promise<void>;

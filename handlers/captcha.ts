@@ -3,7 +3,7 @@ import type { NextFunction, Request, Response } from 'express'
 
 import { getCaptchaText } from '../helpers/captchaFunctions.js'
 
-export async function handler(
+export default async function handler(
   request: Request,
   response: Response,
   next: NextFunction

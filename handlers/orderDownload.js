@@ -5,7 +5,7 @@ import convertHTMLToPDF from '@cityssm/pdf-puppeteer';
 import dateTimeFunctions from '@cityssm/utils-datetime';
 import * as ejs from 'ejs';
 import * as configFunctions from '../helpers/configFunctions.js';
-export async function handler(request, response, next) {
+export default async function handler(request, response, next) {
     const orderNumber = request.params.orderNumber;
     const orderSecret = request.params.orderSecret;
     const itemIndex = request.params.itemIndex;

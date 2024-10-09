@@ -23,8 +23,8 @@ declare const defaultValues: {
     'views.order.title': string | configTypes.StringWithTranslations;
     'views.order.headerEjs': string;
     'views.toPayment.headerEjs': string;
-    fees: Record<string, configTypes.ConfigFeeDefinition>;
-    products: Record<string, configTypes.ConfigProduct>;
+    fees: Record<string, configTypes.ConfigFeeDefinition | undefined>;
+    products: Record<string, configTypes.ConfigProduct | undefined>;
     productHandlers: configTypes.ProductHandlers[];
     store: configTypes.StoreConfigs;
     'store.storeType': configTypes.StoreTypes;
@@ -34,7 +34,7 @@ declare const defaultValues: {
 };
 export declare function getProperty<K extends keyof typeof defaultValues>(propertyName: K, fallbackValue?: (typeof defaultValues)[K]): (typeof defaultValues)[K];
 export declare function overrideProperty(propertyName: 'reverseProxy.urlPrefix', propertyValue: string): void;
-export declare function getClientSideProduct(productSKU: string): configTypes.ConfigProduct;
-export declare function getPropertyByLanguage<K extends keyof typeof defaultValues>(propertyName: K, preferredLanguage?: LanguageCode): string | undefined;
+export declare function getClientSideProduct(productSKU: string): configTypes.ConfigProduct | undefined;
+export declare function getPropertyByLanguage(propertyName: keyof typeof defaultValues, preferredLanguage?: LanguageCode): string | undefined;
 export declare function getLanguages(): string[][];
 export {};

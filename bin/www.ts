@@ -1,4 +1,3 @@
-
 import fs from 'node:fs'
 import http from 'node:http'
 import https from 'node:https'
@@ -7,7 +6,6 @@ import Debug from 'debug'
 
 import { app } from '../app.js'
 import * as configFunctions from '../helpers/configFunctions.js'
-
 
 import { onError, onListening } from './serverFunctions.js'
 const debug = Debug('mini-shop:www')

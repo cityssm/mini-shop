@@ -44,10 +44,11 @@ if (!configFunctions.getProperty('reverseProxy.disableEtag')) {
   app.set('etag', false)
 }
 
-// View engine setup
+// View engine
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
 
+// Abuse check
 app.use(
   abuseCheck({
     byXForwardedFor: configFunctions.getProperty(
@@ -67,9 +68,13 @@ if (!configFunctions.getProperty('reverseProxy.disableCompression')) {
 }
 
 app.use((request, _response, next) => {
-  debugApp(request.method + ' ' + request.url)
+  debugApp(`${request.method} ${request.url}`)
   next()
 })
+
+/*
+ * PARSER MIDDLEWARE
+ */
 
 app.use(express.json())
 
@@ -91,9 +96,7 @@ app.use(urlPrefix, express.static(path.join(__dirname, 'public')))
 
 app.use(
   `${urlPrefix}/lib/js-cookie`,
-  express.static(
-    path.join(__dirname, 'node_modules', 'js-cookie', 'dist')
-  )
+  express.static(path.join(__dirname, 'node_modules', 'js-cookie', 'dist'))
 )
 
 app.use(
@@ -120,26 +123,31 @@ app.use(
  */
 
 app.use((request, response, next) => {
-  // eslint-disable-next-line security/detect-object-injection, @typescript-eslint/no-unsafe-member-access
-  let languageToSet = request.cookies[translationHelpers.preferredLanguageCookieKey] as
-    | string
-    | undefined
+  // eslint-disable-next-line security/detect-object-injection
+  let languageToSet = request.cookies[
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    translationHelpers.preferredLanguageCookieKey
+  ] as string | undefined
 
   const availableLanguages = configFunctions.getProperty('languages')
 
-  if (availableLanguages.includes(languageToSet)) {
+  if (
+    languageToSet !== undefined &&
+    (availableLanguages as string[]).includes(languageToSet)
+  ) {
     next()
     return
   }
 
   languageToSet = request.headers['accept-language'] ?? 'en'
 
-  debugApp(availableLanguages)
-
   for (const availableLanguage of availableLanguages) {
     if (languageToSet.startsWith(availableLanguage)) {
       debugApp('set language')
-      response.cookie(translationHelpers.preferredLanguageCookieKey, availableLanguage)
+      response.cookie(
+        translationHelpers.preferredLanguageCookieKey,
+        availableLanguage
+      )
       next()
       return
     }
@@ -155,8 +163,10 @@ app.use((request, response, next) => {
 
 // Make config objects available to the templates
 app.use((request, response, next) => {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
-  response.locals.preferredLanguage = request.cookies[translationHelpers.preferredLanguageCookieKey] ?? 'en'
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  response.locals.preferredLanguage =
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    request.cookies[translationHelpers.preferredLanguageCookieKey] ?? 'en'
   response.locals.configFunctions = configFunctions
   response.locals.translationHelpers = translationHelpers
   response.locals.dateTimeFns = dateTimeFns
@@ -165,8 +175,6 @@ app.use((request, response, next) => {
   response.locals.pageTitle = ''
   next()
 })
-
-
 
 app.all(`${urlPrefix}/`, (_request, response) => {
   response.redirect(`${urlPrefix}/products`)

@@ -1,12 +1,10 @@
-/* eslint-disable unicorn/filename-case, @eslint-community/eslint-comments/disable-enable-pair */
-
 import { recordAbuse } from '@cityssm/express-abuse-points'
 import { getOrder as miniShopDB_getOrder } from '@cityssm/mini-shop-db'
 import type { Request, Response } from 'express'
 
 import * as configFunctions from '../helpers/configFunctions.js'
 
-export async function handler(
+export default async function handler(
   request: Request,
   response: Response
 ): Promise<void> {

@@ -1,6 +1,6 @@
 import { CaptchaGenerator } from 'captcha-canvas';
 import { getCaptchaText } from '../helpers/captchaFunctions.js';
-export async function handler(request, response, next) {
+export default async function handler(request, response, next) {
     const captchaKey = request.params.captchaKey;
     const captchaText = getCaptchaText(captchaKey);
     if (!captchaText) {

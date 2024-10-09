@@ -42,7 +42,7 @@ if (!configFunctions.getProperty('reverseProxy.disableCompression')) {
     app.use(compression());
 }
 app.use((request, _response, next) => {
-    debugApp(request.method + ' ' + request.url);
+    debugApp(`${request.method} ${request.url}`);
     next();
 });
 app.use(express.json());
@@ -59,12 +59,12 @@ app.use(`${urlPrefix}/lib/formToObject`, express.static(path.join(__dirname, 'no
 app.use((request, response, next) => {
     let languageToSet = request.cookies[translationHelpers.preferredLanguageCookieKey];
     const availableLanguages = configFunctions.getProperty('languages');
-    if (availableLanguages.includes(languageToSet)) {
+    if (languageToSet !== undefined &&
+        availableLanguages.includes(languageToSet)) {
         next();
         return;
     }
     languageToSet = request.headers['accept-language'] ?? 'en';
-    debugApp(availableLanguages);
     for (const availableLanguage of availableLanguages) {
         if (languageToSet.startsWith(availableLanguage)) {
             debugApp('set language');
@@ -80,7 +80,8 @@ app.use((request, response, next) => {
     next();
 });
 app.use((request, response, next) => {
-    response.locals.preferredLanguage = request.cookies[translationHelpers.preferredLanguageCookieKey] ?? 'en';
+    response.locals.preferredLanguage =
+        request.cookies[translationHelpers.preferredLanguageCookieKey] ?? 'en';
     response.locals.configFunctions = configFunctions;
     response.locals.translationHelpers = translationHelpers;
     response.locals.dateTimeFns = dateTimeFns;

@@ -1,5 +1,3 @@
-/* eslint-disable unicorn/filename-case, @eslint-community/eslint-comments/disable-enable-pair */
-
 import path from 'node:path'
 
 import { recordAbuse } from '@cityssm/express-abuse-points'
@@ -13,7 +11,7 @@ import type { NextFunction, Request, Response } from 'express'
 import * as configFunctions from '../helpers/configFunctions.js'
 import type { ConfigProduct } from '../types/configTypes.js'
 
-export async function handler(
+export default async function handler(
   request: Request,
   response: Response,
   next: NextFunction

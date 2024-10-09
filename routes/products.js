@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { handler as handler_productView } from '../handlers/product-view.js';
-import { handler as handler_products } from '../handlers/products.js';
+import handler_productView from '../handlers/productView.js';
+import handler_products from '../handlers/products.js';
 import * as configFunctions from '../helpers/configFunctions.js';
 export const router = Router();
 router.get('/', handler_products);

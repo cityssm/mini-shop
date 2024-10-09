@@ -1,15 +1,14 @@
 import { recordAbuse } from '@cityssm/express-abuse-points'
 import { updateOrderAsPaid } from '@cityssm/mini-shop-db'
-import type { RequestHandler } from 'express'
+import type { Request, Response } from 'express'
 
 import * as configFunctions from '../helpers/configFunctions.js'
 import { validate as monerisCheckout_validate } from '../helpers/stores/moneris-checkout.js'
 import { validate as testingFree_validate } from '../helpers/stores/testing-free.js'
 import type { StoreValidatorReturn } from '../helpers/stores/types'
 
-export const handler: RequestHandler = async (request, response) => {
+export default async function handler(request: Request, response: Response): Promise<void> {
   // Validate store-specific result
-
   const storeType = configFunctions.getProperty('store.storeType')
 
   let storeValidatorReturn: StoreValidatorReturn = {
@@ -34,7 +33,6 @@ export const handler: RequestHandler = async (request, response) => {
   }
 
   // Update the Order record
-
   let orderRecordMarkedAsPaid = false
 
   if (storeValidatorReturn.isValid) {
@@ -42,16 +40,15 @@ export const handler: RequestHandler = async (request, response) => {
   }
 
   // Redirect to receipt
-
   const urlPrefix = configFunctions.getProperty('reverseProxy.urlPrefix')
 
   if (storeValidatorReturn.isValid && orderRecordMarkedAsPaid) {
     response.redirect(
       urlPrefix +
-        '/order/' +
-        storeValidatorReturn.orderNumber +
-        '/' +
-        storeValidatorReturn.orderSecret
+      '/order/' +
+      storeValidatorReturn.orderNumber +
+      '/' +
+      storeValidatorReturn.orderSecret
     )
   } else {
     recordAbuse(request)

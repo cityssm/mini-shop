@@ -1,4 +1,4 @@
-import type { RequestHandler } from 'express'
+import type { Request, Response } from 'express'
 
 import * as configFunctions from '../helpers/configFunctions.js'
 import type {
@@ -6,8 +6,10 @@ import type {
   ConfigProduct
 } from '../types/configTypes.js'
 
-
-const getProductAndFeeDetails = (productSKUs: string[]) => {
+function getProductAndFeeDetails(productSKUs: string[]): {
+  products: Record<string, ConfigProduct>
+  fees: Record<string, ConfigFeeDefinition>
+} {
   const products: Record<string, ConfigProduct> = {}
   const fees: Record<string, ConfigFeeDefinition> = {}
 
@@ -15,18 +17,16 @@ const getProductAndFeeDetails = (productSKUs: string[]) => {
     /*
      * Validate the product SKU
      */
-
     const product = configFunctions.getClientSideProduct(productSKU)
 
     // If product not available, don't add it to the list.
-    if (!product) {
+    if (product === undefined) {
       continue
     }
 
     /*
      * Calculate fees
      */
-
     let addProductToObject = true
     product.feeTotals = {}
 
@@ -54,12 +54,10 @@ const getProductAndFeeDetails = (productSKUs: string[]) => {
   }
 }
 
-export const handler: RequestHandler = (request, response) => {
+export default function handler(request: Request, response: Response): void {
   const productSKUs = (request.body.productSKUs as string).split(',')
 
   const returnObject = getProductAndFeeDetails(productSKUs)
 
-  return response.json(returnObject)
+  response.json(returnObject)
 }
-
-export default handler

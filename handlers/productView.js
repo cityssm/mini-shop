@@ -1,9 +1,9 @@
 import { recordAbuse } from '@cityssm/express-abuse-points';
 import * as configFunctions from '../helpers/configFunctions.js';
-export const handler = (request, response) => {
+export default function handler(request, response) {
     const productSKU = request.params.productSKU;
     const product = configFunctions.getProperty('products')[productSKU];
-    if (!product) {
+    if (product === undefined) {
         recordAbuse(request);
         response.status(404);
         response.render('product-notFound');
@@ -14,4 +14,4 @@ export const handler = (request, response) => {
         productSKU,
         product
     });
-};
+}

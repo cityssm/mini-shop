@@ -15,6 +15,7 @@ import type {
 import { getStringByLanguage } from '../translationHelpers.js'
 
 import type { StoreValidatorReturn } from './types.js'
+import { ConfigFeeDefinition, ConfigProduct } from '../../types/configTypes.js'
 
 const debug = Debug('mini-shop:stores:moneris-checkout')
 
@@ -112,7 +113,7 @@ export async function preloadRequest(
 
   for (const orderItem of order.items ?? []) {
     const product =
-      configFunctions.getProperty('products')[orderItem.productSKU]
+      configFunctions.getProperty('products')[orderItem.productSKU] as ConfigProduct
 
     let description = getStringByLanguage(
       product.productName,
@@ -143,7 +144,7 @@ export async function preloadRequest(
   }
 
   for (const orderFee of order.fees ?? []) {
-    const fee = configFunctions.getProperty('fees')[orderFee.feeName]
+    const fee = configFunctions.getProperty('fees')[orderFee.feeName] as ConfigFeeDefinition
 
     const cartItem = {
       url: '',

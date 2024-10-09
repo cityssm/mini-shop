@@ -14,16 +14,20 @@ import {
   removeTranslationFromProduct
 } from './translationHelpers.js'
 
-const languages = getProperty('languages') ?? ''
+const languages = getProperty('languages')
 
 const language = languages.length > 0 ? languages[0] : 'en'
 
 export function fixProducts(
-  configProducts: Record<string, ConfigProduct>
+  configProducts: Record<string, ConfigProduct | undefined>
 ): Record<string, MiniShopDatabaseProduct> {
   const miniShopProducts: Record<string, MiniShopDatabaseProduct> = {}
 
   for (const [productSku, product] of Object.entries(configProducts)) {
+    if (product === undefined) {
+      continue
+    }
+
     const miniShopDatabaseProduct = removeTranslationFromProduct(
       product,
       language

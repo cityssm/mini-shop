@@ -25,7 +25,7 @@ const defaultValues = {
 
   mssqlConfig: undefined as unknown as sqlTypes.config,
 
-  languages: [] as LanguageCode[],
+  languages: ['en'] as LanguageCode[],
 
   orderNumberFunction: () => {
     return `RCT-${uuidv4().toUpperCase()}`
@@ -59,8 +59,14 @@ const defaultValues = {
 
   'views.toPayment.headerEjs': 'toPayment_redirecting.ejs',
 
-  fees: {} as unknown as Record<string, configTypes.ConfigFeeDefinition>,
-  products: {} as unknown as Record<string, configTypes.ConfigProduct>,
+  fees: {} as unknown as Record<
+    string,
+    configTypes.ConfigFeeDefinition | undefined
+  >,
+  products: {} as unknown as Record<
+    string,
+    configTypes.ConfigProduct | undefined
+  >,
   productHandlers: [] as configTypes.ProductHandlers[],
 
   store: undefined as unknown as configTypes.StoreConfigs,
@@ -140,19 +146,21 @@ const clientSideProducts: Record<string, configTypes.ConfigProduct> = {}
 
 export function getClientSideProduct(
   productSKU: string
-): configTypes.ConfigProduct {
+): configTypes.ConfigProduct | undefined {
   if (Object.keys(clientSideProducts).length === 0) {
     const serverSideProducts = getProperty('products')
 
     for (const serverProductSKU of Object.keys(serverSideProducts)) {
       const serverSideProduct = serverSideProducts[serverProductSKU]
 
-      clientSideProducts[serverProductSKU] = {
-        productName: serverSideProduct.productName,
-        price: serverSideProduct.price,
-        image: serverSideProduct.image,
-        fees: serverSideProduct.fees || [],
-        formFieldsToSave: serverSideProduct.formFieldsToSave
+      if (serverSideProduct !== undefined) {
+        clientSideProducts[serverProductSKU] = {
+          productName: serverSideProduct.productName,
+          price: serverSideProduct.price,
+          image: serverSideProduct.image,
+          fees: serverSideProduct.fees ?? [],
+          formFieldsToSave: serverSideProduct.formFieldsToSave
+        }
       }
     }
   }
@@ -160,8 +168,8 @@ export function getClientSideProduct(
   return clientSideProducts[productSKU]
 }
 
-export function getPropertyByLanguage<K extends keyof typeof defaultValues>(
-  propertyName: K,
+export function getPropertyByLanguage(
+  propertyName: keyof typeof defaultValues,
   preferredLanguage: LanguageCode = 'en'
 ): string | undefined {
   const languageStringProperty = getProperty(propertyName) as

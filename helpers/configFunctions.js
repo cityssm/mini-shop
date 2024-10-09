@@ -13,7 +13,7 @@ const defaultValues = {
     'reverseProxy.blockViaXForwardedFor': false,
     'reverseProxy.urlPrefix': '',
     mssqlConfig: undefined,
-    languages: [],
+    languages: ['en'],
     orderNumberFunction: () => {
         return `RCT-${uuidv4().toUpperCase()}`;
     },
@@ -71,13 +71,15 @@ export function getClientSideProduct(productSKU) {
         const serverSideProducts = getProperty('products');
         for (const serverProductSKU of Object.keys(serverSideProducts)) {
             const serverSideProduct = serverSideProducts[serverProductSKU];
-            clientSideProducts[serverProductSKU] = {
-                productName: serverSideProduct.productName,
-                price: serverSideProduct.price,
-                image: serverSideProduct.image,
-                fees: serverSideProduct.fees || [],
-                formFieldsToSave: serverSideProduct.formFieldsToSave
-            };
+            if (serverSideProduct !== undefined) {
+                clientSideProducts[serverProductSKU] = {
+                    productName: serverSideProduct.productName,
+                    price: serverSideProduct.price,
+                    image: serverSideProduct.image,
+                    fees: serverSideProduct.fees ?? [],
+                    formFieldsToSave: serverSideProduct.formFieldsToSave
+                };
+            }
         }
     }
     return clientSideProducts[productSKU];
