@@ -53,7 +53,7 @@
     "@cityssm/express-abuse-points": "^3.0.0",
     "@cityssm/expressjs-server-js": "^2.3.3",
     "@cityssm/mini-shop-db": "^3.2.2",
-    "@cityssm/mssql-multi-pool": "^3.2.0",
+    "@cityssm/mssql-multi-pool": "^3.2.1",
     "@cityssm/pdf-puppeteer": "^4.3.1",
     "@cityssm/utils-datetime": "^1.3.0",
     "captcha-canvas": "^2.3.1",
