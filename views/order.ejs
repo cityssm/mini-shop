@@ -78,18 +78,7 @@
         const productConfig = configFunctions.getProperty("products")[item.productSKU];
         itemTotal += item.itemTotal;
 
-        let itemHasDownload = productConfig?.hasDownload ?? false
-
-        if (itemHasDownload && item.productSKU === 'oab') {
-
-          const permitType = item.fields.find((possibleField) => {
-            return possibleField.formFieldName === 'permitType'
-          })?.fieldValue ?? ''
-
-          if (!permitType.startsWith('renew_')) {
-            itemHasDownload = false
-          }
-        }
+        const itemHasDownload = productConfig?.hasDownload ?? false
     %>
       <tr>
         <th scope="row" <%- itemHasDownload ? "" : ' colspan="2"' %>>

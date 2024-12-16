@@ -86,23 +86,17 @@ export default async function handler(
       item.fields?.find((possibleField) => {
         return possibleField.formFieldName === 'permitType'
       })?.fieldValue ?? ''
-
-    if (!permitType.startsWith('renew_')) {
-      recordAbuse(request)
-
-      response.json({
-        success: false,
-        errorMessage: 'No download available.'
-      })
-
-      return
-    }
+      
+    const streetAddress =
+      item.fields?.find((possibleField) => {
+        return possibleField.formFieldName === 'streetAddress'
+      })?.fieldValue ?? ''
 
     const expiryDate = new Date(order.orderTime)
 
-    if (permitType === 'renew_1yr') {
+    if (permitType.endsWith('_1yr')) {
       expiryDate.setFullYear(expiryDate.getFullYear() + 1)
-    } else if (permitType === 'renew_4yr') {
+    } else if (permitType.endsWith('_4yr')) {
       expiryDate.setFullYear(expiryDate.getFullYear() + 4)
     } else {
       response.json({
@@ -122,7 +116,8 @@ export default async function handler(
           order,
           item,
           expiryDate,
-          permitType
+          permitType,
+          streetAddress
         },
         { async: true }
       )

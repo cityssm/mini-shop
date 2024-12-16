@@ -91,22 +91,13 @@
           <td class="center">
             <div>
               <span class="caps bold" style="font-size:14pt;">Sault Ste. Marie Fire Services</span><br />
-              <span style="font-size:11pt">72 Tancred St., Sault Ste. Marie, Ontario &nbsp;P6A 2W1</span>
+              <span style="font-size:11pt">
+                72 Tancred St., Sault Ste. Marie, Ontario
+                &nbsp;P6A 2W1
+                &nbsp;705-949-3333
+              </span>
             </div>
             <h1 class="caps bold" style="font-size:18pt">Open-Air Burning Permit</h1>
-            <div class="bold" style="font-size:13pt">
-              No Burning After 11:00 pm
-            </div>
-          </td>
-          <td style="width:25%;text-align:right;font-size:6pt">
-            Emergency Dial 911<br />
-            <br />
-            Approved <span class="checkbox"></span><br />
-            Denied <span class="checkbox"></span><br />
-            Owner Approval <span class="checkbox"></span><br />
-            Please Call Office 705-949-3333 ext. 3 <span class="checkbox"></span><br />
-            <br />
-            Call to Renew 705-949-3333 ext. 3
           </td>
         </tr>
       </tbody>
@@ -120,45 +111,25 @@
         </tr>
         <tr>
           <th>Address</th>
-          <td class="field" colspan="5"><%= item.streetAddress %></td>
+          <td class="field" colspan="5"><%= streetAddress %></td>
         </tr>
         <tr>
           <th>Phone Number</th>
           <td class="field" colspan="5"><%= order.shippingPhoneNumberDay %></td>
         </tr>
         <tr>
-          <th>Location</th>
-          <td class="field" colspan="5">&nbsp;</td>
-        </tr>
-        <tr>
-          <th rowspan="3" style="vertical-align:top">Comments</th>
-          <td class="field" colspan="5">&nbsp;</td>
-        </tr>
-        <tr>
-          <td class="field" colspan="5">&nbsp;</td>
-        </tr>
-        <tr>
-          <td class="field" colspan="5">&nbsp;</td>
-        </tr>
-        <tr>
           <th>Valid From</th>
           <td class="field"><%= dateTimeFunctions.dateToString(order.orderTime) %></td>
           <th>To</th>
           <td class="field"><%= dateTimeFunctions.dateToString(expiryDate) %></td>
-          <th>Signature of Officer</th>
-          <td class="field" style="width:40%">&nbsp;</td>
-        </tr>
-        <tr>
-          <td class="bold narrow nowrap" colspan="4" style="padding-left:0">
-            I have read, understand and agree to abide by all Open-Air Burning Guidelines.
-          </td>
-          <th>Permit Holder</th>
-          <td class="field">&nbsp;</td>
         </tr>
       </tbody>
     </table>
 
-    <h2 class="center" style="font-size:16pt">The Permit Holder Shall Adhere to the Following Guidelines:</h2>
+    <h2 class="center" style="font-size:16pt">
+      The Permit Holder Shall Adhere to All Provisions of Open-Air Burning By-law 2024-147,
+      including but not limited to:
+    </h2>
 
     <table class="narrow" style="table-layout:fixed">
       <tbody>
@@ -166,40 +137,41 @@
           <td>
             <ol>
               <li>
-                <strong>Burn only clean dry material.</strong>
-                Materials such as petroleum products, plastics, rubber, painted materials shall not be burned.
-                Materials the create excessive smoke such as leaves, grass clippings, construction or demolition debris shall not be burned.
-              </li>
-              <li>
-                Ensure the fire is located an approved distance from any structure and/or
-                any combustible material. (trees, woodpiles, fences, etc.)
-              </li>
-              <li>
-                Burn less than one cubic metre of material at a time.
-              </li>
-              <li>
-                Stay with the fire at all times until it is completely extinguished.
-              </li>
-              <li>
-                Have an adequate water supply to contain or extinguish the fire.
+                Burn only clean dry firewood, charcoal or briquettes.
+                Materials such as petroleum products, plastics rubber, painted materials, leaves, grass clippings
+                and construction or demolition debris shall not be burned.
+              </li><li>
+                Ensure the fire is contained in a non-combustible fire container
+                (i.e. fire bowl, fire table, fireplace, chimnea or wood stove)
+                or is in a pit on the ground surrounded by metal, masonry, ceramic or stone.
+              </li><li>
+                Maintain 5 metres of clearance to all buildings, structures, decks, property lines, trees, hedges, fences,
+                roadways, overhead wires or other combustible articles.
+              </li><li>
+                Burn less than 0.5 cubic materials at a time.
+              </li><li>
+                Burning is permitted daily between 7:00 a.m. and 11:00 pm only.
+              </li><li>
+                Ensure there is constant supervision and control over the open-air fire.
               </li>
             </ol>
           </td>
           <td>
-            <ol start="6">
+            <ol start="7">
               <li>
-                Open-air burning <strong>must not</strong> be conducted under the following weather conditions:
-                during rain or fog and/or during excessive wind.
+                Have an adequate water supply to contain or extinguish the fire.
+              </li><li>
+                The permit holder shall completely extinguish the open-air fire before the site is vacated.
+              </li><li>
+                Open-air burning shall not be conducted on days where rain, fog, smog, high winds
+                or any other weather condition prevents the proper dispersion of smoke.
+              </li><li>
+                The permit holder shall be courteous to neighbours at all times and shall not cause or permit a nuisance fire.
+              </li><li>
+                The permit holder shall not open-air burn where open-air burning may cause a risk to human health.
+              </li><li>
+                S.S.M.F.S or the M.N.R.F have the authority to issue a burn ban which would supersede all approvals to conduct open-air burning. 
               </li>
-              <li>
-                <strong>Common courtesy to your neighbours is expected.</strong>
-                (clothes lines, open windows, etc.)
-              </li>
-              <li>
-                Tenants must have written approval from owner.
-              </li>
-              <li>Whenever conditions warrant the S.S.M. Fire Services of the M.N.R. can declare a ban on all burning.
-                All open-air burning is prohibited within the municipality until such time that the ban has been lifted.
             </ol>
           </td>
         </tr>
@@ -207,14 +179,10 @@
     </table>
     <div class="center" style="font-size:13pt">
       <p>
-        Open-Air Burning is regulated under Article 2.4.4.4 of Ontario Fire Code.
-      </p>
-      <p class="bold">
-        Any contravention of this approval and/or guidelines will result in the permit being revoked for 90 days<br />
-        and/or fines up to $50,000 or imprisonment for up to one year or both.
-      </p>
-      <p>
-        Sault Ste. Marie Fire Services assumes no liability from damages that may be caused by this approval.
+        Open-Air Burning is regulated in Sault Ste. Marie under By-law 2024-147.
+        Any contravention of this By-law can result in the permit being revoked.
+        Additionally, any person who contravenes any provision of this By-law is guilty of an offence
+        and is liable to a fine and penalty pursuant to the provisions of Section 61 of the Provincial Offences Act, R.S.O. 1990, c.P.33., as amended. 
       </p>
     </div>
     <p class="bold center" style="font-size:16pt;font-style:italic">
