@@ -11,5 +11,5 @@
   },
   "compileOnSave": true,
   "buildOnSave": true,
-  "include": ["public/javascripts/*"]
+  "include": ["./*", "./**/*"]
 }
