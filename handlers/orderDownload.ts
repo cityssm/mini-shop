@@ -122,7 +122,7 @@ export default async function handler(
         { async: true }
       )
 
-      console.log(ejsData)
+      // console.log(ejsData)
 
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
       const pdf = await convertHTMLToPDF(

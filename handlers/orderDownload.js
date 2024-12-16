@@ -73,7 +73,6 @@ export default async function handler(request, response, next) {
                 permitType,
                 streetAddress
             }, { async: true });
-            console.log(ejsData);
             const pdf = await convertHTMLToPDF(ejsData, {
                 format: 'Letter',
                 printBackground: true,
