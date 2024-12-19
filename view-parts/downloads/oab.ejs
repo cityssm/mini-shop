@@ -199,27 +199,18 @@
           <tr>
             <th>Permit Type</th>
             <td class="field">
-              <%
-                switch (permitType) {
-
-                  case "renew_1yr":
-              %>
-                    Permit Renewal (One Year)
-              <%
-                    break;
-
-                  case "renew_4yr":
-              %>
-                    Permit Renewal (Four Years)
-              <%
-                    break;
-                }
-              %>
+              <% if (permitType.endsWith('_1yr')) { %>
+                One Year Permit
+              <% } else if (permitType.endsWith('_4yr')) { %>
+                Four Year Permit
+              <% } %>
             </td>
           </tr>
           <tr>
             <th>Amount Paid</th>
-            <td class="field">$<%= item.unitPrice.toFixed(2) %></td>
+            <td class="field">
+              $<%= item.unitPrice.toFixed(2) %>
+            </td>
           </tr>
           <tr>
             <th>Payment Time</th>
