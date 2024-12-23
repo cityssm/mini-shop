@@ -61,66 +61,79 @@
   </div>
 </fieldset>
 
-<label class="checkbox">
-  <input
-    id="<%= idPrefix %>_understandGuidelines"
-    name="understandGuidelines"
-    type="checkbox"
-    required
-  />
-  I have read, understand, and will follow all open-air burning requirements under
-  <a href="https://saultstemarie.ca/Cityweb/media/Legal/By-laws/By-law-2024-147.pdf" target="_blank">By-law 2024-147</a>.
-  I understand that it is my responsibility to be aware of the expiry date on the permit and to know when I need to re-apply for a permit.    
-</label>
+<div class="is-hidden" id="container_<%= idPrefix %>_applicantType-owner">
+  <label class="checkbox">
+    <input
+      id="<%= idPrefix %>_understandGuidelines"
+      name="understandGuidelines"
+      type="checkbox"
+      required
+    />
+    I have read, understand, and will follow all open-air burning requirements under
+    <a href="https://saultstemarie.ca/Cityweb/media/Legal/By-laws/By-law-2024-147.pdf" target="_blank">By-law 2024-147</a>.
+    I understand that it is my responsibility to be aware of the expiry date on the permit and to know when I need to re-apply for a permit.    
+  </label>
 
-<fieldset class="mt-5">
-  <legend class="title is-5">Permit Type</legend>
+  <fieldset class="mt-5">
+    <legend class="title is-5">Permit Type</legend>
 
-  <% if (Number.isFinite(product.data?.oab_4yr)) { %>
-    <div class="content">
-      <div class="control">
-        <label class="radio">
-          <input
-            id="<%= idPrefix %>_permitType_oab_4yr"
-            name="permitType"
-            value="oab_4yr"
-            data-unit-price="<%= product.data.oab_4yr %>"
-            type="radio"
-            aria-describedby="<%= idPrefix %>_permitType_oab_4yr_description"
-            required
-          />
-          Four Year Permit - $<%= product.data.oab_4yr %>
-        </label>
+    <% if (Number.isFinite(product.data?.oab_4yr)) { %>
+      <div class="content">
+        <div class="control">
+          <label class="radio">
+            <input
+              id="<%= idPrefix %>_permitType_oab_4yr"
+              name="permitType"
+              value="oab_4yr"
+              data-unit-price="<%= product.data.oab_4yr %>"
+              type="radio"
+              aria-describedby="<%= idPrefix %>_permitType_oab_4yr_description"
+              required
+            />
+            Four Year Permit - $<%= product.data.oab_4yr %>
+          </label>
+        </div>
+
+        <p id="<%= idPrefix %>_permitType_oab_4yr_description">
+          Expires four years after the date of purchase.
+        </p>
       </div>
-
-      <p id="<%= idPrefix %>_permitType_oab_4yr_description">
-        Expires four years after the date of purchase.
-      </p>
-    </div>
-  <% } %>
-  
-  <% if (Number.isFinite(product.data?.oab_1yr)) { %>
-    <div class="content">
-      <div class="control">
-        <label class="radio">
-          <input
-            id="<%= idPrefix %>_permitType_oab_1yr"
-            name="permitType"
-            value="oab_1yr"
-            data-unit-price="<%= product.data.oab_1yr %>"
-            type="radio"
-            aria-describedby="<%= idPrefix %>_permitType_oab_1yr_description"
-            required
-          />
-          One Year Permit - $<%= product.data.oab_1yr %>
-        </label>
+    <% } %>
+    
+    <% if (Number.isFinite(product.data?.oab_1yr)) { %>
+      <div class="content">
+        <div class="control">
+          <label class="radio">
+            <input
+              id="<%= idPrefix %>_permitType_oab_1yr"
+              name="permitType"
+              value="oab_1yr"
+              data-unit-price="<%= product.data.oab_1yr %>"
+              type="radio"
+              aria-describedby="<%= idPrefix %>_permitType_oab_1yr_description"
+              required
+            />
+            One Year Permit - $<%= product.data.oab_1yr %>
+          </label>
+        </div>
+        <p id="<%= idPrefix %>_permitType_oab_1yr_description">
+          Expires one year after the date of purchase.
+        </p>
       </div>
-      <p id="<%= idPrefix %>_permitType_oab_1yr_description">
-        Expires one year after the date of purchase.
-      </p>
-    </div>
-  <% } %>
-</fieldset>
+    <% } %>
+  </fieldset>
+</div>
+
+<div class="is-hidden" id="container_<%= idPrefix %>_applicantType-tenant">
+  <div class="message is-warning">
+    <p class="message-body">
+      Please email your letter of consent from the owner to
+      <a href="mailto:fire@cityssm.on.ca?subject=Open-Air Burning Permit Application for Tenants">fire@cityssm.on.ca</a>.
+      Call the office at 705-949-3333 x3 when you have emailed the letter of consent
+      to complete the open-air burning application.
+    </p>
+  </div>
+</div>
 
 <% if (preferredLanguage !== 'en') { %>
   </div>
