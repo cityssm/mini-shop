@@ -42,7 +42,7 @@
     "bulma": "^0.9.4",
     "cypress": "^13.17.0",
     "cypress-axe": "^1.5.0",
-    "eslint-config-cityssm": "^18.1.2",
+    "eslint-config-cityssm": "^18.3.0",
     "nodemon": "^3.1.9",
     "prettier-config-cityssm": "^1.0.0"
   },
