@@ -107,7 +107,7 @@
         </th>
         <% if (itemHasDownload) { %>
           <td>
-            <a class="button is-primary" href="<%= urlPrefix %>/order/<%= order.paymentID %>/<%= order.orderSecret %>/<%= item.itemIndex %>/download" target="_blank">Download Now</a>
+            <a class="button is-primary" href="<%= urlPrefix %>/order/<%= order.orderNumber %>/<%= order.orderSecret %>/<%= item.itemIndex %>/download" target="_blank">Download Now</a>
           </td>
         <% } %>
         <td class="has-text-right">
