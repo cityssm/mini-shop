@@ -36,7 +36,7 @@
     "@types/express": "^5.0.0",
     "@types/http-errors": "^2.0.4",
     "@types/mocha": "^10.0.10",
-    "@types/mssql": "^9.1.5",
+    "@types/mssql": "^9.1.6",
     "@types/node-windows": "^0.1.6",
     "@types/uuid": "^10.0.0",
     "bulma": "^0.9.4",
