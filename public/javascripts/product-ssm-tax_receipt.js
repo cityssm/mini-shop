@@ -7,12 +7,14 @@
     const toggleCurrentYearVisibility = () => {
         if (documentTypeElement.value.toLowerCase().includes('reprint')) {
             currentYearElement.style.display = '';
+            currentYearElement.disabled = false;
         }
         else {
             if (taxYearElement.selectedIndex === 0) {
                 taxYearElement.selectedIndex = 1;
             }
             currentYearElement.style.display = 'none';
+            currentYearElement.disabled = true;
         }
     };
     documentTypeElement.addEventListener('change', toggleCurrentYearVisibility);

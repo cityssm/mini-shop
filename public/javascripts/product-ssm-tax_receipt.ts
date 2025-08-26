@@ -1,5 +1,7 @@
 ;(() => {
-  const formElement = document.querySelector('#form--product')
+  const formElement = document.querySelector(
+    '#form--product'
+  ) as HTMLFormElement
 
   const documentTypeElement = formElement.querySelector(
     "[name='documentType']"
@@ -13,11 +15,14 @@
   const toggleCurrentYearVisibility = () => {
     if (documentTypeElement.value.toLowerCase().includes('reprint')) {
       currentYearElement.style.display = ''
+      currentYearElement.disabled = false
     } else {
       if (taxYearElement.selectedIndex === 0) {
         taxYearElement.selectedIndex = 1
       }
+
       currentYearElement.style.display = 'none'
+      currentYearElement.disabled = true
     }
   }
 
