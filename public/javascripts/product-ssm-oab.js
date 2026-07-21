@@ -1,9 +1,11 @@
+"use strict";
 ;
 (() => {
     const formElement = document.querySelector('#form--product');
     const applicantTypeRadioElements = formElement.querySelectorAll('input[name="applicantType"]');
     const ownerContainerElement = formElement.querySelector('div[id^="container_"][id$="_applicantType-owner"]');
     const tenantContainerElement = formElement.querySelector('div[id^="container_"][id$="_applicantType-tenant"]');
+    const permitTypeRadioElements = formElement.querySelectorAll('input[name="permitType"]');
     function resetApplicantType() {
         ownerContainerElement.classList.add('is-hidden');
         tenantContainerElement.classList.add('is-hidden');
@@ -15,7 +17,10 @@
         resetApplicantType();
         if (applicantType === 'owner') {
             ownerContainerElement.classList.remove('is-hidden');
-            formElement.querySelector('button[type="submit"]').disabled = false;
+            if (permitTypeRadioElements.length > 0) {
+                ;
+                formElement.querySelector('button[type="submit"]').disabled = false;
+            }
         }
         else if (applicantType === 'tenant') {
             tenantContainerElement.classList.remove('is-hidden');
@@ -26,7 +31,6 @@
         radioElement.checked = false;
         radioElement.addEventListener('change', toggleApplicantType);
     }
-    const permitTypeRadioElements = formElement.querySelectorAll('input[name="permitType"]');
     function setUnitPrice() {
         for (const radioElement of permitTypeRadioElements) {
             if (radioElement.checked) {
@@ -38,5 +42,7 @@
     setUnitPrice();
     for (const radioElement of permitTypeRadioElements) {
         radioElement.addEventListener('change', setUnitPrice);
+    }
+    if (permitTypeRadioElements.length === 0) {
     }
 })();

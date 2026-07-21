@@ -1,3 +1,4 @@
+"use strict";
 ;
 (() => {
     const formElement = document.querySelector('#form--product');

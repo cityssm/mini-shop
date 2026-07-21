@@ -1,7 +1,7 @@
 import path from 'node:path';
 import { recordAbuse } from '@cityssm/express-abuse-points';
 import { getOrder as miniShopDB_getOrder } from '@cityssm/mini-shop-db';
-import convertHTMLToPDF from '@cityssm/pdf-puppeteer';
+import { PdfPuppeteer } from '@cityssm/pdf-puppeteer';
 import dateTimeFunctions from '@cityssm/utils-datetime';
 import * as ejs from 'ejs';
 import * as configFunctions from '../helpers/configFunctions.js';
@@ -63,6 +63,7 @@ export default async function handler(request, response, next) {
             });
             return;
         }
+        const pdfPuppeteer = new PdfPuppeteer();
         try {
             const ejsData = await ejs.renderFile(path.join('view-parts', 'downloads', 'oab.ejs'), {
                 configFunctions,
@@ -73,13 +74,10 @@ export default async function handler(request, response, next) {
                 permitType,
                 streetAddress
             }, { async: true });
-            const pdf = await convertHTMLToPDF(ejsData, {
+            const pdf = await pdfPuppeteer.fromHtml(ejsData, {
                 format: 'Letter',
                 printBackground: true,
                 preferCSSPageSize: true
-            }, {
-                htmlIsUrl: false,
-                remoteContent: true
             });
             console.log(pdf);
             response.setHeader('Content-Disposition', 'attachment; filename=oabPermit.pdf');
@@ -92,6 +90,13 @@ export default async function handler(request, response, next) {
                 success: false,
                 errorMessage: 'Error building download.'
             });
+        }
+        finally {
+            try {
+                await pdfPuppeteer.closeBrowser();
+            }
+            catch {
+            }
         }
     }
     else {

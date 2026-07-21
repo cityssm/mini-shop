@@ -3,7 +3,7 @@ import path from 'node:path'
 import { recordAbuse } from '@cityssm/express-abuse-points'
 import { getOrder as miniShopDB_getOrder } from '@cityssm/mini-shop-db'
 import type { OrderItem } from '@cityssm/mini-shop-db/types.js'
-import convertHTMLToPDF from '@cityssm/pdf-puppeteer'
+import convertHTMLToPDF, { PdfPuppeteer } from '@cityssm/pdf-puppeteer'
 import dateTimeFunctions from '@cityssm/utils-datetime'
 import * as ejs from 'ejs'
 import type { NextFunction, Request, Response } from 'express'
@@ -86,7 +86,7 @@ export default async function handler(
       item.fields?.find((possibleField) => {
         return possibleField.formFieldName === 'permitType'
       })?.fieldValue ?? ''
-      
+
     const streetAddress =
       item.fields?.find((possibleField) => {
         return possibleField.formFieldName === 'streetAddress'
@@ -107,6 +107,8 @@ export default async function handler(
       return
     }
 
+    const pdfPuppeteer = new PdfPuppeteer()
+
     try {
       const ejsData = await ejs.renderFile(
         path.join('view-parts', 'downloads', 'oab.ejs'),
@@ -124,19 +126,11 @@ export default async function handler(
 
       // console.log(ejsData)
 
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
-      const pdf = await convertHTMLToPDF(
-        ejsData,
-        {
-          format: 'Letter',
-          printBackground: true,
-          preferCSSPageSize: true
-        },
-        {
-          htmlIsUrl: false,
-          remoteContent: true
-        }
-      )
+      const pdf = await pdfPuppeteer.fromHtml(ejsData, {
+        format: 'Letter',
+        printBackground: true,
+        preferCSSPageSize: true
+      })
 
       console.log(pdf)
 
@@ -156,6 +150,12 @@ export default async function handler(
         success: false,
         errorMessage: 'Error building download.'
       })
+    } finally {
+      try {
+        await pdfPuppeteer.closeBrowser()
+      } catch {
+        // ignore
+      }
     }
   } else {
     recordAbuse(request)

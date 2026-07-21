@@ -121,6 +121,14 @@
         </p>
       </div>
     <% } %>
+
+    <% if (!Number.isFinite(product.data?.oab_4yr) && !Number.isFinite(product.data?.oab_1yr)) { %>
+      <div class="message is-danger">
+        <p class="message-body">
+          Open air burning permits are not available for purchase at this time.
+        </p>
+      </div>
+    <% } %>
   </fieldset>
 </div>
 

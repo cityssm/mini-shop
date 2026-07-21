@@ -19,11 +19,21 @@
     'div[id^="container_"][id$="_applicantType-tenant"]'
   ) as HTMLElement
 
+  const permitTypeRadioElements = formElement.querySelectorAll(
+    'input[name="permitType"]'
+  ) as NodeListOf<HTMLInputElement>
+
   function resetApplicantType(): void {
     ownerContainerElement.classList.add('is-hidden')
     tenantContainerElement.classList.add('is-hidden')
-    ;(formElement.querySelector('input[name="understandGuidelines"]') as HTMLInputElement).checked = false
-    ;(formElement.querySelector('button[type="submit"]') as HTMLButtonElement).disabled = true
+    ;(
+      formElement.querySelector(
+        'input[name="understandGuidelines"]'
+      ) as HTMLInputElement
+    ).checked = false
+    ;(
+      formElement.querySelector('button[type="submit"]') as HTMLButtonElement
+    ).disabled = true
   }
 
   function toggleApplicantType(): void {
@@ -37,7 +47,13 @@
 
     if (applicantType === 'owner') {
       ownerContainerElement.classList.remove('is-hidden')
-      ;(formElement.querySelector('button[type="submit"]') as HTMLButtonElement).disabled = false
+      if (permitTypeRadioElements.length > 0) {
+        ;(
+          formElement.querySelector(
+            'button[type="submit"]'
+          ) as HTMLButtonElement
+        ).disabled = false
+      }
     } else if (applicantType === 'tenant') {
       tenantContainerElement.classList.remove('is-hidden')
     }
@@ -54,10 +70,6 @@
    * Unit Price
    */
 
-  const permitTypeRadioElements = formElement.querySelectorAll(
-    'input[name="permitType"]'
-  ) as NodeListOf<HTMLInputElement>
-
   function setUnitPrice(): void {
     for (const radioElement of permitTypeRadioElements) {
       if (radioElement.checked) {
@@ -72,5 +84,8 @@
 
   for (const radioElement of permitTypeRadioElements) {
     radioElement.addEventListener('change', setUnitPrice)
+  }
+
+  if (permitTypeRadioElements.length === 0) {
   }
 })()

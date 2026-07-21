@@ -1,3 +1,4 @@
+"use strict";
 (() => {
     const urlPrefix = document.querySelector("main").dataset.urlPrefix;
     const checkoutDivID = "monerisCheckout";
