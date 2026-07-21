@@ -28,7 +28,7 @@ jobs:
       - name: Install Package
         run: |
           npm ci
-          npm install -g c8 mocha cypress@13
+          npm install -g c8 mocha cypress@15
 
       - name: Verify Cypress
         run: cypress verify
