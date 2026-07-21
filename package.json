@@ -52,7 +52,7 @@
     "@cityssm/configurator": "^0.1.0",
     "@cityssm/express-abuse-points": "^3.2.0",
     "@cityssm/expressjs-server-js": "^2.3.3",
-    "@cityssm/mini-shop-db": "^3.2.2",
+    "@cityssm/mini-shop-db": "^4.0.0-rc",
     "@cityssm/mssql-multi-pool": "^5.1.4",
     "@cityssm/pdf-puppeteer": "^6.4.1",
     "@cityssm/utils-datetime": "^1.3.0",
