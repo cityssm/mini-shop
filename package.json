@@ -1,11 +1,11 @@
 {
   "name": "mini-shop",
-  "version": "3.0.0-rc.1",
+  "version": "3.0.0-rc.2",
   "description": "A lightweight, highly customizable storefront.",
   "type": "module",
   "exports": "./app.js",
   "engines": {
-    "node": ">=18.0.0"
+    "node": ">=22.0.0"
   },
   "scripts": {
     "start": "cross-env NODE_ENV=production node ./bin/www",
