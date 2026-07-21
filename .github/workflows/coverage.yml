@@ -10,9 +10,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node: [ 18, 20 ]
+        node: [ 22, 24 ]
     env:
-      CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
       CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
       CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
       DEEPSOURCE_DSN: ${{ secrets.DEEPSOURCE_DSN }}
@@ -31,13 +30,6 @@ jobs:
           npm ci
           npm install -g c8 mocha cypress@13
 
-      - name: Code Climate (Before)
-        if: ${{ github.event_name != 'pull_request' && env.CC_TEST_REPORTER_ID != '' && matrix.node == 20 }}
-        run: |
-          curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./codeclimate-test-reporter
-          chmod +x codeclimate-test-reporter
-          ./codeclimate-test-reporter before-build
-      
       - name: Verify Cypress
         run: cypress verify
         env:
@@ -46,20 +38,15 @@ jobs:
       - name: Run Coverage Testing
         run: npm run coverage
 
-      - name: Code Climate (After)
-        if: ${{ github.event_name != 'pull_request' && env.CC_TEST_REPORTER_ID != '' && matrix.node == 20 }}
-        run: |
-          ./codeclimate-test-reporter after-build -t lcov --exit-code $?
-
       - name: Codecov
-        if: ${{ github.event_name != 'pull_request' && env.CODECOV_TOKEN != '' && matrix.node == 20 }}
+        if: ${{ github.event_name != 'pull_request' && env.CODECOV_TOKEN != '' && matrix.node == 22 }}
         run: |
           curl -Os https://uploader.codecov.io/latest/linux/codecov
           chmod +x codecov
           ./codecov -t ${CODECOV_TOKEN}
 
       - name: DeepSource
-        if: ${{ github.event_name != 'pull_request' && env.DEEPSOURCE_DSN != '' && matrix.node == 20 }}
+        if: ${{ github.event_name != 'pull_request' && env.DEEPSOURCE_DSN != '' && matrix.node == 22 }}
         run: |
           # Install deepsource CLI
           curl https://deepsource.io/cli | sh
